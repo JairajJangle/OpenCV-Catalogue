@@ -22,7 +22,9 @@ SOURCES += \
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
+    OpenCVFunction/imageflip.h \
     Utils/baseconfigwidget.h \
     Utils/captureinputsource.h \
     mainwindow.h
