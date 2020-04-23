@@ -35,6 +35,7 @@ private slots:
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
     void operationSelected(int opCode);
+    void outputLabelLBClicked(int x, int y);
 
 public:
     MainWindow(QWidget *parent = nullptr);

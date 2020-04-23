@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(COLOR_PICKER);
     });
+
+    connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
 
 void MainWindow::initUI(){
@@ -179,6 +181,11 @@ void MainWindow::sourceSelectClicked()
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }
+}
+
+void MainWindow::outputLabelLBClicked(int x, int y)
+{
+    baseConfigWidget->begin = Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()
