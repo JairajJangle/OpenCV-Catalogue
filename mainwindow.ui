@@ -651,7 +651,7 @@ background-repeat: none;
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="text">
-           <string>Full Screen</string>
+           <string>Open undocked views</string>
           </property>
          </widget>
         </item>
@@ -684,6 +684,10 @@ background-repeat: none;
     <addaction name="actionColorSpace"/>
     <addaction name="actionImage_Flip"/>
     <addaction name="actionColor_Picker"/>
+    <addaction name="actionThresholding"/>
+    <addaction name="actionMotion_detection"/>
+    <addaction name="actionHough_Transform"/>
+    <addaction name="actionOptical_Flow"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
@@ -701,6 +705,26 @@ background-repeat: none;
   <action name="actionColor_Picker">
    <property name="text">
     <string>Color Picker</string>
+   </property>
+  </action>
+  <action name="actionThresholding">
+   <property name="text">
+    <string>Thresholding</string>
+   </property>
+  </action>
+  <action name="actionMotion_detection">
+   <property name="text">
+    <string>Motion detection</string>
+   </property>
+  </action>
+  <action name="actionOptical_Flow">
+   <property name="text">
+    <string>Optical Flow</string>
+   </property>
+  </action>
+  <action name="actionHough_Transform">
+   <property name="text">
+    <string>Hough Transform</string>
    </property>
   </action>
  </widget>
