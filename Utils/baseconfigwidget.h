@@ -28,8 +28,6 @@ protected:
     QString operationName = "No operation Selected";
     QString moreInfoLink = "";
     ClickableLabel* labelInfo = new ClickableLabel();
-    Point begin;
-    Point end;
 
     QScrollArea *scrl = new QScrollArea();
 
@@ -40,6 +38,9 @@ protected:
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
 public:
+    Point begin;
+    Point end;
+
     BaseConfigWidget(){
         begin = Point(-1, -1);
         end = Point(-1, -1);
