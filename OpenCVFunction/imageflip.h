@@ -45,7 +45,7 @@ public:
     Mat getProcessedImage(Mat inputImage)
     {
         Mat outputImage;
-        int selectedFlipFlag = flipFlagsAll[flipFlagCode];
+        int selectedFlipFlag = flipFlagsAll.at(flipFlagCode).first;
 
         // If "No Image Flip" is selected: o/p = i/p
         if(selectedFlipFlag == -99)
@@ -67,22 +67,22 @@ private slots:
     }
 
 private:
-    const String noFlip = "No flip";
-    const String yFlip = "X axis";
-    const String xFlip = "Y axis";
-    const String xyFlip = "X and Y axis";
-
     int flipFlagCode = 0;
 
-    std::vector<int> flipFlagsAll = {-99, 0, 1, -1};
+    std::vector<pair<int, QString>> flipFlagsAll =
+    {
+        {-99, "No flip"},
+        {0, "X axis"},
+        {1, "Y axis"},
+        {-1, "X and Y axis"}
+    };
 
     void initWidget()
     {
-        std::vector<String> flipTypeNames = {noFlip, yFlip, xFlip, xyFlip};
-
-        for(int jCount = 0; jCount < flipTypeNames.size(); jCount++)
+        for(unsigned int jCount = 0; jCount < flipFlagsAll.size(); jCount++)
         {
-            QRadioButton *radioButton = new QRadioButton(QString::fromStdString(flipTypeNames[jCount]));
+            QRadioButton *radioButton =
+                    new QRadioButton(flipFlagsAll.at(jCount).second);
             if(jCount == 0)
                 radioButton->setChecked(true);
 

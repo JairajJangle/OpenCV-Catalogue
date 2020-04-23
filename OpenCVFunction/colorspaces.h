@@ -28,6 +28,7 @@
 #include <QSpacerItem>
 
 #include <iostream>
+#include <map>
 
 using namespace cv;
 using namespace std;
@@ -46,13 +47,21 @@ public:
     Mat getProcessedImage(Mat inputImage)
     {
         Mat outputImage;
-        int selectedColorCode = colorCodesAll[colorConvCode];
+        int selectedColorCode = colorCodesAll.at(colorConvCode).first;
 
         // If RGB is selected: o/p = i/p
         if(selectedColorCode == -1)
             return inputImage;
         else
+        {
             cvtColor(inputImage, outputImage, selectedColorCode);
+            /* As Grayscale is single channel
+             * Converting to 3 channel matrix is
+             * important to display as QPixMap in QLabel
+             */
+            if(selectedColorCode == CV_BGR2GRAY)
+                cvtColor(outputImage, outputImage, CV_GRAY2BGR);
+        }
 
         return outputImage;
     }
@@ -69,22 +78,27 @@ private slots:
     }
 
 private:
-    const String rgb = "RGB";
-    const String lab = "LAB";
-    const String yCrCb = "YCrCb";
-    const String hsv = "HSV";
-
-    std::vector<int> colorCodesAll = {-1, CV_BGR2Lab, CV_BGR2YCrCb, CV_BGR2HSV};
+    std::vector<pair<int, QString>> colorCodesAll =
+    {
+        {-1, "RGB"},
+        {CV_BGR2HSV, "HSV"},
+        {CV_BGR2GRAY, "Grayscale"},
+        {CV_BGR2Lab, "LAB"},
+        {CV_BGR2YCrCb, "YCrCb"},
+        {CV_BGR2Luv, "Luv"},
+        {CV_BGR2HLS, "HLS"},
+        {CV_BGR2XYZ, "XYZ"},
+        {CV_BGR2YUV, "YUV"}
+    };
 
     int colorConvCode = 0;
 
     void initWidget()
     {
-        std::vector<String> colorSpacesNames = {rgb, lab, yCrCb, hsv};
-
-        for(int jCount = 0; jCount < colorSpacesNames.size(); jCount++)
+        for(unsigned int jCount = 0; jCount < colorCodesAll.size(); jCount++)
         {
-            QRadioButton *radioButton = new QRadioButton(QString::fromStdString(colorSpacesNames[jCount]));
+            QRadioButton *radioButton =
+                    new QRadioButton(colorCodesAll[jCount].second);
             if(jCount == 0)
                 radioButton->setChecked(true);
 
