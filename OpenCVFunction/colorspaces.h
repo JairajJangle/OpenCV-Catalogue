@@ -31,7 +31,7 @@
 using namespace cv;
 using namespace std;
 
-class ColorSpace : public QThread, public BaseConfigWidget
+class ColorSpace : public QWidget, public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -45,8 +45,9 @@ public:
     Mat getProcessedImage(Mat inputImage)
     {
         Mat outputImage;
-        int selectedColorCode = colorCodes[colorConvCodeStage1];
+        int selectedColorCode = colorCodesAll[colorConvCode];
 
+        // If RGB is selected: o/p = i/p
         if(selectedColorCode == -1)
             return inputImage;
         else
@@ -57,12 +58,12 @@ public:
 
     ~ColorSpace()
     {
-        printf("Colorspace deleted\n");
+        printf("Colorspace destroyed\n");
     }
 
 private slots:
     void colorConvRadioButtonClicked(int colorConvCode){
-        colorConvCodeStage1 = colorConvCode;
+        this->colorConvCode = colorConvCode;
         cout << "Stage 1: Color Code = " << colorConvCode << endl;
     }
 
@@ -72,31 +73,21 @@ private:
     const String yCrCb = "YCrCb";
     const String hsv = "HSV";
 
-    QWidget *wgtSub = new QWidget();
+    std::vector<int> colorCodesAll = {-1, CV_BGR2Lab, CV_BGR2YCrCb, CV_BGR2HSV};
 
-    int colorConvCodeStage1 = 0;
-    int colorConvCodeStage2 = 0;
-
-    std::vector<int> colorCodes = {-1, CV_BGR2Lab, CV_BGR2YCrCb, CV_BGR2HSV};
+    int colorConvCode = 0;
 
     void initWidget()
     {
-        QScrollArea *scrl = new QScrollArea();
-        QWidget *wgtMain = new QWidget();
+        std::vector<String> colorSpacesNames = {rgb, lab, yCrCb, hsv};
 
-        QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
-
-        QVBoxLayout *vboxSubStage1 = new QVBoxLayout(wgtSub);
-
-        string colorSpaces[] = {rgb, lab, yCrCb, hsv};
-
-        for(int jCount = 0; jCount <= colorSpaces->length(); jCount++)
+        for(int jCount = 0; jCount < colorSpacesNames.size(); jCount++)
         {
-            QRadioButton *radioButton = new QRadioButton(QString::fromStdString(colorSpaces[jCount]));
+            QRadioButton *radioButton = new QRadioButton(QString::fromStdString(colorSpacesNames[jCount]));
             if(jCount == 0)
                 radioButton->setChecked(true);
 
-            vboxSubStage1->addWidget(radioButton);
+            vBoxSub->addWidget(radioButton);
 
             connect(radioButton, &QRadioButton::clicked,
                     [=]() {
@@ -104,11 +95,7 @@ private:
             });
         }
 
-        vboxMain->addWidget(wgtSub);
-
-        scrl->setWidget(wgtMain);
-
-        configWidget = scrl;
+        BaseConfigWidget::initWidget();
     }
 };
 
