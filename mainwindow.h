@@ -11,6 +11,8 @@
 
 #include "Utils/captureinputsource.h"
 #include "OpenCVFunction/colorspaces.h"
+#include "OpenCVFunction/imageflip.h"
+#include "OpenCVFunction/colorpicker.h"
 
 using namespace std;
 
@@ -39,7 +41,7 @@ public:
     ~MainWindow();
 
 private:
-    enum OPCodes{COLOR_SPACES, THRESHOLDING};
+    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER};
 
     Ui::MainWindow *ui;
 
@@ -47,7 +49,6 @@ private:
     CaptureInputSource* captureInputSource;
 
     BaseConfigWidget* baseConfigWidget = new BaseConfigWidget;
-    ColorSpace colorSpace;
 
     bool isSourceFlipped = false;
 
