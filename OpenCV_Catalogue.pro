@@ -42,3 +42,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+DISTFILES += \
+    README.md \
+    assets/demo_video.gif \
+    assets/done.png \
+    assets/done_sel.png \
+    assets/info.png \
+    assets/info_sel.png
