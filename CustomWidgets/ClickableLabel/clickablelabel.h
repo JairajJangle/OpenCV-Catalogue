@@ -11,7 +11,6 @@
 #include <QWidget>
 #include <Qt>
 #include <QMouseEvent>
-#include <opencv2/opencv.hpp>
 
 //A Custom Label Class inheriting QLabel
 // Inherits QLabel with adding mousePressEvent overriden function to return mouse position
@@ -23,11 +22,9 @@ public:
     explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
     ~ClickableLabel();
 
-    cv::Point ClickPos;
-
 signals:
-    void LBclicked();
-    void RBclicked();
+    void LBclicked(int, int);
+    void RBclicked(int, int);
 
 protected:
     void mousePressEvent(QMouseEvent* event);
