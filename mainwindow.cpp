@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->cameraRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
-    connect(ui->checkBoxFlipped, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
+    connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
 
@@ -20,9 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(COLOR_SPACES);
     });
-    connect(ui->actionThresholding, &QAction::triggered,
+    connect(ui->actionImage_Flip, &QAction::triggered,
             [=]() {
-        emit operationSelected(THRESHOLDING);
+        emit operationSelected(IMAGE_FLIP);
+    });
+    connect(ui->actionColor_Picker, &QAction::triggered,
+            [=]() {
+        emit operationSelected(COLOR_PICKER);
     });
 }
 
@@ -34,24 +38,6 @@ void MainWindow::initUI(){
     sourceRadioButtonClicked();
 
     setUserMessage("Initializing Done", INFO);
-
-//    baseConfigWidget = new ColorSpace();
-    ui->labelOperationName->setText(baseConfigWidget->getOperationName());
-
-    //    QWidget *wgtMain = new QWidget();
-    //    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
-    //    for(int iCount=0;iCount<3;iCount++){
-    //        QWidget *wgtSub = new QWidget();
-    //        QVBoxLayout *vboxSub = new QVBoxLayout(wgtSub);
-    //        for(int jCount=0;jCount<10;jCount++){
-    //            QCheckBox *chk = new QCheckBox("Check Box " + QString::number(jCount+1) + " of " + QString::number(iCount+1));
-    //            vboxSub->addWidget(chk);
-    //        }
-    //        vboxMain->addWidget(wgtSub);
-    //    }
-    //    ui->scrollArea->show();
-
-//    operationSelected(COLOR_SPACES);
 }
 
 void MainWindow::operationSelected(int opCode)
@@ -62,12 +48,17 @@ void MainWindow::operationSelected(int opCode)
         baseConfigWidget = new ColorSpace();
         break;
     }
-    case THRESHOLDING:
+    case IMAGE_FLIP:
+        baseConfigWidget = new ImageFlip();
+        break;
+    case COLOR_PICKER:
+        baseConfigWidget = new ColorPicker();
         break;
     }
 
-    QWidget *wgtMain = baseConfigWidget->getConfigWidget();
-    ui->scrollArea->setWidget(wgtMain);
+    ui->labelOperationName->setText(baseConfigWidget->getOperationName());
+    QWidget *configWidget = baseConfigWidget->getConfigWidget();
+    ui->scrollArea->setWidget(configWidget);
 }
 
 void MainWindow::GetSourceCaptureImage()
