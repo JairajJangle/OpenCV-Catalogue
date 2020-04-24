@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::initUI(){
+    this->setWindowTitle("OpenCV Catalogue");
+    this->setWindowIcon(QIcon(":/assets/opencv_logo.png"));
+
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);
     group->addButton(ui->fileRadioButton);
