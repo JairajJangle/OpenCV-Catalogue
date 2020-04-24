@@ -1,25 +1,18 @@
 #ifndef BASECONFIGWIDGET_H
 #define BASECONFIGWIDGET_H
 
-#include <QWidget>
-#include <QLabel>
-#include <QHBoxLayout>
+#include <iostream>
+
 #include <opencv2/opencv.hpp>
 
 // QT libs
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QCheckBox>
-#include <QRadioButton>
 #include <QScrollArea>
-#include <QLabel>
-#include <QThread>
-#include <QSizePolicy>
-#include <QSpacerItem>
+#include <QWidget>
+
+// OpenCV libs
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
-
-using namespace cv;
 
 class BaseConfigWidget
 {
@@ -38,12 +31,12 @@ protected:
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
 public:
-    Point begin;
-    Point end;
+    cv::Point begin;
+    cv::Point end;
 
     BaseConfigWidget(){
-        begin = Point(-1, -1);
-        end = Point(-1, -1);
+        begin =cv::Point(-1, -1);
+        end =cv::Point(-1, -1);
         labelInfo->setText("More Info >>");
     }
     ~BaseConfigWidget(){}
@@ -63,7 +56,7 @@ public:
         return moreInfoLink;
     }
 
-    virtual Mat getProcessedImage(Mat inputImage){
+    virtual cv::Mat getProcessedImage(cv::Mat inputImage){
         return inputImage;
     }
 
