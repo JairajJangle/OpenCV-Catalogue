@@ -7,31 +7,10 @@
 #ifndef COLORSPACES_H
 #define COLORSPACES_H
 
-// OpenCV libs
-#include <opencv/highgui.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/video/tracking.hpp>
-#include <opencv2/core/core.hpp>
-#include <Utils/baseconfigwidget.h>
-
 // QT libs
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QCheckBox>
 #include <QRadioButton>
-#include <QScrollArea>
-#include <QLabel>
-#include <QThread>
-#include <QSizePolicy>
-#include <QSpacerItem>
 
-#include <iostream>
-#include <map>
-
-using namespace cv;
-using namespace std;
+#include "Utils/baseconfigwidget.h"
 
 class ColorSpace : public QWidget, public BaseConfigWidget
 {
@@ -44,9 +23,9 @@ public:
         initWidget();
     }
 
-    Mat getProcessedImage(Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)
     {
-        Mat outputImage;
+        cv::Mat outputImage;
         int selectedColorCode = colorCodesAll.at(colorConvCode).first;
 
         // If RGB is selected: o/p = i/p
@@ -74,11 +53,10 @@ public:
 private slots:
     void colorConvRadioButtonClicked(int colorConvCode){
         this->colorConvCode = colorConvCode;
-        cout << "Stage 1: Color Code = " << colorConvCode << endl;
     }
 
 private:
-    std::vector<pair<int, QString>> colorCodesAll =
+    std::vector<std::pair<int, QString>> colorCodesAll =
     {
         {-1, "RGB"},
         {CV_BGR2HSV, "HSV"},

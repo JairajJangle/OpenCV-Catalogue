@@ -13,15 +13,7 @@
 #include <QFile>
 
 // OpenCV libs
-#include <opencv/highgui.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/video/tracking.hpp>
-#include <opencv2/core/core.hpp>
-
-using namespace cv;
-using namespace std;
 
 // CaptureInputSource extends QThread
 class CaptureInputSource : public QThread
@@ -29,15 +21,15 @@ class CaptureInputSource : public QThread
     Q_OBJECT
 public:
     //Mat to store image from camera
-    Mat img, resizedImg;
+   cv::Mat img, resizedImg;
 
-    String inputSource = "";
+    std::string inputSource = "";
 
     /*
      * Constructor to start single shot timer and connect the signal once every loop
      * in StartCam() slot
      */
-    CaptureInputSource(String inputSource)
+    CaptureInputSource(std::string inputSource)
     {
         this->inputSource = inputSource;
         start_cam_once_timer->setInterval(100);
@@ -57,8 +49,8 @@ public slots:
         try{
             openSource();
 
-            img = Mat::zeros(Size(640, 480), CV_8UC3);
-            resizedImg = Mat::zeros(Size(640, 480), CV_8UC3);
+            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+            resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
 
             //TODO: apply FPS
             while(1)
@@ -67,8 +59,8 @@ public slots:
                     double fps = cap.get(cv::CAP_PROP_FPS);
                     bool isSuccess = cap.read(img);
 
-                    if(!Size(img.rows , img.rows).empty()) // Avoid empty image resizing error
-                        resize(img, resizedImg, Size(640, 480));
+                    if(!cv::Size(img.rows , img.rows).empty()) // Avoid empty image resizing error
+                        resize(img, resizedImg, cv::Size(640, 480));
 
                     if(!isSuccess)
                     {
@@ -78,7 +70,7 @@ public slots:
                         continue; // retry
                     }
                     //            img = loadFromQrc(":/test_file/cam_test_2.jpg");
-                    //img = Mat::zeros(Size(640, 480), CV_8UC3); //Black for Simulation Purpose
+                    //img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3); //Black for Simulation Purpose
                     emit SourceCaptured();
                     QThread::usleep(1000000/fps);
                 } catch (cv::Exception& e) {
@@ -105,7 +97,7 @@ public:
 
     void openSource()
     {
-        cout << "Path: " << inputSource << endl;
+        std::cout << "Path: " << inputSource << std::endl;
         cap.release();
         if(std::all_of(inputSource.begin(), inputSource.end(), ::isdigit)) // check if only contains digits
         {
@@ -117,22 +109,22 @@ public:
 
 private:
 
-    VideoCapture cap;
+    cv::VideoCapture cap;
     QTimer *start_cam_once_timer = new QTimer(this);
 
-    //Function to convert QT res image file to OpenCV Mat object
-    Mat loadFromQrc(QString qrc, int flag = IMREAD_COLOR)
+    //Function to convert QT res image file to OpenCVcv::Mat object
+   cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
     {
         //double tic = double(getTickCount());
 
         QFile file(qrc);
-        Mat m;
+       cv::Mat m;
         if(file.open(QIODevice::ReadOnly))
         {
             qint64 sz = file.size();
             std::vector<uchar> buf(sz);
             file.read((char*)buf.data(), sz);
-            m = imdecode(buf, flag);
+            m = cv::imdecode(buf, flag);
         }
 
         //double toc = (double(getTickCount()) - tic) * 1000.0 / getTickFrequency();

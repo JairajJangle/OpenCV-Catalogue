@@ -14,8 +14,6 @@
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
 
-using namespace std;
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -55,8 +53,8 @@ private:
 
     void initUI();
 
-    void RefreshInputImage(Mat img);
-    void RefreshOutputImage(Mat img);
+    void RefreshInputImage(cv::Mat img);
+    void RefreshOutputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
 };
 #endif // MAINWINDOW_H

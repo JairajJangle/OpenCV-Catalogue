@@ -7,30 +7,12 @@
  * @email jairaj.jangle@gmail.com
  */
 
-// OpenCV libs
-#include <opencv/highgui.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/video/tracking.hpp>
-#include <opencv2/core/core.hpp>
-#include <Utils/baseconfigwidget.h>
-
 // QT libs
-#include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QCheckBox>
-#include <QRadioButton>
-#include <QScrollArea>
 #include <QLabel>
-#include <QThread>
-#include <QSizePolicy>
 #include <QLineEdit>
 
-#include <iostream>
-
-using namespace cv;
-using namespace std;
+#include "Utils/baseconfigwidget.h"
 
 class ColorPicker : public QWidget, public BaseConfigWidget
 {
@@ -43,12 +25,12 @@ public:
         initWidget();
     }
 
-    Mat getProcessedImage(Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)
     {
-        Mat outputImage;
+        cv::Mat outputImage;
 
         // If No Location is selected: o/p = 0
-        if(begin == Point(-1, -1))
+        if(begin ==cv::Point(-1, -1))
             return inputImage;
         else
         {
@@ -58,7 +40,7 @@ public:
 
             locLabel->setText(locationValues);
 
-            Vec3b color = inputImage.at<Vec3b>(begin);
+            cv::Vec3b color = inputImage.at<cv::Vec3b>(begin);
 
             QString rgbValues =
                     QString::number(color[0]) + ", "
@@ -68,7 +50,7 @@ public:
             rgbLabel->setText(rgbValues);
         }
 
-        begin = Point(-1, -1);
+        begin =cv::Point(-1, -1);
 
         return inputImage;
     }

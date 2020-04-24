@@ -68,7 +68,7 @@ void MainWindow::operationSelected(int opCode)
 
 void MainWindow::GetSourceCaptureImage()
 {
-    Mat capturedImg = captureInputSource->resizedImg;
+    cv::Mat capturedImg = captureInputSource->resizedImg;
     if(isSourceFlipped)
     {
         cv::flip(capturedImg, capturedImg, 1);
@@ -83,13 +83,13 @@ void MainWindow::GetSourceCaptureError(QString error)
     setUserMessage(error, ERROR);
 }
 
-void MainWindow::RefreshInputImage(Mat img)
+void MainWindow::RefreshInputImage(cv::Mat img)
 {
     try
     {
-        Mat inputImage;
+        cv::Mat inputImage;
         cvtColor(img, inputImage, CV_BGR2RGB);
-        cv::resize(inputImage, inputImage, Size(320, 240));
+        cv::resize(inputImage, inputImage, cv::Size(320, 240));
 
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
@@ -102,13 +102,13 @@ void MainWindow::RefreshInputImage(Mat img)
 
     catch(cv::Exception& e)
     {
-        captureInputSource->resizedImg = Mat::zeros(Size(640, 480), CV_8UC3);
+        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
 }
 
-void MainWindow::RefreshOutputImage(Mat img)
+void MainWindow::RefreshOutputImage(cv::Mat img)
 {
-    Mat outputImg = baseConfigWidget->getProcessedImage(img);
+    cv::Mat outputImg = baseConfigWidget->getProcessedImage(img);
     try
     {
         cvtColor(outputImg, outputImg, CV_BGR2RGB);
@@ -123,7 +123,7 @@ void MainWindow::RefreshOutputImage(Mat img)
 
     catch(cv::Exception& e)
     {
-        captureInputSource->resizedImg = Mat::zeros(Size(640, 480), CV_8UC3);
+        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
 }
 
@@ -151,7 +151,7 @@ void MainWindow::browseClicked()
 
 void MainWindow::sourceSelectClicked()
 {
-    cout << "Source Select Clicked!!" << endl;
+    std::cout << "Source Select Clicked!!" << std::endl;
     QString path = ui->textInputSource->toPlainText();
     if(ui->fileRadioButton->isChecked()){
         QFileInfo check_file(path);
@@ -180,7 +180,7 @@ void MainWindow::sourceSelectClicked()
         connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
     }
     else{
-        cout << "Cam Thread already running!!" << endl;
+        std::cout << "Cam Thread already running!!" << std::endl;
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }
@@ -188,7 +188,7 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
-    baseConfigWidget->begin = Point(x, y);
+    baseConfigWidget->begin =cv::Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()

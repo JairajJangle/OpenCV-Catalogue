@@ -7,29 +7,10 @@
  * @email jairaj.jangle@gmail.com
  */
 
-// OpenCV libs
-#include <opencv/highgui.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include <opencv2/video/tracking.hpp>
-#include <opencv2/core/core.hpp>
-#include <Utils/baseconfigwidget.h>
-
 // QT libs
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QCheckBox>
 #include <QRadioButton>
-#include <QScrollArea>
-#include <QLabel>
-#include <QSizePolicy>
-#include <QSpacerItem>
 
-#include <iostream>
-
-using namespace cv;
-using namespace std;
+#include "Utils/baseconfigwidget.h"
 
 class ImageFlip : public QWidget, public BaseConfigWidget
 {
@@ -42,9 +23,9 @@ public:
         initWidget();
     }
 
-    Mat getProcessedImage(Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)
     {
-        Mat outputImage;
+        cv::Mat outputImage;
         int selectedFlipFlag = flipFlagsAll.at(flipFlagCode).first;
 
         // If "No Image Flip" is selected: o/p = i/p
@@ -69,7 +50,7 @@ private slots:
 private:
     int flipFlagCode = 0;
 
-    std::vector<pair<int, QString>> flipFlagsAll =
+    std::vector<std::pair<int, QString>> flipFlagsAll =
     {
         {-99, "No flip"},
         {0, "X axis"},
