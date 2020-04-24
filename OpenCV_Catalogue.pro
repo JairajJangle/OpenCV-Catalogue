@@ -25,6 +25,7 @@ HEADERS += \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
     OpenCVFunction/imageflip.h \
+    OpenCVFunction/thresholding.h \
     Utils/baseconfigwidget.h \
     Utils/captureinputsource.h \
     mainwindow.h
