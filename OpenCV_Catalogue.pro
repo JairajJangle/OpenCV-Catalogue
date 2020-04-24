@@ -49,4 +49,5 @@ DISTFILES += \
     assets/done.png \
     assets/done_sel.png \
     assets/info.png \
-    assets/info_sel.png
+    assets/info_sel.png \
+    assets/opencv_logo.png
