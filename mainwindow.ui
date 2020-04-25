@@ -684,6 +684,7 @@ background-repeat: none;
     <addaction name="actionColorSpace"/>
     <addaction name="actionImage_Flip"/>
     <addaction name="actionColor_Picker"/>
+    <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionMotion_detection"/>
     <addaction name="actionHough_Transform"/>
@@ -694,17 +695,17 @@ background-repeat: none;
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionColorSpace">
    <property name="text">
-    <string>Color Spaces</string>
+    <string>Color Spaces(cvtColor)</string>
    </property>
   </action>
   <action name="actionImage_Flip">
    <property name="text">
-    <string>Image Flip</string>
+    <string>Image Flip(flip)</string>
    </property>
   </action>
   <action name="actionColor_Picker">
    <property name="text">
-    <string>Color Picker</string>
+    <string>Color Picker(Mat.at)</string>
    </property>
   </action>
   <action name="actionThresholding">
@@ -725,6 +726,11 @@ background-repeat: none;
   <action name="actionHough_Transform">
    <property name="text">
     <string>Hough Transform</string>
+   </property>
+  </action>
+  <action name="actionErosion_Dialation">
+   <property name="text">
+    <string>Erosion &amp; Dialation</string>
    </property>
   </action>
  </widget>
