@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(COLOR_PICKER);
     });
+    connect(ui->actionThresholding, &QAction::triggered,
+            [=]() {
+        emit operationSelected(THRESHOLDING);
+    });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
@@ -49,15 +53,16 @@ void MainWindow::operationSelected(int opCode)
 {
     switch (opCode) {
     case COLOR_SPACES:
-    {
         baseConfigWidget = new ColorSpace();
         break;
-    }
     case IMAGE_FLIP:
         baseConfigWidget = new ImageFlip();
         break;
     case COLOR_PICKER:
         baseConfigWidget = new ColorPicker();
+        break;
+    case THRESHOLDING:
+        baseConfigWidget = new Thresholding();
         break;
     }
 

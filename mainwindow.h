@@ -13,6 +13,8 @@
 #include "OpenCVFunction/colorspaces.h"
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
+#include "OpenCVFunction/erosiondilation.h"
+#include "OpenCVFunction/thresholding.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,7 +42,7 @@ public:
     ~MainWindow();
 
 private:
-    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER};
+    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION};
 
     Ui::MainWindow *ui;
 

@@ -24,6 +24,7 @@ HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
+    OpenCVFunction/erosiondilation.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/thresholding.h \
     Utils/baseconfigwidget.h \
@@ -35,7 +36,6 @@ FORMS += \
 
 INCLUDEPATH += /usr/local/include/opencv
 LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_stitching -lopencv_videoio -lopencv_video -lopencv_photo -lpthread -lX11 -lbluetooth -lbluetooth  -lmysqlclient -lpthread
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
