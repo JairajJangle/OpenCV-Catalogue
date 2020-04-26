@@ -70,6 +70,7 @@ private:
 
     int colorConvCode = 0;
 
+protected:
     void initWidget()
     {
         for(unsigned int jCount = 0; jCount < colorCodesAll.size(); jCount++)
