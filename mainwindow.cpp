@@ -32,6 +32,10 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(THRESHOLDING);
     });
+    connect(ui->actionCanny_Edge, &QAction::triggered,
+            [=]() {
+        emit operationSelected(CANNY_EDGE);
+    });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
@@ -60,6 +64,9 @@ void MainWindow::operationSelected(int opCode)
         break;
     case COLOR_PICKER:
         baseConfigWidget = new ColorPicker();
+        break;
+    case CANNY_EDGE:
+        baseConfigWidget = new CannyEdge();
         break;
     case THRESHOLDING:
         baseConfigWidget = new Thresholding();

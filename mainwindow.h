@@ -15,6 +15,7 @@
 #include "OpenCVFunction/colorpicker.h"
 #include "OpenCVFunction/erosiondilation.h"
 #include "OpenCVFunction/thresholding.h"
+#include "OpenCVFunction/cannyedge.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -42,7 +43,8 @@ public:
     ~MainWindow();
 
 private:
-    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION};
+    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
+                CANNY_EDGE};
 
     Ui::MainWindow *ui;
 
