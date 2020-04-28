@@ -34,8 +34,11 @@ public:
         if((begin.x < kSize.width && begin.y < kSize.height)
                 && (kSize.width > 0 && kSize.height > 0))
         {
-            currentAnchorLabel->setText(QString::number(begin.x)
-                                        + ", " + QString::number(begin.y));
+            QString currentAnchorText = QString::number(begin.x)
+                    + ", " + QString::number(begin.y);
+
+            if(currentAnchorLabel->text() != currentAnchorText)
+                currentAnchorLabel->setText(currentAnchorText);
 
             errorLabel->setVisible(false);
             cv::blur(inputImage, outputImage, kSize, begin);
@@ -93,6 +96,8 @@ private:
     {
         kSizexEdit->setText(QString::number(kSize.width));
         kSizeyEdit->setText(QString::number(kSize.height));
+        kSizexEdit->setReadOnly(true);
+        kSizeyEdit->setReadOnly(true);
 
         errorLabel->setVisible(false);
         errorLabel->setStyleSheet("QLabel { color : red; }");
