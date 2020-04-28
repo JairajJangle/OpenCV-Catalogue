@@ -685,6 +685,7 @@ background-repeat: none;
     <addaction name="actionImage_Flip"/>
     <addaction name="actionColor_Picker"/>
     <addaction name="actionCanny_Edge"/>
+    <addaction name="actionBlur"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionMotion_detection"/>
@@ -737,6 +738,11 @@ background-repeat: none;
   <action name="actionCanny_Edge">
    <property name="text">
     <string>Canny Edge</string>
+   </property>
+  </action>
+  <action name="actionBlur">
+   <property name="text">
+    <string>Blur</string>
    </property>
   </action>
  </widget>
