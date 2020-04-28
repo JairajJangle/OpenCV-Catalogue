@@ -67,8 +67,8 @@ private:
     int t2Value = 3;
     int appertureValue = 3;
 
-    QLabel* t1ValueLabel  = new QLabel("0");
-    QLabel* t2ValueLabel  = new QLabel("0");
+    QLabel* t1ValueLabel  = new QLabel(QString::number(t1Value));
+    QLabel* t2ValueLabel  = new QLabel(QString::number(t2Value));
     QComboBox* appertureComboBox = new QComboBox();
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
 
@@ -84,7 +84,7 @@ private:
         t1HBox->setSpacing(15);
 
         QSlider* t1Slider = new QSlider();
-        t1Slider->setFixedSize(160, 50);
+        t1Slider->setFixedSize(160, 60);
         t1Slider->setSingleStep(20);
         t1Slider->setOrientation(Qt::Horizontal);
         t1Slider->setRange(0, 100);
@@ -100,7 +100,7 @@ private:
         t2HBox->setSpacing(15);
 
         QSlider* t2Slider = new QSlider();
-        t2Slider->setFixedSize(160, 50);
+        t2Slider->setFixedSize(160, 60);
         t2Slider->setSingleStep(20);
         t2Slider->setOrientation(Qt::Horizontal);
         t2Slider->setRange(0, 100);
