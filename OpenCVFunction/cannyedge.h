@@ -70,7 +70,7 @@ private:
     QLabel* t1ValueLabel  = new QLabel("0");
     QLabel* t2ValueLabel  = new QLabel("0");
     QComboBox* appertureComboBox = new QComboBox();
-    QCheckBox* enableBlurCB = new QCheckBox("Enable Blue");
+    QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
 
     void initWidget()
     {
