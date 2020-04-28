@@ -67,6 +67,7 @@ private:
 
     void initWidget()
     {
+        locLabel->setReadOnly(true);
         vBoxSub->addWidget(infoLabel);
 
         rgbLabel->setAlignment(Qt::AlignCenter);
