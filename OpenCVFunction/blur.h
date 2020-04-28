@@ -14,6 +14,7 @@
 #include <QIntValidator>
 
 #include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/errorlabel.h"
 
 class Blur : public QWidget, public BaseConfigWidget
 {
@@ -39,13 +40,13 @@ public:
             if(currentAnchorLabel->text() != currentAnchorText)
                 currentAnchorLabel->setText(currentAnchorText);
 
-            errorLabel->setVisible(false);
+            errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
             return outputImage;
         }
         else
         {
-            errorLabel->setVisible(true);
+            errorLabel->show();
             errorLabel->setText("Kernel Size should be < Anchor");
             if(kSize.width <= 0 || kSize.height <= 0)
                 errorLabel->setText("Kernel Size should not be <= 0");
@@ -89,7 +90,7 @@ private:
     QPushButton* applyButton = new QPushButton("Apply Kernel");
     QPushButton* resetAnchorButton = new QPushButton("Reset Anchor Position");
 
-    QLabel* errorLabel  = new QLabel("No \nError");
+    ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
 
     void initWidget()
     {
@@ -98,11 +99,7 @@ private:
         kSizexEdit->setReadOnly(true);
         kSizeyEdit->setReadOnly(true);
 
-        errorLabel->setVisible(false);
-        errorLabel->setStyleSheet("QLabel { color : red; }");
-        QSizePolicy sp_retain = errorLabel->sizePolicy();
-        sp_retain.setRetainSizeWhenHidden(true);
-        errorLabel->setSizePolicy(sp_retain);
+        errorLabel->hide();
 
         applyButton->setFixedWidth(200);
         resetAnchorButton->setFixedWidth(220);
