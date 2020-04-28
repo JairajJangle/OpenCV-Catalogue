@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(CANNY_EDGE);
     });
+    connect(ui->actionBlur, &QAction::triggered,
+            [=]() {
+        emit operationSelected(BLUR);
+    });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
@@ -70,6 +74,9 @@ void MainWindow::operationSelected(int opCode)
         break;
     case THRESHOLDING:
         baseConfigWidget = new Thresholding();
+        break;
+    case BLUR:
+        baseConfigWidget = new Blur();
         break;
     }
 
