@@ -6,6 +6,7 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QButtonGroup>
 
 #include <iostream>
 

@@ -107,7 +107,7 @@ void MainWindow::RefreshInputImage(cv::Mat img)
     try
     {
         cv::Mat inputImage;
-        cvtColor(img, inputImage, CV_BGR2RGB);
+        cvtColor(img, inputImage, cv::COLOR_BGR2RGB);
         cv::resize(inputImage, inputImage, cv::Size(320, 240));
 
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
@@ -130,7 +130,7 @@ void MainWindow::RefreshOutputImage(cv::Mat img)
     cv::Mat outputImg = baseConfigWidget->getProcessedImage(img);
     try
     {
-        cvtColor(outputImg, outputImg, CV_BGR2RGB);
+        cvtColor(outputImg, outputImg, cv::COLOR_BGR2RGB);
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
                         outputImg.data, outputImg.cols,
