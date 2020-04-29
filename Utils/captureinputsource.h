@@ -49,8 +49,7 @@ public slots:
         try{
             openSource();
 
-            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-            resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);        resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
 
             //TODO: apply FPS
             while(1)

@@ -30,13 +30,13 @@ public:
     {
         cv::Mat outputImage;
 
-        cvtColor(inputImage, outputImage, CV_BGR2GRAY);
+        cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
 
         if(enableBlurCB->isChecked())
             blur( outputImage, outputImage, cv::Size(3,3));
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
-        cvtColor(outputImage, outputImage, CV_GRAY2BGR);
+        cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
         return outputImage;
     }

@@ -38,8 +38,8 @@ public:
              * Converting to 3 channel matrix is
              * important to display as QPixMap in QLabel
              */
-            if(selectedColorCode == CV_BGR2GRAY)
-                cvtColor(outputImage, outputImage, CV_GRAY2BGR);
+            if(selectedColorCode == cv::COLOR_BGR2GRAY)
+                cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
         }
 
         return outputImage;
@@ -59,14 +59,14 @@ private:
     std::vector<std::pair<int, QString>> colorCodesAll =
     {
         {-1, "RGB"},
-        {CV_BGR2HSV, "HSV"},
-        {CV_BGR2GRAY, "Grayscale"},
-        {CV_BGR2Lab, "LAB"},
-        {CV_BGR2YCrCb, "YCrCb"},
-        {CV_BGR2Luv, "Luv"},
-        {CV_BGR2HLS, "HLS"},
-        {CV_BGR2XYZ, "XYZ"},
-        {CV_BGR2YUV, "YUV"}
+        {cv::COLOR_BGR2HSV, "HSV"},
+        {cv::COLOR_BGR2GRAY, "Grayscale"},
+        {cv::COLOR_BGR2Lab, "LAB"},
+        {cv::COLOR_BGR2YCrCb, "YCrCb"},
+        {cv::COLOR_BGR2Luv, "Luv"},
+        {cv::COLOR_BGR2HLS, "HLS"},
+        {cv::COLOR_BGR2XYZ, "XYZ"},
+        {cv::COLOR_BGR2YUV, "YUV"}
     };
 
     int colorConvCode = 0;
