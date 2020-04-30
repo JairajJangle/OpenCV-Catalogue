@@ -94,10 +94,10 @@ private:
 
     void initWidget()
     {
+        currentAnchorLabel->setReadOnly(true);
+
         kSizexEdit->setText(QString::number(kSize.width));
         kSizeyEdit->setText(QString::number(kSize.height));
-        kSizexEdit->setReadOnly(true);
-        kSizeyEdit->setReadOnly(true);
 
         errorLabel->hide();
 
