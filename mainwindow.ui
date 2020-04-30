@@ -686,6 +686,7 @@ background-repeat: none;
     <addaction name="actionColor_Picker"/>
     <addaction name="actionCanny_Edge"/>
     <addaction name="actionBlur"/>
+    <addaction name="actionDenoise_fastNlMeansDenoisingColored"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionMotion_detection"/>
@@ -743,6 +744,11 @@ background-repeat: none;
   <action name="actionBlur">
    <property name="text">
     <string>Blur</string>
+   </property>
+  </action>
+  <action name="actionDenoise_fastNlMeansDenoisingColored">
+   <property name="text">
+    <string>Denoise(fastNlMeansDenoisingColored)</string>
    </property>
   </action>
  </widget>

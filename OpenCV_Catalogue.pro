@@ -22,12 +22,14 @@ SOURCES += \
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    CustomWidgets/SliderLayout.h \
     CustomWidgets/errorlabel.h \
     OpenCVFunction/blur.h \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
     OpenCVFunction/erosiondilation.h \
+    OpenCVFunction/fastnldenoisecolored.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/thresholding.h \
     Utils/baseconfigwidget.h \
