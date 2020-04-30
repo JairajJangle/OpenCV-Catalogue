@@ -686,7 +686,6 @@ background-repeat: none;
     <addaction name="actionColor_Picker"/>
     <addaction name="actionCanny_Edge"/>
     <addaction name="actionBlur"/>
-    <addaction name="actionDenoise_fastNlMeansDenoisingColored"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionMotion_detection"/>
