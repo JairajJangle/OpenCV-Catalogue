@@ -14,6 +14,7 @@
 #include <QComboBox>
 
 #include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/SliderLayout.h"
 
 class CannyEdge : public QWidget, public BaseConfigWidget
 {
@@ -47,19 +48,20 @@ public:
     }
 
 private slots:
-    void tiValueChanged(int value){
+    void t1ValueChanged(int value){
         t1Value = value;
-        t1ValueLabel->setText(QString::number(t1Value));
     }
 
     void t2ValueChanged(int value){
         t2Value = value;
-        t2ValueLabel->setText(QString::number(t2Value));
     }
 
     void appertureValueChanged(int){
         appertureValue = appertureComboBox->currentText().toInt();
         printf("Apperture: %d", appertureValue);
+    }
+    void testSliderValChanged(int value){
+        printf("Test: %d", value);
     }
 
 private:
@@ -67,50 +69,21 @@ private:
     int t2Value = 3;
     int appertureValue = 3;
 
-    QLabel* t1ValueLabel  = new QLabel(QString::number(t1Value));
-    QLabel* t2ValueLabel  = new QLabel(QString::number(t2Value));
     QComboBox* appertureComboBox = new QComboBox();
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
 
     void initWidget()
     {
-        QLabel* t1Label  = new QLabel("threshold1\n[0-100]");
-        QLabel* t2Label  = new QLabel("threshold2\n[0-100]");
-
-        t1ValueLabel->setFixedSize(40, 20);
-        t2ValueLabel->setFixedSize(40, 20);
-
         QHBoxLayout* t1HBox = new QHBoxLayout;
         t1HBox->setSpacing(15);
 
-        QSlider* t1Slider = new QSlider();
-        t1Slider->setFixedSize(160, 60);
-        t1Slider->setSingleStep(20);
-        t1Slider->setOrientation(Qt::Horizontal);
-        t1Slider->setRange(0, 100);
-        t1Slider->setValue(t1Value);
+        SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
+        connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),
+                this, SLOT(t1ValueChanged(int)));
 
-        t1HBox->addWidget(t1Label);
-        t1HBox->addWidget(t1Slider);
-        t1HBox->addWidget(t1ValueLabel);
-
-        connect(t1Slider, SIGNAL(valueChanged(int)),this, SLOT(tiValueChanged(int)));
-
-        QHBoxLayout* t2HBox = new QHBoxLayout;
-        t2HBox->setSpacing(15);
-
-        QSlider* t2Slider = new QSlider();
-        t2Slider->setFixedSize(160, 60);
-        t2Slider->setSingleStep(20);
-        t2Slider->setOrientation(Qt::Horizontal);
-        t2Slider->setRange(0, 100);
-        t2Slider->setValue(t2Value);
-
-        t2HBox->addWidget(t2Label);
-        t2HBox->addWidget(t2Slider);
-        t2HBox->addWidget(t2ValueLabel);
-
-        connect(t2Slider, SIGNAL(valueChanged(int)),this, SLOT(t2ValueChanged(int)));
+        SliderLayout* t2SliderLayout = new SliderLayout("threshold2\n[0-100]", t2Value);
+        connect(t2SliderLayout, SIGNAL(sliderValueChanged(int)),
+                this, SLOT(t2ValueChanged(int)));
 
         QLabel* appertureLabel  = new QLabel("Apperture Value");
 
@@ -124,8 +97,8 @@ private:
         aprtHBox->addWidget(appertureComboBox);
         aprtHBox->insertStretch( -1, 1 );
 
-        vBoxSub->addLayout(t1HBox);
-        vBoxSub->addLayout(t2HBox);
+        vBoxSub->addLayout(t1SliderLayout);
+        vBoxSub->addLayout(t2SliderLayout);
         vBoxSub->addLayout(aprtHBox);
         vBoxSub->addWidget(enableBlurCB);
 
