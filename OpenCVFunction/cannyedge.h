@@ -13,7 +13,7 @@
 #include <QComboBox>
 
 #include "Utils/baseconfigwidget.h"
-#include "CustomWidgets/SliderLayout.h"
+#include "CustomWidgets/sliderlayout.h"
 
 class CannyEdge : public QWidget, public BaseConfigWidget
 {

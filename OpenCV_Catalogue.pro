@@ -22,8 +22,8 @@ SOURCES += \
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
-    CustomWidgets/SliderLayout.h \
     CustomWidgets/errorlabel.h \
+    CustomWidgets/sliderlayout.h \
     OpenCVFunction/blur.h \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
