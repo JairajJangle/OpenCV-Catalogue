@@ -87,14 +87,17 @@ void MainWindow::operationSelected(int opCode)
 
 void MainWindow::GetSourceCaptureImage()
 {
-    cv::Mat capturedImg = captureInputSource->resizedImg;
+    cv::Mat capturedReziedImg = captureInputSource->resizedImg;
+    cv::Mat capturedOriginalImg = captureInputSource->img;
+
     if(isSourceFlipped)
     {
-        cv::flip(capturedImg, capturedImg, 1);
+        cv::flip(capturedReziedImg, capturedReziedImg, 1);
+        cv::flip(capturedOriginalImg, capturedOriginalImg, 1);
     }
 
-    RefreshInputImage(capturedImg);
-    RefreshOutputImage(capturedImg);
+    RefreshInputImage(capturedReziedImg);
+    RefreshOutputImage(capturedOriginalImg);
 }
 
 void MainWindow::GetSourceCaptureError(QString error)
