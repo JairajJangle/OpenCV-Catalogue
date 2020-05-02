@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         emit operationSelected(BLUR);
     });
+    connect(ui->actionMotion_detection, &QAction::triggered,
+            [=]() {
+        emit operationSelected(BKG_SUBTRACT);
+    });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
@@ -77,6 +81,9 @@ void MainWindow::operationSelected(int opCode)
         break;
     case BLUR:
         baseConfigWidget = new Blur();
+        break;
+    case BKG_SUBTRACT:
+        baseConfigWidget = new BackgroundSubtraction();
         break;
     }
 

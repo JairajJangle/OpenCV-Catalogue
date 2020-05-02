@@ -686,9 +686,9 @@ background-repeat: none;
     <addaction name="actionColor_Picker"/>
     <addaction name="actionCanny_Edge"/>
     <addaction name="actionBlur"/>
+    <addaction name="actionMotion_detection"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
-    <addaction name="actionMotion_detection"/>
     <addaction name="actionHough_Transform"/>
     <addaction name="actionOptical_Flow"/>
    </widget>
@@ -717,7 +717,7 @@ background-repeat: none;
   </action>
   <action name="actionMotion_detection">
    <property name="text">
-    <string>Motion detection</string>
+    <string>Motion detection(Backround Subtraction)</string>
    </property>
   </action>
   <action name="actionOptical_Flow">
