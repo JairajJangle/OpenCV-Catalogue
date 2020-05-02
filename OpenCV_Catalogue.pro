@@ -24,6 +24,7 @@ HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/sliderlayout.h \
+    OpenCVFunction/backgroundsubtract.h \
     OpenCVFunction/blur.h \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
