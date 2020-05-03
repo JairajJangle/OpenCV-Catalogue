@@ -25,8 +25,8 @@ class BackgroundSubtraction : public QWidget, public BaseConfigWidget
 public:
     BackgroundSubtraction()
     {
-        operationName = "Blur";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html#blur";
+        operationName = "Background Subtraction";
+        moreInfoLink = "https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html";
         initWidget();
     }
 
@@ -49,7 +49,7 @@ public:
 
 private slots:
     void bkgSubTechChanged(int bkgSubTech){
-
+        selectedTech = bkgSubTech;
     }
 
     void resetAnchorClicked(){
@@ -92,7 +92,7 @@ private:
 
             connect(radioButton, &QRadioButton::clicked,
                     [=]() {
-                //                emit colorConvRadioButtonClicked(jCount);
+                emit bkgSubTechChanged(jCount);
             });
         }
 
