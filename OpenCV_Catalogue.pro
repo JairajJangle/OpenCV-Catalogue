@@ -34,6 +34,7 @@ HEADERS += \
     OpenCVFunction/thresholding.h \
     Utils/baseconfigwidget.h \
     Utils/captureinputsource.h \
+    Utils/constants.h \
     mainwindow.h
 
 FORMS += \
