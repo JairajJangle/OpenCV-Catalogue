@@ -77,6 +77,10 @@ private slots:
         selectedTech = bkgSubTech;
     }
 
+    void applyChangesClicked(){
+
+    }
+
     void resetAnchorClicked(){
         begin = cv::Point(-1, -1);
     }
@@ -108,8 +112,15 @@ private:
 
     int selectedTech = KNN;
 
+    QLineEdit* learningRateLineEdit  = new QLineEdit("0.1");
+    QPushButton* applyButton = new QPushButton("Apply");
+    QPushButton* resetButton = new QPushButton("Reset");
+
     void initWidget()
     {
+        learningRateLineEdit->setFixedWidth(100);
+        learningRateLineEdit->setAlignment(Qt::AlignCenter);
+
         pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
         pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
         pMOG2 = cv::createBackgroundSubtractorMOG2();
@@ -118,8 +129,13 @@ private:
         pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
         pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
 
+        QLabel* learningRateLabel = new QLabel("Learning Rate\n[0-1]");
+        learningRateLabel->setFixedHeight(80);
+
         for(unsigned int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
         {
+            learningRateLabel->setAlignment(Qt::AlignCenter);
+
             QRadioButton *radioButton =
                     new QRadioButton(bkgSubTechs[jCount]);
             if(jCount == 0)
@@ -132,6 +148,21 @@ private:
                 emit bkgSubTechChanged(jCount);
             });
         }
+
+
+        QHBoxLayout* lRHBox = new QHBoxLayout();
+        lRHBox->setSpacing(90);
+        lRHBox->addWidget(learningRateLabel);
+        lRHBox->addWidget(learningRateLineEdit);
+        vBoxSub->addLayout(lRHBox);
+
+        QHBoxLayout* applyButtonHBox = new QHBoxLayout;
+        applyButtonHBox->setAlignment(Qt::AlignHCenter);
+        applyButtonHBox->addWidget(applyButton);
+        applyButtonHBox->addWidget(resetButton);
+        vBoxSub->addLayout(applyButtonHBox);
+        connect(applyButton, SIGNAL(released()),
+                this, SLOT(applyChangesClicked()));
 
         BaseConfigWidget::initWidget();
     }
