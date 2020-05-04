@@ -13,6 +13,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRegExpValidator>
 
 #include "opencv2/bgsegm.hpp"
 
@@ -81,6 +82,10 @@ private slots:
 
     }
 
+    void resetChangesClicked(){
+
+    }
+
     void resetAnchorClicked(){
         begin = cv::Point(-1, -1);
     }
@@ -120,6 +125,9 @@ private:
     {
         learningRateLineEdit->setFixedWidth(100);
         learningRateLineEdit->setAlignment(Qt::AlignCenter);
+        learningRateLineEdit->setValidator(
+                    new QRegExpValidator(
+                        QRegExp("^(0(\.[0-9]{1,4})?|1(\.0{1,4})?)$")));
 
         pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
         pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
@@ -163,6 +171,8 @@ private:
         vBoxSub->addLayout(applyButtonHBox);
         connect(applyButton, SIGNAL(released()),
                 this, SLOT(applyChangesClicked()));
+        connect(resetButton, SIGNAL(released()),
+                this, SLOT(resetChangesClicked()));
 
         BaseConfigWidget::initWidget();
     }
