@@ -63,7 +63,7 @@ public slots:
 
                     if(!isSuccess)
                     {
-                        SourceCaptureError("Cannot read the frame from the source");
+                        emit SourceCaptureError("Cannot read the frame from the source");
                         //                        cap.open("/home/jairaj/Desktop/Projects/JAS.mp4");
                         openSource();
                         continue; // retry
@@ -73,12 +73,12 @@ public slots:
                     emit SourceCaptured();
                     QThread::usleep(1000000/fps);
                 } catch (cv::Exception& e) {
-                    SourceCaptureError(e.what());
+                    emit SourceCaptureError(e.what());
                 }
             }
         }
         catch (cv::Exception& e) {
-            SourceCaptureError(e.what());
+            emit SourceCaptureError(e.what());
         }
     }
 

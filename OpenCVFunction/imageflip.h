@@ -69,9 +69,9 @@ private:
 
             vBoxSub->addWidget(radioButton);
 
-            connect(radioButton, &QRadioButton::clicked,
+            connect(radioButton, &QRadioButton::clicked, this,
                     [=]() {
-                emit imgFlipRadioButtonClicked(jCount);
+                imgFlipRadioButtonClicked(jCount);
             });
         }
 

@@ -16,33 +16,33 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
 
-    connect(ui->actionColorSpace, &QAction::triggered,
+    connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(COLOR_SPACES);
+        operationSelected(COLOR_SPACES);
     });
-    connect(ui->actionImage_Flip, &QAction::triggered,
+    connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(IMAGE_FLIP);
+        operationSelected(IMAGE_FLIP);
     });
-    connect(ui->actionColor_Picker, &QAction::triggered,
+    connect(ui->actionColor_Picker, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(COLOR_PICKER);
+        operationSelected(COLOR_PICKER);
     });
-    connect(ui->actionThresholding, &QAction::triggered,
+    connect(ui->actionThresholding, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(THRESHOLDING);
+        operationSelected(THRESHOLDING);
     });
-    connect(ui->actionCanny_Edge, &QAction::triggered,
+    connect(ui->actionCanny_Edge, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(CANNY_EDGE);
+        operationSelected(CANNY_EDGE);
     });
-    connect(ui->actionBlur, &QAction::triggered,
+    connect(ui->actionBlur, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(BLUR);
+        operationSelected(BLUR);
     });
-    connect(ui->actionMotion_detection, &QAction::triggered,
+    connect(ui->actionMotion_detection, &QAction::triggered, this,
             [=]() {
-        emit operationSelected(BKG_SUBTRACT);
+        operationSelected(BKG_SUBTRACT);
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
