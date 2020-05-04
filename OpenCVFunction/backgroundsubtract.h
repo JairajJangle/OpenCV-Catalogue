@@ -39,25 +39,25 @@ public:
 
         switch (selectedTech) {
         case KNN:
-            pKNN->apply(inputImage, outputImage, 0.00000001);
+            pKNN->apply(inputImage, outputImage, learningRate);
             break;
         case MOG:
-            pMOG->apply(inputImage, outputImage);
+            pMOG->apply(inputImage, outputImage, learningRate);
             break;
         case MOG2:
-            pMOG2->apply(inputImage, outputImage);
+            pMOG2->apply(inputImage, outputImage, learningRate);
             break;
         case GMG:
-            pGMG->apply(inputImage, outputImage);
+            pGMG->apply(inputImage, outputImage, learningRate);
             break;
         case GSOC:
-            pGSOC->apply(inputImage, outputImage);
+            pGSOC->apply(inputImage, outputImage, learningRate);
             break;
         case CNT:
-            pCNT->apply(inputImage, outputImage);
+            pCNT->apply(inputImage, outputImage, learningRate);
             break;
         case LSBP:
-            pLSBP->apply(inputImage, outputImage, 0.00000001);
+            pLSBP->apply(inputImage, outputImage, learningRate);
             break;
         }
 
@@ -79,11 +79,12 @@ private slots:
     }
 
     void applyChangesClicked(){
-
+        learningRate = learningRateLineEdit->text().toDouble();
     }
 
     void resetChangesClicked(){
-
+        learningRate = 0.1;
+        learningRateLineEdit->setText(QString::number(learningRate));
     }
 
     void resetAnchorClicked(){
@@ -117,12 +118,14 @@ private:
 
     int selectedTech = KNN;
 
-    QLineEdit* learningRateLineEdit  = new QLineEdit("0.1");
+    double learningRate = 0.1;
+    QLineEdit* learningRateLineEdit  = new QLineEdit();
     QPushButton* applyButton = new QPushButton("Apply");
     QPushButton* resetButton = new QPushButton("Reset");
 
     void initWidget()
     {
+        learningRateLineEdit->setText(QString::number(learningRate));
         learningRateLineEdit->setFixedWidth(100);
         learningRateLineEdit->setAlignment(Qt::AlignCenter);
         learningRateLineEdit->setValidator(
@@ -156,7 +159,6 @@ private:
                 emit bkgSubTechChanged(jCount);
             });
         }
-
 
         QHBoxLayout* lRHBox = new QHBoxLayout();
         lRHBox->setSpacing(90);
