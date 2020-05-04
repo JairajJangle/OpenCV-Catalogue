@@ -14,6 +14,8 @@
 #include <QPushButton>
 #include <QRadioButton>
 
+#include "opencv2/bgsegm.hpp"
+
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
 
@@ -34,7 +36,30 @@ public:
     {
         cv::Mat outputImage;
 
-        pKNN->apply(inputImage, outputImage, 0.00000001);
+        switch (selectedTech) {
+        case KNN:
+            pKNN->apply(inputImage, outputImage, 0.00000001);
+            break;
+        case MOG:
+            pMOG->apply(inputImage, outputImage);
+            break;
+        case MOG2:
+            pMOG2->apply(inputImage, outputImage);
+            break;
+        case GMG:
+            pGMG->apply(inputImage, outputImage);
+            break;
+        case GSOC:
+            pGSOC->apply(inputImage, outputImage);
+            break;
+        case CNT:
+            pCNT->apply(inputImage, outputImage);
+            break;
+        case LSBP:
+            pLSBP->apply(inputImage, outputImage, 0.00000001);
+            break;
+        }
+
         cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(1, 1));
         morphologyEx(outputImage, outputImage, CV_MOP_OPEN, element);
 
@@ -58,14 +83,17 @@ private slots:
 
 private:
     enum MotionSubtractionTypes{
-        KNN, MOG, MOG2, GMG
+        KNN, MOG, MOG2, GMG, GSOC, CNT, LSBP
         /* More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html */
     };
 
-    cv::Ptr< cv::BackgroundSubtractor> pMOG; //MOG Background subtractor
-    cv::Ptr< cv::BackgroundSubtractor> pMOG2; //MOG2 Background subtractor
-    cv::Ptr< cv::BackgroundSubtractor> pGMG; //GMG Background subtractor
-    cv::Ptr< cv::BackgroundSubtractor> pKNN; //KNN Background subtractor
+    cv::Ptr< cv::BackgroundSubtractor> pMOG;
+    cv::Ptr< cv::BackgroundSubtractor> pMOG2;
+    cv::Ptr< cv::BackgroundSubtractor> pGMG;
+    cv::Ptr< cv::BackgroundSubtractor> pKNN;
+    cv::Ptr< cv::BackgroundSubtractor> pGSOC;
+    cv::Ptr< cv::BackgroundSubtractor> pCNT;
+    cv::Ptr< cv::BackgroundSubtractor> pLSBP;
 
     std::vector<QString> bkgSubTechs =
     {
@@ -73,6 +101,9 @@ private:
         {GET_VARIABLE_NAME(MOG)},
         {GET_VARIABLE_NAME(MOG2)},
         {GET_VARIABLE_NAME(GMG)},
+        {GET_VARIABLE_NAME(GSOC)},
+        {GET_VARIABLE_NAME(CNT)},
+        {GET_VARIABLE_NAME(LSBP)},
     };
 
     int selectedTech = KNN;
@@ -80,6 +111,12 @@ private:
     void initWidget()
     {
         pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
+        pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
+        pMOG2 = cv::createBackgroundSubtractorMOG2();
+        pGMG = cv::bgsegm::createBackgroundSubtractorGMG();
+        pGSOC = cv::bgsegm::createBackgroundSubtractorGSOC();
+        pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
+        pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
 
         for(unsigned int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
         {
