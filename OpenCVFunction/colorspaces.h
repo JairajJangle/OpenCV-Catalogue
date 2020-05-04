@@ -82,9 +82,9 @@ protected:
 
             vBoxSub->addWidget(radioButton);
 
-            connect(radioButton, &QRadioButton::clicked,
+            connect(radioButton, &QRadioButton::clicked, this,
                     [=]() {
-                emit colorConvRadioButtonClicked(jCount);
+                colorConvRadioButtonClicked(jCount);
             });
         }
 

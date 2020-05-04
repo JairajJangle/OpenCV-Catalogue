@@ -34,7 +34,7 @@ public:
 
         connect(slider, SIGNAL(valueChanged(int)),this,
                 SLOT(valueChanged(int)));
-        connect(slider, &QSlider::valueChanged,
+        connect(slider, &QSlider::valueChanged, this,
                 [=]() {
             emit sliderValueChanged(slider->value());
         });
