@@ -47,7 +47,7 @@ public:
 
 private:
     enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
-                CANNY_EDGE, BLUR, BKG_SUBTRACT};
+                CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLE};
 
     Ui::MainWindow *ui;
 
