@@ -11,6 +11,7 @@
 #include <QCheckBox>
 
 #include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/sliderlayout.h"
 
 class HoughCircleDetector: public QWidget, public BaseConfigWidget
 {
@@ -30,8 +31,8 @@ public:
 
         cvtColor(inputImage, grayImage, CV_BGR2GRAY);
 
-        if(enableBlurCB->isChecked())
-            blur(inputImage, grayImage, cv::Size(3,3));
+        if(enableBlurCB->isChecked() && blurKernelSize > 0)
+            blur(grayImage, grayImage, cv::Size(blurKernelSize, blurKernelSize));
 
         std::vector<cv::Vec3f> circles;
 
@@ -61,14 +62,34 @@ public:
         printf("Hough Circle destroyed\n");
     }
 
+private slots:
+    void blurKernelChanged(int value){
+        blurKernelSize = value;
+    }
+
+    void blurCBClicked(bool isChecked){
+        isBlurEnabled = isChecked;
+
+        blurKernelSliderLayout->setVisible(isChecked);
+    }
+
 private:
+    int blurKernelSize = 3;
+    bool isBlurEnabled = true;
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
+    SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
     void initWidget()
     {
+        enableBlurCB->setChecked(true);
+        connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(blurCBClicked(bool)));
+        connect(blurKernelSliderLayout, SIGNAL(sliderValueChanged(int)),
+                this, SLOT(blurKernelChanged(int)));
+
         // TODO: Add Blur Trackbar
         // TODO: Add Hough Circles function control trackbars
         vBoxSub->addWidget(enableBlurCB);
+        vBoxSub->addLayout(blurKernelSliderLayout);
         BaseConfigWidget::initWidget();
     }
 
