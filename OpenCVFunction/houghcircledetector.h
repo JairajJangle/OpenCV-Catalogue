@@ -66,6 +66,8 @@ private:
 
     void initWidget()
     {
+        // TODO: Add Blur Trackbar
+        // TODO: Add Hough Circles function control trackbars
         vBoxSub->addWidget(enableBlurCB);
         BaseConfigWidget::initWidget();
     }
