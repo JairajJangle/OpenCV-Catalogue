@@ -90,7 +90,7 @@ void MainWindow::operationSelected(int opCode)
         baseConfigWidget = new BackgroundSubtraction();
         break;
     case HOUGH_CIRCLE:
-        // TODO
+        baseConfigWidget = new HoughCircleDetector();
         break;
     }
 
