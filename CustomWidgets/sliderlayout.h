@@ -12,12 +12,22 @@ class SliderLayout : public QHBoxLayout
 public:
     QLabel* titleLabel  = new QLabel();
     QLabel* valueLabel  = new QLabel();
+    QSlider* slider = new QSlider();
 
     explicit SliderLayout(QString title, int initialValue, int minValue = 0, int maxValue = 100, int fixedWidth = 160, int fixedHeight = 60, QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
     {
+        QSizePolicy sp_retainTitle = titleLabel->sizePolicy();
+        sp_retainTitle.setRetainSizeWhenHidden(true);
+        titleLabel->setSizePolicy(sp_retainTitle);
+        QSizePolicy sp_retainValue = valueLabel->sizePolicy();
+        sp_retainValue.setRetainSizeWhenHidden(true);
+        valueLabel->setSizePolicy(sp_retainValue);
+        QSizePolicy sp_retainSlider = slider->sizePolicy();
+        sp_retainSlider.setRetainSizeWhenHidden(true);
+        slider->setSizePolicy(sp_retainSlider);
+
         this->setSpacing(15);
 
-        QSlider* slider = new QSlider();
         slider->setFixedSize(fixedWidth, fixedHeight);
         slider->setSingleStep(20);
         slider->setOrientation(Qt::Horizontal);
@@ -39,6 +49,14 @@ public:
             emit sliderValueChanged(slider->value());
         });
     }
+
+    void setVisible(bool visible)
+    {
+         titleLabel->setVisible(visible);
+         valueLabel->setVisible(visible);
+         slider->setVisible(visible);
+    }
+
     ~SliderLayout()
     {
 
