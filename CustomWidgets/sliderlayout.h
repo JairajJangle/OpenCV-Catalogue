@@ -14,7 +14,14 @@ public:
     QLabel* valueLabel  = new QLabel();
     QSlider* slider = new QSlider();
 
-    explicit SliderLayout(QString title, int initialValue, int minValue = 0, int maxValue = 100, int fixedWidth = 160, int fixedHeight = 60, QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
+    explicit SliderLayout(QString title,
+                          int initialValue,
+                          int minValue = 0,
+                          int maxValue = 100,
+                          int fixedWidth = 160,
+                          int fixedHeight = 60,
+                          QWidget* parent = Q_NULLPTR,
+                          Qt::WindowFlags f = Qt::WindowFlags())
     {
         QSizePolicy sp_retainTitle = titleLabel->sizePolicy();
         sp_retainTitle.setRetainSizeWhenHidden(true);
@@ -52,9 +59,9 @@ public:
 
     void setVisible(bool visible)
     {
-         titleLabel->setVisible(visible);
-         valueLabel->setVisible(visible);
-         slider->setVisible(visible);
+        titleLabel->setVisible(visible);
+        valueLabel->setVisible(visible);
+        slider->setVisible(visible);
     }
 
     ~SliderLayout()
