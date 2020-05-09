@@ -14,6 +14,8 @@
 
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
+#include "CustomWidgets/lineeditlayout.h"
+
 #include "Utils/constants.h"
 
 class HoughCircleDetector: public QWidget, public BaseConfigWidget
@@ -85,14 +87,11 @@ private:
     int dp = 1;
 
     QComboBox* selectMethodComboBox = new QComboBox();
-    QLineEdit* dpLineEdit  = new QLineEdit();
+    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", dp);
 
     void initWidget()
     {
-        dpLineEdit->setText(QString::number(dp));
-        dpLineEdit->setFixedWidth(100);
-        dpLineEdit->setAlignment(Qt::AlignCenter);
-        dpLineEdit->setValidator(new QRegExpValidator(RegExps::regExInt_greaterThan0));
+        dpLineEditLayout->lineEdit->setValidator(new QRegExpValidator(RegExps::regExInt_greaterThan0));
 
         enableBlurCB->setChecked(true);
         connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(blurCBClicked(bool)));
@@ -106,13 +105,7 @@ private:
         selectMethodHBox->addWidget(selectMethodComboBox);
         vBoxSub->addLayout(selectMethodHBox);
 
-        QLabel* dpLabel = new QLabel("dp");
-        QHBoxLayout* dpHBox = new QHBoxLayout;
-        dpHBox->addWidget(dpLabel);
-        dpHBox->addStretch();
-        dpHBox->addWidget(dpLineEdit);
-        dpHBox->addStretch();
-        vBoxSub->addLayout(dpHBox);
+        vBoxSub->addLayout(dpLineEditLayout);
 
         QFrame* line = new QFrame(this);
         line->setObjectName(QString::fromUtf8("line"));
@@ -122,7 +115,6 @@ private:
         line->setFixedHeight(20);
         vBoxSub->addWidget(line);
 
-        // TODO: Add Blur Trackbar
         // TODO: Add Hough Circles function control trackbars
         vBoxSub->addWidget(enableBlurCB);
         vBoxSub->addLayout(blurKernelSliderLayout);
