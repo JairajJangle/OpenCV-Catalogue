@@ -23,8 +23,6 @@
 
 class BackgroundSubtraction : public QWidget, public BaseConfigWidget
 {
-#define GET_VARIABLE_NAME(Variable) (#Variable)
-
     Q_OBJECT
 public:
     BackgroundSubtraction()
