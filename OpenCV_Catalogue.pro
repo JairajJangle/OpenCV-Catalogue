@@ -22,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    CustomWidgets/applyresetbuttonlayout.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/lineeditlayout.h \
     CustomWidgets/sliderlayout.h \
