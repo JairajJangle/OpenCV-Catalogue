@@ -9,9 +9,11 @@
 // QT libs
 #include <QRadioButton>
 #include <QCheckBox>
+#include <QComboBox>
 
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
+#include "Utils/constants.h"
 
 class HoughCircleDetector: public QWidget, public BaseConfigWidget
 {
@@ -79,12 +81,30 @@ private:
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
     SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
+    QComboBox* selectMethodComboBox = new QComboBox();
+
     void initWidget()
     {
         enableBlurCB->setChecked(true);
         connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(blurCBClicked(bool)));
         connect(blurKernelSliderLayout, SIGNAL(sliderValueChanged(int)),
                 this, SLOT(blurKernelChanged(int)));
+
+        QLabel* selectMethodLabel = new QLabel("Select Method");
+        selectMethodComboBox->addItem("CV_HOUGH_GRADIENT");
+        QHBoxLayout* selectMethodHBox = new QHBoxLayout;
+        selectMethodHBox->addWidget(selectMethodLabel);
+        selectMethodHBox->addWidget(selectMethodComboBox);
+
+        QFrame* line = new QFrame(this);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setGeometry(QRect(320, 150, 118, 3));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+        line->setFixedHeight(20);
+
+        vBoxSub->addLayout(selectMethodHBox);
+        vBoxSub->addWidget(line);
 
         // TODO: Add Blur Trackbar
         // TODO: Add Hough Circles function control trackbars
