@@ -22,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    CustomWidgets/LineEditLayout.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/sliderlayout.h \
     OpenCVFunction/backgroundsubtract.h \
