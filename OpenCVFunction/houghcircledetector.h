@@ -10,6 +10,7 @@
 #include <QRadioButton>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLineEdit>
 
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
@@ -81,10 +82,18 @@ private:
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
     SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
+    int dp = 1;
+
     QComboBox* selectMethodComboBox = new QComboBox();
+    QLineEdit* dpLineEdit  = new QLineEdit();
 
     void initWidget()
     {
+        dpLineEdit->setText(QString::number(dp));
+        dpLineEdit->setFixedWidth(100);
+        dpLineEdit->setAlignment(Qt::AlignCenter);
+        dpLineEdit->setValidator(new QRegExpValidator(RegExps::regExInt_greaterThan0));
+
         enableBlurCB->setChecked(true);
         connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(blurCBClicked(bool)));
         connect(blurKernelSliderLayout, SIGNAL(sliderValueChanged(int)),
@@ -95,6 +104,15 @@ private:
         QHBoxLayout* selectMethodHBox = new QHBoxLayout;
         selectMethodHBox->addWidget(selectMethodLabel);
         selectMethodHBox->addWidget(selectMethodComboBox);
+        vBoxSub->addLayout(selectMethodHBox);
+
+        QLabel* dpLabel = new QLabel("dp");
+        QHBoxLayout* dpHBox = new QHBoxLayout;
+        dpHBox->addWidget(dpLabel);
+        dpHBox->addStretch();
+        dpHBox->addWidget(dpLineEdit);
+        dpHBox->addStretch();
+        vBoxSub->addLayout(dpHBox);
 
         QFrame* line = new QFrame(this);
         line->setObjectName(QString::fromUtf8("line"));
@@ -102,8 +120,6 @@ private:
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
         line->setFixedHeight(20);
-
-        vBoxSub->addLayout(selectMethodHBox);
         vBoxSub->addWidget(line);
 
         // TODO: Add Blur Trackbar
