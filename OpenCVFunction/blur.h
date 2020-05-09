@@ -53,8 +53,6 @@ public:
                 errorLabel->setText("Kernel Size should not be <= 0");
             return inputImage;
         }
-
-
     }
 
     ~Blur()
@@ -73,7 +71,6 @@ private slots:
     }
 
 private:
-
     cv::Size kSize = cv::Size(101, 101);
     const int lineEditW = 50;
 
@@ -141,7 +138,6 @@ private:
         vboxBlurMain->addLayout(applyButtonHBox);
         connect(applyButton, SIGNAL(released()),
                 this, SLOT(applyKernelClicked()));
-
 
         QVBoxLayout* anchorMainVBox = new QVBoxLayout;
         anchorMainVBox->setAlignment(Qt::AlignHCenter);
