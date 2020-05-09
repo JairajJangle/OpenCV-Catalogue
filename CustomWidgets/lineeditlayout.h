@@ -16,12 +16,35 @@ public:
 
     explicit LineEditLayout(QString title,
                             int initialValue,
-                            int fixedWidth = 160,
-                            int fixedHeight = 60,
+                            int lineEditFixedWidth = 100,
+                            int lineEditFixedHeight = 60,
                             QWidget* parent = Q_NULLPTR,
                             Qt::WindowFlags f = Qt::WindowFlags())
     {
+        QSizePolicy sp_retainTitle = titleLabel->sizePolicy();
+        sp_retainTitle.setRetainSizeWhenHidden(true);
+        titleLabel->setSizePolicy(sp_retainTitle);
+        QSizePolicy sp_retainValue = lineEdit->sizePolicy();
+        sp_retainValue.setRetainSizeWhenHidden(true);
+        lineEdit->setSizePolicy(sp_retainValue);
 
+        titleLabel->setText(title);
+
+        lineEdit->setText(QString::number(initialValue));
+        lineEdit->setFixedWidth(lineEditFixedWidth);
+        lineEdit->setAlignment(Qt::AlignCenter);
+
+        this->addWidget(titleLabel);
+
+        this->addStretch();
+        this->addWidget(lineEdit);
+        this->addStretch();
+    }
+
+    void setVisible(bool visible)
+    {
+        titleLabel->setVisible(visible);
+        lineEdit->setVisible(visible);
     }
 };
 
