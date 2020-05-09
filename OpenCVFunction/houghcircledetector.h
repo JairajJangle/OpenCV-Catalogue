@@ -15,6 +15,7 @@
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
 
 #include "Utils/constants.h"
 
@@ -88,6 +89,7 @@ private:
 
     QComboBox* selectMethodComboBox = new QComboBox();
     LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", dp);
+    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
     void initWidget()
     {
@@ -107,6 +109,9 @@ private:
 
         vBoxSub->addLayout(dpLineEditLayout);
 
+        // TODO get click signal from Apply Reset Buttons
+        vBoxSub->addLayout(applyResetBox);
+
         QFrame* line = new QFrame(this);
         line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(320, 150, 118, 3));
@@ -118,6 +123,7 @@ private:
         // TODO: Add Hough Circles function control trackbars
         vBoxSub->addWidget(enableBlurCB);
         vBoxSub->addLayout(blurKernelSliderLayout);
+
         BaseConfigWidget::initWidget();
     }
 
