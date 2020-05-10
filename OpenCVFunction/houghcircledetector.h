@@ -79,6 +79,14 @@ private slots:
         blurKernelSliderLayout->setVisible(isChecked);
     }
 
+    void applyClicked(){
+
+    }
+
+    void resetClicked(){
+
+    }
+
 private:
     int blurKernelSize = 3;
     bool isBlurEnabled = true;
@@ -96,9 +104,15 @@ private:
         dpLineEditLayout->lineEdit->setValidator(new QRegExpValidator(RegExps::regExInt_greaterThan0));
 
         enableBlurCB->setChecked(true);
-        connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(blurCBClicked(bool)));
+        connect(enableBlurCB, SIGNAL(clicked(bool)),
+                this, SLOT(blurCBClicked(bool)));
         connect(blurKernelSliderLayout, SIGNAL(sliderValueChanged(int)),
                 this, SLOT(blurKernelChanged(int)));
+
+        connect(applyResetBox, SIGNAL(applyClicked()),
+                this, SLOT(applyClicked()));
+        connect(applyResetBox, SIGNAL(resetClicked()),
+                this, SLOT(resetClicked()));
 
         QLabel* selectMethodLabel = new QLabel("Select Method");
         selectMethodComboBox->addItem("CV_HOUGH_GRADIENT");
