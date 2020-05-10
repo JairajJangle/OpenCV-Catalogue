@@ -15,7 +15,7 @@ public:
     QLineEdit* lineEdit = new QLineEdit();
 
     explicit LineEditLayout(QString title,
-                            int initialValue,
+                            QString initialValue,
                             int lineEditFixedWidth = 100,
                             int lineEditFixedHeight = 60,
                             QWidget* parent = Q_NULLPTR,
@@ -30,7 +30,7 @@ public:
 
         titleLabel->setText(title);
 
-        lineEdit->setText(QString::number(initialValue));
+        lineEdit->setText(initialValue);
         lineEdit->setFixedWidth(lineEditFixedWidth);
         lineEdit->setAlignment(Qt::AlignCenter);
 
