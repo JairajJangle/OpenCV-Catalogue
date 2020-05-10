@@ -53,6 +53,7 @@ public:
                 errorLabel->setText("Kernel Size should not be <= 0");
             return inputImage;
         }
+
     }
 
     ~Blur()
@@ -112,7 +113,9 @@ private:
         anchorNoteLabel->setFont(font);
         anchorNoteLabel->setAlignment(Qt::AlignCenter);
 
-        kSizexEdit->setValidator( new QIntValidator());
+        QIntValidator* kSizeValidator = new QIntValidator();
+        kSizeValidator->setBottom(1);
+        kSizexEdit->setValidator(kSizeValidator);
 
         kSizexEdit->setFixedWidth(lineEditW);
         kSizeyEdit->setFixedWidth(lineEditW);
