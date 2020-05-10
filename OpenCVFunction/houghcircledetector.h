@@ -37,6 +37,12 @@ public:
 
         cvtColor(inputImage, grayImage, CV_BGR2GRAY);
 
+        if(minDist == -1.0)
+        {
+            minDist = grayImage.rows/8;
+            minDistLayout->lineEdit->setText(QString::number(minDist));
+        }
+
         if(enableBlurCB->isChecked() && blurKernelSize > 0)
             blur(grayImage, grayImage, cv::Size(blurKernelSize, blurKernelSize));
 
@@ -44,7 +50,7 @@ public:
 
         /// Apply the Hough Transform to find the circles
         HoughCircles(grayImage, circles, CV_HOUGH_GRADIENT,
-                     1, grayImage.rows/8, 200, 100, 0, 0 );
+                     dp, minDist, 200, 100, 0, 0 );
 
         /// Draw the circles detected
         for( size_t i = 0; i < circles.size(); i++ )
@@ -80,11 +86,21 @@ private slots:
     }
 
     void applyClicked(){
-
+        QString text = dpLineEditLayout->getText();
+        if(text.isEmpty())
+        {
+            dp = 1;
+            dpLineEditLayout->lineEdit->setText(QString::number(dp));
+        }
+        else
+        {
+            dp = text.toInt();
+        }
     }
 
     void resetClicked(){
-
+        dp = 1;
+        dpLineEditLayout->lineEdit->setText(QString::number(dp));
     }
 
 private:
@@ -94,14 +110,25 @@ private:
     SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
     int dp = 1;
+    double minDist = -1.0;
+    QDoubleValidator* minDistValidator = new QDoubleValidator();
 
     QComboBox* selectMethodComboBox = new QComboBox();
-    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", dp);
+
+    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", QString::number(dp));
+    LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
+
     ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
     void initWidget()
     {
-        dpLineEditLayout->lineEdit->setValidator(new QRegExpValidator(RegExps::regExInt_greaterThan0));
+        minDistValidator->setBottom(0);
+        minDistValidator->setDecimals(2);
+
+        QIntValidator* dpValidator = new QIntValidator();
+        dpValidator->setBottom(0);
+        dpLineEditLayout->lineEdit->setValidator(dpValidator);
+        minDistLayout->lineEdit->setValidator(minDistValidator);
 
         enableBlurCB->setChecked(true);
         connect(enableBlurCB, SIGNAL(clicked(bool)),
@@ -122,6 +149,7 @@ private:
         vBoxSub->addLayout(selectMethodHBox);
 
         vBoxSub->addLayout(dpLineEditLayout);
+        vBoxSub->addLayout(minDistLayout);
 
         // TODO get click signal from Apply Reset Buttons
         vBoxSub->addLayout(applyResetBox);
