@@ -20,10 +20,15 @@ public:
         this->addWidget(applyButton);
         this->addWidget(resetButton);
 
-        connect(applyButton, SIGNAL(released()),
-                this, SLOT(applyClicked()));
-        connect(resetButton, SIGNAL(released()),
-                this, SLOT(resetClicked()));
+        connect(applyButton, &QPushButton::released, this,
+                [=]() {
+            emit applyClicked();
+        });
+
+        connect(resetButton, &QPushButton::released, this,
+                [=]() {
+            emit resetClicked();
+        });
     }
 
 signals:
