@@ -41,6 +41,11 @@ public:
         this->addStretch();
     }
 
+    QString getText()
+    {
+        return lineEdit->text();
+    }
+
     void setVisible(bool visible)
     {
         titleLabel->setVisible(visible);
