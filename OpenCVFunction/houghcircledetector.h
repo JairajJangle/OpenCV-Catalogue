@@ -18,6 +18,7 @@
 #include "CustomWidgets/applyresetbuttonlayout.h"
 
 #include "Utils/constants.h"
+#include "Utils/utils.h"
 
 class HoughCircleDetector: public QWidget, public BaseConfigWidget
 {
@@ -87,7 +88,7 @@ private slots:
 
     void applyClicked(){
         QString text = dpLineEditLayout->getText();
-        if(text.isEmpty())
+        if(dpLineEditLayout->getText().isEmpty())
         {
             dp = 1;
             dpLineEditLayout->lineEdit->setText(QString::number(dp));
@@ -96,11 +97,29 @@ private slots:
         {
             dp = text.toInt();
         }
+
+        dp = dpLineEditLayout->getText().toInt();
+        minDist = minDistLayout->getText().toDouble();
+        param1 = param1Layout->getText().toDouble();
+        param2= param2Layout->getText().toDouble();
+        minRadius = minRadiusLayout->getText().toInt();
+        maxRadius = maxRadiusLayout->getText().toInt();
     }
 
     void resetClicked(){
         dp = 1;
-        dpLineEditLayout->lineEdit->setText(QString::number(dp));
+        minDist = -1.0;
+        param1 = 100.0;
+        param2 = 100.0;
+        minRadius = 0;
+        maxRadius = 0;
+
+        dpLineEditLayout->setText(dp);
+        minDistLayout->setText(minDist);
+        param1Layout->setText(param1);
+        param2Layout->setText(param2);
+        minRadiusLayout->setText(minRadius);
+        maxRadiusLayout->setText(maxRadius);
     }
 
 private:
@@ -111,12 +130,24 @@ private:
 
     int dp = 1;
     double minDist = -1.0;
+    double param1 = 100.0;
+    double param2 = 100.0;
+    int minRadius = 0;
+    int maxRadius = 0;
+
     QDoubleValidator* minDistValidator = new QDoubleValidator();
 
     QComboBox* selectMethodComboBox = new QComboBox();
 
     LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", QString::number(dp));
     LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
+    LineEditLayout* param1Layout = new LineEditLayout("param1", QString::number(param1));
+    LineEditLayout* param2Layout = new LineEditLayout("param2", QString::number(param2));
+    LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", QString::number(minRadius));
+    LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", QString::number(maxRadius));
+
+    // TODO: Reduce code length with dynamic get and set values in line Edits
+    std::vector<std::pair<LineEditLayout*, Unions::Numeric>> lineEditsWithParams;
 
     ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
@@ -129,6 +160,7 @@ private:
         dpValidator->setBottom(0);
         dpLineEditLayout->lineEdit->setValidator(dpValidator);
         minDistLayout->lineEdit->setValidator(minDistValidator);
+        // TODO: Add validators to other fields if required
 
         enableBlurCB->setChecked(true);
         connect(enableBlurCB, SIGNAL(clicked(bool)),
@@ -150,6 +182,10 @@ private:
 
         vBoxSub->addLayout(dpLineEditLayout);
         vBoxSub->addLayout(minDistLayout);
+        vBoxSub->addLayout(param1Layout);
+        vBoxSub->addLayout(param2Layout);
+        vBoxSub->addLayout(minRadiusLayout);
+        vBoxSub->addLayout(maxRadiusLayout);
 
         // TODO get click signal from Apply Reset Buttons
         vBoxSub->addLayout(applyResetBox);
@@ -168,7 +204,6 @@ private:
 
         BaseConfigWidget::initWidget();
     }
-
 };
 
 #endif // HOUGHCIRCLEDETECTOR_H
