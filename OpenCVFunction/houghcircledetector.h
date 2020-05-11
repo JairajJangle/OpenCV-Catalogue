@@ -20,6 +20,8 @@
 #include "Utils/constants.h"
 #include "Utils/utils.h"
 
+#include <iostream>
+
 class HoughCircleDetector: public QWidget, public BaseConfigWidget
 {
     Q_OBJECT
@@ -29,6 +31,14 @@ public:
     {
         operationName = "Hough Circle Detector";
         moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=houghcircles#houghcircles";
+
+        lineEditsWithParams.push_back(std::make_pair(dpLineEditLayout, dp));
+        lineEditsWithParams.push_back(std::make_pair(minDistLayout, minDist));
+        lineEditsWithParams.push_back(std::make_pair(param1Layout, param1));
+        lineEditsWithParams.push_back(std::make_pair(param2Layout, param2));
+        lineEditsWithParams.push_back(std::make_pair(minRadiusLayout, minRadius));
+        lineEditsWithParams.push_back(std::make_pair(maxRadiusLayout, maxRadius));
+
         initWidget();
     }
 
@@ -38,10 +48,10 @@ public:
 
         cvtColor(inputImage, grayImage, CV_BGR2GRAY);
 
-        if(minDist == -1.0)
+        if(*minDist == -1.0)
         {
-            minDist = grayImage.rows/8;
-            minDistLayout->lineEdit->setText(QString::number(minDist));
+            *minDist = grayImage.rows/8;
+            minDistLayout->setText(*minDist);
         }
 
         if(enableBlurCB->isChecked() && blurKernelSize > 0)
@@ -51,7 +61,8 @@ public:
 
         /// Apply the Hough Transform to find the circles
         HoughCircles(grayImage, circles, CV_HOUGH_GRADIENT,
-                     dp, minDist, 200, 100, 0, 0 );
+                     dp->toInt(), minDist->toDouble(), param1->toDouble(),
+                     param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
 
         /// Draw the circles detected
         for( size_t i = 0; i < circles.size(); i++ )
@@ -87,39 +98,34 @@ private slots:
     }
 
     void applyClicked(){
-        QString text = dpLineEditLayout->getText();
-        if(dpLineEditLayout->getText().isEmpty())
+        bool paramsApplied = true;
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
         {
-            dp = 1;
-            dpLineEditLayout->lineEdit->setText(QString::number(dp));
-        }
-        else
-        {
-            dp = text.toInt();
+            if(!lineEditWithParam.first->getText().isEmpty())
+                lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
+            else
+            {
+                paramsApplied = false;
+                break;
+            }
         }
 
-        dp = dpLineEditLayout->getText().toInt();
-        minDist = minDistLayout->getText().toDouble();
-        param1 = param1Layout->getText().toDouble();
-        param2= param2Layout->getText().toDouble();
-        minRadius = minRadiusLayout->getText().toInt();
-        maxRadius = maxRadiusLayout->getText().toInt();
+        if(!paramsApplied)
+        {
+            // TODO: Update error label message
+        }
     }
 
     void resetClicked(){
-        dp = 1;
-        minDist = -1.0;
-        param1 = 100.0;
-        param2 = 100.0;
-        minRadius = 0;
-        maxRadius = 0;
+        *dp = 1;
+        *minDist = -1.0;
+        *param1 = 100.0;
+        *param2 = 100.0;
+        *minRadius = 0;
+        *maxRadius = 0;
 
-        dpLineEditLayout->setText(dp);
-        minDistLayout->setText(minDist);
-        param1Layout->setText(param1);
-        param2Layout->setText(param2);
-        minRadiusLayout->setText(minRadius);
-        maxRadiusLayout->setText(maxRadius);
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+            lineEditWithParam.first->setText(lineEditWithParam.second->toString());
     }
 
 private:
@@ -128,26 +134,25 @@ private:
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
     SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
-    int dp = 1;
-    double minDist = -1.0;
-    double param1 = 100.0;
-    double param2 = 100.0;
-    int minRadius = 0;
-    int maxRadius = 0;
+    QVariant* dp = new QVariant(1);
+    QVariant* minDist = new QVariant(-1.0);
+    QVariant* param1 = new QVariant(200.0);
+    QVariant* param2 = new QVariant(100.0);
+    QVariant* minRadius = new QVariant(0);
+    QVariant* maxRadius = new QVariant(0);
 
     QDoubleValidator* minDistValidator = new QDoubleValidator();
 
     QComboBox* selectMethodComboBox = new QComboBox();
 
-    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", QString::number(dp));
+    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
     LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
-    LineEditLayout* param1Layout = new LineEditLayout("param1", QString::number(param1));
-    LineEditLayout* param2Layout = new LineEditLayout("param2", QString::number(param2));
-    LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", QString::number(minRadius));
-    LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", QString::number(maxRadius));
+    LineEditLayout* param1Layout = new LineEditLayout("param1", *param1);
+    LineEditLayout* param2Layout = new LineEditLayout("param2", *param2);
+    LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", *minRadius);
+    LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", *maxRadius);
 
-    // TODO: Reduce code length with dynamic get and set values in line Edits
-    std::vector<std::pair<LineEditLayout*, Unions::Numeric>> lineEditsWithParams;
+    QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
     ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
@@ -180,14 +185,9 @@ private:
         selectMethodHBox->addWidget(selectMethodComboBox);
         vBoxSub->addLayout(selectMethodHBox);
 
-        vBoxSub->addLayout(dpLineEditLayout);
-        vBoxSub->addLayout(minDistLayout);
-        vBoxSub->addLayout(param1Layout);
-        vBoxSub->addLayout(param2Layout);
-        vBoxSub->addLayout(minRadiusLayout);
-        vBoxSub->addLayout(maxRadiusLayout);
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+            vBoxSub->addLayout(lineEditWithParam.first);
 
-        // TODO get click signal from Apply Reset Buttons
         vBoxSub->addLayout(applyResetBox);
 
         QFrame* line = new QFrame(this);
