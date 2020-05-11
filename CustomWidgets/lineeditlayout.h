@@ -15,7 +15,7 @@ public:
     QLineEdit* lineEdit = new QLineEdit();
 
     explicit LineEditLayout(QString title,
-                            QString initialValue,
+                            QVariant initialValue,
                             int lineEditFixedWidth = 100,
                             int labelFixedWidth = 100,
                             QWidget* parent = Q_NULLPTR,
@@ -32,7 +32,7 @@ public:
 
         titleLabel->setFixedWidth(labelFixedWidth);
 
-        lineEdit->setText(initialValue);
+        lineEdit->setText(initialValue.toString());
         lineEdit->setFixedWidth(lineEditFixedWidth);
         lineEdit->setAlignment(Qt::AlignCenter);
 
@@ -56,6 +56,11 @@ public:
     void setText(int integerNumber)
     {
         lineEdit->setText(QString::number((integerNumber)));
+    }
+
+    void setText(QVariant text)
+    {
+        lineEdit->setText(text.toString());
     }
 
     void setText(double decimalNumber)
