@@ -19,7 +19,7 @@
 #include "OpenCVFunction/cannyedge.h"
 #include "OpenCVFunction/blur.h"
 #include "OpenCVFunction/backgroundsubtract.h"
-#include "OpenCVFunction/houghcircledetector.h"
+#include "OpenCVFunction/houghcircles.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

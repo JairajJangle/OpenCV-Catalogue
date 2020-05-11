@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         operationSelected(BKG_SUBTRACT);
     });
-    connect(ui->actionHough_Circle_Detector, &QAction::triggered, this,
+    connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
         operationSelected(HOUGH_CIRCLE);
     });
@@ -90,7 +90,7 @@ void MainWindow::operationSelected(int opCode)
         baseConfigWidget = new BackgroundSubtraction();
         break;
     case HOUGH_CIRCLE:
-        baseConfigWidget = new HoughCircleDetector();
+        baseConfigWidget = new HoughCircles();
         break;
     }
 

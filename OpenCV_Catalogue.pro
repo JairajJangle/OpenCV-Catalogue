@@ -32,7 +32,7 @@ HEADERS += \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
     OpenCVFunction/erosiondilation.h \
-    OpenCVFunction/houghcircledetector.h \
+    OpenCVFunction/houghcircles.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/thresholding.h \
     Utils/baseconfigwidget.h \

@@ -693,7 +693,7 @@ background-repeat: none;
     <addaction name="actionCanny_Edge"/>
     <addaction name="actionBlur"/>
     <addaction name="actionMotion_detection"/>
-    <addaction name="actionHough_Circle_Detector"/>
+    <addaction name="actionHough_Circles"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionHough_Transform"/>
@@ -757,9 +757,9 @@ background-repeat: none;
     <string>Denoise(fastNlMeansDenoisingColored)</string>
    </property>
   </action>
-  <action name="actionHough_Circle_Detector">
+  <action name="actionHough_Circles">
    <property name="text">
-    <string>Hough Circle Detector</string>
+    <string>Hough Circles</string>
    </property>
   </action>
  </widget>
