@@ -22,12 +22,12 @@
 
 #include <iostream>
 
-class HoughCircleDetector: public QWidget, public BaseConfigWidget
+class HoughCircles: public QWidget, public BaseConfigWidget
 {
     Q_OBJECT
 
 public:
-    HoughCircleDetector()
+    HoughCircles()
     {
         operationName = "Hough Circle Detector";
         moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=houghcircles#houghcircles";
@@ -60,7 +60,7 @@ public:
         std::vector<cv::Vec3f> circles;
 
         /// Apply the Hough Transform to find the circles
-        HoughCircles(grayImage, circles, CV_HOUGH_GRADIENT,
+        cv::HoughCircles(grayImage, circles, CV_HOUGH_GRADIENT,
                      dp->toInt(), minDist->toDouble(), param1->toDouble(),
                      param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
 
@@ -81,7 +81,7 @@ public:
         return inputImage;
     }
 
-    ~HoughCircleDetector()
+    ~HoughCircles()
     {
         printf("Hough Circle destroyed\n");
     }
