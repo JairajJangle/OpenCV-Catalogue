@@ -38,6 +38,7 @@ HEADERS += \
     Utils/baseconfigwidget.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
+    Utils/utils.h \
     mainwindow.h
 
 FORMS += \
