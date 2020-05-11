@@ -17,7 +17,7 @@ public:
     explicit LineEditLayout(QString title,
                             QString initialValue,
                             int lineEditFixedWidth = 100,
-                            int lineEditFixedHeight = 60,
+                            int labelFixedWidth = 100,
                             QWidget* parent = Q_NULLPTR,
                             Qt::WindowFlags f = Qt::WindowFlags())
     {
@@ -29,6 +29,8 @@ public:
         lineEdit->setSizePolicy(sp_retainValue);
 
         titleLabel->setText(title);
+
+        titleLabel->setFixedWidth(labelFixedWidth);
 
         lineEdit->setText(initialValue);
         lineEdit->setFixedWidth(lineEditFixedWidth);
@@ -44,6 +46,21 @@ public:
     QString getText()
     {
         return lineEdit->text();
+    }
+
+    void setText(QString text)
+    {
+        lineEdit->setText(text);
+    }
+
+    void setText(int integerNumber)
+    {
+        lineEdit->setText(QString::number((integerNumber)));
+    }
+
+    void setText(double decimalNumber)
+    {
+        lineEdit->setText(QString::number((decimalNumber)));
     }
 
     void setVisible(bool visible)
