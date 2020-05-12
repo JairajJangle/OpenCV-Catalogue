@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include "CustomWidgets/lineeditlayout.h"
 #include "Utils/baseconfigwidget.h"
 
 class ColorPicker : public QWidget, public BaseConfigWidget
@@ -37,7 +38,7 @@ public:
                     QString::number(begin.x) + ", "
                     +  QString::number(begin.y);
 
-            locLabel->setText(locationValues);
+            locLineEditLayout->setText(locationValues);
 
             cv::Vec3b color = inputImage.at<cv::Vec3b>(begin);
 
@@ -46,7 +47,7 @@ public:
                     +  QString::number(color[1]) + ", "
                     +  QString::number(color[2]);
 
-            rgbLabel->setText(rgbValues);
+            rgbLineEditLayout->setText(rgbValues);
         }
 
         begin =cv::Point(-1, -1);
@@ -60,32 +61,19 @@ public:
     }
 
 private:
-    QLineEdit* rgbLabel  = new QLineEdit("000, 000, 000");
-    QLineEdit* locLabel  = new QLineEdit("No location selected");
+    LineEditLayout* rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
+
+    LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);
 
     QLabel* infoLabel  = new QLabel("Click on Output feed to pick color\n");
 
     void initWidget()
     {
-        locLabel->setReadOnly(true);
+        locLineEditLayout->lineEdit->setReadOnly(true);
         vBoxSub->addWidget(infoLabel);
 
-        rgbLabel->setAlignment(Qt::AlignCenter);
-        locLabel->setAlignment(Qt::AlignCenter);
-
-        QHBoxLayout* rgbHBox = new QHBoxLayout;
-
-        rgbHBox->addWidget(new QLabel("RGB: "));
-        rgbHBox->addWidget(rgbLabel);
-
-        vBoxSub->addLayout(rgbHBox);
-
-        QHBoxLayout* locHBox = new QHBoxLayout;
-
-        locHBox->addWidget(new QLabel("Location: "));
-        locHBox->addWidget(locLabel);
-
-        vBoxSub->addLayout(locHBox);
+        vBoxSub->addLayout(rgbLineEditLayout);
+        vBoxSub->addLayout(locLineEditLayout);
 
         BaseConfigWidget::initWidget();
     }
