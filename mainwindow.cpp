@@ -67,6 +67,8 @@ void MainWindow::initUI(){
 
 void MainWindow::operationSelected(int opCode)
 {
+    // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
+
     switch (opCode) {
     case COLOR_SPACES:
         baseConfigWidget = new ColorSpace();
