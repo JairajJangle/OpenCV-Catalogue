@@ -46,7 +46,7 @@ public:
     {
         cv::Mat grayImage;
 
-        cvtColor(inputImage, grayImage, CV_BGR2GRAY);
+        cvtColor(inputImage, grayImage, cv::COLOR_BGR2GRAY);
 
         if(*minDist == -1.0)
         {
@@ -60,7 +60,7 @@ public:
         std::vector<cv::Vec3f> circles;
 
         /// Apply the Hough Transform to find the circles
-        cv::HoughCircles(grayImage, circles, CV_HOUGH_GRADIENT,
+        cv::HoughCircles(grayImage, circles, cv::HOUGH_GRADIENT,
                      dp->toInt(), minDist->toDouble(), param1->toDouble(),
                      param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
 

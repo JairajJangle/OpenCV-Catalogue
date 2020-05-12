@@ -62,7 +62,7 @@ public:
         }
 
         cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(1, 1));
-        morphologyEx(outputImage, outputImage, CV_MOP_OPEN, element);
+        morphologyEx(outputImage, outputImage, cv::MORPH_OPEN, element);
 
         cv::cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
         return outputImage;
