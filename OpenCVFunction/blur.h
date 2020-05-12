@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QIntValidator>
 
+#include "CustomWidgets/lineeditlayout.h"
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
 
@@ -38,8 +39,8 @@ public:
             QString currentAnchorText = QString::number(begin.x)
                     + ", " + QString::number(begin.y);
 
-            if(currentAnchorLabel->text() != currentAnchorText)
-                currentAnchorLabel->setText(currentAnchorText);
+            if(anchorLineEditLayout->getText() != currentAnchorText)
+                anchorLineEditLayout->setText(currentAnchorText);
 
             errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
@@ -82,8 +83,10 @@ private:
     QLineEdit* kSizeyEdit = new QLineEdit();
     QLabel* bcLabel  = new QLabel(" ) ");
 
-    QLabel* anchorLabel  = new QLabel("Current Anchor");
-    QLineEdit* currentAnchorLabel  = new QLineEdit("Default = (-1, -1)");
+    LineEditLayout* anchorLineEditLayout =
+            new LineEditLayout("Current Anchor", "Default = (-1, -1)",
+                               160, 150);
+
     QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
 
     QPushButton* applyButton = new QPushButton("Apply Kernel");
@@ -93,7 +96,7 @@ private:
 
     void initWidget()
     {
-        currentAnchorLabel->setReadOnly(true);
+        anchorLineEditLayout->lineEdit->setReadOnly(true);
 
         kSizexEdit->setText(QString::number(kSize.width));
         kSizeyEdit->setText(QString::number(kSize.height));
@@ -103,7 +106,6 @@ private:
         applyButton->setFixedWidth(200);
         resetAnchorButton->setFixedWidth(220);
 
-        currentAnchorLabel->setAlignment(Qt::AlignCenter);
         QVBoxLayout* vboxBlurMain = new QVBoxLayout;
         vboxBlurMain->setAlignment(Qt::AlignCenter);
         vboxBlurMain->setSpacing(15);
@@ -144,11 +146,11 @@ private:
 
         QVBoxLayout* anchorMainVBox = new QVBoxLayout;
         anchorMainVBox->setAlignment(Qt::AlignHCenter);
-        QHBoxLayout* anchorHBox = new QHBoxLayout;
-        anchorHBox->addWidget(anchorLabel);
-        anchorHBox->addWidget(currentAnchorLabel);
-        anchorMainVBox->addLayout(anchorHBox);
+
+        anchorMainVBox->addLayout(anchorLineEditLayout);
+
         anchorMainVBox->addWidget(anchorNoteLabel);
+
         vboxBlurMain->addLayout(anchorMainVBox);
 
         QHBoxLayout* resetAnchorHBox = new QHBoxLayout;
