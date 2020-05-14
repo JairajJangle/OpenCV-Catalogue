@@ -29,8 +29,8 @@ public:
         lineEdit->setSizePolicy(sp_retainValue);
 
         titleLabel->setText(title);
-
         titleLabel->setFixedWidth(labelFixedWidth);
+        titleLabel->setAlignment(Qt::AlignCenter);
 
         lineEdit->setText(initialValue.toString());
         lineEdit->setFixedWidth(lineEditFixedWidth);
