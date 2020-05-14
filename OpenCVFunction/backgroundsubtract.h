@@ -21,6 +21,7 @@
 
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
+#include "CustomWidgets/lineeditlayout.h"
 
 class BackgroundSubtraction : public QWidget, public BaseConfigWidget
 {
@@ -79,12 +80,12 @@ private slots:
     }
 
     void applyChangesClicked(){
-        learningRate = learningRateLineEdit->text().toDouble();
+        learningRate = learningRateEditLayout->getText().toDouble();
     }
 
     void resetChangesClicked(){
         learningRate = 0.1;
-        learningRateLineEdit->setText(QString::number(learningRate));
+        learningRateEditLayout->setText(QString::number(learningRate));
     }
 
     void resetAnchorClicked(){
@@ -119,16 +120,16 @@ private:
     int selectedTech = KNN;
 
     double learningRate = 0.1;
-    QLineEdit* learningRateLineEdit  = new QLineEdit();
+    LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
+                                                                 learningRate,
+                                                                 150,
+                                                                 150);
     QPushButton* applyButton = new QPushButton("Apply");
     QPushButton* resetButton = new QPushButton("Reset");
 
     void initWidget()
     {
-        learningRateLineEdit->setText(QString::number(learningRate));
-        learningRateLineEdit->setFixedWidth(100);
-        learningRateLineEdit->setAlignment(Qt::AlignCenter);
-        learningRateLineEdit->setValidator(
+        learningRateEditLayout->lineEdit->setValidator(
                     new QRegExpValidator(RegExps::regEx0_1Decimal));
 
         pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
@@ -139,13 +140,8 @@ private:
         pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
         pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
 
-        QLabel* learningRateLabel = new QLabel("Learning Rate\n[0-1]");
-        learningRateLabel->setFixedHeight(80);
-
         for(unsigned int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
         {
-            learningRateLabel->setAlignment(Qt::AlignCenter);
-
             QRadioButton *radioButton =
                     new QRadioButton(bkgSubTechs[jCount]);
             if(jCount == 0)
@@ -159,11 +155,7 @@ private:
             });
         }
 
-        QHBoxLayout* lRHBox = new QHBoxLayout();
-        lRHBox->setSpacing(90);
-        lRHBox->addWidget(learningRateLabel);
-        lRHBox->addWidget(learningRateLineEdit);
-        vBoxSub->addLayout(lRHBox);
+        vBoxSub->addLayout(learningRateEditLayout);
 
         QHBoxLayout* applyButtonHBox = new QHBoxLayout;
         applyButtonHBox->setAlignment(Qt::AlignHCenter);
