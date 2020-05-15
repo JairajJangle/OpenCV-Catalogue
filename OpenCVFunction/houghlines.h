@@ -48,7 +48,7 @@ public:
         cvtColor(dst, cdst, CV_GRAY2BGR);
 
         std::vector<cv::Vec4i> lines;
-        HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10);
+        HoughLinesP(dst, lines, rho->toDouble(), theta->toDouble(), threshold->toInt(), srn->toDouble(), stn->toDouble());
         for(size_t i = 0; i < lines.size(); i++)
         {
             cv::Vec4i l = lines[i];
