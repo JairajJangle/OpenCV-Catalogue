@@ -32,50 +32,36 @@ public:
         operationName = "Hough Lines Detector";
         moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=HoughLines#houghlines";
 
-        lineEditsWithParams.push_back(std::make_pair(dpLineEditLayout, dp));
-        lineEditsWithParams.push_back(std::make_pair(minDistLayout, minDist));
-        lineEditsWithParams.push_back(std::make_pair(param1Layout, param1));
-        lineEditsWithParams.push_back(std::make_pair(param2Layout, param2));
-        lineEditsWithParams.push_back(std::make_pair(minRadiusLayout, minRadius));
-        lineEditsWithParams.push_back(std::make_pair(maxRadiusLayout, maxRadius));
+        lineEditsWithParams.push_back(std::make_pair(rhoLineEditLayout, rho));
+        lineEditsWithParams.push_back(std::make_pair(thetaLayout, theta));
+        lineEditsWithParams.push_back(std::make_pair(thresholdLayout, threshold));
+        lineEditsWithParams.push_back(std::make_pair(srnLayout, srn));
+        lineEditsWithParams.push_back(std::make_pair(stnLayout, stn));
 
         initWidget();
     }
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
-        cv::Mat grayImage;
+        cv::Mat dst, cdst; // CDST contains canny + lines
+        Canny(inputImage, dst, 50, 200, 3);
+        cvtColor(dst, cdst, CV_GRAY2BGR);
 
-        cvtColor(inputImage, grayImage, cv::COLOR_BGR2GRAY);
-
-        if(*minDist == -1.0)
+        std::vector<cv::Vec4i> lines;
+        HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10);
+        for(size_t i = 0; i < lines.size(); i++)
         {
-            *minDist = grayImage.rows/8;
-            minDistLayout->setText(*minDist);
+            cv::Vec4i l = lines[i];
+            line(cdst, cv::Point(l[0], l[1]),
+                    cv::Point(l[2], l[3]), cv::Scalar(0,0,255),
+                    3, CV_AA);
         }
 
-        if(enableBlurCB->isChecked() && blurKernelSize > 0)
-            blur(grayImage, grayImage, cv::Size(blurKernelSize, blurKernelSize));
-
-        std::vector<cv::Vec3f> circles;
-
-        /// Apply the Hough Transform to find the circles
-        cv::HoughLines(grayImage, circles, cv::HOUGH_GRADIENT,
-                     dp->toInt(), minDist->toDouble(), param1->toDouble(),
-                     param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
-
-        /// Draw the circles detected
-        for( size_t i = 0; i < circles.size(); i++ )
-        {
-            cv::Point center(cvRound(circles[i][0]),
-                    cvRound(circles[i][1]));
-            int radius = cvRound(circles[i][2]);
-            // circle center
-            circle(inputImage, center, 3,
-                   cv::Scalar(0,255,0), -1, 8, 0 );
-            // circle outline
-            circle(inputImage, center, radius,
-                   cv::Scalar(0,0,255), 3, 8, 0 );
+        for (size_t i=0; i<lines.size(); i++) {
+            cv::Vec4i l = lines[i];
+            cv::line(inputImage, cv::Point(l[0], l[1]),
+                    cv::Point(l[2], l[3]),
+                    cv::Scalar(0, 0, 255), 3, cv::LINE_AA);
         }
 
         return inputImage;
@@ -117,15 +103,17 @@ private slots:
     }
 
     void resetClicked(){
-        *dp = 1;
-        *minDist = -1.0;
-        *param1 = 100.0;
-        *param2 = 100.0;
-        *minRadius = 0;
-        *maxRadius = 0;
+        *rho = 1.0;
+        *theta = CV_PI/180;
+        *threshold = 50;
+        *srn = 50.0;
+        *stn = 10.0;
 
         for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
             lineEditWithParam.first->setText(lineEditWithParam.second->toString());
+
+        // Special case:
+        thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
     }
 
 private:
@@ -134,23 +122,17 @@ private:
     QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
     SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
-    QVariant* dp = new QVariant(1);
-    QVariant* minDist = new QVariant(-1.0);
-    QVariant* param1 = new QVariant(200.0);
-    QVariant* param2 = new QVariant(100.0);
-    QVariant* minRadius = new QVariant(0);
-    QVariant* maxRadius = new QVariant(0);
+    QVariant* rho = new QVariant(1); // double
+    QVariant* theta = new QVariant(CV_PI/180); // double
+    QVariant* threshold = new QVariant(50); // int
+    QVariant* srn = new QVariant(50.0); // double
+    QVariant* stn = new QVariant(10.0); // double
 
-    QDoubleValidator* minDistValidator = new QDoubleValidator();
-
-    QComboBox* selectMethodComboBox = new QComboBox();
-
-    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
-    LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
-    LineEditLayout* param1Layout = new LineEditLayout("param1", *param1);
-    LineEditLayout* param2Layout = new LineEditLayout("param2", *param2);
-    LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", *minRadius);
-    LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", *maxRadius);
+    LineEditLayout* rhoLineEditLayout = new LineEditLayout("rho", *rho);
+    LineEditLayout* thetaLayout = new LineEditLayout("theta", *theta, 150);
+    LineEditLayout* thresholdLayout = new LineEditLayout("threshold", *threshold);
+    LineEditLayout* srnLayout = new LineEditLayout("srn", *srn);
+    LineEditLayout* stnLayout = new LineEditLayout("stn", *stn);
 
     QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
@@ -158,13 +140,33 @@ private:
 
     void initWidget()
     {
-        minDistValidator->setBottom(0);
-        minDistValidator->setDecimals(2);
+        thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
 
-        QIntValidator* dpValidator = new QIntValidator();
-        dpValidator->setBottom(0);
-        dpLineEditLayout->lineEdit->setValidator(dpValidator);
-        minDistLayout->lineEdit->setValidator(minDistValidator);
+        QDoubleValidator* rhoValidator = new QDoubleValidator();
+        QDoubleValidator* thetaValidator = new QDoubleValidator();
+        QIntValidator* thresholdValidator = new QIntValidator();
+        QDoubleValidator* srnValidator = new QDoubleValidator();
+        QDoubleValidator* stnValidator = new QDoubleValidator();
+
+        thetaValidator->setBottom(0);
+        thetaValidator->setDecimals(6);
+        thetaLayout->lineEdit->setValidator(thetaValidator);
+
+        rhoValidator->setBottom(0);
+        rhoValidator->setDecimals(4);
+        rhoLineEditLayout->lineEdit->setValidator(rhoValidator);
+
+        thresholdValidator->setBottom(0);
+        thresholdLayout->lineEdit->setValidator(thresholdValidator);
+
+        srnValidator->setBottom(0);
+        srnValidator->setDecimals(4);
+        srnLayout->lineEdit->setValidator(srnValidator);
+
+        stnValidator->setBottom(0);
+        stnValidator->setDecimals(4);
+        stnLayout->lineEdit->setValidator(stnValidator);
+
         // TODO: Add validators to other fields if required
 
         enableBlurCB->setChecked(true);
@@ -178,25 +180,18 @@ private:
         connect(applyResetBox, SIGNAL(resetClicked()),
                 this, SLOT(resetClicked()));
 
-        QLabel* selectMethodLabel = new QLabel("Select Method");
-        selectMethodComboBox->addItem("CV_HOUGH_GRADIENT");
-        QHBoxLayout* selectMethodHBox = new QHBoxLayout;
-        selectMethodHBox->addWidget(selectMethodLabel);
-        selectMethodHBox->addWidget(selectMethodComboBox);
-        vBoxSub->addLayout(selectMethodHBox);
-
         for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
             vBoxSub->addLayout(lineEditWithParam.first);
 
         vBoxSub->addLayout(applyResetBox);
 
-        QFrame* line = new QFrame(this);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setGeometry(QRect(320, 150, 118, 3));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-        line->setFixedHeight(20);
-        vBoxSub->addWidget(line);
+        QFrame* separatorLine = new QFrame(this);
+        separatorLine->setObjectName(QString::fromUtf8("line"));
+        separatorLine->setGeometry(QRect(320, 150, 118, 3));
+        separatorLine->setFrameShape(QFrame::HLine);
+        separatorLine->setFrameShadow(QFrame::Sunken);
+        separatorLine->setFixedHeight(20);
+        vBoxSub->addWidget(separatorLine);
 
         // TODO: Add Hough Lines function control trackbars
         vBoxSub->addWidget(enableBlurCB);
