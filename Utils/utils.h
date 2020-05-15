@@ -1,12 +1,17 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-namespace Unions {
-union Numeric
+#include <cmath>
+
+namespace Numeric {
+// extern:
+double setPrecision(double number, int decimalPlaces);
+// inline:
+inline double setPrecision(double number, int decimalPlaces)
 {
-    int i;
-    double d;
-};
+    int n = (int)(number *pow(10, decimalPlaces));
+    return ((double)n) / pow(10, decimalPlaces);
+}
 }
 
 #endif // UTILS_H
