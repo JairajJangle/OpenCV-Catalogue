@@ -694,6 +694,7 @@ background-repeat: none;
     <addaction name="actionBlur"/>
     <addaction name="actionMotion_detection"/>
     <addaction name="actionHough_Circles"/>
+    <addaction name="actionHough_Lines"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
     <addaction name="actionHough_Transform"/>
@@ -760,6 +761,11 @@ background-repeat: none;
   <action name="actionHough_Circles">
    <property name="text">
     <string>Hough Circles</string>
+   </property>
+  </action>
+  <action name="actionHough_Lines">
+   <property name="text">
+    <string>Hough Lines</string>
    </property>
   </action>
  </widget>

@@ -46,7 +46,11 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
-        operationSelected(HOUGH_CIRCLE);
+        operationSelected(HOUGH_CIRCLES);
+    });
+    connect(ui->actionHough_Lines, &QAction::triggered, this,
+            [=]() {
+        operationSelected(HOUGH_LINES);
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
@@ -91,8 +95,11 @@ void MainWindow::operationSelected(int opCode)
     case BKG_SUBTRACT:
         baseConfigWidget = new BackgroundSubtraction();
         break;
-    case HOUGH_CIRCLE:
+    case HOUGH_CIRCLES:
         baseConfigWidget = new HoughCircles();
+        break;
+    case HOUGH_LINES:
+        baseConfigWidget = new HoughLines();
         break;
     }
 
