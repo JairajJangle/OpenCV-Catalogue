@@ -20,6 +20,7 @@
 #include "OpenCVFunction/blur.h"
 #include "OpenCVFunction/backgroundsubtract.h"
 #include "OpenCVFunction/houghcircles.h"
+#include "OpenCVFunction/houghlines.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,7 +49,7 @@ public:
 
 private:
     enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
-                CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLE};
+                 CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES};
 
     Ui::MainWindow *ui;
 
