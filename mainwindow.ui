@@ -690,6 +690,7 @@ background-repeat: none;
     <addaction name="actionColorSpace"/>
     <addaction name="actionImage_Flip"/>
     <addaction name="actionColor_Picker"/>
+    <addaction name="actionHistogram"/>
     <addaction name="actionCanny_Edge"/>
     <addaction name="actionBlur"/>
     <addaction name="actionMotion_detection"/>
@@ -766,6 +767,11 @@ background-repeat: none;
   <action name="actionHough_Lines">
    <property name="text">
     <string>Hough Lines</string>
+   </property>
+  </action>
+  <action name="actionHistogram">
+   <property name="text">
+    <string>Histogram</string>
    </property>
   </action>
  </widget>

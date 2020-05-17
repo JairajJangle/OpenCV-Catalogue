@@ -21,6 +21,7 @@
 #include "OpenCVFunction/backgroundsubtract.h"
 #include "OpenCVFunction/houghcircles.h"
 #include "OpenCVFunction/houghlines.h"
+#include "OpenCVFunction/histogram.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,7 +50,8 @@ public:
 
 private:
     enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
-                 CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES};
+                 CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
+                 HISTOGRAM_CALCULATION};
 
     Ui::MainWindow *ui;
 
