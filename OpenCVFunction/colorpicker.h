@@ -1,7 +1,6 @@
 #ifndef COLORPICKER_H
 #define COLORPICKER_H
 
-
 /*
  * @author JairajJangle
  * @email jairaj.jangle@gmail.com
