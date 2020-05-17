@@ -52,6 +52,10 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         operationSelected(HOUGH_LINES);
     });
+    connect(ui->actionHistogram, &QAction::triggered, this,
+            [=]() {
+        operationSelected(HISTOGRAM_CALCULATION);
+    });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 }
@@ -100,6 +104,9 @@ void MainWindow::operationSelected(int opCode)
         break;
     case HOUGH_LINES:
         baseConfigWidget = new HoughLines();
+        break;
+    case HISTOGRAM_CALCULATION:
+        baseConfigWidget = new HistogramCalculation();
         break;
     }
 
