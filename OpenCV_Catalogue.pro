@@ -33,6 +33,7 @@ HEADERS += \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
     OpenCVFunction/erosiondilation.h \
+    OpenCVFunction/histogram.h \
     OpenCVFunction/houghcircles.h \
     OpenCVFunction/houghlines.h \
     OpenCVFunction/imageflip.h \
