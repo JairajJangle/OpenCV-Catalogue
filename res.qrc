@@ -5,5 +5,7 @@
         <file>assets/info_sel.png</file>
         <file>assets/info.png</file>
         <file>assets/opencv_logo.png</file>
+        <file>assets/undock_sel.png</file>
+        <file>assets/undock.png</file>
     </qresource>
 </RCC>
