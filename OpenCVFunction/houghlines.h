@@ -44,6 +44,7 @@ public:
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
         cv::Mat dst, cdst; // CDST contains canny + lines
+        // TODO make Canny params customizable
         Canny(inputImage, dst, 50, 200, 3);
         cvtColor(dst, cdst, CV_GRAY2BGR);
 
