@@ -7,5 +7,7 @@
         <file>assets/opencv_logo.png</file>
         <file>assets/undock_sel.png</file>
         <file>assets/undock.png</file>
+        <file>assets/liberapay_donate.png</file>
+        <file>assets/paypal_donate.png</file>
     </qresource>
 </RCC>

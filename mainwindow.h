@@ -23,6 +23,8 @@
 #include "OpenCVFunction/houghlines.h"
 #include "OpenCVFunction/histogram.h"
 
+#include "aboutdialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -42,6 +44,7 @@ private slots:
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
     void operationSelected(int opCode);
+    void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
 
 public:
