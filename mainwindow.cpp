@@ -15,6 +15,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
+    connect(ui->actionAbout, &QAction::triggered, this,
+            [=]() {
+        showAboutDialog();
+    });
+
+    connect(ui->actionColorSpace, &QAction::triggered, this,
+            [=]() {
+        operationSelected(COLOR_SPACES);
+    });
 
     connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
@@ -113,6 +122,12 @@ void MainWindow::operationSelected(int opCode)
     ui->labelOperationName->setText(baseConfigWidget->getOperationName());
     QWidget *configWidget = baseConfigWidget->getConfigWidget();
     ui->scrollArea->setWidget(configWidget);
+}
+
+void MainWindow::showAboutDialog()
+{
+    AboutDialog* aboutDialog = new AboutDialog();
+    aboutDialog->show();
 }
 
 void MainWindow::GetSourceCaptureImage()
