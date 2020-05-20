@@ -14,7 +14,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     ui->verticalLayout->setAlignment(Qt::AlignHCenter);
 
-    connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openLabelLink(const QString&)));
+    connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
 
     connect(ui->buttonContribute,SIGNAL(released()),this,SLOT(openGithubSourcePage()));
     connect(ui->buttonReportIssue,SIGNAL(released()),this,SLOT(openGithubIssuesPage()));
@@ -23,7 +23,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     connect(ui->buttonDonateLiberaPay, SIGNAL(released()), this, SLOT(openLiberaPayDOnatePage()));
 }
 
-void AboutDialog::openLabelLink(const QString& link)
+void AboutDialog::openURL(const QString& link)
 {
     QDesktopServices::openUrl(QUrl(link));
 }
