@@ -14,12 +14,16 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     ui->verticalLayout->setAlignment(Qt::AlignHCenter);
 
-    connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openLeadDevSite(const QString&)));
+    connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openLabelLink(const QString&)));
+
+    connect(ui->buttonContribute,SIGNAL(released()),this,SLOT(openGithubSourcePage()));
+    connect(ui->buttonReportIssue,SIGNAL(released()),this,SLOT(openGithubIssuesPage()));
+
     connect(ui->buttonDonatePaypal, SIGNAL(released()), this, SLOT(openPayPalDonatePage()));
     connect(ui->buttonDonateLiberaPay, SIGNAL(released()), this, SLOT(openLiberaPayDOnatePage()));
 }
 
-void AboutDialog::openLeadDevSite(const QString& link)
+void AboutDialog::openLabelLink(const QString& link)
 {
     QDesktopServices::openUrl(QUrl(link));
 }
@@ -27,6 +31,16 @@ void AboutDialog::openLeadDevSite(const QString& link)
 void AboutDialog::openPayPalDonatePage()
 {
     QDesktopServices::openUrl(QUrl(paypalDonateUrl));
+}
+
+void AboutDialog::openGithubSourcePage()
+{
+    QDesktopServices::openUrl(QUrl(githubSourceLink));
+}
+
+void AboutDialog::openGithubIssuesPage()
+{
+    QDesktopServices::openUrl(QUrl(githubIssuesLink));
 }
 
 void AboutDialog::openLiberaPayDOnatePage()
