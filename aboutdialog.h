@@ -17,11 +17,16 @@ public:
 
 
 private slots:
-    void openLeadDevSite(const QString& url);
+    void openLabelLink(const QString& url);
     void openPayPalDonatePage();
     void openLiberaPayDOnatePage();
+    void openGithubSourcePage();
+    void openGithubIssuesPage();
 
 private:
+    const QString githubSourceLink = "https://github.com/JairajJangle/Open-CV-Catalogue";
+    const QString githubIssuesLink = "https://github.com/JairajJangle/Open-CV-Catalogue/issues";
+
     const QString paypalDonateUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U";
     const QString liberaPayUrl = "https://liberapay.com/FutureJJ/donate";
 
