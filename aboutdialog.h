@@ -18,10 +18,6 @@ public:
 
 private slots:
     void openURL(const QString& url);
-    void openPayPalDonatePage();
-    void openLiberaPayDOnatePage();
-    void openGithubSourcePage();
-    void openGithubIssuesPage();
 
 private:
     const QString githubSourceLink = "https://github.com/JairajJangle/Open-CV-Catalogue";
