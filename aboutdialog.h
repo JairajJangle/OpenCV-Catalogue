@@ -17,7 +17,7 @@ public:
 
 
 private slots:
-    void openLabelLink(const QString& url);
+    void openURL(const QString& url);
     void openPayPalDonatePage();
     void openLiberaPayDOnatePage();
     void openGithubSourcePage();
