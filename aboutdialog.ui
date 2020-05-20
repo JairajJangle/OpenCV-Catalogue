@@ -169,6 +169,9 @@ background-repeat: none;
            <property name="text">
             <string/>
            </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
          <item>
@@ -259,6 +262,12 @@ background-repeat: none;
            </property>
            <property name="text">
             <string>Want to contribute?</string>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
