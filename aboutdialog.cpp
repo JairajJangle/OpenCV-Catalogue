@@ -16,36 +16,28 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
 
-    connect(ui->buttonContribute,SIGNAL(released()),this,SLOT(openGithubSourcePage()));
-    connect(ui->buttonReportIssue,SIGNAL(released()),this,SLOT(openGithubIssuesPage()));
+    connect(ui->buttonContribute, &QPushButton::released, this,
+            [=]() {
+        openURL(githubSourceLink);
+    });
+    connect(ui->buttonReportIssue, &QPushButton::released, this,
+            [=]() {
+        openURL(githubIssuesLink);
+    });
 
-    connect(ui->buttonDonatePaypal, SIGNAL(released()), this, SLOT(openPayPalDonatePage()));
-    connect(ui->buttonDonateLiberaPay, SIGNAL(released()), this, SLOT(openLiberaPayDOnatePage()));
+    connect(ui->buttonDonatePaypal, &QPushButton::released, this,
+            [=]() {
+        openURL(paypalDonateUrl);
+    });
+    connect(ui->buttonDonateLiberaPay, &QPushButton::released, this,
+            [=]() {
+        openURL(liberaPayUrl);
+    });
 }
 
 void AboutDialog::openURL(const QString& link)
 {
     QDesktopServices::openUrl(QUrl(link));
-}
-
-void AboutDialog::openPayPalDonatePage()
-{
-    QDesktopServices::openUrl(QUrl(paypalDonateUrl));
-}
-
-void AboutDialog::openGithubSourcePage()
-{
-    QDesktopServices::openUrl(QUrl(githubSourceLink));
-}
-
-void AboutDialog::openGithubIssuesPage()
-{
-    QDesktopServices::openUrl(QUrl(githubIssuesLink));
-}
-
-void AboutDialog::openLiberaPayDOnatePage()
-{
-    QDesktopServices::openUrl(QUrl(liberaPayUrl));
 }
 
 AboutDialog::~AboutDialog()
