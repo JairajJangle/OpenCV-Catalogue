@@ -86,6 +86,9 @@
        </item>
        <item>
         <widget class="QLabel" name="labelJairajJangle">
+         <property name="toolTip">
+          <string>Go to Jairaj Jangle's website</string>
+         </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://jairajjangle.github.io/&quot;&gt;&lt;span style=&quot; color:#007af4;&quot;&gt;Jairaj Jangle&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
@@ -150,6 +153,9 @@
              <height>47</height>
             </size>
            </property>
+           <property name="toolTip">
+            <string>Paypal Donate</string>
+           </property>
            <property name="styleSheet">
             <string notr="true">#buttonDonatePaypal
 {
@@ -178,6 +184,9 @@ background-repeat: none;
              <width>96</width>
              <height>35</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>LiberaPay support</string>
            </property>
            <property name="styleSheet">
             <string notr="true">#buttonDonateLiberaPay
@@ -245,6 +254,9 @@ background-repeat: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>Sourced hosted on Github</string>
+           </property>
            <property name="text">
             <string>Want to contribute?</string>
            </property>
@@ -261,6 +273,9 @@ background-repeat: none;
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Write new Issue on Github</string>
            </property>
            <property name="text">
             <string>Report issue</string>
