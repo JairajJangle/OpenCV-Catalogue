@@ -34,6 +34,7 @@ HEADERS += \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
     OpenCVFunction/erosiondilation.h \
+    OpenCVFunction/harriscornerdetector.h \
     OpenCVFunction/histogram.h \
     OpenCVFunction/houghcircles.h \
     OpenCVFunction/houghlines.h \
