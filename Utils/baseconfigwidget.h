@@ -18,18 +18,20 @@ class BaseConfigWidget
 {
 private:
     QScrollArea *scrl = new QScrollArea();
-
-    QWidget *wgtMain = new QWidget();
     QWidget *wgtSub = new QWidget();
-    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
 protected:
+    QWidget *wgtMain = new QWidget();
+
     QWidget* configWidget;
     QString operationName = "No operation Selected";
     QString moreInfoLink = "";
     ClickableLabel* labelInfo = new ClickableLabel();
 
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+
+private:
+    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
 public:
     cv::Point begin;
