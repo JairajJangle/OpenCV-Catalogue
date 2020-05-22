@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
     aboutdialog.cpp \
+    hybridslider.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -45,10 +46,12 @@ HEADERS += \
     Utils/constants.h \
     Utils/utils.h \
     aboutdialog.h \
+    hybridslider.h \
     mainwindow.h
 
 FORMS += \
     aboutdialog.ui \
+    hybridslider.ui \
     mainwindow.ui
 
 INCLUDEPATH += /usr/local/include/opencv4
