@@ -32,7 +32,7 @@
       <number>7</number>
      </property>
      <item row="0" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,2,0,1">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,0,0,0">
        <item>
         <widget class="QLabel" name="labelTitle">
          <property name="sizePolicy">
@@ -47,15 +47,43 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="labelValue">
+        <widget class="Line" name="line_2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editValue">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Val</string>
+          <string>0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -172,7 +200,7 @@
      <item row="3" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="labelMinVal">
          <property name="text">
           <string>0</string>
          </property>
@@ -180,13 +208,16 @@
        </item>
        <item>
         <widget class="QSlider" name="sliderVal">
+         <property name="maximum">
+          <number>1000</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="labelMaxVal">
          <property name="text">
           <string>100</string>
          </property>
