@@ -20,8 +20,9 @@ public:
 
 private slots:
     void showRangeBox();
-    void applyValues();
     void valueChanged(int);
+    void valLineEditFocusChanged(bool);
+    void valueChanged(const QString&);
 
 signals:
     void editApplyClicked();
@@ -30,14 +31,19 @@ private:
     Ui::HybridSlider *ui;
 
     enum MODE{
-        EDIT, APPLIED, FORCE_VALUE
+        EDIT, APPLIED
     };
 
     MODE currentMode = APPLIED;
+    MODE previousMode = EDIT;
 
     int initVal;
     int rangeMin;
     int rangeMax;
+
+    void setRangeBoxVisibility(bool visibility);
+
+    bool isLineEditFocused;
 };
 
 #endif // HYBRIDSLIDER_H
