@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>361</width>
-    <height>164</height>
+    <width>353</width>
+    <height>148</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -27,12 +27,12 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0,0,0">
+    <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0">
      <property name="spacing">
       <number>7</number>
      </property>
      <item row="0" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,0,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,0,0">
        <item>
         <widget class="QLabel" name="labelTitle">
          <property name="sizePolicy">
@@ -42,7 +42,11 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Title</string>
+          <string>Operation Name
+ here</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -66,7 +70,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="editValue">
+        <widget class="FocusAwareLineEdit" name="editValue">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -86,19 +90,6 @@
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="buttonEditApply">
@@ -236,6 +227,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FocusAwareLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>CustomWidgets/focusawarelineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

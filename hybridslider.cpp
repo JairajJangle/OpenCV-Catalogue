@@ -36,38 +36,73 @@ HybridSlider::HybridSlider(QWidget *parent,
             showRangeBox();
         emit editApplyClicked();
     });
+
+    connect(ui->editValue, SIGNAL(focussed(bool)),
+            this, SLOT(valLineEditFocusChanged(bool)));
+
+    connect(ui->editValue, SIGNAL(textChanged(const QString&)),
+            this, SLOT(valueChanged(const QString&)));
 }
 
 void HybridSlider::showRangeBox()
 {
-    bool setRangeBoxVisibility;
+    bool rangeBoxVisibility;
 
     if(currentMode == APPLIED)
     {
-        setRangeBoxVisibility = true;
+        ui->buttonEditApply->setText("Set Range");
+        rangeBoxVisibility = true;
         currentMode = EDIT;
     }
     else
     {
-        setRangeBoxVisibility = false;
-        currentMode = APPLIED;
+        // TODO: Check validity
         // TODO: Apply Range values here
+        ui->buttonEditApply->setText("Edit Range");
+        rangeBoxVisibility = false;
+        currentMode = APPLIED;
     }
 
-    ui->label_5->setVisible(setRangeBoxVisibility);
-    ui->lineEditMinVal->setVisible(setRangeBoxVisibility);
-    ui->label_6->setVisible(setRangeBoxVisibility);
-    ui->lineEditMaxVal->setVisible(setRangeBoxVisibility);
+    setRangeBoxVisibility(rangeBoxVisibility);
 }
 
-void HybridSlider::applyValues()
+void HybridSlider::valLineEditFocusChanged(bool isFocused)
 {
-    currentMode = APPLIED;
+    isLineEditFocused = isFocused;
 }
 
 void HybridSlider::valueChanged(int value)
 {
-    ui->editValue->setText(QString::number(value));
+    if(!isLineEditFocused)
+        ui->editValue->setText(QString::number(value));
+}
+
+void HybridSlider::valueChanged(const QString& text)
+{
+    if(isLineEditFocused)
+    {
+        ui->buttonEditApply->setText(text);
+        int value = text.toInt();
+
+        int round = value % 100;
+        int low = value - round;
+        int high = low + 100;
+
+        ui->sliderVal->setMinimum(low);
+        ui->sliderVal->setMaximum(high);
+        ui->labelMinVal->setText(QString::number(low));
+        ui->labelMaxVal->setText(QString::number(high));
+
+        ui->sliderVal->setValue(value);
+    }
+}
+
+void HybridSlider::setRangeBoxVisibility(bool visibility)
+{
+    ui->label_5->setVisible(visibility);
+    ui->lineEditMinVal->setVisible(visibility);
+    ui->label_6->setVisible(visibility);
+    ui->lineEditMaxVal->setVisible(visibility);
 }
 
 HybridSlider::~HybridSlider()
