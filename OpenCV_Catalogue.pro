@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
+    CustomWidgets/focusawarelineedit.cpp \
     aboutdialog.cpp \
     hybridslider.cpp \
     main.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
     CustomWidgets/applyresetbuttonlayout.h \
     CustomWidgets/errorlabel.h \
+    CustomWidgets/focusawarelineedit.h \
     CustomWidgets/hybridadjustlayout.h \
     CustomWidgets/lineeditlayout.h \
     CustomWidgets/sliderlayout.h \
