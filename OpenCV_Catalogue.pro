@@ -67,6 +67,7 @@ RESOURCES += \
     res.qrc
 
 DISTFILES += \
+    LICENSE.txt \
     README.md \
     assets/demo_video.gif \
     assets/done.png \
