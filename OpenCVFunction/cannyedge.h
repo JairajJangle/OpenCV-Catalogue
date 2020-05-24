@@ -31,7 +31,7 @@
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 
-#include "hybridslider.h"
+#include "CustomWidgets/HybridSlider/hybridslider.h"
 
 class CannyEdge : public QWidget, public BaseConfigWidget
 {

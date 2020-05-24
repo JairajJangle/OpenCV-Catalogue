@@ -43,9 +43,9 @@
 #include "OpenCVFunction/houghlines.h"
 #include "OpenCVFunction/histogram.h"
 
-#include "aboutdialog.h"
+#include "Window/AboutDialog/aboutdialog.h"
 
-#include "hybridslider.h"
+#include "CustomWidgets/HybridSlider/hybridslider.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -18,7 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mainwindow.h"
+#include "Window/MainWindow/mainwindow.h"
 
 #include <QApplication>
 

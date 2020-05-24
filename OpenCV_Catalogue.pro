@@ -18,10 +18,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
     CustomWidgets/focusawarelineedit.cpp \
-    aboutdialog.cpp \
-    hybridslider.cpp \
+    Window/AboutDialog/aboutdialog.cpp \
+    CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
-    mainwindow.cpp
+    Window/MainWindow/mainwindow.cpp
 
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
@@ -30,6 +30,7 @@ HEADERS += \
     CustomWidgets/focusawarelineedit.h \
     CustomWidgets/hybridadjustlayout.h \
     CustomWidgets/lineeditlayout.h \
+    CustomWidgets/HybridSlider/hybridslider.h \
     CustomWidgets/sliderlayout.h \
     OpenCVFunction/backgroundsubtract.h \
     OpenCVFunction/blur.h \
@@ -47,14 +48,13 @@ HEADERS += \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/utils.h \
-    aboutdialog.h \
-    hybridslider.h \
-    mainwindow.h
+    Window/AboutDialog/aboutdialog.h \
+    Window/MainWindow/mainwindow.h
 
 FORMS += \
-    aboutdialog.ui \
-    hybridslider.ui \
-    mainwindow.ui
+    Window/AboutDialog/aboutdialog.ui \
+    CustomWidgets/HybridSlider/hybridslider.ui \
+    Window/MainWindow/mainwindow.ui
 
 INCLUDEPATH += /usr/local/include/opencv4
 LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_stitching -lopencv_videoio -lopencv_video -lopencv_photo -lopencv_bgsegm -lpthread -lX11
