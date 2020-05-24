@@ -84,6 +84,8 @@ void HybridSlider::valueChanged(int value)
 {
     if(!isLineEditFocused)
         ui->editValue->setText(QString::number(value));
+
+    emit sliderValueChanged(value);
 }
 
 void HybridSlider::valueChanged(const QString& text)
