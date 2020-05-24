@@ -15,6 +15,8 @@
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 
+#include "hybridslider.h"
+
 class CannyEdge : public QWidget, public BaseConfigWidget
 {
     Q_OBJECT
@@ -62,6 +64,10 @@ private slots:
     void testSliderValChanged(int value){
         printf("Test: %d", value);
     }
+    void refreshLayout()
+    {
+        wgtMain->adjustSize();
+    }
 
 private:
     int t1Value = 30;
@@ -99,6 +105,18 @@ private:
         vBoxSub->addLayout(t1SliderLayout);
         vBoxSub->addLayout(t2SliderLayout);
         vBoxSub->addLayout(aprtHBox);
+
+        // FIXME: Range Box hiding causes Hybrid Slider to retain height
+        //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
+        //        connect(hybridGG, SIGNAL(sliderValueChanged(int)),
+        //                this, SLOT(t1ValueChanged(int)));
+        //        connect(hybridGG, SIGNAL(editApplyClicked()),
+        //                this, SLOT(refreshLayout()));
+
+        //        vBoxSub->addWidget(hybridGG);
+
+        connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
+
         vBoxSub->addWidget(enableBlurCB);
 
         BaseConfigWidget::initWidget();
