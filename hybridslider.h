@@ -13,6 +13,7 @@ class HybridSlider : public QWidget
 
 public:
     explicit HybridSlider(QWidget *parent = nullptr,
+                          QString title = "Slider",
                           int initVal = 0,
                           int rangeMin = 0,
                           int rangeMax = 100);
