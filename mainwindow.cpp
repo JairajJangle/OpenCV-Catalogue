@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     initUI();
 
+    // FIXME: Check FIXME in HybridSlider cpp source
+//    HybridSlider* hybrid = new HybridSlider();
+//    hybrid->show();
+
     connect(ui->cameraRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
