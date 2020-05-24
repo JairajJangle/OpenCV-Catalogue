@@ -37,10 +37,6 @@ private:
     MODE currentMode = APPLIED;
     MODE previousMode = EDIT;
 
-    int initVal;
-    int rangeMin;
-    int rangeMax;
-
     void setRangeBoxVisibility(bool visibility);
 
     bool isLineEditFocused;

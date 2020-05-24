@@ -8,16 +8,18 @@ HybridSlider::HybridSlider(QWidget *parent,
     QWidget(parent),
     ui(new Ui::HybridSlider)
 {
-    this->initVal = initVal;
-    this->rangeMin = rangeMin;
-    this->rangeMax = rangeMax;
-
     ui->setupUi(this);
+
+    ui->lineEditMinVal->setValidator(new QIntValidator());
+    ui->lineEditMaxVal->setValidator(new QIntValidator());
+    ui->editValue->setValidator(new QIntValidator());
 
     ui->sliderVal->setValue(initVal);
     valueChanged(initVal);
     ui->sliderVal->setMinimum(rangeMin);
+    ui->lineEditMinVal->setText(QString::number(rangeMin));
     ui->sliderVal->setMaximum(rangeMax);
+    ui->lineEditMaxVal->setText(QString::number(rangeMax));
 
     ui->buttonEditApply->setText("Edit Range");
 
@@ -46,7 +48,7 @@ HybridSlider::HybridSlider(QWidget *parent,
 
 void HybridSlider::showRangeBox()
 {
-    bool rangeBoxVisibility;
+    bool rangeBoxVisibility = ui->lineEditMinVal->isVisible();
 
     if(currentMode == APPLIED)
     {
@@ -54,13 +56,20 @@ void HybridSlider::showRangeBox()
         rangeBoxVisibility = true;
         currentMode = EDIT;
     }
-    else
+    else if(ui->lineEditMinVal->text().toInt()
+            < ui->lineEditMaxVal->text().toInt()) // if currentMode == EDIT
     {
         // TODO: Check validity
         // TODO: Apply Range values here
         ui->buttonEditApply->setText("Edit Range");
         rangeBoxVisibility = false;
         currentMode = APPLIED;
+
+        ui->sliderVal->setMinimum(ui->lineEditMinVal->text().toInt());
+        ui->sliderVal->setMaximum(ui->lineEditMaxVal->text().toInt());
+
+        ui->labelMinVal->setText(ui->lineEditMinVal->text());
+        ui->labelMaxVal->setText(ui->lineEditMaxVal->text());
     }
 
     setRangeBoxVisibility(rangeBoxVisibility);
@@ -81,7 +90,6 @@ void HybridSlider::valueChanged(const QString& text)
 {
     if(isLineEditFocused)
     {
-        ui->buttonEditApply->setText(text);
         int value = text.toInt();
 
         int round = value % 100;
@@ -92,6 +100,9 @@ void HybridSlider::valueChanged(const QString& text)
         ui->sliderVal->setMaximum(high);
         ui->labelMinVal->setText(QString::number(low));
         ui->labelMaxVal->setText(QString::number(high));
+
+        ui->lineEditMinVal->setText(QString::number(low));
+        ui->lineEditMaxVal->setText(QString::number(high));
 
         ui->sliderVal->setValue(value);
     }
