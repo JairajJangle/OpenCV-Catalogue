@@ -2,6 +2,7 @@
 #include "ui_hybridslider.h"
 
 HybridSlider::HybridSlider(QWidget *parent,
+                           QString title,
                            int initVal,
                            int rangeMin,
                            int rangeMax) :
@@ -9,6 +10,8 @@ HybridSlider::HybridSlider(QWidget *parent,
     ui(new Ui::HybridSlider)
 {
     ui->setupUi(this);
+
+    ui->labelTitle->setText(title);
 
     ui->lineEditMinVal->setValidator(new QIntValidator());
     ui->lineEditMaxVal->setValidator(new QIntValidator());
@@ -23,10 +26,7 @@ HybridSlider::HybridSlider(QWidget *parent,
 
     ui->buttonEditApply->setText("Edit Range");
 
-    ui->label_5->setVisible(false);
-    ui->lineEditMinVal->setVisible(false);
-    ui->label_6->setVisible(false);
-    ui->lineEditMaxVal->setVisible(false);
+    setRangeBoxVisibility(false);
 
     ui->gridLayout->setSizeConstraint(QLayout::SetFixedSize);
 
@@ -34,8 +34,14 @@ HybridSlider::HybridSlider(QWidget *parent,
             this, SLOT(valueChanged(int)));
     connect(ui->buttonEditApply, &QPushButton::released, this,
             [=]() {
-        if(currentMode == EDIT || currentMode == APPLIED)
-            showRangeBox();
+        showRangeBox();
+        /*
+         * Connect this signal to slot which performs
+         * adjustSize() on parent layout
+         * example: wgtMain->adjustSize();
+         * Reason: To refresh layout on visibility change of
+         * Range Edit layout box
+         */
         emit editApplyClicked();
     });
 
@@ -73,6 +79,22 @@ void HybridSlider::showRangeBox()
     }
 
     setRangeBoxVisibility(rangeBoxVisibility);
+
+    // FIXME: Hiding Range Box retains widget height
+
+    //    if(rangeBoxVisibility)
+    //        ui->verticalLayout->removeItem(ui->verticalSpacer);
+    //    else
+    //        ui->verticalLayout->removeItem(ui->verticalSpacer);
+    //111 147
+
+    //    if(!rangeBoxVisibility)
+    //        ui->gridLayout->removeItem(ui->horizontalLayout_4);
+    //    else
+    //        ui->gridLayout->addLayout(ui->horizontalLayout_4, 1, 0);
+    //    ui->gridLayout->update();
+    //    ui->horizontalLayout_4->update();
+    //    this->adjustSize();
 }
 
 void HybridSlider::valLineEditFocusChanged(bool isFocused)
