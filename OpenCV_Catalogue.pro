@@ -75,6 +75,8 @@ DISTFILES += \
     assets/info.png \
     assets/info_sel.png \
     assets/liberapay_donate.png \
+    assets/minimize.png \
+    assets/minimize_sel.png \
     assets/opencv_logo.png \
     assets/paypal_donate.png \
     assets/undock.png \
