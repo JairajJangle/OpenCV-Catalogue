@@ -26,6 +26,7 @@ private slots:
 
 signals:
     void editApplyClicked();
+    void sliderValueChanged(int);
 
 private:
     Ui::HybridSlider *ui;
