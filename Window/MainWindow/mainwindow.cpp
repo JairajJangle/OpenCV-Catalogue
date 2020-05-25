@@ -32,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     initUI();
 
     // FIXME: Check FIXME in HybridSlider cpp source
-//    HybridSlider* hybrid = new HybridSlider();
-//    hybrid->show();
+    //    HybridSlider* hybrid = new HybridSlider();
+    //    hybrid->show();
 
     connect(ui->cameraRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
@@ -173,7 +173,7 @@ void MainWindow::showHideExplodedView()
 
 void MainWindow::showAboutDialog()
 {
-    AboutDialog* aboutDialog = new AboutDialog();
+    aboutDialog = new AboutDialog();
     aboutDialog->show();
 }
 
