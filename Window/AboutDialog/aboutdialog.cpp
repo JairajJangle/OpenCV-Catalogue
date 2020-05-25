@@ -40,6 +40,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->verticalLayout->setAlignment(Qt::AlignHCenter);
 
     connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
+    connect(ui->labelCopyright,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
 
     connect(ui->buttonContribute, &QPushButton::released, this,
             [=]() {
