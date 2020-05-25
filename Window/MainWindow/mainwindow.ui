@@ -650,7 +650,7 @@ background-repeat: none;
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="buttonUndock">
+           <widget class="QPushButton" name="buttonExplodedView">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -673,7 +673,7 @@ background-repeat: none;
              <string>Open undocked views</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">#buttonUndock
+             <string notr="true">#buttonExplodedView
 {
 background-color: transparent;
 border-image: url(:/assets/undock.png);
@@ -681,7 +681,7 @@ background: none;
 border: none;
 background-repeat: none;
 }
-#buttonUndock:pressed
+#buttonExplodedView:pressed
 {
 background-color: transparent;
 border-image: url(:/assets/undock_sel.png);

@@ -50,6 +50,8 @@ protected:
 
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
+    bool explodedViewEnabled = false;
+
 private:
     QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
@@ -77,6 +79,23 @@ public:
     QString getInfoURL()
     {
         return moreInfoLink;
+    }
+
+    // Funtion to show extra windows either in QT UI or OpenCV NamedWindow
+    virtual bool setExplodedView(bool explodedViewEnabled)
+    {
+        /*
+         * If exploded == true:
+         *              Should return true if exploded view is possible else false
+         * If exploded == false:
+         *              Ignore return value
+         */
+        return this->explodedViewEnabled;
+    }
+
+    bool isExplodedViewEnabled()
+    {
+        return  explodedViewEnabled;
     }
 
     virtual cv::Mat getProcessedImage(cv::Mat inputImage){

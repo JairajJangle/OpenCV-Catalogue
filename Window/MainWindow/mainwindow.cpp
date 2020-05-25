@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
+    connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
+
     connect(ui->actionAbout, &QAction::triggered, this,
             [=]() {
         showAboutDialog();
@@ -108,6 +110,8 @@ void MainWindow::initUI(){
 
 void MainWindow::operationSelected(int opCode)
 {
+    baseConfigWidget->setExplodedView(false);
+
     // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
 
     switch (opCode) {
@@ -146,6 +150,23 @@ void MainWindow::operationSelected(int opCode)
     ui->labelOperationName->setText(baseConfigWidget->getOperationName());
     QWidget *configWidget = baseConfigWidget->getConfigWidget();
     ui->scrollArea->setWidget(configWidget);
+}
+
+void MainWindow::showHideExplodedView()
+{
+    if(baseConfigWidget->isExplodedViewEnabled())
+    {
+        if(baseConfigWidget->setExplodedView(true))
+        {
+            // TODO: Change Icon to minimize
+        }
+    }
+    else
+    {
+        baseConfigWidget->setExplodedView(false);
+        // TODO: Change Icon to exploded
+    }
+
 }
 
 void MainWindow::showAboutDialog()

@@ -68,6 +68,7 @@ private slots:
     void operationSelected(int opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
+    void showHideExplodedView();
 
 public:
     MainWindow(QWidget *parent = nullptr);
