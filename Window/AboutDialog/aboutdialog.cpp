@@ -21,6 +21,8 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
+#include "Utils/constants.h"
+
 #include <QDesktopServices>
 #include <QUrl>
 
@@ -29,6 +31,9 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
+
+    ui->labelAppName->setText(Info::appName);
+    ui->labelVersion->setText(Info::version);
 
     ui->labelJairajJangle->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
