@@ -86,7 +86,7 @@ private:
     QThread *cam_thread = new QThread;
     CaptureInputSource* captureInputSource;
 
-    AboutDialog* aboutDialog;
+    AboutDialog* aboutDialog = nullptr;
 
     BaseConfigWidget* baseConfigWidget = new BaseConfigWidget;
 
@@ -98,18 +98,21 @@ private:
     void RefreshOutputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
 
+    QPoint getWindowCenter();
+
     void closeEvent (QCloseEvent *event) override
     {
         QMessageBox::StandardButton resBtn =
                 QMessageBox::question( this, Info::appName,
-                                       QString("Are you sure you want to close") + QString(" ") + QString(Info::appName) +QString("?"),
+                                       QString("Are you sure you want to close")
+                                       + QString(" ") + QString(Info::appName) +QString("?"),
                                        QMessageBox::No | QMessageBox::Yes,
                                        QMessageBox::Yes);
         if (resBtn != QMessageBox::Yes) {
             event->ignore();
         } else {
             // TO close About Dialog if its opened
-            if(aboutDialog != NULL)
+            if(aboutDialog != nullptr)
             {
                 aboutDialog->close();
             }
