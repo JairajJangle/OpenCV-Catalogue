@@ -44,9 +44,13 @@ protected:
     QWidget *wgtMain = new QWidget();
 
     QWidget* configWidget;
+
+    /*
+     * Assing Values to operationName and moreInfoLink in Constructor of
+     * Derived class of OpenCV operation widgets
+     */
     QString operationName = "No operation Selected";
     QString moreInfoLink = "";
-    ClickableLabel* labelInfo = new ClickableLabel();
 
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
@@ -62,26 +66,40 @@ public:
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
-        labelInfo->setText("More Info >>");
     }
     ~BaseConfigWidget(){}
 
+    /*
+     * Returned widget to be used by calling widget/application(Main Window)
+     * to set it in Scroll Area
+     */
     QWidget* getConfigWidget()
     {
         return configWidget;
     }
 
+    /*
+     * Returns name of operation to be used by calling widget/application(Main Window)
+     * to update Operation Name label
+     */
     QString getOperationName()
     {
         return operationName;
     }
 
+    /*
+     * Returns URL of opertaion documentation in OpenCV docs to be used by calling
+     * widget/application(Main Window) to update Operation Name label
+     */
     QString getInfoURL()
     {
         return moreInfoLink;
     }
 
-    // Funtion to show extra windows either in QT UI or OpenCV NamedWindow
+    /*
+     * Shows exploded windows of OpenCV operation to give user more insights
+     * Perform displaying/hiding of exploded views and returns status of operation
+     */
     virtual bool setExplodedView(bool explodedViewEnabled)
     {
         /*
@@ -93,15 +111,25 @@ public:
         return this->explodedViewEnabled;
     }
 
+    /*
+     * Get state of exploded view
+     */
     bool isExplodedViewEnabled()
     {
         return  explodedViewEnabled;
     }
 
+    /*
+     * Override this function in individual operation classes
+     */
     virtual cv::Mat getProcessedImage(cv::Mat inputImage){
         return inputImage;
     }
 
+    /*
+     * Super call this function at the end of overriden initWidget() function in
+     * each Operation class to actually show configuration widget in the Scroll Area
+     */
     virtual void initWidget()
     {
         vboxMain->addWidget(wgtSub);
