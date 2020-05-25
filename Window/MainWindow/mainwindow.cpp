@@ -21,6 +21,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "Utils/constants.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -96,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::initUI(){
-    this->setWindowTitle("OpenCV Catalogue");
+    this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/opencv_logo.png"));
 
     QButtonGroup* group = new QButtonGroup();
