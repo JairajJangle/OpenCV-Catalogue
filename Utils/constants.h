@@ -21,8 +21,15 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <QString>
+#include <QRegExp>
+
+namespace Info {
+    const QString appName = "OpenCV Catalogue";
+    const QString version = "v 0.2.1";
+}
+
 namespace RegExps {
-    #include <QRegExp>
      const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
 }
 
