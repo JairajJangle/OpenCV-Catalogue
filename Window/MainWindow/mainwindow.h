@@ -27,6 +27,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QButtonGroup>
+#include <QCloseEvent>
+#include <QMessageBox>
 
 #include <iostream>
 
@@ -84,6 +86,8 @@ private:
     QThread *cam_thread = new QThread;
     CaptureInputSource* captureInputSource;
 
+    AboutDialog* aboutDialog;
+
     BaseConfigWidget* baseConfigWidget = new BaseConfigWidget;
 
     bool isSourceFlipped = false;
@@ -93,5 +97,24 @@ private:
     void RefreshInputImage(cv::Mat img);
     void RefreshOutputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
+
+    void closeEvent (QCloseEvent *event) override
+    {
+        QMessageBox::StandardButton resBtn =
+                QMessageBox::question( this, Info::appName,
+                                       QString("Are you sure you want to close") + QString(" ") + QString(Info::appName) +QString("?"),
+                                       QMessageBox::No | QMessageBox::Yes,
+                                       QMessageBox::Yes);
+        if (resBtn != QMessageBox::Yes) {
+            event->ignore();
+        } else {
+            // TO close About Dialog if its opened
+            if(aboutDialog != NULL)
+            {
+                aboutDialog->close();
+            }
+            event->accept();
+        }
+    }
 };
 #endif // MAINWINDOW_H
