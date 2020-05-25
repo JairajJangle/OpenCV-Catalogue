@@ -173,6 +173,7 @@ void MainWindow::showHideExplodedView()
 
 void MainWindow::showAboutDialog()
 {
+    // FIXME: Do not mak Dialog Box Modal with exec, this breaks UX
     if(aboutDialog != nullptr)
     {
         if(!aboutDialog->isVisible())
@@ -183,7 +184,7 @@ void MainWindow::showAboutDialog()
                                                 aboutDialog->geometry().height()/2);
             aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
             aboutDialog->setWindowFlags(Qt::WindowStaysOnTopHint);
-            aboutDialog->show();
+            aboutDialog->exec();
         }
         else
         {
