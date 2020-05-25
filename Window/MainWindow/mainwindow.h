@@ -102,21 +102,9 @@ private:
 
     void closeEvent (QCloseEvent *event) override
     {
-        QMessageBox::StandardButton resBtn =
-                QMessageBox::question( this, Info::appName,
-                                       QString("Are you sure you want to close")
-                                       + QString(" ") + QString(Info::appName) +QString("?"),
-                                       QMessageBox::No | QMessageBox::Yes,
-                                       QMessageBox::Yes);
-        if (resBtn != QMessageBox::Yes) {
-            event->ignore();
-        } else {
-            // TO close About Dialog if its opened
-            if(aboutDialog != nullptr)
-            {
-                aboutDialog->close();
-            }
-            event->accept();
+        if(aboutDialog != nullptr)
+        {
+            aboutDialog->close();
         }
     }
 };
