@@ -173,7 +173,6 @@ void MainWindow::showHideExplodedView()
 
 void MainWindow::showAboutDialog()
 {
-    // FIXME: Do not mak Dialog Box Modal with exec, this breaks UX
     if(aboutDialog != nullptr)
     {
         if(!aboutDialog->isVisible())
@@ -183,18 +182,17 @@ void MainWindow::showAboutDialog()
             QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
                                                 aboutDialog->geometry().height()/2);
             aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
-            aboutDialog->setWindowFlags(Qt::WindowStaysOnTopHint);
-            aboutDialog->exec();
+            aboutDialog->show();
         }
-        else
+        else // If dialog is already visible but not in focus
         {
             aboutDialog->raise();
             aboutDialog->activateWindow();
         }
     }
-    else
+    else // If AboutDialog object holds nullptr which is what it is initialized with
     {
-        aboutDialog = new AboutDialog();
+        aboutDialog = new AboutDialog(this);
         showAboutDialog();
     }
 }
