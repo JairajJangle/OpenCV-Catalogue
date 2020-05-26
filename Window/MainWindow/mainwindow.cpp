@@ -99,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI(){
     this->setWindowTitle(Info::appName);
-    this->setWindowIcon(QIcon(":/assets/opencv_logo.png"));
+    this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);

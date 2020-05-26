@@ -11,5 +11,6 @@
         <file>assets/paypal_donate.png</file>
         <file>assets/minimize_sel.png</file>
         <file>assets/minimize.png</file>
+        <file>assets/app_logo.png</file>
     </qresource>
 </RCC>
