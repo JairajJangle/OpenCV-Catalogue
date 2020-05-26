@@ -181,4 +181,4 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 [license-url]: https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jairaj-jangle-35aab3137/
-[product-screenshot]: media/screenshot_canny.png
+[product-screenshot]: media/screenshot_canny.jpg

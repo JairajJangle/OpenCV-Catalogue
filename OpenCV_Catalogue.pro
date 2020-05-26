@@ -81,6 +81,7 @@ DISTFILES += \
     assets/paypal_donate.png \
     assets/undock.png \
     assets/undock_sel.png \
+    media/screenshot_canny.jpg \
     media/screenshot_canny.png \
     media/screenshot_histogram.png \
     media/screenshot_hsv.png \
