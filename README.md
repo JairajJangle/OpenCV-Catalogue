@@ -54,7 +54,7 @@
 ## About The Project
 TODO: Add gif
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/media/screenshot_canny.png)
 
 OpenCV Catalogue is a stand alone application which is made to let OpenCV beginnners and veterans test any OpenCV operation without a need to code. This awesome GUI application lets the user control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes.
 
