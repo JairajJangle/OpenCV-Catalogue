@@ -60,8 +60,6 @@ TODO: Add gif
   </a>
 </p>
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/JairajJangle/Open-CV-Catalogue)
-
 OpenCV Catalogue is a stand alone application which is made to let OpenCV beginnners and veterans test any OpenCV operation without a need to code. This awesome GUI application lets the user control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes.
 
 This project is still in development and as of now covers primitive OpenCV operations. But, with the power of open sourcing, this application can be made to cover all the OpenCV operations, very soon.
