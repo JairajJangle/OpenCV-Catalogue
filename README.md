@@ -55,8 +55,8 @@
 TODO: Add gif
 
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src=product-screenshot alt="Logo" width="80" height="80">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue/media/screenshot_canny.png">
+    <img src=product-screenshot alt="Logo" width="512" height="512">
   </a>
 </p>
 
