@@ -39,7 +39,7 @@
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites for contribution](#Prerequisites\ for\ contribution)
+  * [Prerequisites for contribution](#Prerequisites for contribution)
   * [Build and run standalone application](#Build\ and\ run\ standalone\ application)
 * [Usage](#usage)
 * [Roadmap](#roadmap)
