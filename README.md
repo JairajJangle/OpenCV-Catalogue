@@ -143,9 +143,9 @@ Distributed under the GNU GPL v3 License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Your Name - [@JairajJangle](https://twitter.com/JairajJangle) - email@example.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github.com/JairajJangle/Open-CV-Catalogue)
 
 
 
