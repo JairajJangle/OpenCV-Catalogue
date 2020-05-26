@@ -12,7 +12,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="assets/app_logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">OpenCV Catalogue</h3>
