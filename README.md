@@ -115,16 +115,16 @@ Use this space to show useful examples of how a project can be used. Additional 
 ### 1. Select Input source
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="680" >
+    <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="512" >
+    <p>Select Camera as Input Source</p> 
   </a>
 </p>
-Select Camera as Input Source
 
 OR
 
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="680" >
+    <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="512" >
   </a>
 </p>
 Select Video/Image file as Input Source
