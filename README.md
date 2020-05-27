@@ -1,3 +1,4 @@
+
 <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -119,7 +120,7 @@ Use this space to show useful examples of how a project can be used. Additional 
   </a>
 </p>
 <p align="center">
-  Select Camera as Input Source
+ <em>Select Camera as Input Source</em>
 </p>
 
 <p align="center">
@@ -132,7 +133,7 @@ Use this space to show useful examples of how a project can be used. Additional 
   </a>
 </p>
 <p align="center">
-  Select Video/Image file as Input Source
+  <em>Select Video/Image file as Input Source</em>
 </p>
 
 _For more examples, please refer to the [Documentation](https://example.com)_
