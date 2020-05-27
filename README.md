@@ -119,19 +119,21 @@ Use this space to show useful examples of how a project can be used. Additional 
   </a>
 </p>
 <p align="center">
-  \nSelect Camera as Input Source
+  Select Camera as Input Source
 </p>
 
-OR
+<p align="center">
+  <b>OR</b>
+</p>
 
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="512" >
   </a>
+</p>
+<p align="center">
   Select Video/Image file as Input Source
 </p>
-
-
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
