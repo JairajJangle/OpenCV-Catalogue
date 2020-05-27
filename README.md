@@ -118,9 +118,7 @@ Use this space to show useful examples of how a project can be used. Additional 
     <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="512" >
   </a>
 </p>
-<center> 
-  <p>Select Camera as Input Source</p>
-<center>
+<center>Select Camera as Input Source</center>
 
 OR
 
