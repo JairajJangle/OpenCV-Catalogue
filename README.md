@@ -112,7 +112,22 @@ chmod +x <name of .AppImage File>
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-TODO: Add Screenshots
+### 1. Select Input source
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="680" >
+  </a>
+</p>
+Select Camera as Input Source
+
+OR
+
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="680" >
+  </a>
+</p>
+Select Video/Image file as Input Source
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
