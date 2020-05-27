@@ -128,8 +128,10 @@ OR
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="512" >
   </a>
+  Select Video/Image file as Input Source
 </p>
-Select Video/Image file as Input Source
+
+
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
