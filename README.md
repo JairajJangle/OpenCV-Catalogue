@@ -116,9 +116,11 @@ Use this space to show useful examples of how a project can be used. Additional 
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="512" >
-    <p>Select Camera as Input Source</p> 
   </a>
 </p>
+<center> 
+  <p>Select Camera as Input Source</p>
+<center>
 
 OR
 
