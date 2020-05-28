@@ -47,7 +47,8 @@
 * [Contributing](#contributing)
 * [License](#license)
 * [Contact](#contact)
-* [Acknowledgements](#acknowledgements)
+* [Support the project development](#support-the-project-development)
+* [Liked the Project? Buy Me A Coffee](#liked-the-project?-buy-me-a-coffee)
 
 
 
@@ -173,11 +174,11 @@ Your Name - [@JairajJangle](https://twitter.com/JairajJangle) - jairaj.jangle@gm
 
 Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github.com/JairajJangle/Open-CV-Catalogue)
 
-## Support the project development:
+## Support the project development
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![librapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/FutureJJ/donate) 
 
-## Liked the Project? Buy Me A Coffee:
+## Liked the Project? Buy Me A Coffee
  [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U)
 
 <!-- ACKNOWLEDGEMENTS -->
