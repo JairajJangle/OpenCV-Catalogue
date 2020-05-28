@@ -85,7 +85,6 @@ DISTFILES += \
     media/screenshot_canny.png \
     media/screenshot_histogram.png \
     media/screenshot_hsv.png \
-    media/screenshot_menu.jpg \
     media/screenshot_menu.png \
     media/screenshot_select_input_camera.jpg \
     media/screenshot_select_input_file.jpg
