@@ -1,4 +1,5 @@
 
+
 <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -175,11 +176,15 @@ Your Name - [@JairajJangle](https://twitter.com/JairajJangle) - jairaj.jangle@gm
 Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github.com/JairajJangle/Open-CV-Catalogue)
 
 ## Support the project development
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![librapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/FutureJJ/donate) 
-
-## Liked the Project? Buy Me A Coffee
- [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U)
+<p align="center">
+  <a href="https://liberapay.com/FutureJJ/donate">
+    <img src="https://liberapay.com/assets/widgets/donate.svg" alt="Input_Cam" width="100" > 
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U">
+    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Input_Cam" width="120" >
+  </a>
+</p>
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
