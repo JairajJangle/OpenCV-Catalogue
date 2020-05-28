@@ -157,6 +157,9 @@ Use this space to show useful examples of how a project can be used. Additional 
 ### 3. Adjusting OpenCV Operation parameters
 TODO
 
+### 4. OpenCV Catalogue GUI summary
+TODO
+
 ## For Developers: Project Structure
 TODO
 
