@@ -147,7 +147,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 ### 2. Select OpenCV Operation
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="media/screenshot_menu.jpg" alt="Input_File" width="756" >
+    <img src="media/screenshot_menu.png" alt="Input_File" width="756" >
   </a>
 </p>
 <p align="center">
