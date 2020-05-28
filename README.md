@@ -175,7 +175,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 
 ## Support the project development:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![librapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/FutureJJ/donate) 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![librapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/FutureJJ/donate) 
 
 ## Liked the Project? Buy Me A Coffee:
  [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U)
