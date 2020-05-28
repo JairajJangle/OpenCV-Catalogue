@@ -145,9 +145,19 @@ Use this space to show useful examples of how a project can be used. Additional 
 - Select "Mirror" option to make the input Matrix mirrored along Y-axis
 
 ### 2. Select OpenCV Operation
-TODO
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="media/screenshot_menu.png" alt="Input_File" width="756" >
+  </a>
+</p>
+<p align="center">
+  <em>Select OpenCV Operation from Menu</em>
+</p>
 
 ### 3. Adjusting OpenCV Operation parameters
+TODO
+
+### 4. OpenCV Catalogue GUI summary
 TODO
 
 ## For Developers: Project Structure
