@@ -1,5 +1,6 @@
 
 
+
 <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -43,7 +44,7 @@
 * [Getting Started](#getting-started)
   * [Prerequisites for contribution](#prerequisites-for-contribution)
   * [Build and run standalone application](#build-and-run-standalone-application)
-* [Usage](#usage)
+* [Application usage](#application-usage)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
@@ -109,7 +110,7 @@ chmod +x <name of .AppImage File>
 ```
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Application usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -136,7 +137,19 @@ Use this space to show useful examples of how a project can be used. Additional 
   <em>Select Video/Image file as Input Source</em>
 </p>
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+- Confirm the source selection by clicking on the ✔️ button. 
+- Select "Mirror" option to make the input Matrix mirrored along Y-axis
+
+### 2. Select OpenCV Operation
+TODO
+
+### 3. Adjusting OpenCV Operation parameters
+TODO
+
+## For Developers: Project Structure
+TODO
+
+_TODO:_ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 <!-- ROADMAP -->
