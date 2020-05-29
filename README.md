@@ -135,7 +135,7 @@ Use this space to show useful examples of how a project can be used. Additional 
   <em>Select Video/Image file as Input Source</em>
 </p>
 
-- Confirm the source selection by clicking on the <img src="assets/done.png" alt="Logo" width="24"> button. 
+- Confirm the source selection by clicking on <img src="assets/done.png" alt="Logo" width="24"> button. 
 - Select "Mirror" option to make the input Matrix mirrored along Y-axis
 
 ### 2. Select OpenCV Operation
@@ -171,7 +171,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 - Each OpenCV operation has it's own parameter control GUI
 - Changing parameters values reflect the changes in real time
-- Clicking on <img src="assets/info.png" alt="Logo" width="22"> button will reveal official OpenCV documentation for the selected operation in your internet browser.
+- Clicking on <img src="assets/info.png" alt="Logo" width="22"> button will reveal the official OpenCV documentation for the selected operation in your internet browser.
 - Various GUI elements are used:
 
    - Seekbar for definite ranging values
