@@ -149,10 +149,33 @@ Use this space to show useful examples of how a project can be used. Additional 
 </p>
 
 ### 3. Adjusting OpenCV Operation parameters
-TODO
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="media/screenshot_adjust_params.png" alt="Input_File" width="756" >
+  </a>
+</p>
+<p align="center">
+  <em>GUI to adjust selected operation paramters is in the right side</em>
+</p>
 
 ### 4. OpenCV Catalogue GUI summary
-TODO
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="media/picture_gui.jpg" alt="Input_File" width="756" >
+  </a>
+</p>
+<p align="center">
+  <em>Convenient GUI for parameter value adjustment</em>
+</p>
+
+
+- Each OpenCV operation has it's own GUI
+- Changing parameters values reflect the changes in real time
+- Various GUI elements are used:
+ - Seekbar for definite ranging values
+ - Check box for binary options
+ - Text Input Field for indefinite values and decimal values
+ - Radio Buttons to select one out of many options
 
 ## For Developers: Project Structure
 TODO
