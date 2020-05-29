@@ -169,7 +169,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 </p>
 
 
-- Each OpenCV operation has it's own GUI
+- Each OpenCV operation has it's own parameter control GUI
 - Changing parameters values reflect the changes in real time
 - Various GUI elements are used:
  - Seekbar for definite ranging values
