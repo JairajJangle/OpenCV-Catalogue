@@ -11,12 +11,21 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
+
 <!-- PROJECT LOGO -->
 <br />
-<p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="assets/app_logo.png" alt="Logo" width="100">
-  </a>
+
+				HTML
+				
+					
+				
+				
+						
+				
+			
+  
+    </p>
+  
 
   <h3 align="center">OpenCV Catalogue</h3>
 
@@ -56,7 +65,9 @@
 * [Support the project development](#support-the-project-development)
 
 
+
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 TODO: Add gif
 
@@ -90,7 +101,9 @@ Coming Soon:
 * [OpenCV](https://opencv.org/)
 
 
+
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 Get started with contributing to OpenCV Catalogue
@@ -107,7 +120,10 @@ chmod +x <name of .AppImage File>
 ./<name of .AppImage File>
 ```
 
+
+
 <!-- USAGE EXAMPLES -->
+
 ## Application usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -185,7 +201,9 @@ TODO
 _TODO:_ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
+
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) for a list of proposed features (and known issues).
@@ -213,6 +231,7 @@ Distributed under the GNU GPL v3 License. See `LICENSE` for more information.
 
 
 <!-- CONTACT -->
+
 ## Contact
 
 Jairaj Jangle - 🐦[@JairajJangle](https://twitter.com/JairajJangle) | ✉️ jairaj.jangle@gmail.com
@@ -237,19 +256,10 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 * [Img Shields](https://shields.io)
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
-
-
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
 
 
