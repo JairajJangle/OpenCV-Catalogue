@@ -215,7 +215,7 @@ Distributed under the GNU GPL v3 License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@JairajJangle](https://twitter.com/JairajJangle) - jairaj.jangle@gmail.com
+Jairaj Jangle - 🐦[@JairajJangle](https://twitter.com/JairajJangle) | ✉️ jairaj.jangle@gmail.com
 
 Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github.com/JairajJangle/Open-CV-Catalogue)
 
