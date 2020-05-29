@@ -171,7 +171,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 - Each OpenCV operation has it's own parameter control GUI
 - Changing parameters values reflect the changes in real time
-- Clicking on <img src="assets/info.png" alt="alt text" title="Title" style="zoom: 30%;" /> button will reveal official OpenCV documentation for the selected operation in your internet browser.
+- Clicking on <img src="assets/info.png" alt="Logo" width="25"> button will reveal official OpenCV documentation for the selected operation in your internet browser.
 - Various GUI elements are used:
 
    - Seekbar for definite ranging values
