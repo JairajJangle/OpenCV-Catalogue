@@ -61,7 +61,7 @@ public:
         cv::Mat dst, cdst; // CDST contains canny + lines
         // TODO make Canny params customizable
         Canny(inputImage, dst, 50, 200, 3);
-        cvtColor(dst, cdst, CV_GRAY2BGR);
+        cvtColor(dst, cdst, cv::COLOR_GRAY2BGR);
 
         std::vector<cv::Vec4i> lines;
         HoughLinesP(dst, lines, rho->toDouble(), theta->toDouble(), threshold->toInt(), srn->toDouble(), stn->toDouble());
@@ -70,7 +70,7 @@ public:
             cv::Vec4i l = lines[i];
             line(cdst, cv::Point(l[0], l[1]),
                     cv::Point(l[2], l[3]), cv::Scalar(0,0,255),
-                    3, CV_AA);
+                    3, cv::LINE_AA);
         }
 
         for (size_t i=0; i<lines.size(); i++) {
