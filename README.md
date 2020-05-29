@@ -50,7 +50,7 @@
   * [1. Select Input source](#1-select-input-source)
   * [2. Select OpenCV Operation](#2-select-opencv-operation)
   * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
-* [For Developers: Project Structure](#for-developers-project-structure)
+* [For Developers](#for-developers)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
@@ -188,12 +188,20 @@ Use this space to show useful examples of how a project can be used. Additional 
    - Text Input Field for indefinite values and decimal values
    - Radio Buttons to select one out of many options
 
-## For Developers: Project Structure
 
-_TODO:_ _For more examples, please refer to the [Documentation](https://example.com)_
 
+## For Developers
+
+- Please respect the project file structure while making pull requests
+
+- Please try to stick to the coding structure as much as you can
+
+- If you find the code struncture should be amended to make it more organized please do make a pull request  or create an issue and explain the need in detail
+
+  
 
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) for a list of proposed features (and known issues).
@@ -250,6 +258,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Pages](https://pages.github.com)
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [Typora Markdown Editor](https://typora.io/)
 
 
 
