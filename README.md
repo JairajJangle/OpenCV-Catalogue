@@ -151,7 +151,7 @@ Use this space to show useful examples of how a project can be used. Additional 
   </a>
 </p>
 <p align="center">
-  <em>Select OpenCV Operation from Menu</em>
+  <em>Select OpenCV Operation from the "Examples" Menu</em>
 </p>
 
 ### 3. Adjusting OpenCV Operation parameters
