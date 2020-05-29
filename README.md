@@ -224,7 +224,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the GNU GPL v3 License. See `LICENSE` for more information.
+Distributed under the [GNU GPL v3 License](https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/LICENSE.txt). 
 
 
 
