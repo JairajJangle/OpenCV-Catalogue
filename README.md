@@ -1,6 +1,3 @@
-
-
-
 <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -13,19 +10,13 @@
 
 
 <!-- PROJECT LOGO -->
+
 <br />
 
-				HTML
-
-
-​					
-​				
-​				
-​						
-​				
-​			
-
-    </p>
+<p align="center">
+  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
+    <img src="assets/app_logo.png" alt="Logo" width="100">
+  </a>
 
 
   <h3 align="center">OpenCV Catalogue</h3>
@@ -42,6 +33,7 @@
     ·
     <a href="https://github.com/JairajJangle/Open-CV-Catalogue/issues">Request Feature</a>
   </p>
+
 </p>
 
 
@@ -49,7 +41,23 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
-* [TOC]
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites for contribution](#prerequisites-for-contribution)
+  * [Run the standalone application](#run-the-standalone-application)
+* [Application usage](#application-usage)
+  * [1. Select Input source](#1-select-input-source)
+  * [2. Select OpenCV Operation](#2-select-opencv-operation)
+  * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
+* [For Developers: Project Structure](#for-developers-project-structure)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
+* [Support the project development](#support-the-project-development)
+
+
 
 <!-- ABOUT THE PROJECT -->
 
@@ -256,12 +264,11 @@ Use this space to show useful examples of how a project can be used. Additional 
         └── mainwindow.ui
 ```
 
+
 _TODO:_ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
-
 <!-- ROADMAP -->
-
 ## Roadmap
 
 See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) for a list of proposed features (and known issues).
