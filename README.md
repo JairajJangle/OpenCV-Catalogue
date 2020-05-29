@@ -16,16 +16,17 @@
 <br />
 
 				HTML
-				
-					
-				
-				
-						
-				
-			
-  
+
+
+​					
+​				
+​				
+​						
+​				
+​			
+
     </p>
-  
+
 
   <h3 align="center">OpenCV Catalogue</h3>
 
@@ -48,23 +49,7 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites for contribution](#prerequisites-for-contribution)
-  * [Run the standalone application](#run-the-standalone-application)
-* [Application usage](#application-usage)
-  * [1. Select Input source](#1-select-input-source)
-  * [2. Select OpenCV Operation](#2-select-opencv-operation)
-  * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
-* [For Developers: Project Structure](#for-developers-project-structure)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
-* [Support the project development](#support-the-project-development)
-
-
+* [TOC]
 
 <!-- ABOUT THE PROJECT -->
 
@@ -196,7 +181,80 @@ Use this space to show useful examples of how a project can be used. Additional 
    - Radio Buttons to select one out of many options
 
 ## For Developers: Project Structure
-TODO
+```bash
+.
+├── assets
+│   ├── app_logo.png
+│   ├── demo_video.gif
+│   ├── done.png
+│   ├── done_sel.png
+│   ├── info.png
+│   ├── info_sel.png
+│   ├── liberapay_donate.png
+│   ├── minimize.png
+│   ├── minimize_sel.png
+│   ├── opencv_logo.png
+│   ├── paypal_donate.png
+│   ├── undock.png
+│   └── undock_sel.png
+├── CustomWidgets
+│   ├── applyresetbuttonlayout.h
+│   ├── ClickableLabel
+│   │   ├── clickablelabel.cpp
+│   │   └── clickablelabel.h
+│   ├── errorlabel.h
+│   ├── focusawarelineedit.cpp
+│   ├── focusawarelineedit.h
+│   ├── hybridadjustlayout.h
+│   ├── HybridSlider
+│   │   ├── hybridslider.cpp
+│   │   ├── hybridslider.h
+│   │   └── hybridslider.ui
+│   ├── lineeditlayout.h
+│   └── sliderlayout.h
+├── LICENSE.txt
+├── main.cpp
+├── media
+│   ├── picture_gui.jpg
+│   ├── screenshot_adjust_params.png
+│   ├── screenshot_canny.png
+│   ├── screenshot_histogram.png
+│   ├── screenshot_hsv.png
+│   ├── screenshot_menu.png
+│   ├── screenshot_select_input_camera.jpg
+│   └── screenshot_select_input_file.jpg
+├── OpenCV_Catalogue.pro
+├── OpenCV_Catalogue.pro.user
+├── OpenCVFunction
+│   ├── backgroundsubtract.h
+│   ├── blur.h
+│   ├── cannyedge.h
+│   ├── colorpicker.h
+│   ├── colorspaces.h
+│   ├── erosiondilation.h
+│   ├── harriscornerdetector.h
+│   ├── histogram.h
+│   ├── houghcircles.h
+│   ├── houghlines.h
+│   ├── imageflip.h
+│   └── thresholding.h
+├── README.md
+├── res.qrc
+├── Utils
+│   ├── baseconfigwidget.h
+│   ├── captureinputsource.h
+│   ├── constants.h
+│   └── utils.h
+└── Window
+    ├── AboutDialog
+    │   ├── aboutdialog.cpp
+    │   ├── aboutdialog.h
+    │   └── aboutdialog.ui
+    └── MainWindow
+        ├── mainwindow.cpp
+        ├── mainwindow.h
+        └── mainwindow.ui
+```
 
 _TODO:_ _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -278,3 +336,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jairaj-jangle-35aab3137/
 [product-screenshot]: media/screenshot_canny.jpg
+
+```
+
+```
