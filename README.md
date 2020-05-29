@@ -43,7 +43,7 @@
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
   * [Prerequisites for contribution](#prerequisites-for-contribution)
-  * [Build and run standalone application](#build-and-run-standalone-application)
+  * [Run the standalone application](#run-the-standalone-application)
 * [Application usage](#application-usage)
   * [1. Select Input source](#1-select-input-source)
   * [2. Select OpenCV Operation](#2-select-opencv-operation)
@@ -100,13 +100,7 @@ Get started with contributing to OpenCV Catalogue
 * [Install QT libs + QT Creator](https://www.qt.io/download-open-source)
 * For development, supported platforms: Linux, MacOS, Windows
 
-### Build and run standalone application
-
-1. Build AppImage: TODO
-```sh
-<AppImage Build Commond here>
-```
-2. Running standalone .AppImage
+### Run the standalone application
 ```sh
 cd <.AppImage File Location>
 chmod +x <name of .AppImage File>
