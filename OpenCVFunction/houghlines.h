@@ -37,10 +37,9 @@
 
 #include <iostream>
 
-class HoughLines: public QWidget, public BaseConfigWidget
+class HoughLines: public BaseConfigWidget
 {
     Q_OBJECT
-
 public:
     HoughLines()
     {
@@ -58,6 +57,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat dst, cdst; // CDST contains canny + lines
         // TODO make Canny params customizable
         Canny(inputImage, dst, 50, 200, 3);
@@ -80,6 +81,7 @@ public:
                     cv::Scalar(0, 0, 255), 3, cv::LINE_AA);
         }
 
+        m.unlock();
         return inputImage;
     }
 

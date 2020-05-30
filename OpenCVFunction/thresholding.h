@@ -43,10 +43,13 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage = ColorSpace::getProcessedImage(inputImage);
 
         // TODO: Apply Threshold values from UI
 
+        m.unlock();
         return outputImage;
     }
 

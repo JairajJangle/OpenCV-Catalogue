@@ -95,6 +95,10 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
+
+    // Register cv::Mat type to make it queueable
+    qRegisterMetaType<cv::Mat>("cv::Mat");
+    connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
 }
 
 void MainWindow::initUI(){
@@ -110,13 +114,15 @@ void MainWindow::initUI(){
     setUserMessage("Initializing Done", INFO);
 }
 
-void MainWindow::operationSelected(int opCode)
+void MainWindow::operationSelected(OPCodes opCode)
 {
+    selectedOpCode = opCode;
+
     baseConfigWidget->setExplodedView(false);
 
     // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
 
-    switch (opCode) {
+    switch (selectedOpCode) {
     case COLOR_SPACES:
         baseConfigWidget = new ColorSpace();
         break;
@@ -152,23 +158,6 @@ void MainWindow::operationSelected(int opCode)
     ui->labelOperationName->setText(baseConfigWidget->getOperationName());
     QWidget *configWidget = baseConfigWidget->getConfigWidget();
     ui->scrollArea->setWidget(configWidget);
-}
-
-void MainWindow::showHideExplodedView()
-{
-    if(baseConfigWidget->isExplodedViewEnabled())
-    {
-        if(baseConfigWidget->setExplodedView(true))
-        {
-            // TODO: Change Icon to minimize
-        }
-    }
-    else
-    {
-        baseConfigWidget->setExplodedView(false);
-        // TODO: Change Icon to exploded
-    }
-
 }
 
 void MainWindow::showAboutDialog()
@@ -208,8 +197,16 @@ void MainWindow::GetSourceCaptureImage()
         cv::flip(capturedOriginalImg, capturedOriginalImg, 1);
     }
 
-    RefreshInputImage(capturedReziedImg);
-    RefreshOutputImage(capturedOriginalImg);
+    refreshInputImage(capturedReziedImg);
+
+    if(selectedOpCode != NONE)
+    {
+        QtConcurrent::run([=]
+        {
+            emit refreshOutputImageSignal(baseConfigWidget->
+                                          getProcessedImage(capturedOriginalImg));
+        });
+    }
 }
 
 void MainWindow::GetSourceCaptureError(QString error)
@@ -217,7 +214,7 @@ void MainWindow::GetSourceCaptureError(QString error)
     setUserMessage(error, ERROR);
 }
 
-void MainWindow::RefreshInputImage(cv::Mat img)
+void MainWindow::refreshInputImage(cv::Mat img)
 {
     try
     {
@@ -240,16 +237,15 @@ void MainWindow::RefreshInputImage(cv::Mat img)
     }
 }
 
-void MainWindow::RefreshOutputImage(cv::Mat img)
+void MainWindow::refreshOutputImage(const cv::Mat img)
 {
-    cv::Mat outputImg = baseConfigWidget->getProcessedImage(img);
     try
     {
-        cvtColor(outputImg, outputImg, cv::COLOR_BGR2RGB);
+        cvtColor(img, img, cv::COLOR_BGR2RGB);
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        outputImg.data, outputImg.cols,
-                        outputImg.rows, outputImg.step,
+                        img.data, img.cols,
+                        img.rows, img.step,
                         QImage::Format_RGB888));
 
         ui->labelOutput->setPixmap(OpenCV2QTOP);
@@ -259,6 +255,23 @@ void MainWindow::RefreshOutputImage(cv::Mat img)
     {
         captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
+}
+
+void MainWindow::showHideExplodedView()
+{
+    if(baseConfigWidget->isExplodedViewEnabled())
+    {
+        if(baseConfigWidget->setExplodedView(true))
+        {
+            // TODO: Change Icon to minimize
+        }
+    }
+    else
+    {
+        baseConfigWidget->setExplodedView(false);
+        // TODO: Change Icon to exploded
+    }
+
 }
 
 void MainWindow::sourceRadioButtonClicked(){
