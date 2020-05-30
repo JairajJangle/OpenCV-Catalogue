@@ -88,16 +88,12 @@ Features:
 
 Coming Soon:
 * Exploded View of OpenCV operations to give more insights
-* Multi-threading to keep GUI lag free while testing compute-heavy operations
 * Chaining of various OpenCV operations in a sequence
 * Support for CUDA operations
 
 ### Known Issue
 
 The project is still in development and all these issues will be addressed soon.
-
-- On slower machines, some intensive operations may cause GUI to be unresponsive
-  - *For developers*: this issue can be fixed with mutithreading implementation.
 
 - Exploded view is not implemented yet, so the exploded view  button <img src="assets/undock.png" alt="Logo" width="24"> may not be functional.
 
