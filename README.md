@@ -64,9 +64,10 @@
 ## About The Project
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="assets/demo_video.gif" alt="Logo" width="756" >
+    <img src="assets/demo_video.gif" alt="Logo" width="640" >
   </a>
 </p>
+
 <p align="center">
  <em>OpenCV Catalogue Application Demo Video</em>
 </p>
