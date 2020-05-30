@@ -29,7 +29,7 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "Utils/baseconfigwidget.h"
 
-class HistogramCalculation : public QWidget, public BaseConfigWidget
+class HistogramCalculation : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -42,6 +42,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         std::vector<cv::Mat> bgr_planes;
         split(inputImage, bgr_planes);
 
@@ -80,6 +82,7 @@ public:
                  cv::Scalar(0, 0, 255), 2, 8, 0);
         }
 
+        m.unlock();
         return histImage;
     }
 

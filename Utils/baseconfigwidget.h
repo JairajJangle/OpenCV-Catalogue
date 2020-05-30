@@ -29,20 +29,23 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QWidget>
+#include <QMutex>
 
 // OpenCV libs
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
 
-class BaseConfigWidget
+class BaseConfigWidget : public QWidget
 {
+    Q_OBJECT
 private:
     QScrollArea *scrl = new QScrollArea();
     QWidget *wgtSub = new QWidget();
 
 protected:
-    QWidget *wgtMain = new QWidget();
+    QMutex m;
 
+    QWidget *wgtMain = new QWidget();
     QWidget* configWidget;
 
     /*

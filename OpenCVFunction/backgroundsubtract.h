@@ -38,7 +38,7 @@
 #include "CustomWidgets/errorlabel.h"
 #include "CustomWidgets/lineeditlayout.h"
 
-class BackgroundSubtraction : public QWidget, public BaseConfigWidget
+class BackgroundSubtraction : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -51,6 +51,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage;
 
         switch (selectedTech) {
@@ -81,6 +83,8 @@ public:
         morphologyEx(outputImage, outputImage, cv::MORPH_OPEN, element);
 
         cv::cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
+
+        m.unlock();
         return outputImage;
     }
 

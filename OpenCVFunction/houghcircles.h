@@ -37,10 +37,9 @@
 
 #include <iostream>
 
-class HoughCircles: public QWidget, public BaseConfigWidget
+class HoughCircles: public BaseConfigWidget
 {
     Q_OBJECT
-
 public:
     HoughCircles()
     {
@@ -59,6 +58,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat grayImage;
 
         cvtColor(inputImage, grayImage, cv::COLOR_BGR2GRAY);
@@ -93,6 +94,7 @@ public:
                    cv::Scalar(0,0,255), 3, 8, 0 );
         }
 
+        m.unlock();
         return inputImage;
     }
 
