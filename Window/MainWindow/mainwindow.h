@@ -29,6 +29,7 @@
 #include <QButtonGroup>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QtConcurrent/QtConcurrent>
 
 #include <iostream>
 
@@ -59,6 +60,11 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+private:
+    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
+                 CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
+                 HISTOGRAM_CALCULATION};
+
 private slots:
     void sourceRadioButtonClicked();
     void sourceSelectClicked();
@@ -67,19 +73,21 @@ private slots:
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
-    void operationSelected(int opCode);
+    void operationSelected(OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
+    void refreshOutputImage(const cv::Mat img);
+
+signals:
+    void refreshOutputImageSignal(cv::Mat);
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
-    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
-                 CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION};
+    OPCodes selectedOpCode = NONE;
 
     Ui::MainWindow *ui;
 
@@ -94,8 +102,7 @@ private:
 
     void initUI();
 
-    void RefreshInputImage(cv::Mat img);
-    void RefreshOutputImage(cv::Mat img);
+    void refreshInputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
 
     QPoint getWindowCenter();

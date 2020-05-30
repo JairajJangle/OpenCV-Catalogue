@@ -33,7 +33,7 @@
 
 #include "CustomWidgets/HybridSlider/hybridslider.h"
 
-class CannyEdge : public QWidget, public BaseConfigWidget
+class CannyEdge : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -46,6 +46,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage;
 
         cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
@@ -56,6 +58,7 @@ public:
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
         cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
+        m.unlock();
         return outputImage;
     }
 

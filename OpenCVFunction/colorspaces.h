@@ -27,7 +27,7 @@
 
 #include "Utils/baseconfigwidget.h"
 
-class ColorSpace : public QWidget, public BaseConfigWidget
+class ColorSpace : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -40,12 +40,17 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage;
         int selectedColorCode = colorCodesAll.at(colorConvCode).first;
 
         // If RGB is selected: o/p = i/p
         if(selectedColorCode == -1)
+        {
+            m.unlock();
             return inputImage;
+        }
         else
         {
             cvtColor(inputImage, outputImage, selectedColorCode);
@@ -57,6 +62,7 @@ public:
                 cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
         }
 
+        m.unlock();
         return outputImage;
     }
 
