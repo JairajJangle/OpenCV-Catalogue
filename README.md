@@ -62,8 +62,6 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-TODO: Add gif
-
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="assets/demo_video.gif" alt="Logo" width="756" >
