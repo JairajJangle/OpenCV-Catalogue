@@ -33,7 +33,7 @@
 #include "Utils/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
 
-class Blur : public QWidget, public BaseConfigWidget
+class Blur : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -46,6 +46,8 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage;
 
         if((begin.x < kSize.width && begin.y < kSize.height)
@@ -59,6 +61,8 @@ public:
 
             errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
+
+            m.unlock();
             return outputImage;
         }
         else
@@ -67,6 +71,8 @@ public:
             errorLabel->setText("Kernel Size should be < Anchor");
             if(kSize.width <= 0 || kSize.height <= 0)
                 errorLabel->setText("Kernel Size should not be <= 0");
+
+            m.unlock();
             return inputImage;
         }
 

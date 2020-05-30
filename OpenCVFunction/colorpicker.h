@@ -29,7 +29,7 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "Utils/baseconfigwidget.h"
 
-class ColorPicker : public QWidget, public BaseConfigWidget
+class ColorPicker : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -42,11 +42,16 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)
     {
+        m.lock();
+
         cv::Mat outputImage;
 
         // If No Location is selected: o/p = 0
         if(begin ==cv::Point(-1, -1))
+        {
+            m.unlock();
             return inputImage;
+        }
         else
         {
             QString locationValues =
@@ -67,6 +72,7 @@ public:
 
         begin =cv::Point(-1, -1);
 
+        m.unlock();
         return inputImage;
     }
 

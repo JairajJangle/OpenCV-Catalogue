@@ -28,7 +28,7 @@
 
 #include "Utils/baseconfigwidget.h"
 
-class ErosionDilation : public QWidget, public BaseConfigWidget
+class ErosionDilation : public BaseConfigWidget
 {
     Q_OBJECT
 public:
