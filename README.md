@@ -67,6 +67,10 @@
     <img src="assets/demo_video.gif" alt="Logo" width="756" >
   </a>
 </p>
+<p align="center">
+ <em>OpenCV Catalogue Application Demo Video</em>
+</p>
+
 
 
 OpenCV Catalogue is a stand alone application which is made to let OpenCV beginnners and veterans test any OpenCV operation without a need to code. This awesome GUI application lets the user control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes.
