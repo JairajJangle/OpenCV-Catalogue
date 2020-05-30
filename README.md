@@ -66,9 +66,10 @@ TODO: Add gif
 
 <p align="center">
   <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
-    <img src="media/screenshot_canny.png" alt="Logo" width="756" >
+    <img src="assets/demo_video.gif" alt="Logo" width="756" >
   </a>
 </p>
+
 
 OpenCV Catalogue is a stand alone application which is made to let OpenCV beginnners and veterans test any OpenCV operation without a need to code. This awesome GUI application lets the user control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes.
 
@@ -88,7 +89,17 @@ Coming Soon:
 * Chaining of various OpenCV operations in a sequence
 * Support for CUDA operations
 
+### Known Issue
+
+The project is still in development and all these issues will be addressed soon.
+
+- On slower machines, some intensive operations may cause GUI to be unresponsive
+  - *For developers*: this issue can be fixed with mutithreading implementation.
+
+- Exploded view is not implemented yet, so the exploded view  button <img src="assets/undock.png" alt="Logo" width="24"> may not be functional.
+
 ### Built With
+
 * [C++](https://devdocs.io/cpp/)
 * [QT](https://www.qt.io/)
 * [OpenCV](https://opencv.org/)
