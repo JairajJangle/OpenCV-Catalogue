@@ -26,7 +26,7 @@
 
 namespace Info {
     const QString appName = "OpenCV Catalogue";
-    const QString version = "v 0.2.1";
+    const QString version = "v0.2.1";
 }
 
 namespace RegExps {
