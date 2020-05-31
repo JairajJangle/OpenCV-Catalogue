@@ -31,6 +31,7 @@
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
+#include "CustomWidgets/dividerline.h"
 
 #include "Utils/constants.h"
 #include "Utils/utils.h"
@@ -203,13 +204,7 @@ private:
 
         vBoxSub->addLayout(applyResetBox);
 
-        QFrame* separatorLine = new QFrame(this);
-        separatorLine->setObjectName(QString::fromUtf8("line"));
-        separatorLine->setGeometry(QRect(320, 150, 118, 3));
-        separatorLine->setFrameShape(QFrame::HLine);
-        separatorLine->setFrameShadow(QFrame::Sunken);
-        separatorLine->setFixedHeight(20);
-        vBoxSub->addWidget(separatorLine);
+        vBoxSub->addWidget(new DividerLine(this));
 
         // TODO: Add Hough Lines function control trackbars
         vBoxSub->addWidget(enableBlurCB);
