@@ -27,12 +27,13 @@
     <a href="https://github.com/JairajJangle/Open-CV-Catalogue"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/assets/demo_video.gif">View Demo</a>
+    <a href="https://github.com/JairajJangle/Open-CV-Catalogue/releases">Download</a>
     ·
     <a href="https://github.com/JairajJangle/Open-CV-Catalogue/issues">Report Bug</a>
     ·
     <a href="https://github.com/JairajJangle/Open-CV-Catalogue/issues">Request Feature</a>
   </p>
+
 
 
 </p>
