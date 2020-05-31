@@ -28,7 +28,7 @@
 #include <QSlider>
 #include <QComboBox>
 
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 
 #include "CustomWidgets/HybridSlider/hybridslider.h"

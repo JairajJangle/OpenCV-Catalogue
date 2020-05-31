@@ -34,7 +34,7 @@
 
 #include <opencv2/bgsegm.hpp>
 
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
 #include "CustomWidgets/lineeditlayout.h"
 

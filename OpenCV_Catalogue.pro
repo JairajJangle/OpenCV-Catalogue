@@ -32,6 +32,7 @@ HEADERS += \
     CustomWidgets/lineeditlayout.h \
     CustomWidgets/HybridSlider/hybridslider.h \
     CustomWidgets/sliderlayout.h \
+    CustomWidgets/baseconfigwidget.h \
     OpenCVFunction/backgroundsubtract.h \
     OpenCVFunction/blur.h \
     OpenCVFunction/cannyedge.h \
@@ -44,7 +45,6 @@ HEADERS += \
     OpenCVFunction/houghlines.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/thresholding.h \
-    Utils/baseconfigwidget.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/utils.h \
