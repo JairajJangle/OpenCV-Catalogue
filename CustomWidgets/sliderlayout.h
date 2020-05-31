@@ -56,7 +56,7 @@ public:
         this->setSpacing(15);
 
         slider->setFixedSize(fixedWidth, fixedHeight);
-        slider->setSingleStep(20);
+        slider->setSingleStep(1);
         slider->setOrientation(Qt::Horizontal);
         slider->setRange(minValue, maxValue);
         slider->setValue(initialValue);
