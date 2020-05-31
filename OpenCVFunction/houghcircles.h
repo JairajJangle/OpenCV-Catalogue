@@ -31,6 +31,7 @@
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
+#include "CustomWidgets/dividerline.h"
 
 #include "Utils/constants.h"
 #include "Utils/utils.h"
@@ -158,8 +159,6 @@ private:
     QVariant* minRadius = new QVariant(0);
     QVariant* maxRadius = new QVariant(0);
 
-    QDoubleValidator* minDistValidator = new QDoubleValidator();
-
     QComboBox* selectMethodComboBox = new QComboBox();
 
     LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
@@ -175,6 +174,8 @@ private:
 
     void initWidget()
     {
+        QDoubleValidator* minDistValidator = new QDoubleValidator();
+
         minDistValidator->setBottom(0);
         minDistValidator->setDecimals(2);
 
@@ -207,13 +208,7 @@ private:
 
         vBoxSub->addLayout(applyResetBox);
 
-        QFrame* line = new QFrame(this);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setGeometry(QRect(320, 150, 118, 3));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-        line->setFixedHeight(20);
-        vBoxSub->addWidget(line);
+        vBoxSub->addWidget(new DividerLine(this));
 
         // TODO: Add Hough Circles function control trackbars
         vBoxSub->addWidget(enableBlurCB);
