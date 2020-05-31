@@ -126,6 +126,11 @@ public:
      * Override this function in individual operation classes
      */
     virtual cv::Mat getProcessedImage(cv::Mat inputImage){
+        m.lock(); // Lock mutex at function start
+
+        // Do Operations
+
+        m.unlock(); // Unlock mutex before return
         return inputImage;
     }
 
