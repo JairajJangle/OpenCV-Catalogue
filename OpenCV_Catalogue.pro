@@ -26,6 +26,7 @@ SOURCES += \
 HEADERS += \
     CustomWidgets/ClickableLabel/clickablelabel.h \
     CustomWidgets/applyresetbuttonlayout.h \
+    CustomWidgets/dividerline.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/focusawarelineedit.h \
     CustomWidgets/hybridadjustlayout.h \
