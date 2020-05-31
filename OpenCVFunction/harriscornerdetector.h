@@ -30,6 +30,8 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
+#include "CustomWidgets/dividerline.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
 
 class HarrisCornerDetector : public BaseConfigWidget
 {
@@ -39,6 +41,11 @@ public:
     {
         operationName = "Harris Corner Detector";
         moreInfoLink = "https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#gac1fc3598018010880e370e2f709b4345";
+
+        lineEditsWithParams.push_back(std::make_pair(blockSizeLayout, blockSize));
+        lineEditsWithParams.push_back(std::make_pair(apertureSizeLayout, apertureSize));
+        lineEditsWithParams.push_back(std::make_pair(kLayout, k));
+
         initWidget();
     }
 
@@ -55,7 +62,8 @@ public:
 
         cv::Mat dst = cv::Mat::zeros(inputImage.size(), CV_32FC1);
 
-        cornerHarris(inputImageGray, dst, blockSize, apertureSize, k);
+        cornerHarris(inputImageGray, dst,
+                     blockSize->toInt(), apertureSize->toInt(), k->toDouble());
         normalize(dst, inputNorm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
         convertScaleAbs(inputNorm, inputNormScaled);
 
@@ -86,22 +94,75 @@ private slots:
         threshold = value;
     }
 
+    void applyClicked()
+    {
+        bool paramsApplied = true;
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+        {
+            if(!lineEditWithParam.first->getText().isEmpty())
+                lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
+            else
+            {
+                paramsApplied = false;
+                break;
+            }
+        }
+
+        if(!paramsApplied)
+        {
+            // TODO: Update error label message
+        }
+    }
+
+    void resetClicked()
+    {
+        *blockSize = 2;
+        *apertureSize = 3;
+        *k = 0.04;
+
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+            lineEditWithParam.first->setText(lineEditWithParam.second->toString());
+    }
+
 private:
     int threshold = 200;
-    SliderLayout* threshSliderLayout = new SliderLayout("Threshold\n[0-255]", threshold, 0, 255);
 
-    int blockSize = 2;
-    int apertureSize = 3;
-    double k = 0.04;
+    // TODO: Add ToolTip for Theshold
+    SliderLayout* threshSliderLayout = new SliderLayout("Threshold\n[0-255]",
+                                                        threshold, 0, 255, 190);
+
+    QVariant* blockSize = new QVariant(2);
+    // FIXME: Kernel size should be odd and less than 31
+    QVariant* apertureSize = new QVariant(3);
+    QVariant* k = new QVariant(0.04);
+
+    LineEditLayout* blockSizeLayout = new LineEditLayout("blockSize", *blockSize);
+    LineEditLayout* apertureSizeLayout = new LineEditLayout("ksize", *apertureSize);
+    LineEditLayout* kLayout = new LineEditLayout("k", *k);
+
+    QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+
+    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
     void initWidget()
     {
         // TODO add parameter control
 
-        connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
-                this, SLOT(threshChanged(int)));
+        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+            vBoxSub->addLayout(lineEditWithParam.first);
+
+        connect(applyResetBox, SIGNAL(applyClicked()),
+                this, SLOT(applyClicked()));
+        connect(applyResetBox, SIGNAL(resetClicked()),
+                this, SLOT(resetClicked()));
+
+        vBoxSub->addLayout(applyResetBox);
+
+        vBoxSub->addWidget(new DividerLine(this));
 
         vBoxSub->addLayout(threshSliderLayout);
+        connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
+                this, SLOT(threshChanged(int)));
 
         BaseConfigWidget::initWidget();
     }
