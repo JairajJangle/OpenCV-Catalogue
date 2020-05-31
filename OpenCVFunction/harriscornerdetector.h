@@ -46,51 +46,27 @@ public:
     {
         m.lock();
 
-        //        cv::Mat inputGrayScale, outputImage, outputImageNormalized, outputImageNormalizedScaled;
-
-        //        // Converting to grayscale
-        //        cvtColor(inputImage, inputGrayScale, cv::COLOR_BGR2GRAY);
-
-        //        // Detect corners
-        //        outputImage = cv::Mat::zeros(inputImage.size(), CV_32FC1);
-        //        cornerHarris(inputGrayScale, outputImage, 2, 3, 0.04);
-
-        //        // Normalize
-        //        normalize(outputImage, outputImageNormalized, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
-        //        convertScaleAbs(outputImageNormalized, outputImageNormalizedScaled);
-
-        //        // Drawing corners
-        //        for(int j = 0; j < outputImageNormalized.rows ; j++){
-        //            for(int i = 0; i < outputImageNormalized.cols; i++){
-        //                if((int) outputImageNormalized.at<float>(j,i) > 100){
-        //                    circle(inputImage, cv::Point(i,j), 2,  cv::Scalar(0,0,255), 2, 8, 0 );
-        //                }
-        //            }
-        //        }
-
-        cv::Mat src, src_gray, outputImage;
-
-        src = inputImage;
+        cv::Mat inputImageGray, outputImage,
+                inputNorm, inputNormScaled;
 
         inputImage.copyTo(outputImage);
 
-        cvtColor( src, src_gray, cv::COLOR_BGR2GRAY );
+        cvtColor(inputImage, inputImageGray, cv::COLOR_BGR2GRAY);
 
-        int blockSize = 2;
-        int apertureSize = 3;
-        double k = 0.04;
-        cv::Mat dst = cv::Mat::zeros( src.size(), CV_32FC1 );
-        cornerHarris( src_gray, dst, blockSize, apertureSize, k );
-        cv::Mat dst_norm, dst_norm_scaled;
-        normalize( dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat() );
-        convertScaleAbs( dst_norm, dst_norm_scaled );
-        for(int i = 0; i < dst_norm.rows ; i++ )
+        cv::Mat dst = cv::Mat::zeros(inputImage.size(), CV_32FC1);
+
+        cornerHarris(inputImageGray, dst, blockSize, apertureSize, k);
+        normalize(dst, inputNorm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+        convertScaleAbs(inputNorm, inputNormScaled);
+
+        for(int i = 0; i < inputNorm.rows ; i++)
         {
-            for( int j = 0; j < dst_norm.cols; j++ )
+            for(int j = 0; j < inputNorm.cols; j++)
             {
-                if( (int) dst_norm.at<float>(i,j) > threshold )
+                if(static_cast<int>(inputNorm.at<float>(i,j)) > threshold)
                 {
-                    circle( outputImage, cv::Point(j,i), 5,  cv::Scalar(0, 0, 255), 2, 8, 0 );
+                    circle(outputImage, cv::Point(j,i), 5,
+                           cv::Scalar(0, 0, 255), 2, 8, 0 );
                 }
             }
         }
@@ -113,6 +89,10 @@ private slots:
 private:
     int threshold = 200;
     SliderLayout* threshSliderLayout = new SliderLayout("Threshold\n[0-255]", threshold, 0, 255);
+
+    int blockSize = 2;
+    int apertureSize = 3;
+    double k = 0.04;
 
     void initWidget()
     {
