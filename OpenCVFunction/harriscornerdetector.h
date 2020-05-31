@@ -29,6 +29,7 @@
 
 #include "CustomWidgets/lineeditlayout.h"
 #include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/sliderlayout.h"
 
 class HarrisCornerDetector : public BaseConfigWidget
 {
@@ -67,9 +68,6 @@ public:
         //            }
         //        }
 
-        int thresh = 200;
-        int max_thresh = 255;
-
         cv::Mat src, src_gray, outputImage;
 
         src = inputImage;
@@ -86,11 +84,11 @@ public:
         cv::Mat dst_norm, dst_norm_scaled;
         normalize( dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat() );
         convertScaleAbs( dst_norm, dst_norm_scaled );
-        for( int i = 0; i < dst_norm.rows ; i++ )
+        for(int i = 0; i < dst_norm.rows ; i++ )
         {
             for( int j = 0; j < dst_norm.cols; j++ )
             {
-                if( (int) dst_norm.at<float>(i,j) > thresh )
+                if( (int) dst_norm.at<float>(i,j) > threshold )
                 {
                     circle( outputImage, cv::Point(j,i), 5,  cv::Scalar(0, 0, 255), 2, 8, 0 );
                 }
@@ -106,11 +104,24 @@ public:
         printf("Harris Corner Detector destroyed\n");
     }
 
+private slots:
+    void threshChanged(int value)
+    {
+        threshold = value;
+    }
+
 private:
+    int threshold = 200;
+    SliderLayout* threshSliderLayout = new SliderLayout("Threshold\n[0-255]", threshold, 0, 255);
 
     void initWidget()
     {
         // TODO add parameter control
+
+        connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
+                this, SLOT(threshChanged(int)));
+
+        vBoxSub->addLayout(threshSliderLayout);
 
         BaseConfigWidget::initWidget();
     }
