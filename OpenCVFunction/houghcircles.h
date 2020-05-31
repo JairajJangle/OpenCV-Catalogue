@@ -27,7 +27,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"

@@ -25,7 +25,7 @@
 // QT libs
 #include <QRadioButton>
 
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 
 class ColorSpace : public BaseConfigWidget
 {

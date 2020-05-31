@@ -26,7 +26,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 
 class ErosionDilation : public BaseConfigWidget
 {

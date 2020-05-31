@@ -27,7 +27,7 @@
 #include <QLineEdit>
 
 #include "CustomWidgets/lineeditlayout.h"
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 
 class ColorPicker : public BaseConfigWidget
 {

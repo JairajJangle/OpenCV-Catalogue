@@ -28,7 +28,7 @@
 #include <QLineEdit>
 
 #include "CustomWidgets/lineeditlayout.h"
-#include "Utils/baseconfigwidget.h"
+#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 
 class HarrisCornerDetector : public BaseConfigWidget
