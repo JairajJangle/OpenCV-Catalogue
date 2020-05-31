@@ -63,10 +63,10 @@
 
 ## About The Project
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="assets/demo_video.gif" alt="Logo" width="640" >
   </a>
 </p>
+
 
 <p align="center">
  <em>OpenCV Catalogue Application Demo Video</em>
@@ -90,12 +90,6 @@ Coming Soon:
 * Exploded View of OpenCV operations to give more insights
 * Chaining of various OpenCV operations in a sequence
 * Support for CUDA operations
-
-### Known Issue
-
-The project is still in development and all these issues will be addressed soon.
-
-- Exploded view is not implemented yet, so the exploded view  button <img src="assets/undock.png" alt="Logo" width="24"> may not be functional.
 
 ### Built With
 
@@ -133,7 +127,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 ### 1. Select Input source
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="512" >
   </a>
 </p>
@@ -141,12 +134,11 @@ Use this space to show useful examples of how a project can be used. Additional 
  <em>Select Camera as Input Source</em>
 </p>
 
+
 <p align="center">
   <b>OR</b>
 </p>
-
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="512" >
   </a>
 </p>
@@ -154,12 +146,12 @@ Use this space to show useful examples of how a project can be used. Additional 
   <em>Select Video/Image file as Input Source</em>
 </p>
 
+
 - Confirm the source selection by clicking on <img src="assets/done.png" alt="Logo" width="24"> button. 
 - Select "Mirror" option to make the input Matrix mirrored along Y-axis
 
 ### 2. Select OpenCV Operation
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_menu.png" alt="Input_File" width="756" >
   </a>
 </p>
@@ -167,9 +159,9 @@ Use this space to show useful examples of how a project can be used. Additional 
   <em>Select OpenCV Operation from the "Examples" Menu</em>
 </p>
 
+
 ### 3. Adjusting OpenCV Operation parameters
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/screenshot_adjust_params.png" alt="Input_File" width="756" >
   </a>
 </p>
@@ -177,15 +169,16 @@ Use this space to show useful examples of how a project can be used. Additional 
   <em>GUI to adjust selected operation paramters is in the right side</em>
 </p>
 
+
 ### 4. OpenCV Catalogue GUI summary
 <p align="center">
-  <a href="https://github.com/JairajJangle/Open-CV-Catalogue">
     <img src="media/picture_gui.jpg" alt="Input_File" width="756" >
   </a>
 </p>
 <p align="center">
   <em>Convenient GUI for parameter value adjustment</em>
 </p>
+
 
 
 - Each OpenCV operation has it's own parameter control GUI
