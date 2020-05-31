@@ -62,6 +62,7 @@ public:
         slider->setValue(initialValue);
 
         titleLabel->setText(title);
+        titleLabel->setAlignment(Qt::AlignCenter);
         valueLabel->setText(QString::number(initialValue));
         valueLabel->setFixedSize(40, 20);
 
