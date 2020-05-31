@@ -45,6 +45,7 @@
 #include "OpenCVFunction/houghcircles.h"
 #include "OpenCVFunction/houghlines.h"
 #include "OpenCVFunction/histogram.h"
+#include "OpenCVFunction/harriscornerdetector.h"
 
 #include "Window/AboutDialog/aboutdialog.h"
 
@@ -63,7 +64,7 @@ class MainWindow : public QMainWindow
 private:
     enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION};
+                 HISTOGRAM_CALCULATION, HARRIS_CORNER};
 
 private slots:
     void sourceRadioButtonClicked();

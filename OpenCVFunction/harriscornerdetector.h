@@ -21,4 +21,99 @@
 #ifndef HARRISCORNERDETECTOR_H
 #define HARRISCORNERDETECTOR_H
 
+
+// QT libs
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+
+#include "CustomWidgets/lineeditlayout.h"
+#include "Utils/baseconfigwidget.h"
+
+class HarrisCornerDetector : public BaseConfigWidget
+{
+    Q_OBJECT
+public:
+    HarrisCornerDetector()
+    {
+        operationName = "Harris Corner Detector";
+        moreInfoLink = "https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#gac1fc3598018010880e370e2f709b4345";
+        initWidget();
+    }
+
+    cv::Mat getProcessedImage(cv::Mat inputImage)
+    {
+        m.lock();
+
+        //        cv::Mat inputGrayScale, outputImage, outputImageNormalized, outputImageNormalizedScaled;
+
+        //        // Converting to grayscale
+        //        cvtColor(inputImage, inputGrayScale, cv::COLOR_BGR2GRAY);
+
+        //        // Detect corners
+        //        outputImage = cv::Mat::zeros(inputImage.size(), CV_32FC1);
+        //        cornerHarris(inputGrayScale, outputImage, 2, 3, 0.04);
+
+        //        // Normalize
+        //        normalize(outputImage, outputImageNormalized, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
+        //        convertScaleAbs(outputImageNormalized, outputImageNormalizedScaled);
+
+        //        // Drawing corners
+        //        for(int j = 0; j < outputImageNormalized.rows ; j++){
+        //            for(int i = 0; i < outputImageNormalized.cols; i++){
+        //                if((int) outputImageNormalized.at<float>(j,i) > 100){
+        //                    circle(inputImage, cv::Point(i,j), 2,  cv::Scalar(0,0,255), 2, 8, 0 );
+        //                }
+        //            }
+        //        }
+
+        int thresh = 200;
+        int max_thresh = 255;
+
+        cv::Mat src, src_gray, outputImage;
+
+        src = inputImage;
+
+        inputImage.copyTo(outputImage);
+
+        cvtColor( src, src_gray, cv::COLOR_BGR2GRAY );
+
+        int blockSize = 2;
+        int apertureSize = 3;
+        double k = 0.04;
+        cv::Mat dst = cv::Mat::zeros( src.size(), CV_32FC1 );
+        cornerHarris( src_gray, dst, blockSize, apertureSize, k );
+        cv::Mat dst_norm, dst_norm_scaled;
+        normalize( dst, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat() );
+        convertScaleAbs( dst_norm, dst_norm_scaled );
+        for( int i = 0; i < dst_norm.rows ; i++ )
+        {
+            for( int j = 0; j < dst_norm.cols; j++ )
+            {
+                if( (int) dst_norm.at<float>(i,j) > thresh )
+                {
+                    circle( outputImage, cv::Point(j,i), 5,  cv::Scalar(0, 0, 255), 2, 8, 0 );
+                }
+            }
+        }
+
+        m.unlock();
+        return outputImage;
+    }
+
+    ~HarrisCornerDetector()
+    {
+        printf("Harris Corner Detector destroyed\n");
+    }
+
+private:
+
+    void initWidget()
+    {
+        // TODO add parameter control
+
+        BaseConfigWidget::initWidget();
+    }
+};
+
 #endif // HARRISCORNERDETECTOR_H

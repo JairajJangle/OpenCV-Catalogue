@@ -749,9 +749,9 @@ background-repeat: none;
     <addaction name="actionMotion_detection"/>
     <addaction name="actionHough_Circles"/>
     <addaction name="actionHough_Lines"/>
+    <addaction name="actionHarris_Corner_Detection"/>
     <addaction name="actionErosion_Dialation"/>
     <addaction name="actionThresholding"/>
-    <addaction name="actionHough_Transform"/>
     <addaction name="actionOptical_Flow"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -781,8 +781,14 @@ background-repeat: none;
    </property>
   </action>
   <action name="actionThresholding">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Thresholding</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionMotion_detection">
@@ -791,18 +797,30 @@ background-repeat: none;
    </property>
   </action>
   <action name="actionOptical_Flow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Optical Flow</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
-  <action name="actionHough_Transform">
+  <action name="action">
    <property name="text">
     <string>Hough Transform</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionErosion_Dialation">
    <property name="text">
     <string>Erosion and Dialation</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionCanny_Edge">
@@ -838,6 +856,11 @@ background-repeat: none;
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionHarris_Corner_Detection">
+   <property name="text">
+    <string>Harris Corner Detection</string>
    </property>
   </action>
  </widget>

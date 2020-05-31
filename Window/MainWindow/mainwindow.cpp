@@ -93,6 +93,11 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         operationSelected(HISTOGRAM_CALCULATION);
     });
+    connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
+            [=]() {
+        operationSelected(HARRIS_CORNER);
+    });
+
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 
@@ -152,6 +157,9 @@ void MainWindow::operationSelected(OPCodes opCode)
         break;
     case HISTOGRAM_CALCULATION:
         baseConfigWidget = new HistogramCalculation();
+        break;
+    case HARRIS_CORNER:
+        baseConfigWidget = new HarrisCornerDetector();
         break;
     }
 
