@@ -860,7 +860,7 @@ background-repeat: none;
   </action>
   <action name="actionHarris_Corner_Detection">
    <property name="text">
-    <string>Harris Corner Detection</string>
+    <string>Harris Corner Detection (in development)</string>
    </property>
   </action>
  </widget>
