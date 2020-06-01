@@ -78,8 +78,8 @@ public:
 
         /// Apply the Hough Transform to find the circles
         cv::HoughCircles(grayImage, circles, cv::HOUGH_GRADIENT,
-                     dp->toInt(), minDist->toDouble(), param1->toDouble(),
-                     param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
+                         dp->toInt(), minDist->toDouble(), param1->toDouble(),
+                         param2->toDouble(), minRadius->toInt(), maxRadius->toInt());
 
         /// Draw the circles detected
         for( size_t i = 0; i < circles.size(); i++ )

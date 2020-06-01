@@ -25,18 +25,18 @@
 
 class FocusAwareLineEdit : public QLineEdit
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  FocusAwareLineEdit(QWidget *parent = 0);
-  ~FocusAwareLineEdit();
+    FocusAwareLineEdit(QWidget *parent = 0);
+    ~FocusAwareLineEdit();
 
 signals:
-  void focussed(bool hasFocus);
+    void focussed(bool hasFocus);
 
 protected:
-  virtual void focusInEvent(QFocusEvent *e);
-  virtual void focusOutEvent(QFocusEvent *e);
+    virtual void focusInEvent(QFocusEvent *e);
+    virtual void focusOutEvent(QFocusEvent *e);
 };
 
 #endif // FOCUSAWARELINEEDIT_H

@@ -25,12 +25,12 @@
 #include <QRegExp>
 
 namespace Info {
-    const QString appName = "OpenCV Catalogue";
-    const QString version = "v0.2.1";
+const QString appName = "OpenCV Catalogue";
+const QString version = "v0.2.1";
 }
 
 namespace RegExps {
-     const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
+const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
 }
 
 #define GET_VARIABLE_NAME(Variable) (#Variable)

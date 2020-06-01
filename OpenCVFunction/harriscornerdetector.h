@@ -74,7 +74,7 @@ public:
                 if(static_cast<int>(inputNorm.at<float>(i,j)) > threshold)
                 {
                     circle(outputImage, cv::Point(j,i), 5,
-                           cv::Scalar(0, 0, 255), 2, 8, 0 );
+                           cv::Scalar(0, 0, 255), 2, 8, 0);
                 }
             }
         }
