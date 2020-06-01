@@ -36,7 +36,7 @@ class CaptureInputSource : public QThread
     Q_OBJECT
 public:
     //Mat to store image from camera
-   cv::Mat img, resizedImg;
+    cv::Mat img, resizedImg;
 
     std::string inputSource = "";
 
@@ -127,12 +127,12 @@ private:
     QTimer *start_cam_once_timer = new QTimer(this);
 
     //Function to convert QT res image file to OpenCVcv::Mat object
-   cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
+    cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
     {
         //double tic = double(getTickCount());
 
         QFile file(qrc);
-       cv::Mat m;
+        cv::Mat m;
         if(file.open(QIODevice::ReadOnly))
         {
             qint64 sz = file.size();
