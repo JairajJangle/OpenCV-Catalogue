@@ -34,4 +34,6 @@ inline double setPrecision(double number, int decimalPlaces)
 }
 }
 
+#define GET_VARIABLE_NAME(Variable) (#Variable)
+
 #endif // UTILS_H
