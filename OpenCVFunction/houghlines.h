@@ -24,7 +24,6 @@
 // QT libs
 #include <QRadioButton>
 #include <QCheckBox>
-#include <QComboBox>
 #include <QLineEdit>
 
 #include "CustomWidgets/baseconfigwidget.h"

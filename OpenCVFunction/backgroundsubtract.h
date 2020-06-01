@@ -30,6 +30,7 @@
 #include <QRadioButton>
 #include <QRegExpValidator>
 
+#include "Utils/utils.h"
 #include "Utils/constants.h"
 
 #include <opencv2/bgsegm.hpp>
