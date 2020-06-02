@@ -213,8 +213,6 @@ void MainWindow::GetSourceCaptureImage()
     {
         QtConcurrent::run([=]
         {
-            bool chainSuccess = true;
-
             cv::Mat outputImage;
             capturedOriginalImg.copyTo(outputImage);
             for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
@@ -224,17 +222,10 @@ void MainWindow::GetSourceCaptureImage()
                 }
                 catch(...)
                 {
-                    chainSuccess = false;
                     capturedOriginalImg.copyTo(outputImage);
+                    baseConfigWidgetChain.erase(baseConfigWidgetChain.end() - 1);
                     break;
                 }
-            }
-
-            if(!chainSuccess)
-            {
-                qDebug() << "Vector size before = " << baseConfigWidgetChain.size();
-                baseConfigWidgetChain.erase(baseConfigWidgetChain.end() - 1);
-                qDebug() << "Vector size after = " << baseConfigWidgetChain.size();
             }
 
             emit refreshOutputImageSignal(outputImage);
