@@ -97,7 +97,7 @@ private:
 
     AboutDialog* aboutDialog = nullptr;
 
-    BaseConfigWidget* baseConfigWidget = new BaseConfigWidget;
+    std::vector<BaseConfigWidget*> baseConfigWidgetChain;
 
     bool isSourceFlipped = false;
 
