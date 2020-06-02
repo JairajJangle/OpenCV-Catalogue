@@ -123,49 +123,51 @@ void MainWindow::operationSelected(OPCodes opCode)
 {
     selectedOpCode = opCode;
 
-    baseConfigWidget->setExplodedView(false);
-
     // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
 
     switch (selectedOpCode) {
     case COLOR_SPACES:
-        baseConfigWidget = new ColorSpace();
+        baseConfigWidgetChain.push_back(new ColorSpace());
         break;
     case IMAGE_FLIP:
-        baseConfigWidget = new ImageFlip();
+        baseConfigWidgetChain.push_back(new ImageFlip());
         break;
     case COLOR_PICKER:
-        baseConfigWidget = new ColorPicker();
+        baseConfigWidgetChain.push_back(new ColorPicker());
         break;
     case CANNY_EDGE:
-        baseConfigWidget = new CannyEdge();
+        baseConfigWidgetChain.push_back(new CannyEdge());
         break;
     case THRESHOLDING:
-        baseConfigWidget = new Thresholding();
+        baseConfigWidgetChain.push_back(new Thresholding());
         break;
     case BLUR:
-        baseConfigWidget = new Blur();
+        baseConfigWidgetChain.push_back(new Blur());
         break;
     case BKG_SUBTRACT:
-        baseConfigWidget = new BackgroundSubtraction();
+        baseConfigWidgetChain.push_back(new BackgroundSubtraction());
         break;
     case HOUGH_CIRCLES:
-        baseConfigWidget = new HoughCircles();
+        baseConfigWidgetChain.push_back(new HoughCircles());
         break;
     case HOUGH_LINES:
-        baseConfigWidget = new HoughLines();
+        baseConfigWidgetChain.push_back(new HoughLines());
         break;
     case HISTOGRAM_CALCULATION:
-        baseConfigWidget = new HistogramCalculation();
+        baseConfigWidgetChain.push_back(new HistogramCalculation());
         break;
     case HARRIS_CORNER:
-        baseConfigWidget = new HarrisCornerDetector();
+        baseConfigWidgetChain.push_back(new HarrisCornerDetector());
         break;
     }
 
-    ui->labelOperationName->setText(baseConfigWidget->getOperationName());
-    QWidget *configWidget = baseConfigWidget->getConfigWidget();
-    ui->scrollArea->setWidget(configWidget);
+    if(baseConfigWidgetChain.size() != 0)
+    {
+        baseConfigWidgetChain.back()->setExplodedView(false);
+        ui->labelOperationName->setText(baseConfigWidgetChain.back()->getOperationName());
+        QWidget *configWidget = baseConfigWidgetChain.back()->getConfigWidget();
+        ui->scrollArea->setWidget(configWidget);
+    }
 }
 
 void MainWindow::showAboutDialog()
@@ -211,8 +213,13 @@ void MainWindow::GetSourceCaptureImage()
     {
         QtConcurrent::run([=]
         {
-            emit refreshOutputImageSignal(baseConfigWidget->
-                                          getProcessedImage(capturedOriginalImg));
+            cv::Mat outputImage;
+            capturedOriginalImg.copyTo(outputImage);
+            for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain){
+                outputImage = baseConfigWidget->getProcessedImage(outputImage);
+            }
+
+            emit refreshOutputImageSignal(outputImage);
         });
     }
 }
@@ -272,16 +279,16 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    if(baseConfigWidget->isExplodedViewEnabled())
+    if(baseConfigWidgetChain.back()->isExplodedViewEnabled())
     {
-        if(baseConfigWidget->setExplodedView(true))
+        if(baseConfigWidgetChain.back()->setExplodedView(true))
         {
             // TODO: Change Icon to minimize
         }
     }
     else
     {
-        baseConfigWidget->setExplodedView(false);
+        baseConfigWidgetChain.back()->setExplodedView(false);
         // TODO: Change Icon to exploded
     }
 
@@ -348,12 +355,12 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
-    baseConfigWidget->begin =cv::Point(x, y);
+    baseConfigWidgetChain.back()->begin =cv::Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()
 {
-    QDesktopServices::openUrl(QUrl(baseConfigWidget->getInfoURL()));
+    QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.back()->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
