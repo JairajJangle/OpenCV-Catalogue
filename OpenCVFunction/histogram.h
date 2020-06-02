@@ -108,8 +108,9 @@ private:
         range[1] = 256;
         // TODO add parameter control
 
-        vBoxSub->addWidget(uniformCB);
-        vBoxSub->addWidget(accumulateCB);
+        // FIXME: Handle uniform false value
+//        vBoxSub->addWidget(uniformCB);
+//        vBoxSub->addWidget(accumulateCB);
 
         BaseConfigWidget::initWidget();
     }
