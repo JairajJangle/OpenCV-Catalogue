@@ -56,7 +56,6 @@ public:
             blur( outputImage, outputImage, cv::Size(3,3));
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
-        cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
         m.unlock();
         return outputImage;
