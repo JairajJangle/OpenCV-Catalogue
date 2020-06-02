@@ -25,6 +25,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QCheckBox>
 
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
@@ -47,19 +48,19 @@ public:
         std::vector<cv::Mat> bgr_planes;
         split(inputImage, bgr_planes);
 
-        int histSize = 256;
-
-        float range[] = {0, 256}; //the upper boundary is exclusive
-
         const float* histRange = {range};
-
-        bool uniform = true, accumulate = false;
 
         cv::Mat b_hist, g_hist, r_hist;
 
-        calcHist(&bgr_planes[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
-        calcHist(&bgr_planes[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
-        calcHist(&bgr_planes[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+        calcHist(&bgr_planes[0], 1, 0, cv::Mat(), b_hist, 1,
+                &histSize, &histRange, uniformCB->isChecked(),
+                accumulateCB->isChecked());
+        calcHist(&bgr_planes[1], 1, 0, cv::Mat(), g_hist, 1,
+                &histSize, &histRange, uniformCB->isChecked(),
+                accumulateCB->isChecked());
+        calcHist(&bgr_planes[2], 1, 0, cv::Mat(), r_hist, 1,
+                &histSize, &histRange, uniformCB->isChecked(),
+                accumulateCB->isChecked());
 
         int hist_w = 512, hist_h = 400;
         int bin_w = cvRound((double)hist_w/histSize);
@@ -92,10 +93,23 @@ public:
     }
 
 private:
+    int histSize = 256;
+    bool uniform = true, accumulate = false;
+
+    float range[2]; //the upper boundary is exclusive
+
+    QCheckBox* uniformCB = new QCheckBox("uniform");
+    QCheckBox* accumulateCB = new QCheckBox("accumulate");
 
     void initWidget()
     {
+        uniformCB->setChecked(true);
+        range[0] = 0; //the upper boundary is exclusive
+        range[1] = 256;
         // TODO add parameter control
+
+        vBoxSub->addWidget(uniformCB);
+        vBoxSub->addWidget(accumulateCB);
 
         BaseConfigWidget::initWidget();
     }

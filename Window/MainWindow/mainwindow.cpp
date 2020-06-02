@@ -247,13 +247,18 @@ void MainWindow::refreshInputImage(cv::Mat img)
 
 void MainWindow::refreshOutputImage(const cv::Mat img)
 {
+    cv::Mat outputImage;
+    img.copyTo(outputImage);
     try
     {
-        cvtColor(img, img, cv::COLOR_BGR2RGB);
+        if(outputImage.type() == CV_8UC1)
+            cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
+
+        cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        img.data, img.cols,
-                        img.rows, img.step,
+                        outputImage.data, outputImage.cols,
+                        outputImage.rows, outputImage.step,
                         QImage::Format_RGB888));
 
         ui->labelOutput->setPixmap(OpenCV2QTOP);

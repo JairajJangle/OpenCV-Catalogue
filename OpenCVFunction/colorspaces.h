@@ -58,8 +58,6 @@ public:
              * Converting to 3 channel matrix is
              * important to display as QPixMap in QLabel
              */
-            if(selectedColorCode == cv::COLOR_BGR2GRAY)
-                cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
         }
 
         m.unlock();
