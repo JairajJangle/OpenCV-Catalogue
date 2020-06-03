@@ -44,7 +44,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
         m.lock();
 
@@ -56,10 +56,14 @@ public:
             QString currentAnchorText = QString::number(begin.x)
                     + ", " + QString::number(begin.y);
 
-            if(anchorLineEditLayout->getText() != currentAnchorText)
+            // FIXME: Add focus change String assignment and then use it here
+            if(prevAnchorText != currentAnchorText)
+            {
                 anchorLineEditLayout->setText(currentAnchorText);
+                prevAnchorText = currentAnchorText;
+            }
 
-            errorLabel->hide();
+//            errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
 
             m.unlock();
@@ -67,16 +71,25 @@ public:
         }
         else
         {
-            errorLabel->show();
-            errorLabel->setText("Kernel Size should be < Anchor");
-            if(kSize.width <= 0 || kSize.height <= 0)
-                errorLabel->setText("Kernel Size should not be <= 0");
+//            errorLabel->show();
+//            errorLabel->setText("Kernel Size should be < Anchor");
+//            if(kSize.width <= 0 || kSize.height <= 0)
+//                errorLabel->setText("Kernel Size should not be <= 0");
 
             m.unlock();
             return inputImage;
         }
 
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
     ~Blur()
     {
@@ -114,6 +127,8 @@ private:
     QPushButton* resetAnchorButton = new QPushButton("Reset Anchor Position");
 
     ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
+
+    QString prevAnchorText = "";
 
     void initWidget()
     {
