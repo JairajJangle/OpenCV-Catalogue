@@ -57,7 +57,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
         m.lock();
 
@@ -98,6 +98,15 @@ public:
         m.unlock();
         return inputImage;
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
     ~HoughCircles()
     {
