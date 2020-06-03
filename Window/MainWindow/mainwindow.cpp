@@ -217,11 +217,26 @@ void MainWindow::GetSourceCaptureImage()
             capturedOriginalImg.copyTo(outputImage);
             for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
             {
+                bool isChainSuccess = false;
                 try{
                     outputImage = baseConfigWidget->getProcessedImage(outputImage);
+                    isChainSuccess = true;
                 }
-                catch(...)
+                catch(cv::Exception& e)
                 {
+                    qDebug() << e.what();
+                }
+                catch(std::exception& e)
+                {
+                    qDebug() << e.what();
+                }
+                catch(std::string &error)
+                {
+                    qDebug() << QString::fromStdString(error);
+                }
+                if(!isChainSuccess)
+                {
+                    qDebug() << "Errored Operation removed from Chain";
                     capturedOriginalImg.copyTo(outputImage);
                     baseConfigWidgetChain.erase(baseConfigWidgetChain.end() - 1);
                     break;
