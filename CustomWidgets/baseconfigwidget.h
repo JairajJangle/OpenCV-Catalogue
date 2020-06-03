@@ -43,6 +43,7 @@ private:
     QWidget *wgtSub = new QWidget();
 
 protected:
+    // TODO: Check need of mutex, probably not required -> remove
     QMutex m;
 
     QWidget *wgtMain = new QWidget();
