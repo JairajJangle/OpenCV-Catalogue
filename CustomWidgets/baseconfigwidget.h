@@ -126,7 +126,8 @@ public:
     /*
      * Override this function in individual operation classes
      */
-    virtual cv::Mat getProcessedImage(cv::Mat inputImage){
+    virtual cv::Mat getProcessedImage(cv::Mat inputImage)try
+    {
         m.lock(); // Lock mutex at function start
 
         // Do Operations
@@ -134,6 +135,15 @@ public:
         m.unlock(); // Unlock mutex before return
         return inputImage;
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name()); // Append class name
+}
 
     /*
      * Super call this function at the end of overriden initWidget() function in
