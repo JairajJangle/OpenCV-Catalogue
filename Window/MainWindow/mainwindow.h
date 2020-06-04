@@ -115,5 +115,7 @@ private:
             aboutDialog->close();
         }
     }
+
+    void setParamAdjustWidget();
 };
 #endif // MAINWINDOW_H

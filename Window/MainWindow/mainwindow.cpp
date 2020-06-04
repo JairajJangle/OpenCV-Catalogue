@@ -161,10 +161,17 @@ void MainWindow::operationSelected(OPCodes opCode)
         break;
     }
 
-    if(baseConfigWidgetChain.size() != 0)
+    setParamAdjustWidget();
+}
+
+void MainWindow::setParamAdjustWidget()
+{
+    if(!baseConfigWidgetChain.empty())
     {
         baseConfigWidgetChain.back()->setExplodedView(false);
         ui->labelOperationName->setText(baseConfigWidgetChain.back()->getOperationName());
+
+        qDebug() << "Chain size = " << baseConfigWidgetChain.size();
         QWidget *configWidget = baseConfigWidgetChain.back()->getConfigWidget();
         ui->scrollArea->setWidget(configWidget);
     }
@@ -215,9 +222,10 @@ void MainWindow::GetSourceCaptureImage()
         {
             cv::Mat outputImage;
             capturedOriginalImg.copyTo(outputImage);
+            bool isChainSuccess = false;
             for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
             {
-                bool isChainSuccess = false;
+                isChainSuccess = false;
                 try{
                     outputImage = baseConfigWidget->getProcessedImage(outputImage);
                     isChainSuccess = true;
@@ -244,6 +252,8 @@ void MainWindow::GetSourceCaptureImage()
             }
 
             emit refreshOutputImageSignal(outputImage);
+            if(!isChainSuccess)
+                setParamAdjustWidget();
         });
     }
 }
@@ -303,19 +313,21 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    if(baseConfigWidgetChain.back()->isExplodedViewEnabled())
+    if(!baseConfigWidgetChain.empty())
     {
-        if(baseConfigWidgetChain.back()->setExplodedView(true))
+        if(baseConfigWidgetChain.back()->isExplodedViewEnabled())
         {
-            // TODO: Change Icon to minimize
+            if(baseConfigWidgetChain.back()->setExplodedView(true))
+            {
+                // TODO: Change Icon to minimize
+            }
+        }
+        else
+        {
+            baseConfigWidgetChain.back()->setExplodedView(false);
+            // TODO: Change Icon to exploded
         }
     }
-    else
-    {
-        baseConfigWidgetChain.back()->setExplodedView(false);
-        // TODO: Change Icon to exploded
-    }
-
 }
 
 void MainWindow::sourceRadioButtonClicked(){
@@ -379,12 +391,14 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
-    baseConfigWidgetChain.back()->begin =cv::Point(x, y);
+    if(!baseConfigWidgetChain.empty())
+        baseConfigWidgetChain.back()->begin =cv::Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()
 {
-    QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.back()->getInfoURL()));
+    if(!baseConfigWidgetChain.empty())
+        QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.back()->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
