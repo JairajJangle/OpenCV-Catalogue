@@ -79,7 +79,7 @@ public:
      */
     QWidget* getConfigWidget()
     {
-        return configWidget;
+        return scrl;
     }
 
     /*
@@ -155,7 +155,7 @@ public:
         wgtMain->setMinimumWidth(410);
         scrl->setWidget(wgtMain);
 //        scrl->setFrameShape(QFrame::NoFrame);
-        configWidget = scrl;
+//        configWidget = scrl;
     }
 };
 
