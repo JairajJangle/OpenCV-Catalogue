@@ -174,6 +174,8 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         if(!isWidgetRemoved){
+            ui->vBoxChainMenu->addWidget(
+                        new QLabel(baseConfigWidgetChain.back()->getOperationName()));
             QScrollArea* scrollArea = new QScrollArea();
 
             scrollArea->setWidget(
@@ -183,12 +185,16 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         }
         else
         {
+            ui->vBoxChainMenu->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
             ui->stackedWidget->removeWidget(
                         ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+            ui->vBoxChainMenu->update();
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
     }
+    else
+        qDebug() << "baseConfigWidgetChain is empty";
 }
 
 void MainWindow::showAboutDialog()
@@ -265,7 +271,7 @@ void MainWindow::GetSourceCaptureImage()
                     baseConfigWidget->~BaseConfigWidget();
                     baseConfigWidgetChain.removeLast();
                     paramWidgetSetSignal(true);
-//                    setParamAdjustWidget(true);
+                    //                    setParamAdjustWidget(true);
                     break;
                 }
             }
