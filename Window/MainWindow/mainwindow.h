@@ -79,9 +79,11 @@ private slots:
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
     void refreshOutputImage(const cv::Mat img);
+    void setParamAdjustWidget(bool isWidgetRemoved = false);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
+    void paramWidgetSetSignal(bool isWidgetRemoved);
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -97,7 +99,7 @@ private:
 
     AboutDialog* aboutDialog = nullptr;
 
-    std::vector<BaseConfigWidget*> baseConfigWidgetChain;
+    QList<BaseConfigWidget*> baseConfigWidgetChain;
 
     bool isSourceFlipped = false;
 
@@ -115,7 +117,5 @@ private:
             aboutDialog->close();
         }
     }
-
-    void setParamAdjustWidget();
 };
 #endif // MAINWINDOW_H

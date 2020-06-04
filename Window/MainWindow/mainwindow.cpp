@@ -52,11 +52,6 @@ MainWindow::MainWindow(QWidget *parent)
             [=]() {
         operationSelected(COLOR_SPACES);
     });
-
-    connect(ui->actionColorSpace, &QAction::triggered, this,
-            [=]() {
-        operationSelected(COLOR_SPACES);
-    });
     connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
         operationSelected(IMAGE_FLIP);
@@ -98,8 +93,10 @@ MainWindow::MainWindow(QWidget *parent)
         operationSelected(HARRIS_CORNER);
     });
 
-
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
+
+    connect(this, SIGNAL(paramWidgetSetSignal(bool)),
+            this, SLOT(setParamAdjustWidget(bool)));
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
@@ -121,50 +118,53 @@ void MainWindow::initUI(){
 
 void MainWindow::operationSelected(OPCodes opCode)
 {
+    if(selectedOpCode == NONE)
+        ui->stackedWidget->removeWidget(
+                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
     selectedOpCode = opCode;
 
     // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
 
     switch (selectedOpCode) {
     case COLOR_SPACES:
-        baseConfigWidgetChain.push_back(new ColorSpace());
+        baseConfigWidgetChain.append(new ColorSpace());
         break;
     case IMAGE_FLIP:
-        baseConfigWidgetChain.push_back(new ImageFlip());
+        baseConfigWidgetChain.append(new ImageFlip());
         break;
     case COLOR_PICKER:
-        baseConfigWidgetChain.push_back(new ColorPicker());
+        baseConfigWidgetChain.append(new ColorPicker());
         break;
     case CANNY_EDGE:
-        baseConfigWidgetChain.push_back(new CannyEdge());
+        baseConfigWidgetChain.append(new CannyEdge());
         break;
     case THRESHOLDING:
-        baseConfigWidgetChain.push_back(new Thresholding());
+        baseConfigWidgetChain.append(new Thresholding());
         break;
     case BLUR:
-        baseConfigWidgetChain.push_back(new Blur());
+        baseConfigWidgetChain.append(new Blur());
         break;
     case BKG_SUBTRACT:
-        baseConfigWidgetChain.push_back(new BackgroundSubtraction());
+        baseConfigWidgetChain.append(new BackgroundSubtraction());
         break;
     case HOUGH_CIRCLES:
-        baseConfigWidgetChain.push_back(new HoughCircles());
+        baseConfigWidgetChain.append(new HoughCircles());
         break;
     case HOUGH_LINES:
-        baseConfigWidgetChain.push_back(new HoughLines());
+        baseConfigWidgetChain.append(new HoughLines());
         break;
     case HISTOGRAM_CALCULATION:
-        baseConfigWidgetChain.push_back(new HistogramCalculation());
+        baseConfigWidgetChain.append(new HistogramCalculation());
         break;
     case HARRIS_CORNER:
-        baseConfigWidgetChain.push_back(new HarrisCornerDetector());
+        baseConfigWidgetChain.append(new HarrisCornerDetector());
         break;
     }
 
     setParamAdjustWidget();
 }
 
-void MainWindow::setParamAdjustWidget()
+void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
 {
     if(!baseConfigWidgetChain.empty())
     {
@@ -172,8 +172,22 @@ void MainWindow::setParamAdjustWidget()
         ui->labelOperationName->setText(baseConfigWidgetChain.back()->getOperationName());
 
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
-        QWidget *configWidget = baseConfigWidgetChain.back()->getConfigWidget();
-        ui->scrollArea->setWidget(configWidget);
+
+        if(!isWidgetRemoved){
+            QScrollArea* scrollArea = new QScrollArea();
+
+            scrollArea->setWidget(
+                        baseConfigWidgetChain.back()->getConfigWidget());
+
+            ui->stackedWidget->addWidget(scrollArea);
+        }
+        else
+        {
+            ui->stackedWidget->removeWidget(
+                        ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+        }
+
+        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
     }
 }
 
@@ -245,15 +259,18 @@ void MainWindow::GetSourceCaptureImage()
                 if(!isChainSuccess)
                 {
                     qDebug() << "Errored Operation removed from Chain";
+
                     capturedOriginalImg.copyTo(outputImage);
-                    baseConfigWidgetChain.erase(baseConfigWidgetChain.end() - 1);
+
+                    baseConfigWidget->~BaseConfigWidget();
+                    baseConfigWidgetChain.removeLast();
+                    paramWidgetSetSignal(true);
+//                    setParamAdjustWidget(true);
                     break;
                 }
             }
 
             emit refreshOutputImageSignal(outputImage);
-            if(!isChainSuccess)
-                setParamAdjustWidget();
         });
     }
 }
@@ -313,6 +330,8 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
+    qDebug() << typeid(baseConfigWidgetChain.last()).name();
+
     if(!baseConfigWidgetChain.empty())
     {
         if(baseConfigWidgetChain.back()->isExplodedViewEnabled())

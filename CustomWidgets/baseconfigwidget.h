@@ -152,7 +152,9 @@ public:
     virtual void initWidget()
     {
         vboxMain->addWidget(wgtSub);
+        wgtMain->setMinimumWidth(410);
         scrl->setWidget(wgtMain);
+//        scrl->setFrameShape(QFrame::NoFrame);
         configWidget = scrl;
     }
 };

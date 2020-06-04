@@ -46,7 +46,7 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
+//        m.lock();
 
         cv::Mat outputImage;
 
@@ -57,7 +57,7 @@ public:
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
 
-        m.unlock();
+//        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){
