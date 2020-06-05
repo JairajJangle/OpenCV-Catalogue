@@ -104,6 +104,11 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::initUI(){
+    vboxMain->addWidget(wgtSub);
+    wgtMain->setMinimumWidth(410);
+    ui->scrollAreaChainMenu->setWidget(wgtMain);
+    vBoxSub->setAlignment(Qt::AlignTop);
+
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -174,7 +179,7 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         if(!isWidgetRemoved){
-            ui->vBoxChainMenu->addWidget(
+            vBoxSub->addWidget(
                         new QLabel(baseConfigWidgetChain.back()->getOperationName()));
             QScrollArea* scrollArea = new QScrollArea();
 
@@ -185,10 +190,10 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         }
         else
         {
-            ui->vBoxChainMenu->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
+            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
             ui->stackedWidget->removeWidget(
                         ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
-            ui->vBoxChainMenu->update();
+            vBoxSub->update();
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
@@ -379,7 +384,7 @@ void MainWindow::browseClicked()
 
 void MainWindow::sourceSelectClicked()
 {
-    std::cout << "Source Select Clicked!!" << std::endl;
+    qDebug() << "Source Select Clicked!!";
     QString path = ui->textInputSource->toPlainText();
     if(ui->fileRadioButton->isChecked()){
         QFileInfo check_file(path);
@@ -408,7 +413,7 @@ void MainWindow::sourceSelectClicked()
         connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
     }
     else{
-        std::cout << "Cam Thread already running!!" << std::endl;
+        qDebug() << "Cam Thread already running!!";
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }

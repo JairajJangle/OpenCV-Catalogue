@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
+    <width>1125</width>
     <height>942</height>
    </rect>
   </property>
@@ -278,7 +278,7 @@ background-repeat: none;
             <height>499</height>
            </size>
           </property>
-          <widget class="QWidget" name="Page1" native="true">
+          <widget class="QWidget" name="Page1">
            <layout class="QVBoxLayout" name="verticalLayout">
             <property name="spacing">
              <number>0</number>
@@ -302,8 +302,8 @@ background-repeat: none;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>410</width>
-                 <height>495</height>
+                 <width>390</width>
+                 <height>475</height>
                 </rect>
                </property>
                <property name="minimumSize">
@@ -329,6 +329,204 @@ background-repeat: none;
             </item>
            </layout>
           </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" rowspan="2">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="1">
+         <widget class="ClickableLabel" name="labelOutput">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>640</width>
+            <height>480</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 1px solid black</string>
+          </property>
+          <property name="text">
+           <string>No input source selected</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="2">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>   Output</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="buttonExplodedView">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Open undocked views</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">#buttonExplodedView
+{
+background-color: transparent;
+border-image: url(:/assets/undock.png);
+background: none;
+border: none;
+background-repeat: none;
+}
+#buttonExplodedView:pressed
+{
+background-color: transparent;
+border-image: url(:/assets/undock_sel.png);
+background: none;
+border: none;
+background-repeat: none;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="9" column="0" rowspan="6" colspan="2">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QScrollArea" name="scrollAreaChainMenu">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>668</width>
+             <height>141</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="lineAboveUserMessage">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelUserMessage">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </item>
        </layout>
@@ -497,33 +695,6 @@ background-repeat: none;
           </item>
          </layout>
         </item>
-        <item row="4" column="1" rowspan="2">
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="checkBoxMirror">
-            <property name="text">
-             <string>Mirror</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item row="4" column="0">
          <spacer name="horizontalSpacer_7">
           <property name="orientation">
@@ -537,202 +708,41 @@ background-repeat: none;
           </property>
          </spacer>
         </item>
-       </layout>
-      </item>
-      <item row="0" column="0" rowspan="2">
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="4" column="1">
-         <spacer name="verticalSpacer_6">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="4" column="1" rowspan="2">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="verticalSpacing">
+           <number>7</number>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="1">
-         <spacer name="verticalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="1">
-         <widget class="ClickableLabel" name="labelOutput">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>640</width>
-            <height>480</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border: 1px solid black</string>
-          </property>
-          <property name="text">
-           <string>No input source selected</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="3" column="2">
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="minimumSize">
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>0</width>
-              <height>40</height>
+              <width>10</width>
+              <height>10</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>   Output</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-            </property>
-           </widget>
+           </spacer>
           </item>
-          <item>
-           <widget class="QPushButton" name="buttonExplodedView">
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="checkBoxMirror">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Open undocked views</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">#buttonExplodedView
-{
-background-color: transparent;
-border-image: url(:/assets/undock.png);
-background: none;
-border: none;
-background-repeat: none;
-}
-#buttonExplodedView:pressed
-{
-background-color: transparent;
-border-image: url(:/assets/undock_sel.png);
-background: none;
-border: none;
-background-repeat: none;
-}</string>
-            </property>
             <property name="text">
-             <string/>
+             <string>Mirror</string>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-       </layout>
-      </item>
-      <item row="9" column="0" rowspan="6" colspan="2">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <layout class="QVBoxLayout" name="vBoxChainMenu"/>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="Line" name="lineAboveUserMessage">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelUserMessage">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
         </item>
        </layout>
       </item>
@@ -745,7 +755,7 @@ background-repeat: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1080</width>
+     <width>1125</width>
      <height>26</height>
     </rect>
    </property>

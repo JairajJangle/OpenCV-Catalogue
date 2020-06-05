@@ -117,5 +117,10 @@ private:
             aboutDialog->close();
         }
     }
+
+    QWidget *wgtMain = new QWidget();
+    QWidget *wgtSub = new QWidget();
+    QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 };
 #endif // MAINWINDOW_H
