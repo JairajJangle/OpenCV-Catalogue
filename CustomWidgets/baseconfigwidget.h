@@ -47,7 +47,6 @@ protected:
     QMutex m;
 
     QWidget *wgtMain = new QWidget();
-    QWidget* configWidget;
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
