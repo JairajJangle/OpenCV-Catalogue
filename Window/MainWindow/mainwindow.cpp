@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI(){
     vboxMain->addWidget(wgtSub);
-    wgtMain->setMinimumWidth(410);
+//    wgtMain->setMinimumWidth(410);
     ui->scrollAreaChainMenu->setWidget(wgtMain);
     vBoxSub->setAlignment(Qt::AlignTop);
 
