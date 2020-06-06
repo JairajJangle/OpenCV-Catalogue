@@ -20,6 +20,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 
 #include "Utils/constants.h"
 
@@ -187,6 +188,9 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
                         baseConfigWidgetChain.back()->getConfigWidget());
 
             ui->stackedWidget->addWidget(scrollArea);
+
+            ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
+            vBoxSub->addWidget(chainMenuWidget);
         }
         else
         {
@@ -342,6 +346,10 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 void MainWindow::showHideExplodedView()
 {
     qDebug() << typeid(baseConfigWidgetChain.last()).name();
+
+    baseConfigWidgetChain.back()->~BaseConfigWidget();
+    baseConfigWidgetChain.removeLast();
+    paramWidgetSetSignal(true);
 
     if(!baseConfigWidgetChain.empty())
     {
