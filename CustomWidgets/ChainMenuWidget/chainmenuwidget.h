@@ -19,6 +19,8 @@ public:
 
     void setAddButonEnabled(bool enabled);
     void setRemoveButtonEnabled(bool enabled);
+    void setComboBoxEnabled(bool enabled);
+    void setEnabled(bool enabled);
 
     ~ChainMenuWidget();
 

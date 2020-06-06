@@ -32,6 +32,16 @@ void ChainMenuWidget::setRemoveButtonEnabled(bool enabled)
 {
     ui->buttonRemove->setEnabled(enabled);
 }
+void ChainMenuWidget::setComboBoxEnabled(bool enabled)
+{
+    ui->comboBox->setEnabled(enabled);
+}
+void ChainMenuWidget::setEnabled(bool enabled)
+{
+    setAddButonEnabled(enabled);
+    setRemoveButtonEnabled(enabled);
+    setComboBoxEnabled(enabled);
+}
 
 ChainMenuWidget::~ChainMenuWidget()
 {

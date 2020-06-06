@@ -128,9 +128,14 @@ background-color: #ffffff;
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton 
+        <string notr="true">#buttonAdd
 {
  color: green;
+}
+#buttonAdd:disabled
+{
+ color: #787878;
+background-color: #ffffff;
 }</string>
        </property>
        <property name="text">
