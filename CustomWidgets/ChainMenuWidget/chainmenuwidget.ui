@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>324</width>
+    <width>270</width>
     <height>60</height>
    </rect>
   </property>
@@ -36,9 +36,19 @@
     <number>12</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,10,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,10,1">
+     <property name="spacing">
+      <number>2</number>
+     </property>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QRadioButton" name="radioButton">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonRemove">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -47,7 +57,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>40</width>
+         <width>35</width>
          <height>16777215</height>
         </size>
        </property>
@@ -59,9 +69,14 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton 
+        <string notr="true">#buttonRemove 
 {
  color: red;
+}
+#buttonRemove:disabled
+{
+ color: #787878;
+background-color: #ffffff;
 }</string>
        </property>
        <property name="text">
@@ -77,6 +92,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>175</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -86,7 +107,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="buttonAdd">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -95,7 +116,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>40</width>
+         <width>35</width>
          <height>16777215</height>
         </size>
        </property>
