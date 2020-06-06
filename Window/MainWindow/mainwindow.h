@@ -30,6 +30,7 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrent>
+#include <QGroupBox>
 
 #include <iostream>
 
@@ -50,6 +51,7 @@
 #include "Window/AboutDialog/aboutdialog.h"
 
 #include "CustomWidgets/HybridSlider/hybridslider.h"
+#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -62,7 +64,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
+    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER};
 
@@ -74,7 +76,7 @@ private slots:
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
-    void operationSelected(OPCodes opCode);
+    void operationChanged(OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
@@ -90,6 +92,8 @@ public:
     ~MainWindow();
 
 private:
+    QScrollArea* noOperationWidget = new QScrollArea();
+
     OPCodes selectedOpCode = NONE;
 
     Ui::MainWindow *ui;
@@ -122,5 +126,10 @@ private:
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
     QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
+
+    QList<QPair<int, QString>> chainMenuOpList;
+    QList<ChainMenuWidget*> chainMenuWidgetList;
+
+    void configChainMenuList();
 };
 #endif // MAINWINDOW_H
