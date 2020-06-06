@@ -20,9 +20,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
-
-#include "Utils/constants.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     initUI();
+
+    configChainMenuList();
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
@@ -51,47 +50,47 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
-        operationSelected(COLOR_SPACES);
+        operationChanged(COLOR_SPACES);
     });
     connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
-        operationSelected(IMAGE_FLIP);
+        operationChanged(IMAGE_FLIP);
     });
     connect(ui->actionColor_Picker, &QAction::triggered, this,
             [=]() {
-        operationSelected(COLOR_PICKER);
+        operationChanged(COLOR_PICKER);
     });
     connect(ui->actionThresholding, &QAction::triggered, this,
             [=]() {
-        operationSelected(THRESHOLDING);
+        operationChanged(THRESHOLDING);
     });
     connect(ui->actionCanny_Edge, &QAction::triggered, this,
             [=]() {
-        operationSelected(CANNY_EDGE);
+        operationChanged(CANNY_EDGE);
     });
     connect(ui->actionBlur, &QAction::triggered, this,
             [=]() {
-        operationSelected(BLUR);
+        operationChanged(BLUR);
     });
     connect(ui->actionMotion_detection, &QAction::triggered, this,
             [=]() {
-        operationSelected(BKG_SUBTRACT);
+        operationChanged(BKG_SUBTRACT);
     });
     connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
-        operationSelected(HOUGH_CIRCLES);
+        operationChanged(HOUGH_CIRCLES);
     });
     connect(ui->actionHough_Lines, &QAction::triggered, this,
             [=]() {
-        operationSelected(HOUGH_LINES);
+        operationChanged(HOUGH_LINES);
     });
     connect(ui->actionHistogram, &QAction::triggered, this,
             [=]() {
-        operationSelected(HISTOGRAM_CALCULATION);
+        operationChanged(HISTOGRAM_CALCULATION);
     });
     connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
             [=]() {
-        operationSelected(HARRIS_CORNER);
+        operationChanged(HARRIS_CORNER);
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
@@ -102,11 +101,13 @@ MainWindow::MainWindow(QWidget *parent)
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
+
+    operationChanged(NONE);
 }
 
 void MainWindow::initUI(){
     vboxMain->addWidget(wgtSub);
-//    wgtMain->setMinimumWidth(410);
+    //    wgtMain->setMinimumWidth(410);
     ui->scrollAreaChainMenu->setWidget(wgtMain);
     vBoxSub->setAlignment(Qt::AlignTop);
 
@@ -120,18 +121,22 @@ void MainWindow::initUI(){
     sourceRadioButtonClicked();
 
     setUserMessage("Initializing Done", INFO);
+
+    noOperationWidget = ui->scrollArea;
 }
 
-void MainWindow::operationSelected(OPCodes opCode)
+void MainWindow::operationChanged(OPCodes opCode)
 {
     if(selectedOpCode == NONE)
         ui->stackedWidget->removeWidget(
                     ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
     selectedOpCode = opCode;
 
-    // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
-
-    switch (selectedOpCode) {
+    switch (selectedOpCode)
+    {
+    case NONE:
+        baseConfigWidgetChain.append(new BaseConfigWidget());
+        break;
     case COLOR_SPACES:
         baseConfigWidgetChain.append(new ColorSpace());
         break;
@@ -180,8 +185,6 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         if(!isWidgetRemoved){
-            vBoxSub->addWidget(
-                        new QLabel(baseConfigWidgetChain.back()->getOperationName()));
             QScrollArea* scrollArea = new QScrollArea();
 
             scrollArea->setWidget(
@@ -189,8 +192,8 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
 
             ui->stackedWidget->addWidget(scrollArea);
 
-            ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
-            vBoxSub->addWidget(chainMenuWidget);
+            ChainMenuWidget* chainMenuWidget = new ChainMenuWidget(this, chainMenuOpList);
+            chainMenuWidgetList.append(chainMenuWidget);
         }
         else
         {
@@ -198,9 +201,14 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
             ui->stackedWidget->removeWidget(
                         ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
             vBoxSub->update();
+
+            chainMenuWidgetList.removeLast();
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+        if(chainMenuWidgetList.size() == 1)
+            chainMenuWidgetList.last()->setRemoveButtonEnabled(false);
+        vBoxSub->addWidget(chainMenuWidgetList.last());
     }
     else
         qDebug() << "baseConfigWidgetChain is empty";
@@ -463,6 +471,22 @@ QPoint MainWindow::getWindowCenter()
     position.setX(this->geometry().x() + this->geometry().width()/2);
     position.setY(this->geometry().y() + this->geometry().height()/2);
     return  position;
+}
+
+void MainWindow::configChainMenuList()
+{
+    chainMenuOpList.append(QPair<OPCodes, QString>(NONE ,BaseConfigWidget().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_SPACES ,ColorSpace().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(IMAGE_FLIP ,ImageFlip().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_PICKER ,ColorPicker().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(THRESHOLDING ,Thresholding().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(CANNY_EDGE ,CannyEdge().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(BLUR ,Blur().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_CIRCLES ,HoughCircles().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
 }
 
 MainWindow::~MainWindow()
