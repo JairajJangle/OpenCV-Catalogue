@@ -192,7 +192,22 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
 
             ui->stackedWidget->addWidget(scrollArea);
 
+            /*
+             * Make Add and Remove buttons disabled for previous chain menu widgets
+             * Support for same is planned in future
+             */
+            if(chainMenuWidgetList.size() != 0)
+            {
+                chainMenuWidgetList.last()->setEnabled(false);
+            }
+
             ChainMenuWidget* chainMenuWidget = new ChainMenuWidget(this, chainMenuOpList);
+
+            connect(chainMenuWidget, &ChainMenuWidget::addOperationClicked, this,
+                    [=](){
+                operationChanged(NONE);
+            });
+
             chainMenuWidgetList.append(chainMenuWidget);
         }
         else
@@ -206,8 +221,14 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+
+        /*
+         * Configure Add and Remove buttons after additiona dn removal of
+         * Operation from Operation chain
+         */
         if(chainMenuWidgetList.size() == 1)
             chainMenuWidgetList.last()->setRemoveButtonEnabled(false);
+        chainMenuWidgetList.last()->setEnabled(true);
         vBoxSub->addWidget(chainMenuWidgetList.last());
     }
     else
