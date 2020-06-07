@@ -75,7 +75,7 @@ private slots:
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
-    void operationChanged(OPCodes opCode);
+    void addOperation(OPCodes opCode = NONE);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
@@ -92,8 +92,6 @@ public:
 
 private:
     QScrollArea* noOperationWidget = new QScrollArea();
-
-    OPCodes selectedOpCode = NONE;
 
     Ui::MainWindow *ui;
 
