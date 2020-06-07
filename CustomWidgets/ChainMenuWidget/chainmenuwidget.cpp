@@ -1,5 +1,6 @@
 #include "chainmenuwidget.h"
 #include "ui_chainmenuwidget.h"
+//#include <QDebug>
 
 ChainMenuWidget::ChainMenuWidget(QWidget *parent,
                                  QList<QPair<int, QString>> chainMenuOpList) :
@@ -22,7 +23,16 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent,
             [=](){
         emit removeOperationClicked();
     });
+
+//    connect(ui->comboBox, SIGNAL(activated(int)),
+//            this, SLOT(operationChangedSlot(int)));
 }
+
+//void ChainMenuWidget::operationChangedSlot(int index)
+//{
+//    qDebug() << "Current Combo Box = " << index;
+//    emit operationChangedSignal(index);
+//}
 
 void ChainMenuWidget::setAddButonEnabled(bool enabled)
 {
