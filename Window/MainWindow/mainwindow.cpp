@@ -50,47 +50,47 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
-        operationChanged(COLOR_SPACES);
+        addOperation(COLOR_SPACES);
     });
     connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
-        operationChanged(IMAGE_FLIP);
+        addOperation(IMAGE_FLIP);
     });
     connect(ui->actionColor_Picker, &QAction::triggered, this,
             [=]() {
-        operationChanged(COLOR_PICKER);
+        addOperation(COLOR_PICKER);
     });
     connect(ui->actionThresholding, &QAction::triggered, this,
             [=]() {
-        operationChanged(THRESHOLDING);
+        addOperation(THRESHOLDING);
     });
     connect(ui->actionCanny_Edge, &QAction::triggered, this,
             [=]() {
-        operationChanged(CANNY_EDGE);
+        addOperation(CANNY_EDGE);
     });
     connect(ui->actionBlur, &QAction::triggered, this,
             [=]() {
-        operationChanged(BLUR);
+        addOperation(BLUR);
     });
     connect(ui->actionMotion_detection, &QAction::triggered, this,
             [=]() {
-        operationChanged(BKG_SUBTRACT);
+        addOperation(BKG_SUBTRACT);
     });
     connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
-        operationChanged(HOUGH_CIRCLES);
+        addOperation(HOUGH_CIRCLES);
     });
     connect(ui->actionHough_Lines, &QAction::triggered, this,
             [=]() {
-        operationChanged(HOUGH_LINES);
+        addOperation(HOUGH_LINES);
     });
     connect(ui->actionHistogram, &QAction::triggered, this,
             [=]() {
-        operationChanged(HISTOGRAM_CALCULATION);
+        addOperation(HISTOGRAM_CALCULATION);
     });
     connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
             [=]() {
-        operationChanged(HARRIS_CORNER);
+        addOperation(HARRIS_CORNER);
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
 
-    operationChanged(NONE);
+    addOperation(NONE);
 }
 
 void MainWindow::initUI(){
@@ -124,14 +124,9 @@ void MainWindow::initUI(){
     noOperationWidget = ui->scrollArea;
 }
 
-void MainWindow::operationChanged(OPCodes opCode)
+void MainWindow::addOperation(OPCodes opCode)
 {
-    //        ui->stackedWidget->removeWidget(
-    //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
-
-    selectedOpCode = opCode;
-
-    switch (selectedOpCode)
+    switch (opCode)
     {
     case NONE:
         baseConfigWidgetChain.append(new BaseConfigWidget());
@@ -196,7 +191,7 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
                     &ChainMenuWidget::addOperationClicked,
                     this,
                     [=](){
-                operationChanged(NONE);
+                addOperation(NONE);
             });
 
             connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
