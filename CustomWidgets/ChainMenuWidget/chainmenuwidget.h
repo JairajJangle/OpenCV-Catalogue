@@ -22,12 +22,15 @@ public:
     void setComboBoxEnabled(bool enabled);
     void setEnabled(bool enabled);
 
+//private slots:
+//    void operationChangedSlot(int); // OpCode
+
     ~ChainMenuWidget();
 
 signals:
     void addOperationClicked();
     void removeOperationClicked();
-    void operationChanged(int chainMenuOpListIndex); // or OpCode
+//    void operationChangedSignal(int chainMenuOpListIndex); // or OpCode
 
 private:
     Ui::ChainMenuWidget *ui;
