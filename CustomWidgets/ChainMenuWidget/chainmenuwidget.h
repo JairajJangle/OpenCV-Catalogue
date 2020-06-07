@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPair>
 
+#include "Utils/utils.h"
+
 namespace Ui {
 class ChainMenuWidget;
 }
@@ -13,14 +15,13 @@ class ChainMenuWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ChainMenuWidget(QWidget *parent = nullptr,
-                             QList<QPair<int, QString>> chainMenuOpList =
-            QList<QPair<int, QString>>() << QPair<int, QString>(0 ,""));
+    explicit ChainMenuWidget(QWidget *parent = nullptr);
 
     void setAddButonEnabled(bool enabled);
     void setRemoveButtonEnabled(bool enabled);
     void setComboBoxEnabled(bool enabled);
     void setEnabled(bool enabled);
+    void setCurrentOperation(QString operationName);
 
 //private slots:
 //    void operationChangedSlot(int); // OpCode

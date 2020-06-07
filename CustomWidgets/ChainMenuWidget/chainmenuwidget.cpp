@@ -2,8 +2,7 @@
 #include "ui_chainmenuwidget.h"
 //#include <QDebug>
 
-ChainMenuWidget::ChainMenuWidget(QWidget *parent,
-                                 QList<QPair<int, QString>> chainMenuOpList) :
+ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ChainMenuWidget)
 {
@@ -51,6 +50,10 @@ void ChainMenuWidget::setEnabled(bool enabled)
     setAddButonEnabled(enabled);
     setRemoveButtonEnabled(enabled);
     setComboBoxEnabled(enabled);
+}
+void ChainMenuWidget::setCurrentOperation(QString operationName)
+{
+    ui->comboBox->setCurrentText(operationName);
 }
 
 ChainMenuWidget::~ChainMenuWidget()
