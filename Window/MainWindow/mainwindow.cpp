@@ -106,9 +106,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::initUI(){
-    vboxMain->addWidget(wgtSub);
     //    wgtMain->setMinimumWidth(410);
-    ui->scrollAreaChainMenu->setWidget(wgtMain);
+    ui->scrollAreaChainMenu->setWidget(wgtSub);
     vBoxSub->setAlignment(Qt::AlignTop);
 
     this->setWindowTitle(Info::appName);
@@ -127,9 +126,9 @@ void MainWindow::initUI(){
 
 void MainWindow::operationChanged(OPCodes opCode)
 {
-    if(selectedOpCode == NONE)
-        ui->stackedWidget->removeWidget(
-                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+    //        ui->stackedWidget->removeWidget(
+    //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+
     selectedOpCode = opCode;
 
     switch (selectedOpCode)
@@ -184,7 +183,8 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
 
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-        if(!isWidgetRemoved){
+        if(!isWidgetRemoved)
+        {
             QScrollArea* scrollArea = new QScrollArea();
 
             scrollArea->setWidget(
@@ -192,32 +192,42 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
 
             ui->stackedWidget->addWidget(scrollArea);
 
-            /*
-             * Make Add and Remove buttons disabled for previous chain menu widgets
-             * Support for same is planned in future
-             */
-            if(chainMenuWidgetList.size() != 0)
-            {
-                chainMenuWidgetList.last()->setEnabled(false);
-            }
-
-            ChainMenuWidget* chainMenuWidget = new ChainMenuWidget(this, chainMenuOpList);
-
-            connect(chainMenuWidget, &ChainMenuWidget::addOperationClicked, this,
+            connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                    &ChainMenuWidget::addOperationClicked,
+                    this,
                     [=](){
                 operationChanged(NONE);
             });
 
-            chainMenuWidgetList.append(chainMenuWidget);
+            connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                    &ChainMenuWidget::removeOperationClicked,
+                    this,
+                    [=](){
+                baseConfigWidgetChain.last()->~BaseConfigWidget();
+                baseConfigWidgetChain.removeLast();
+                emit paramWidgetSetSignal(true);
+            });
+
+            vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
+            vBoxSub->update();
         }
         else
         {
-            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
+            qDebug() << "VBox Count Before: " << vBoxSub->count();
+
+            QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
+            item->widget()->hide();
+            vBoxSub->removeWidget(item->widget());
+
+            qDebug() << "VBox Count After: " << vBoxSub->count();
+
+            //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
             ui->stackedWidget->removeWidget(
                         ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+
             vBoxSub->update();
 
-            chainMenuWidgetList.removeLast();
+            ui->scrollAreaChainMenu->update();
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
@@ -226,10 +236,31 @@ void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
          * Configure Add and Remove buttons after additiona dn removal of
          * Operation from Operation chain
          */
-        if(chainMenuWidgetList.size() == 1)
-            chainMenuWidgetList.last()->setRemoveButtonEnabled(false);
-        chainMenuWidgetList.last()->setEnabled(true);
-        vBoxSub->addWidget(chainMenuWidgetList.last());
+        //        if(baseConfigWidgetChain.size() == 1)
+        //            baseConfigWidgetChain.last()->getChainMenuWidget()->setRemoveButtonEnabled(false);
+        //        chainMenuWidgetList.last()->setEnabled(true);
+
+        /*
+         * Make Add and Remove buttons disabled for previous chain menu widgets
+         * Support for same is planned in future
+         */
+        if(baseConfigWidgetChain.size() > 1)
+        {
+            baseConfigWidgetChain.at(baseConfigWidgetChain.size() - 2)->
+                    getChainMenuWidget()->setEnabled(false);
+            baseConfigWidgetChain.last()->
+                    getChainMenuWidget()->setEnabled(true);
+        }
+        else
+        {
+            baseConfigWidgetChain.last()->
+                    getChainMenuWidget()->setEnabled(true);
+            baseConfigWidgetChain.last()->
+                    getChainMenuWidget()->setRemoveButtonEnabled(false);
+        }
+
+        wgtSub->update();
+        wgtSub->repaint();
     }
     else
         qDebug() << "baseConfigWidgetChain is empty";
@@ -274,49 +305,46 @@ void MainWindow::GetSourceCaptureImage()
 
     refreshInputImage(capturedReziedImg);
 
-    if(selectedOpCode != NONE)
+    QtConcurrent::run([=]
     {
-        QtConcurrent::run([=]
+        cv::Mat outputImage;
+        capturedOriginalImg.copyTo(outputImage);
+        bool isChainSuccess = false;
+        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
         {
-            cv::Mat outputImage;
-            capturedOriginalImg.copyTo(outputImage);
-            bool isChainSuccess = false;
-            for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
-            {
-                isChainSuccess = false;
-                try{
-                    outputImage = baseConfigWidget->getProcessedImage(outputImage);
-                    isChainSuccess = true;
-                }
-                catch(cv::Exception& e)
-                {
-                    qDebug() << e.what();
-                }
-                catch(std::exception& e)
-                {
-                    qDebug() << e.what();
-                }
-                catch(std::string &error)
-                {
-                    qDebug() << QString::fromStdString(error);
-                }
-                if(!isChainSuccess)
-                {
-                    qDebug() << "Errored Operation removed from Chain";
-
-                    capturedOriginalImg.copyTo(outputImage);
-
-                    baseConfigWidget->~BaseConfigWidget();
-                    baseConfigWidgetChain.removeLast();
-                    paramWidgetSetSignal(true);
-                    //                    setParamAdjustWidget(true);
-                    break;
-                }
+            isChainSuccess = false;
+            try{
+                outputImage = baseConfigWidget->getProcessedImage(outputImage);
+                isChainSuccess = true;
             }
+            catch(cv::Exception& e)
+            {
+                qDebug() << e.what();
+            }
+            catch(std::exception& e)
+            {
+                qDebug() << e.what();
+            }
+            catch(std::string &error)
+            {
+                qDebug() << QString::fromStdString(error);
+            }
+            if(!isChainSuccess)
+            {
+                qDebug() << "Errored Operation removed from Chain";
 
-            emit refreshOutputImageSignal(outputImage);
-        });
-    }
+                capturedOriginalImg.copyTo(outputImage);
+
+                baseConfigWidget->~BaseConfigWidget();
+                baseConfigWidgetChain.removeLast();
+                emit paramWidgetSetSignal(true);
+                // setParamAdjustWidget(true);
+                break;
+            }
+        }
+
+        emit refreshOutputImageSignal(outputImage);
+    });
 }
 
 void MainWindow::GetSourceCaptureError(QString error)

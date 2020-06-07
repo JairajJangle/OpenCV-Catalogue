@@ -51,7 +51,6 @@
 #include "Window/AboutDialog/aboutdialog.h"
 
 #include "CustomWidgets/HybridSlider/hybridslider.h"
-#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -122,13 +121,8 @@ private:
         }
     }
 
-    QWidget *wgtMain = new QWidget();
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
-    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
-
-    QList<QPair<int, QString>> chainMenuOpList;
-    QList<ChainMenuWidget*> chainMenuWidgetList;
 
     void configChainMenuList();
 };

@@ -34,6 +34,7 @@
 // OpenCV libs
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
+#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 
 class BaseConfigWidget : public QWidget
 {
@@ -47,6 +48,8 @@ protected:
     QMutex m;
 
     QWidget *wgtMain = new QWidget();
+
+    ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
@@ -69,6 +72,8 @@ public:
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
+
+        wgtMain->setMinimumWidth(410);
     }
     ~BaseConfigWidget(){}
 
@@ -79,6 +84,12 @@ public:
     QWidget* getConfigWidget()
     {
         return scrl;
+    }
+
+    ChainMenuWidget* getChainMenuWidget()
+    {
+        chainMenuWidget->setCurrentOperation(operationName);
+        return chainMenuWidget;
     }
 
     /*
@@ -151,7 +162,6 @@ public:
     virtual void initWidget()
     {
         vboxMain->addWidget(wgtSub);
-        wgtMain->setMinimumWidth(410);
         scrl->setWidget(wgtMain);
 //        scrl->setFrameShape(QFrame::NoFrame);
 //        configWidget = scrl;
