@@ -1,5 +1,6 @@
 #include "chainmenuwidget.h"
 #include "ui_chainmenuwidget.h"
+#include <QComboBox>
 //#include <QDebug>
 
 ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
@@ -21,6 +22,11 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
     connect(ui->buttonRemove, &QPushButton::released,this,
             [=](){
         emit removeOperationClicked();
+    });
+
+    connect(ui->comboBox, qOverload<int>(&QComboBox::activated), this,
+            [=](int index){
+        emit operationChanged(index);
     });
 
 //    connect(ui->comboBox, SIGNAL(activated(int)),
