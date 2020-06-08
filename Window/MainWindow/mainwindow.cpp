@@ -21,8 +21,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "Utils/constants.h"
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -30,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     initUI();
+
+    configChainMenuList();
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
@@ -50,63 +50,66 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
-        operationSelected(COLOR_SPACES);
-    });
-
-    connect(ui->actionColorSpace, &QAction::triggered, this,
-            [=]() {
-        operationSelected(COLOR_SPACES);
+        addOperation(COLOR_SPACES);
     });
     connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
-        operationSelected(IMAGE_FLIP);
+        addOperation(IMAGE_FLIP);
     });
     connect(ui->actionColor_Picker, &QAction::triggered, this,
             [=]() {
-        operationSelected(COLOR_PICKER);
+        addOperation(COLOR_PICKER);
     });
     connect(ui->actionThresholding, &QAction::triggered, this,
             [=]() {
-        operationSelected(THRESHOLDING);
+        addOperation(THRESHOLDING);
     });
     connect(ui->actionCanny_Edge, &QAction::triggered, this,
             [=]() {
-        operationSelected(CANNY_EDGE);
+        addOperation(CANNY_EDGE);
     });
     connect(ui->actionBlur, &QAction::triggered, this,
             [=]() {
-        operationSelected(BLUR);
+        addOperation(BLUR);
     });
     connect(ui->actionMotion_detection, &QAction::triggered, this,
             [=]() {
-        operationSelected(BKG_SUBTRACT);
+        addOperation(BKG_SUBTRACT);
     });
     connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
-        operationSelected(HOUGH_CIRCLES);
+        addOperation(HOUGH_CIRCLES);
     });
     connect(ui->actionHough_Lines, &QAction::triggered, this,
             [=]() {
-        operationSelected(HOUGH_LINES);
+        addOperation(HOUGH_LINES);
     });
     connect(ui->actionHistogram, &QAction::triggered, this,
             [=]() {
-        operationSelected(HISTOGRAM_CALCULATION);
+        addOperation(HISTOGRAM_CALCULATION);
     });
     connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
             [=]() {
-        operationSelected(HARRIS_CORNER);
+        addOperation(HARRIS_CORNER);
     });
 
-
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
+
+    connect(this, SIGNAL(removeOperationWidgetsSignal()),
+            this, SLOT(removeOperationWidgets()));
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
+
+    addOperation(NONE);
 }
 
 void MainWindow::initUI(){
+    //    wgtMain->setMinimumWidth(410);
+    ui->scrollAreaChainMenu->setWidget(wgtSub);
+    vBoxSub->setAlignment(Qt::AlignTop);
+
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -117,55 +120,229 @@ void MainWindow::initUI(){
     sourceRadioButtonClicked();
 
     setUserMessage("Initializing Done", INFO);
+
+    noOperationWidget = ui->scrollArea;
 }
 
-void MainWindow::operationSelected(OPCodes opCode)
+void MainWindow::addOperation(OPCodes opCode)
 {
-    selectedOpCode = opCode;
-
-    baseConfigWidget->setExplodedView(false);
-
-    // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
-
-    switch (selectedOpCode) {
+    switch (opCode)
+    {
+    case NONE:
+        baseConfigWidgetChain.append(new BaseConfigWidget());
+        break;
     case COLOR_SPACES:
-        baseConfigWidget = new ColorSpace();
+        baseConfigWidgetChain.append(new ColorSpace());
         break;
     case IMAGE_FLIP:
-        baseConfigWidget = new ImageFlip();
+        baseConfigWidgetChain.append(new ImageFlip());
         break;
     case COLOR_PICKER:
-        baseConfigWidget = new ColorPicker();
+        baseConfigWidgetChain.append(new ColorPicker());
         break;
     case CANNY_EDGE:
-        baseConfigWidget = new CannyEdge();
+        baseConfigWidgetChain.append(new CannyEdge());
         break;
     case THRESHOLDING:
-        baseConfigWidget = new Thresholding();
+        baseConfigWidgetChain.append(new Thresholding());
         break;
     case BLUR:
-        baseConfigWidget = new Blur();
+        baseConfigWidgetChain.append(new Blur());
         break;
     case BKG_SUBTRACT:
-        baseConfigWidget = new BackgroundSubtraction();
+        baseConfigWidgetChain.append(new BackgroundSubtraction());
         break;
     case HOUGH_CIRCLES:
-        baseConfigWidget = new HoughCircles();
+        baseConfigWidgetChain.append(new HoughCircles());
         break;
     case HOUGH_LINES:
-        baseConfigWidget = new HoughLines();
+        baseConfigWidgetChain.append(new HoughLines());
         break;
     case HISTOGRAM_CALCULATION:
-        baseConfigWidget = new HistogramCalculation();
+        baseConfigWidgetChain.append(new HistogramCalculation());
         break;
     case HARRIS_CORNER:
-        baseConfigWidget = new HarrisCornerDetector();
+        baseConfigWidgetChain.append(new HarrisCornerDetector());
         break;
     }
 
-    ui->labelOperationName->setText(baseConfigWidget->getOperationName());
-    QWidget *configWidget = baseConfigWidget->getConfigWidget();
-    ui->scrollArea->setWidget(configWidget);
+    addOperationWidget();
+}
+
+void MainWindow::lastOperationChanged(OPCodes opCode)
+{
+    // FIXME: Operation non Changing
+    switch (opCode)
+    {
+    case NONE:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new BaseConfigWidget());
+        break;
+    case COLOR_SPACES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ColorSpace());
+        break;
+    case IMAGE_FLIP:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ImageFlip());
+        break;
+    case COLOR_PICKER:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ColorPicker());
+        break;
+    case CANNY_EDGE:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new CannyEdge());
+        break;
+    case THRESHOLDING:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new Thresholding());
+        break;
+    case BLUR:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new Blur());
+        break;
+    case BKG_SUBTRACT:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new BackgroundSubtraction());
+        break;
+    case HOUGH_CIRCLES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HoughCircles());
+        break;
+    case HOUGH_LINES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HoughLines());
+        break;
+    case HISTOGRAM_CALCULATION:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HistogramCalculation());
+        break;
+    case HARRIS_CORNER:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HarrisCornerDetector());
+        break;
+    }
+
+    // Replace Paramter Widget in Stacked Widget
+    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
+    ui->stackedWidget->removeWidget(lastWidget);
+
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidget(
+                baseConfigWidgetChain.last()->getConfigWidget());
+    ui->stackedWidget->addWidget(scrollArea);
+
+    refreshOperationWidgets();
+}
+
+void MainWindow::addOperationWidget()
+{
+    if(!baseConfigWidgetChain.empty())
+    {
+        qDebug() << "Chain size = " << baseConfigWidgetChain.size();
+
+        QScrollArea* scrollArea = new QScrollArea();
+        scrollArea->setWidget(
+                    baseConfigWidgetChain.last()->getConfigWidget());
+        ui->stackedWidget->addWidget(scrollArea);
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                &ChainMenuWidget::addOperationClicked,
+                this,
+                [=](){
+            addOperation(NONE);
+        });
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                qOverload<int>(&ChainMenuWidget::operationChanged),
+                this,
+                [=](int index){
+            lastOperationChanged((OPCodes)index);
+        });
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                &ChainMenuWidget::removeOperationClicked,
+                this,
+                [=](){
+            baseConfigWidgetChain.last()->~BaseConfigWidget();
+            baseConfigWidgetChain.removeLast();
+            emit removeOperationWidgetsSignal();
+        });
+
+        vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
+        vBoxSub->update();
+
+        refreshOperationWidgets();
+    }
+    else
+        qDebug() << "baseConfigWidgetChain is empty";
+}
+
+void MainWindow::removeOperationWidgets()
+{
+    if(!baseConfigWidgetChain.empty())
+    {
+        qDebug() << "VBox Count Before: " << vBoxSub->count();
+
+        QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
+        item->widget()->hide();
+        vBoxSub->removeWidget(item->widget());
+
+        qDebug() << "VBox Count After: " << vBoxSub->count();
+
+        //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
+        ui->stackedWidget->removeWidget(
+                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+
+        vBoxSub->update();
+
+        ui->scrollAreaChainMenu->update();
+
+        refreshOperationWidgets();
+    }
+}
+
+void MainWindow::refreshOperationWidgets()
+{
+    if(!baseConfigWidgetChain.empty())
+    {
+        qDebug() << "Refresh Called";
+        baseConfigWidgetChain.last()->setExplodedView(false);
+        ui->labelOperationName->setText(baseConfigWidgetChain.last()->getOperationName());
+
+        //        if(baseConfigWidgetChain.size() > 1)
+        //        {
+        //            baseConfigWidgetChain.at(baseConfigWidgetChain.size() - 2)->
+        //                    getChainMenuWidget()->setEnabled(false);
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setEnabled(true);
+        //        }
+        //        else
+        //        {
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setEnabled(true);
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setRemoveButtonEnabled(false);
+        //        }
+
+        if(vBoxSub->count() > 1)
+        {
+            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
+        }
+        else
+        {
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                          widget())->setRemoveButtonEnabled(false);
+        }
+
+        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+
+        wgtSub->update();
+        wgtSub->repaint();
+    }
 }
 
 void MainWindow::showAboutDialog()
@@ -207,14 +384,45 @@ void MainWindow::GetSourceCaptureImage()
 
     refreshInputImage(capturedReziedImg);
 
-    if(selectedOpCode != NONE)
+    QtConcurrent::run([=]
     {
-        QtConcurrent::run([=]
+        cv::Mat outputImage;
+        capturedOriginalImg.copyTo(outputImage);
+        bool isChainSuccess = false;
+        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
         {
-            emit refreshOutputImageSignal(baseConfigWidget->
-                                          getProcessedImage(capturedOriginalImg));
-        });
-    }
+            isChainSuccess = false;
+            try{
+                outputImage = baseConfigWidget->getProcessedImage(outputImage);
+                isChainSuccess = true;
+            }
+            catch(cv::Exception& e)
+            {
+                qDebug() << e.what();
+            }
+            catch(std::exception& e)
+            {
+                qDebug() << e.what();
+            }
+            catch(std::string &error)
+            {
+                qDebug() << QString::fromStdString(error);
+            }
+            if(!isChainSuccess)
+            {
+                qDebug() << "Errored Operation removed from Chain";
+
+                capturedOriginalImg.copyTo(outputImage);
+
+                baseConfigWidget->~BaseConfigWidget();
+                baseConfigWidgetChain.removeLast();
+                emit removeOperationWidgetsSignal();
+                break;
+            }
+        }
+
+        emit refreshOutputImageSignal(outputImage);
+    });
 }
 
 void MainWindow::GetSourceCaptureError(QString error)
@@ -272,19 +480,21 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    if(baseConfigWidget->isExplodedViewEnabled())
+    if(!baseConfigWidgetChain.empty())
     {
-        if(baseConfigWidget->setExplodedView(true))
+        if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
         {
-            // TODO: Change Icon to minimize
+            if(baseConfigWidgetChain.last()->setExplodedView(true))
+            {
+                // TODO: Change Icon to minimize
+            }
+        }
+        else
+        {
+            baseConfigWidgetChain.last()->setExplodedView(false);
+            // TODO: Change Icon to exploded
         }
     }
-    else
-    {
-        baseConfigWidget->setExplodedView(false);
-        // TODO: Change Icon to exploded
-    }
-
 }
 
 void MainWindow::sourceRadioButtonClicked(){
@@ -311,7 +521,7 @@ void MainWindow::browseClicked()
 
 void MainWindow::sourceSelectClicked()
 {
-    std::cout << "Source Select Clicked!!" << std::endl;
+    qDebug() << "Source Select Clicked!!";
     QString path = ui->textInputSource->toPlainText();
     if(ui->fileRadioButton->isChecked()){
         QFileInfo check_file(path);
@@ -340,7 +550,7 @@ void MainWindow::sourceSelectClicked()
         connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
     }
     else{
-        std::cout << "Cam Thread already running!!" << std::endl;
+        qDebug() << "Cam Thread already running!!";
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }
@@ -348,12 +558,14 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
-    baseConfigWidget->begin =cv::Point(x, y);
+    if(!baseConfigWidgetChain.empty())
+        baseConfigWidgetChain.last()->begin =cv::Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()
 {
-    QDesktopServices::openUrl(QUrl(baseConfigWidget->getInfoURL()));
+    if(!baseConfigWidgetChain.empty())
+        QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.last()->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
@@ -380,6 +592,22 @@ QPoint MainWindow::getWindowCenter()
     position.setX(this->geometry().x() + this->geometry().width()/2);
     position.setY(this->geometry().y() + this->geometry().height()/2);
     return  position;
+}
+
+void MainWindow::configChainMenuList()
+{
+    chainMenuOpList.append(QPair<OPCodes, QString>(NONE ,BaseConfigWidget().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_SPACES ,ColorSpace().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(IMAGE_FLIP ,ImageFlip().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_PICKER ,ColorPicker().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(THRESHOLDING ,Thresholding().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(CANNY_EDGE ,CannyEdge().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(BLUR ,Blur().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_CIRCLES ,HoughCircles().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
 }
 
 MainWindow::~MainWindow()

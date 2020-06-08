@@ -50,9 +50,9 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
+//        m.lock();
 
         cv::Mat outputImage;
 
@@ -83,9 +83,18 @@ public:
         cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(1, 1));
         morphologyEx(outputImage, outputImage, cv::MORPH_OPEN, element);
 
-        m.unlock();
+//        m.unlock();
         return outputImage;
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
     ~BackgroundSubtraction()
     {

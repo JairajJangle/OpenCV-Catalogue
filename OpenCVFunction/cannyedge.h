@@ -44,101 +44,117 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
+//        m.lock();
 
         cv::Mat outputImage;
 
         cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
 
-        if(enableBlurCB->isChecked())
+        if(blurEnabled)
             blur( outputImage, outputImage, cv::Size(3,3));
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
 
-        m.unlock();
+//        m.unlock();
         return outputImage;
     }
-
-    ~CannyEdge()
-    {
-        printf("Canny Edge destroyed\n");
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
     }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
+
+~CannyEdge()
+{
+    printf("Canny Edge destroyed\n");
+}
 
 private slots:
-    void t1ValueChanged(int value){
-        t1Value = value;
-    }
+void t1ValueChanged(int value){
+    t1Value = value;
+}
 
-    void t2ValueChanged(int value){
-        t2Value = value;
-    }
+void t2ValueChanged(int value){
+    t2Value = value;
+}
 
-    void appertureValueChanged(int){
-        appertureValue = appertureComboBox->currentText().toInt();
-        printf("Apperture: %d", appertureValue);
-    }
-    void testSliderValChanged(int value){
-        printf("Test: %d", value);
-    }
-    void refreshLayout()
-    {
-        wgtMain->adjustSize();
-    }
+void appertureValueChanged(int){
+    appertureValue = appertureComboBox->currentText().toInt();
+    printf("Apperture: %d", appertureValue);
+}
+void testSliderValChanged(int value){
+    printf("Test: %d", value);
+}
+void refreshLayout()
+{
+    wgtMain->adjustSize();
+}
+void enableBlurCBToggled(bool isChecked)
+{
+    blurEnabled = isChecked;
+}
 
 private:
-    int t1Value = 30;
-    int t2Value = 3;
-    int appertureValue = 3;
+int t1Value = 30;
+int t2Value = 3;
+int appertureValue = 3;
+bool blurEnabled = true;
 
-    QComboBox* appertureComboBox = new QComboBox();
-    QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
+QComboBox* appertureComboBox = new QComboBox();
+QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
 
-    void initWidget()
-    {
-        QHBoxLayout* t1HBox = new QHBoxLayout;
-        t1HBox->setSpacing(15);
+void initWidget()
+{
+    QHBoxLayout* t1HBox = new QHBoxLayout;
+    t1HBox->setSpacing(15);
 
-        SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
-        connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),
-                this, SLOT(t1ValueChanged(int)));
+    SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
+    connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),
+            this, SLOT(t1ValueChanged(int)));
 
-        SliderLayout* t2SliderLayout = new SliderLayout("threshold2\n[0-100]", t2Value);
-        connect(t2SliderLayout, SIGNAL(sliderValueChanged(int)),
-                this, SLOT(t2ValueChanged(int)));
+    SliderLayout* t2SliderLayout = new SliderLayout("threshold2\n[0-100]", t2Value);
+    connect(t2SliderLayout, SIGNAL(sliderValueChanged(int)),
+            this, SLOT(t2ValueChanged(int)));
 
-        QLabel* appertureLabel  = new QLabel("Apperture Value");
+    QLabel* appertureLabel  = new QLabel("Apperture Value");
 
-        QHBoxLayout* aprtHBox = new QHBoxLayout;
-        aprtHBox->addWidget(appertureLabel);
-        aprtHBox->setSpacing(30);
-        appertureComboBox->addItems({"3", "5", "7"});
-        appertureComboBox->setFixedWidth(50);
-        connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
+    QHBoxLayout* aprtHBox = new QHBoxLayout;
+    aprtHBox->addWidget(appertureLabel);
+    aprtHBox->setSpacing(30);
+    appertureComboBox->addItems({"3", "5", "7"});
+    appertureComboBox->setFixedWidth(50);
+    connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
 
-        aprtHBox->addWidget(appertureComboBox);
-        aprtHBox->insertStretch( -1, 1 );
+    aprtHBox->addWidget(appertureComboBox);
+    aprtHBox->insertStretch( -1, 1 );
 
-        vBoxSub->addLayout(t1SliderLayout);
-        vBoxSub->addLayout(t2SliderLayout);
-        vBoxSub->addLayout(aprtHBox);
+    vBoxSub->addLayout(t1SliderLayout);
+    vBoxSub->addLayout(t2SliderLayout);
+    vBoxSub->addLayout(aprtHBox);
 
-        // FIXME: Range Box hiding causes Hybrid Slider to retain height
-        //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
-        //        connect(hybridGG, SIGNAL(sliderValueChanged(int)),
-        //                this, SLOT(t1ValueChanged(int)));
-        //        connect(hybridGG, SIGNAL(editApplyClicked()),
-        //                this, SLOT(refreshLayout()));
+    // FIXME: Range Box hiding causes Hybrid Slider to retain height
+    //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
+    //        connect(hybridGG, SIGNAL(sliderValueChanged(int)),
+    //                this, SLOT(t1ValueChanged(int)));
+    //        connect(hybridGG, SIGNAL(editApplyClicked()),
+    //                this, SLOT(refreshLayout()));
 
-        //        vBoxSub->addWidget(hybridGG);
+    //        vBoxSub->addWidget(hybridGG);
 
-        connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
+    connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
 
-        vBoxSub->addWidget(enableBlurCB);
+    vBoxSub->addWidget(enableBlurCB);
 
-        BaseConfigWidget::initWidget();
-    }
+    connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(enableBlurCBToggled(bool)));
+
+    BaseConfigWidget::initWidget();
+}
 };
 
 #endif // CANNYEDGE_H

@@ -27,9 +27,8 @@
 #include <QLineEdit>
 
 #include "CustomWidgets/baseconfigwidget.h"
-#include "OpenCVFunction/colorspaces.h"
 
-class Thresholding : public ColorSpace
+class Thresholding : public BaseConfigWidget
 {
     Q_OBJECT
 public:
@@ -41,17 +40,22 @@ public:
         this->initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)
+    cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
         m.lock();
 
-        cv::Mat outputImage = ColorSpace::getProcessedImage(inputImage);
-
-        // TODO: Apply Threshold values from UI
-
         m.unlock();
-        return outputImage;
+        return inputImage;
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
     ~Thresholding()
     {
@@ -61,6 +65,7 @@ public:
 private:
     void initWidget()
     {
+        BaseConfigWidget::initWidget();
     }
 };
 
