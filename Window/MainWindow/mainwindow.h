@@ -35,6 +35,8 @@
 #include <iostream>
 
 #include "Utils/captureinputsource.h"
+#include "Utils/utils.h"
+
 #include "OpenCVFunction/colorspaces.h"
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
@@ -112,8 +114,6 @@ private:
 
     void refreshInputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
-
-    QPoint getWindowCenter();
 
     void closeEvent (QCloseEvent *event) override
     {
