@@ -23,6 +23,8 @@
 
 #include <cmath>
 
+#include <QList>
+
 namespace Numeric {
 // extern:
 double setPrecision(double number, int decimalPlaces);
@@ -33,6 +35,8 @@ inline double setPrecision(double number, int decimalPlaces)
     return ((double)n) / pow(10, decimalPlaces);
 }
 }
+
+inline QList<QPair<int, QString>> chainMenuOpList;
 
 #define GET_VARIABLE_NAME(Variable) (#Variable)
 

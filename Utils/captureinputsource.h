@@ -26,6 +26,7 @@
 #include <QTimer>
 #include <QIODevice>
 #include <QFile>
+#include <QtDebug>
 
 // OpenCV libs
 #include <opencv2/opencv.hpp>
@@ -111,7 +112,8 @@ public:
 
     void openSource()
     {
-        std::cout << "Path: " << inputSource << std::endl;
+        qDebug() << "Path: "
+                 << QString::fromStdString(inputSource);
         cap.release();
         if(std::all_of(inputSource.begin(), inputSource.end(), ::isdigit)) // check if only contains digits
         {

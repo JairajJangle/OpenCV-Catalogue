@@ -30,6 +30,7 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrent>
+#include <QGroupBox>
 
 #include <iostream>
 
@@ -62,7 +63,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, EROSION_DILATION,
+    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER};
 
@@ -74,21 +75,27 @@ private slots:
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
-    void operationSelected(OPCodes opCode);
+    void addOperation(OPCodes opCode = NONE);
+    void lastOperationChanged(OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
     void refreshOutputImage(const cv::Mat img);
+    void addOperationWidget();
+    void removeOperationWidgets();
+    void refreshOperationWidgets();
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
+    void paramWidgetSetSignal(bool isWidgetRemoved);
+    void removeOperationWidgetsSignal();
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
-    OPCodes selectedOpCode = NONE;
+    QScrollArea* noOperationWidget = new QScrollArea();
 
     Ui::MainWindow *ui;
 
@@ -97,7 +104,7 @@ private:
 
     AboutDialog* aboutDialog = nullptr;
 
-    BaseConfigWidget* baseConfigWidget = new BaseConfigWidget;
+    QList<BaseConfigWidget*> baseConfigWidgetChain;
 
     bool isSourceFlipped = false;
 
@@ -115,5 +122,10 @@ private:
             aboutDialog->close();
         }
     }
+
+    QWidget *wgtSub = new QWidget();
+    QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+
+    void configChainMenuList();
 };
 #endif // MAINWINDOW_H

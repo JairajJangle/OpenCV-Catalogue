@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
     CustomWidgets/focusawarelineedit.cpp \
     Window/AboutDialog/aboutdialog.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
     Window/MainWindow/mainwindow.cpp
 
 HEADERS += \
+    CustomWidgets/ChainMenuWidget/chainmenuwidget.h \
     CustomWidgets/ClickableLabel/clickablelabel.h \
     CustomWidgets/applyresetbuttonlayout.h \
     CustomWidgets/dividerline.h \
@@ -53,6 +55,7 @@ HEADERS += \
     Window/MainWindow/mainwindow.h
 
 FORMS += \
+    CustomWidgets/ChainMenuWidget/chainmenuwidget.ui \
     Window/AboutDialog/aboutdialog.ui \
     CustomWidgets/HybridSlider/hybridslider.ui \
     Window/MainWindow/mainwindow.ui

@@ -34,6 +34,7 @@
 // OpenCV libs
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
+#include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 
 class BaseConfigWidget : public QWidget
 {
@@ -43,10 +44,12 @@ private:
     QWidget *wgtSub = new QWidget();
 
 protected:
+    // TODO: Check need of mutex, probably not required -> remove
     QMutex m;
 
     QWidget *wgtMain = new QWidget();
-    QWidget* configWidget;
+
+    ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
@@ -78,7 +81,13 @@ public:
      */
     QWidget* getConfigWidget()
     {
-        return configWidget;
+        return scrl;
+    }
+
+    ChainMenuWidget* getChainMenuWidget()
+    {
+        chainMenuWidget->setCurrentOperation(operationName);
+        return chainMenuWidget;
     }
 
     /*
@@ -125,7 +134,8 @@ public:
     /*
      * Override this function in individual operation classes
      */
-    virtual cv::Mat getProcessedImage(cv::Mat inputImage){
+    virtual cv::Mat getProcessedImage(cv::Mat inputImage)try
+    {
         m.lock(); // Lock mutex at function start
 
         // Do Operations
@@ -133,6 +143,15 @@ public:
         m.unlock(); // Unlock mutex before return
         return inputImage;
     }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name()); // Append class name
+}
 
     /*
      * Super call this function at the end of overriden initWidget() function in
@@ -140,9 +159,11 @@ public:
      */
     virtual void initWidget()
     {
+        wgtMain->setMinimumWidth(410);
         vboxMain->addWidget(wgtSub);
         scrl->setWidget(wgtMain);
-        configWidget = scrl;
+//        scrl->setFrameShape(QFrame::NoFrame);
+//        configWidget = scrl;
     }
 };
 
