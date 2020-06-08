@@ -24,6 +24,8 @@
 #include <cmath>
 
 #include <QList>
+#include <QPoint>
+#include <QWidget>
 
 namespace Numeric {
 // extern:
@@ -37,6 +39,17 @@ inline double setPrecision(double number, int decimalPlaces)
 }
 
 inline QList<QPair<int, QString>> chainMenuOpList;
+
+namespace WidgetUtils {
+QPoint getWidgetCenter(QWidget* widget);
+inline QPoint getWidgetCenter(QWidget* widget)
+{
+    QPoint position = QPoint(0,0);
+    position.setX(widget->geometry().x() + widget->geometry().width()/2);
+    position.setY(widget->geometry().y() + widget->geometry().height()/2);
+    return  position;
+}
+}
 
 #define GET_VARIABLE_NAME(Variable) (#Variable)
 

@@ -352,7 +352,7 @@ void MainWindow::showAboutDialog()
         if(!aboutDialog->isVisible())
         {
             // Set About Dialog Window Position and Always on Top
-            QPoint mainWindowCenter = getWindowCenter();
+            QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
             QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
                                                 aboutDialog->geometry().height()/2);
             aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
@@ -584,14 +584,6 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
     ui->labelUserMessage->setAutoFillBackground(true);
     ui->labelUserMessage->setPalette(sample_palette);
     ui->labelUserMessage->setText(message);
-}
-
-QPoint MainWindow::getWindowCenter()
-{
-    QPoint position = QPoint(0,0);
-    position.setX(this->geometry().x() + this->geometry().width()/2);
-    position.setY(this->geometry().y() + this->geometry().height()/2);
-    return  position;
 }
 
 void MainWindow::configChainMenuList()
