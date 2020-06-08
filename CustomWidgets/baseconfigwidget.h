@@ -72,8 +72,6 @@ public:
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
-
-        wgtMain->setMinimumWidth(410);
     }
     ~BaseConfigWidget(){}
 
@@ -161,6 +159,7 @@ public:
      */
     virtual void initWidget()
     {
+        wgtMain->setMinimumWidth(410);
         vboxMain->addWidget(wgtSub);
         scrl->setWidget(wgtMain);
 //        scrl->setFrameShape(QFrame::NoFrame);
