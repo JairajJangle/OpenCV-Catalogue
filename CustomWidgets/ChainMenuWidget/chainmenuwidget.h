@@ -31,6 +31,7 @@ public:
 signals:
     void addOperationClicked();
     void removeOperationClicked();
+    void operationChanged(int index);
 //    void operationChangedSignal(int chainMenuOpListIndex); // or OpCode
 
 private:
