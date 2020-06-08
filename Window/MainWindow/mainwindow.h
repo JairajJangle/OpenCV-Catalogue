@@ -76,15 +76,19 @@ private slots:
     void toggleFlipSource(bool);
     void moreInfoOperationClicked();
     void addOperation(OPCodes opCode = NONE);
+    void lastOperationChanged(OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
     void refreshOutputImage(const cv::Mat img);
-    void setParamAdjustWidget(bool isWidgetRemoved = false);
+    void addOperationWidget();
+    void removeOperationWidgets();
+    void refreshOperationWidgets();
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
     void paramWidgetSetSignal(bool isWidgetRemoved);
+    void removeOperationWidgetsSignal();
 
 public:
     MainWindow(QWidget *parent = nullptr);

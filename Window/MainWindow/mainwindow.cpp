@@ -95,8 +95,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 
-    connect(this, SIGNAL(paramWidgetSetSignal(bool)),
-            this, SLOT(setParamAdjustWidget(bool)));
+    connect(this, SIGNAL(removeOperationWidgetsSignal()),
+            this, SLOT(removeOperationWidgets()));
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
@@ -166,99 +166,183 @@ void MainWindow::addOperation(OPCodes opCode)
         break;
     }
 
-    setParamAdjustWidget();
+    addOperationWidget();
 }
 
-void MainWindow::setParamAdjustWidget(bool isWidgetRemoved)
+void MainWindow::lastOperationChanged(OPCodes opCode)
+{
+    // FIXME: Operation non Changing
+    switch (opCode)
+    {
+    case NONE:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new BaseConfigWidget());
+        break;
+    case COLOR_SPACES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ColorSpace());
+        break;
+    case IMAGE_FLIP:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ImageFlip());
+        break;
+    case COLOR_PICKER:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new ColorPicker());
+        break;
+    case CANNY_EDGE:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new CannyEdge());
+        break;
+    case THRESHOLDING:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new Thresholding());
+        break;
+    case BLUR:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new Blur());
+        break;
+    case BKG_SUBTRACT:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new BackgroundSubtraction());
+        break;
+    case HOUGH_CIRCLES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HoughCircles());
+        break;
+    case HOUGH_LINES:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HoughLines());
+        break;
+    case HISTOGRAM_CALCULATION:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HistogramCalculation());
+        break;
+    case HARRIS_CORNER:
+        baseConfigWidgetChain.replace(
+                    baseConfigWidgetChain.size() - 1, new HarrisCornerDetector());
+        break;
+    }
+
+    // Replace Paramter Widget in Stacked Widget
+    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
+    ui->stackedWidget->removeWidget(lastWidget);
+
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidget(
+                baseConfigWidgetChain.last()->getConfigWidget());
+    ui->stackedWidget->addWidget(scrollArea);
+
+    refreshOperationWidgets();
+}
+
+void MainWindow::addOperationWidget()
 {
     if(!baseConfigWidgetChain.empty())
     {
-        baseConfigWidgetChain.back()->setExplodedView(false);
-        ui->labelOperationName->setText(baseConfigWidgetChain.back()->getOperationName());
-
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-        if(!isWidgetRemoved)
+        QScrollArea* scrollArea = new QScrollArea();
+        scrollArea->setWidget(
+                    baseConfigWidgetChain.last()->getConfigWidget());
+        ui->stackedWidget->addWidget(scrollArea);
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                &ChainMenuWidget::addOperationClicked,
+                this,
+                [=](){
+            addOperation(NONE);
+        });
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                qOverload<int>(&ChainMenuWidget::operationChanged),
+                this,
+                [=](int index){
+            lastOperationChanged((OPCodes)index);
+        });
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                &ChainMenuWidget::removeOperationClicked,
+                this,
+                [=](){
+            baseConfigWidgetChain.last()->~BaseConfigWidget();
+            baseConfigWidgetChain.removeLast();
+            emit removeOperationWidgetsSignal();
+        });
+
+        vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
+        vBoxSub->update();
+
+        refreshOperationWidgets();
+    }
+    else
+        qDebug() << "baseConfigWidgetChain is empty";
+}
+
+void MainWindow::removeOperationWidgets()
+{
+    if(!baseConfigWidgetChain.empty())
+    {
+        qDebug() << "VBox Count Before: " << vBoxSub->count();
+
+        QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
+        item->widget()->hide();
+        vBoxSub->removeWidget(item->widget());
+
+        qDebug() << "VBox Count After: " << vBoxSub->count();
+
+        //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
+        ui->stackedWidget->removeWidget(
+                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+
+        vBoxSub->update();
+
+        ui->scrollAreaChainMenu->update();
+
+        refreshOperationWidgets();
+    }
+}
+
+void MainWindow::refreshOperationWidgets()
+{
+    if(!baseConfigWidgetChain.empty())
+    {
+        qDebug() << "Refresh Called";
+        baseConfigWidgetChain.last()->setExplodedView(false);
+        ui->labelOperationName->setText(baseConfigWidgetChain.last()->getOperationName());
+
+        //        if(baseConfigWidgetChain.size() > 1)
+        //        {
+        //            baseConfigWidgetChain.at(baseConfigWidgetChain.size() - 2)->
+        //                    getChainMenuWidget()->setEnabled(false);
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setEnabled(true);
+        //        }
+        //        else
+        //        {
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setEnabled(true);
+        //            baseConfigWidgetChain.last()->
+        //                    getChainMenuWidget()->setRemoveButtonEnabled(false);
+        //        }
+
+        if(vBoxSub->count() > 1)
         {
-            QScrollArea* scrollArea = new QScrollArea();
-
-            scrollArea->setWidget(
-                        baseConfigWidgetChain.back()->getConfigWidget());
-
-            ui->stackedWidget->addWidget(scrollArea);
-
-            connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                    &ChainMenuWidget::addOperationClicked,
-                    this,
-                    [=](){
-                addOperation(NONE);
-            });
-
-            connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                    &ChainMenuWidget::removeOperationClicked,
-                    this,
-                    [=](){
-                baseConfigWidgetChain.last()->~BaseConfigWidget();
-                baseConfigWidgetChain.removeLast();
-                emit paramWidgetSetSignal(true);
-            });
-
-            vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
-            vBoxSub->update();
+            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
         }
         else
         {
-            qDebug() << "VBox Count Before: " << vBoxSub->count();
-
-            QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
-            item->widget()->hide();
-            vBoxSub->removeWidget(item->widget());
-
-            qDebug() << "VBox Count After: " << vBoxSub->count();
-
-            //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
-            ui->stackedWidget->removeWidget(
-                        ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
-
-            vBoxSub->update();
-
-            ui->scrollAreaChainMenu->update();
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                          widget())->setRemoveButtonEnabled(false);
         }
 
         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
 
-        /*
-         * Configure Add and Remove buttons after additiona dn removal of
-         * Operation from Operation chain
-         */
-        //        if(baseConfigWidgetChain.size() == 1)
-        //            baseConfigWidgetChain.last()->getChainMenuWidget()->setRemoveButtonEnabled(false);
-        //        chainMenuWidgetList.last()->setEnabled(true);
-
-        /*
-         * Make Add and Remove buttons disabled for previous chain menu widgets
-         * Support for same is planned in future
-         */
-        if(baseConfigWidgetChain.size() > 1)
-        {
-            baseConfigWidgetChain.at(baseConfigWidgetChain.size() - 2)->
-                    getChainMenuWidget()->setEnabled(false);
-            baseConfigWidgetChain.last()->
-                    getChainMenuWidget()->setEnabled(true);
-        }
-        else
-        {
-            baseConfigWidgetChain.last()->
-                    getChainMenuWidget()->setEnabled(true);
-            baseConfigWidgetChain.last()->
-                    getChainMenuWidget()->setRemoveButtonEnabled(false);
-        }
-
         wgtSub->update();
         wgtSub->repaint();
     }
-    else
-        qDebug() << "baseConfigWidgetChain is empty";
 }
 
 void MainWindow::showAboutDialog()
@@ -332,8 +416,7 @@ void MainWindow::GetSourceCaptureImage()
 
                 baseConfigWidget->~BaseConfigWidget();
                 baseConfigWidgetChain.removeLast();
-                emit paramWidgetSetSignal(true);
-                // setParamAdjustWidget(true);
+                emit removeOperationWidgetsSignal();
                 break;
             }
         }
@@ -397,24 +480,18 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    qDebug() << typeid(baseConfigWidgetChain.last()).name();
-
-    baseConfigWidgetChain.back()->~BaseConfigWidget();
-    baseConfigWidgetChain.removeLast();
-    paramWidgetSetSignal(true);
-
     if(!baseConfigWidgetChain.empty())
     {
-        if(baseConfigWidgetChain.back()->isExplodedViewEnabled())
+        if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
         {
-            if(baseConfigWidgetChain.back()->setExplodedView(true))
+            if(baseConfigWidgetChain.last()->setExplodedView(true))
             {
                 // TODO: Change Icon to minimize
             }
         }
         else
         {
-            baseConfigWidgetChain.back()->setExplodedView(false);
+            baseConfigWidgetChain.last()->setExplodedView(false);
             // TODO: Change Icon to exploded
         }
     }
@@ -482,13 +559,13 @@ void MainWindow::sourceSelectClicked()
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
     if(!baseConfigWidgetChain.empty())
-        baseConfigWidgetChain.back()->begin =cv::Point(x, y);
+        baseConfigWidgetChain.last()->begin =cv::Point(x, y);
 }
 
 void MainWindow::moreInfoOperationClicked()
 {
     if(!baseConfigWidgetChain.empty())
-        QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.back()->getInfoURL()));
+        QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.last()->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
