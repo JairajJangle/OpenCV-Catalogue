@@ -130,7 +130,12 @@ private:
 
     // TODO: Add and test Chain Menu Radio buttons grouped working
     QGroupBox* chainMenuRadioButtonsGroup = new QGroupBox();
-        QVBoxLayout* testVBox = new QVBoxLayout();
+
+    QWidget *wgtSubtest = new QWidget();
+    QWidget *wgtMain = new QWidget();
+    QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
+    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
+
     void configChainMenuList();
 };
 #endif // MAINWINDOW_H

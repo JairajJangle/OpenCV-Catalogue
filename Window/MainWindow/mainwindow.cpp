@@ -225,13 +225,13 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
     }
 
     // Replace Paramter Widget in Stacked Widget
-    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
-    ui->stackedWidget->removeWidget(lastWidget);
+//    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
+//    ui->stackedWidget->removeWidget(lastWidget);
 
-    QScrollArea* scrollArea = new QScrollArea();
-    scrollArea->setWidget(
-                baseConfigWidgetChain.last()->getConfigWidget());
-    ui->stackedWidget->addWidget(scrollArea);
+//    QScrollArea* scrollArea = new QScrollArea();
+//    scrollArea->setWidget(
+//                baseConfigWidgetChain.last()->getConfigWidget());
+//    ui->stackedWidget->addWidget(scrollArea);
 
     refreshOperationWidgets();
 }
@@ -250,21 +250,21 @@ void MainWindow::addOperationWidget()
 
         // Testing
 
-        Collapsible* collapsible = new Collapsible("ghj");
+        Collapsible* collapsible = new Collapsible(baseConfigWidgetChain.last()->getOperationName());
         collapsible->setContentLayout(*baseConfigWidgetChain.last()->wgtSub);
         collapsible->show();
 //        testWidget->show();
 
-        QWidget* testWidget = new QWidget();
         testVBox->addWidget(collapsible);
-        testWidget->setLayout(testVBox);
-        testWidget->show();
         testVBox->setAlignment(Qt::AlignTop);
-        scrollArea->setLayout(testVBox);
+//        scrollArea->setLayout(testVBox);
+
+        vboxMain->addWidget(wgtSubtest);
+        ui->scrollArea->setWidget(wgtMain);
 
         //////////////////////////////////////
 
-        ui->stackedWidget->addWidget(scrollArea);
+//        ui->stackedWidget->addWidget(scrollArea);
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::radioButtonChecked,
@@ -318,8 +318,8 @@ void MainWindow::removeOperationWidgets()
         qDebug() << "VBox Count After: " << vBoxSub->count();
 
         //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
-        ui->stackedWidget->removeWidget(
-                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+//        ui->stackedWidget->removeWidget(
+//                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
 
         vBoxSub->update();
 
@@ -368,7 +368,7 @@ void MainWindow::refreshOperationWidgets()
                                           widget())->setRemoveButtonEnabled(false);
         }
 
-        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+//        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
 
         wgtSub->update();
         wgtSub->repaint();

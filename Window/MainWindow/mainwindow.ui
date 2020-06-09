@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="3,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="3,0,0,0,0,0">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -92,69 +92,25 @@ background-repeat: none;
          </layout>
         </item>
         <item row="2" column="0">
-         <widget class="QStackedWidget" name="stackedWidget">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QScrollArea" name="scrollArea">
           <property name="minimumSize">
            <size>
             <width>414</width>
-            <height>499</height>
+            <height>0</height>
            </size>
           </property>
-          <widget class="QWidget" name="Page1">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
-            </property>
-            <item>
-             <widget class="QScrollArea" name="scrollArea">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="widgetResizable">
-               <bool>true</bool>
-              </property>
-              <widget class="QWidget" name="scrollAreaWidgetContents">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>390</width>
-                 <height>475</height>
-                </rect>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Please selct an Operation</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-           </layout>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>412</width>
+             <height>497</height>
+            </rect>
+           </property>
           </widget>
          </widget>
         </item>
@@ -558,7 +514,7 @@ background-repeat: none;
                <x>0</x>
                <y>0</y>
                <width>323</width>
-               <height>482</height>
+               <height>497</height>
               </rect>
              </property>
              <property name="sizePolicy">

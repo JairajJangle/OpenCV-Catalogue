@@ -23,8 +23,11 @@ Collapsible::Collapsible(const QString & title, const int animationDuration, QWi
     hBox.addWidget(&headerLine);
     hBox.addWidget(&infoButton);
 
-    contentArea.setStyleSheet("QScrollArea { background-color: white; border: none; }");
+//    contentArea.setStyleSheet("QScrollArea { background-color: white; border: none; }");
+    contentArea.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    contentArea.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     contentArea.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
     // start out collapsed
     contentArea.setMaximumHeight(0);
     contentArea.setMinimumHeight(0);
@@ -53,7 +56,7 @@ void Collapsible::setContentLayout(QWidget & contentLayout) {
     delete contentArea.layout();
     contentArea.setWidget(&contentLayout);
     const auto collapsedHeight = sizeHint().height() - contentArea.maximumHeight();
-    auto contentHeight = contentLayout.sizeHint().height();
+    auto contentHeight = contentLayout.sizeHint().height() + 10;
     for (int i = 0; i < toggleAnimation.animationCount() - 1; ++i) {
         QPropertyAnimation * CollapsibleAnimation = static_cast<QPropertyAnimation *>(toggleAnimation.animationAt(i));
         CollapsibleAnimation->setDuration(animationDuration);

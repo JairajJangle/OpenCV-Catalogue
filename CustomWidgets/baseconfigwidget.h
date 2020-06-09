@@ -39,17 +39,12 @@
 class BaseConfigWidget : public QWidget
 {
     Q_OBJECT
-private:
-    QScrollArea *scrl = new QScrollArea();
-
 public:
     QWidget *wgtSub = new QWidget();
 
 protected:
     // TODO: Check need of mutex, probably not required -> remove
     QMutex m;
-
-    QWidget *wgtMain = new QWidget();
 
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
 
@@ -63,9 +58,6 @@ protected:
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
     bool explodedViewEnabled = false;
-
-private:
-    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
 public:
     cv::Point begin;
@@ -83,7 +75,7 @@ public:
      */
     QWidget* getConfigWidget()
     {
-        return scrl;
+        return wgtSub;
     }
 
     ChainMenuWidget* getChainMenuWidget()
@@ -161,9 +153,7 @@ public:
      */
     virtual void initWidget()
     {
-        wgtMain->setMinimumWidth(410);
-        vboxMain->addWidget(wgtSub);
-        scrl->setWidget(wgtMain);
+//        wgtMain->setMinimumWidth(410);
 //        scrl->setFrameShape(QFrame::NoFrame);
 //        configWidget = scrl;
     }
