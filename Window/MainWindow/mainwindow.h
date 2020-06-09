@@ -31,6 +31,7 @@
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrent>
 #include <QGroupBox>
+#include <QWindow>
 
 #include <iostream>
 
@@ -126,6 +127,9 @@ private:
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
+    // TODO: Add and test Chain Menu Radio buttons grouped working
+    QGroupBox* chainMenuRadioButtonsGroup = new QGroupBox();
+        QVBoxLayout* testVBox = new QVBoxLayout();
     void configChainMenuList();
 };
 #endif // MAINWINDOW_H

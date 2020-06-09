@@ -243,9 +243,28 @@ void MainWindow::addOperationWidget()
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         QScrollArea* scrollArea = new QScrollArea();
-        scrollArea->setWidget(
-                    baseConfigWidgetChain.last()->getConfigWidget());
+        // Remove comment, only for testing
+//        scrollArea->setWidget(
+//                    baseConfigWidgetChain.last()->getConfigWidget());
+
+
+        // Testing
+        QWidget* testWidget = new QWidget();
+        testVBox->addWidget(baseConfigWidgetChain.last()->wgtSub);
+        testWidget->setLayout(testVBox);
+        scrollArea->setWidget(testWidget);
+//        testWidget->show();
+
+        //////////////////////////////////////
+
         ui->stackedWidget->addWidget(scrollArea);
+
+        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+                &ChainMenuWidget::radioButtonChecked,
+                this,
+                [=](){
+            qDebug() << "TODO";
+        });
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
@@ -328,12 +347,16 @@ void MainWindow::refreshOperationWidgets()
 
         if(vBoxSub->count() > 1)
         {
-            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
-            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+                                          widget())->setEnabled(false);
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                          widget())->setEnabled(true);
         }
         else
         {
-            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
+            qDebug() << "Refreshed called in else";
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                          widget())->setEnabled(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }
