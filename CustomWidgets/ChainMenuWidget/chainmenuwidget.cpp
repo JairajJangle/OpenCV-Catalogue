@@ -29,8 +29,13 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
         emit operationChanged(index);
     });
 
-//    connect(ui->comboBox, SIGNAL(activated(int)),
-//            this, SLOT(operationChangedSlot(int)));
+    connect(ui->radioButton, &QRadioButton::clicked, this,
+            [=]() {
+        emit radioButtonChecked();
+    });
+
+    //    connect(ui->comboBox, SIGNAL(activated(int)),
+    //            this, SLOT(operationChangedSlot(int)));
 }
 
 //void ChainMenuWidget::operationChangedSlot(int index)
@@ -61,6 +66,15 @@ void ChainMenuWidget::setCurrentOperation(QString operationName)
 {
     ui->comboBox->setCurrentText(operationName);
 }
+void ChainMenuWidget::setRadioButtonCheck(bool checked)
+{
+    ui->radioButton->setChecked(checked);
+}
+
+//QWidget* ChainMenuWidget::getRadioButton()
+//{
+//    return ui->radioButton;
+//}
 
 ChainMenuWidget::~ChainMenuWidget()
 {

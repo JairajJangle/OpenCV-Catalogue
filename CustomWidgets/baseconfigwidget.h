@@ -41,6 +41,8 @@ class BaseConfigWidget : public QWidget
     Q_OBJECT
 private:
     QScrollArea *scrl = new QScrollArea();
+
+public:
     QWidget *wgtSub = new QWidget();
 
 protected:

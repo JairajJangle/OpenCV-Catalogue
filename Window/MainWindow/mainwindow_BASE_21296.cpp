@@ -243,28 +243,9 @@ void MainWindow::addOperationWidget()
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         QScrollArea* scrollArea = new QScrollArea();
-        // Remove comment, only for testing
-//        scrollArea->setWidget(
-//                    baseConfigWidgetChain.last()->getConfigWidget());
-
-
-        // Testing
-        QWidget* testWidget = new QWidget();
-        testVBox->addWidget(baseConfigWidgetChain.last()->wgtSub);
-        testWidget->setLayout(testVBox);
-        scrollArea->setWidget(testWidget);
-//        testWidget->show();
-
-        //////////////////////////////////////
-
+        scrollArea->setWidget(
+                    baseConfigWidgetChain.last()->getConfigWidget());
         ui->stackedWidget->addWidget(scrollArea);
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                &ChainMenuWidget::radioButtonChecked,
-                this,
-                [=](){
-            qDebug() << "TODO";
-        });
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
@@ -347,16 +328,12 @@ void MainWindow::refreshOperationWidgets()
 
         if(vBoxSub->count() > 1)
         {
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                          widget())->setEnabled(false);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
         }
         else
         {
-            qDebug() << "Refreshed called in else";
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }
@@ -375,7 +352,7 @@ void MainWindow::showAboutDialog()
         if(!aboutDialog->isVisible())
         {
             // Set About Dialog Window Position and Always on Top
-            QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
+            QPoint mainWindowCenter = getWindowCenter();
             QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
                                                 aboutDialog->geometry().height()/2);
             aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
@@ -607,6 +584,14 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
     ui->labelUserMessage->setAutoFillBackground(true);
     ui->labelUserMessage->setPalette(sample_palette);
     ui->labelUserMessage->setText(message);
+}
+
+QPoint MainWindow::getWindowCenter()
+{
+    QPoint position = QPoint(0,0);
+    position.setX(this->geometry().x() + this->geometry().width()/2);
+    position.setY(this->geometry().y() + this->geometry().height()/2);
+    return  position;
 }
 
 void MainWindow::configChainMenuList()

@@ -98,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(removeOperationWidgetsSignal()),
             this, SLOT(removeOperationWidgets()));
 
-    // Register cv::Mat type to make it queueable
+    // Register cv::Mat type to make it queueable in QT Signal system
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
 
@@ -171,7 +171,6 @@ void MainWindow::addOperation(OPCodes opCode)
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
 {
-    // FIXME: Operation non Changing
     switch (opCode)
     {
     case NONE:
@@ -224,7 +223,7 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
         break;
     }
 
-    // Replace Paramter Widget in Stacked Widget
+    // To Replace Paramter Widget in Stacked Widget
     QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
     ui->stackedWidget->removeWidget(lastWidget);
 
@@ -243,28 +242,9 @@ void MainWindow::addOperationWidget()
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
         QScrollArea* scrollArea = new QScrollArea();
-        // Remove comment, only for testing
-//        scrollArea->setWidget(
-//                    baseConfigWidgetChain.last()->getConfigWidget());
-
-
-        // Testing
-        QWidget* testWidget = new QWidget();
-        testVBox->addWidget(baseConfigWidgetChain.last()->wgtSub);
-        testWidget->setLayout(testVBox);
-        scrollArea->setWidget(testWidget);
-//        testWidget->show();
-
-        //////////////////////////////////////
-
+        scrollArea->setWidget(
+                    baseConfigWidgetChain.last()->getConfigWidget());
         ui->stackedWidget->addWidget(scrollArea);
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                &ChainMenuWidget::radioButtonChecked,
-                this,
-                [=](){
-            qDebug() << "TODO";
-        });
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
@@ -310,7 +290,6 @@ void MainWindow::removeOperationWidgets()
 
         qDebug() << "VBox Count After: " << vBoxSub->count();
 
-        //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
         ui->stackedWidget->removeWidget(
                     ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
 
@@ -347,16 +326,12 @@ void MainWindow::refreshOperationWidgets()
 
         if(vBoxSub->count() > 1)
         {
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                          widget())->setEnabled(false);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
         }
         else
         {
-            qDebug() << "Refreshed called in else";
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }

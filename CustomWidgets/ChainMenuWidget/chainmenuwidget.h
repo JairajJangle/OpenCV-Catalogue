@@ -22,6 +22,7 @@ public:
     void setComboBoxEnabled(bool enabled);
     void setEnabled(bool enabled);
     void setCurrentOperation(QString operationName);
+    void setRadioButtonCheck(bool checked);
 
 //private slots:
 //    void operationChangedSlot(int); // OpCode
@@ -32,6 +33,8 @@ signals:
     void addOperationClicked();
     void removeOperationClicked();
     void operationChanged(int index);
+    void radioButtonChecked();
+//    QWidget* getRadioButton();
 //    void operationChangedSignal(int chainMenuOpListIndex); // or OpCode
 
 private:
