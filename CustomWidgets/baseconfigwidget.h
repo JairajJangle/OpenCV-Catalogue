@@ -153,7 +153,7 @@ public:
      */
     virtual void initWidget()
     {
-//        wgtMain->setMinimumWidth(410);
+        wgtSub->setMinimumWidth(410);
 //        scrl->setFrameShape(QFrame::NoFrame);
 //        configWidget = scrl;
     }
