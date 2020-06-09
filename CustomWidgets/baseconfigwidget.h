@@ -153,7 +153,9 @@ public:
      */
     virtual void initWidget()
     {
-        wgtSub->setMinimumWidth(410);
+        vBoxSub->setAlignment(Qt::AlignHCenter);
+        wgtSub->setMinimumWidth(400);
+        wgtSub->setMaximumWidth(420);
 //        scrl->setFrameShape(QFrame::NoFrame);
 //        configWidget = scrl;
     }

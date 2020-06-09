@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QPushButton>
 
-class Collapsible : public QWidget {
+class Collapsible : public QFrame {
     Q_OBJECT
 private:
     QGridLayout mainLayout;

@@ -95,7 +95,7 @@ background-repeat: none;
          <widget class="QScrollArea" name="scrollArea">
           <property name="minimumSize">
            <size>
-            <width>440</width>
+            <width>460</width>
             <height>0</height>
            </size>
           </property>
@@ -107,7 +107,7 @@ background-repeat: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>438</width>
+             <width>458</width>
              <height>497</height>
             </rect>
            </property>
@@ -495,7 +495,7 @@ background-repeat: none;
             </property>
             <property name="minimumSize">
              <size>
-              <width>325</width>
+              <width>150</width>
               <height>0</height>
              </size>
             </property>
@@ -513,7 +513,7 @@ background-repeat: none;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>323</width>
+               <width>301</width>
                <height>497</height>
               </rect>
              </property>
