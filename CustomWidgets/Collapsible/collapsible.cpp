@@ -2,7 +2,10 @@
 
 #include "collapsible.h"
 
-Collapsible::Collapsible(const QString & title, const int animationDuration, QWidget *parent) : QWidget(parent), animationDuration(animationDuration) {
+Collapsible::Collapsible(const QString & title,
+                         const int animationDuration,
+                         QWidget *parent) : QFrame(parent), animationDuration(animationDuration)
+{
     toggleButton.setStyleSheet("QToolButton { border: none; }");
     toggleButton.setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toggleButton.setArrowType(Qt::ArrowType::RightArrow);
@@ -42,14 +45,17 @@ Collapsible::Collapsible(const QString & title, const int animationDuration, QWi
     mainLayout.addWidget(&toggleButton, row, 0, 1, 1, Qt::AlignLeft);
     mainLayout.addWidget(&infoButton, row, 2, 1, 1);
     mainLayout.addWidget(&headerLine, row, 3, 1, 1);
-    mainLayout.addWidget(&removeButton, row++, 4, 1, 1);
-    mainLayout.addWidget(&contentArea, row, 0, 1, 5);
+    mainLayout.addWidget(&removeButton, row++, 4, 1, 2);
+    mainLayout.addWidget(&contentArea, row, 0, 1, 8);
     setLayout(&mainLayout);
     QObject::connect(&toggleButton, &QToolButton::clicked, [this](const bool checked) {
         toggleButton.setArrowType(checked ? Qt::ArrowType::DownArrow : Qt::ArrowType::RightArrow);
         toggleAnimation.setDirection(checked ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
         toggleAnimation.start();
     });
+
+    this->setFrameShape(QFrame::Box);
+    this->setLineWidth(1);
 }
 
 void Collapsible::setContentLayout(QWidget & contentLayout) {
