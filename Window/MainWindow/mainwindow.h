@@ -54,6 +54,7 @@
 #include "Window/AboutDialog/aboutdialog.h"
 
 #include "CustomWidgets/HybridSlider/hybridslider.h"
+#include "CustomWidgets/Collapsible/collapsible.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

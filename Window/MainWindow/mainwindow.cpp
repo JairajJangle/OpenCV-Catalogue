@@ -249,11 +249,18 @@ void MainWindow::addOperationWidget()
 
 
         // Testing
-        QWidget* testWidget = new QWidget();
-        testVBox->addWidget(baseConfigWidgetChain.last()->wgtSub);
-        testWidget->setLayout(testVBox);
-        scrollArea->setWidget(testWidget);
+
+        Collapsible* collapsible = new Collapsible("ghj");
+        collapsible->setContentLayout(*baseConfigWidgetChain.last()->wgtSub);
+        collapsible->show();
 //        testWidget->show();
+
+        QWidget* testWidget = new QWidget();
+        testVBox->addWidget(collapsible);
+        testWidget->setLayout(testVBox);
+        testWidget->show();
+        testVBox->setAlignment(Qt::AlignTop);
+        scrollArea->setLayout(testVBox);
 
         //////////////////////////////////////
 
