@@ -35,6 +35,7 @@
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
+#include "CustomWidgets/Collapsible/collapsible.h"
 
 class BaseConfigWidget : public QWidget
 {
@@ -47,6 +48,7 @@ protected:
     QMutex m;
 
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
+    Collapsible* collapsible = new Collapsible();
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
@@ -82,6 +84,11 @@ public:
     {
         chainMenuWidget->setCurrentOperation(operationName);
         return chainMenuWidget;
+    }
+
+    Collapsible* getParamAdjustWidget()
+    {
+        return collapsible;
     }
 
     /*
@@ -156,6 +163,8 @@ public:
         vBoxSub->setAlignment(Qt::AlignHCenter);
         wgtSub->setMinimumWidth(400);
         wgtSub->setMaximumWidth(420);
+
+        collapsible->setContentLayout(wgtSub, operationName);
 //        scrl->setFrameShape(QFrame::NoFrame);
 //        configWidget = scrl;
     }

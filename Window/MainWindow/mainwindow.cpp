@@ -249,14 +249,11 @@ void MainWindow::addOperationWidget()
 
 
         // Testing
-
-        Collapsible* collapsible = new Collapsible();
-        collapsible->setContentLayout(baseConfigWidgetChain.last()->wgtSub,
-                                      baseConfigWidgetChain.last()->getOperationName());
-        collapsible->show();
         //        testWidget->show();
 
-        testVBox->addWidget(collapsible);
+        testVBox->addWidget(
+                    baseConfigWidgetChain.last()->
+                    getParamAdjustWidget());
         testVBox->setAlignment(Qt::AlignTop);
         //        scrollArea->setLayout(testVBox);
 
@@ -315,6 +312,10 @@ void MainWindow::removeOperationWidgets()
         QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
         item->widget()->hide();
         vBoxSub->removeWidget(item->widget());
+
+        QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
+        itemParamAdjust->widget()->hide();
+        testVBox->removeWidget(itemParamAdjust->widget());
 
         qDebug() << "VBox Count After: " << vBoxSub->count();
 
