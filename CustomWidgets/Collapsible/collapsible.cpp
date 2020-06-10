@@ -16,6 +16,11 @@ Collapsible::Collapsible(const int animationDuration,
     infoButton->setMaximumSize(25, 25);
     removeButton->setMaximumSize(20, 20);
 
+    connect(removeButton, &QPushButton::released,
+            this, [=]() {
+        emit removeButtonPressed();
+    });
+
     headerLine->setFrameShape(QFrame::HLine);
     headerLine->setFrameShadow(QFrame::Sunken);
     headerLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);

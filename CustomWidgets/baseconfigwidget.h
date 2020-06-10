@@ -61,6 +61,9 @@ protected:
 
     bool explodedViewEnabled = false;
 
+signals:
+    void removeOperationSignal();
+
 public:
     cv::Point begin;
     cv::Point end;
@@ -68,6 +71,12 @@ public:
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
+
+        connect(collapsible, &Collapsible::removeButtonPressed,
+                this, [=]() {
+            emit removeOperationSignal();
+        });
+
     }
     ~BaseConfigWidget(){}
 
@@ -154,20 +163,20 @@ public:
     + std::string(typeid(this).name()); // Append class name
 }
 
-    /*
+/*
      * Super call this function at the end of overriden initWidget() function in
      * each Operation class to actually show configuration widget in the Scroll Area
      */
-    virtual void initWidget()
-    {
-        vBoxSub->setAlignment(Qt::AlignHCenter);
-        wgtSub->setMinimumWidth(400);
-        wgtSub->setMaximumWidth(420);
+virtual void initWidget()
+{
+    vBoxSub->setAlignment(Qt::AlignHCenter);
+    wgtSub->setMinimumWidth(400);
+    wgtSub->setMaximumWidth(420);
 
-        collapsible->setContentLayout(wgtSub, operationName);
-//        scrl->setFrameShape(QFrame::NoFrame);
-//        configWidget = scrl;
-    }
+    collapsible->setContentLayout(wgtSub, operationName);
+    //        scrl->setFrameShape(QFrame::NoFrame);
+    //        configWidget = scrl;
+}
 };
 
 #endif // BASECONFIGWIDGET_H
