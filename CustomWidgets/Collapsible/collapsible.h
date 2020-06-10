@@ -17,6 +17,10 @@ private:
     QParallelAnimationGroup* toggleAnimation = new QParallelAnimationGroup();
     QScrollArea* contentArea = new QScrollArea();
     int animationDuration{300};
+
+signals:
+    void removeButtonPressed();
+
 public:
     explicit Collapsible(const int animationDuration = 300,
                          QWidget *parent = 0);

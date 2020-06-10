@@ -285,6 +285,15 @@ void MainWindow::addOperationWidget()
             lastOperationChanged((OPCodes)index);
         });
 
+        connect(baseConfigWidgetChain.last(),
+                &BaseConfigWidget::removeOperationSignal,
+                this,
+                [=](){
+            baseConfigWidgetChain.last()->~BaseConfigWidget();
+            baseConfigWidgetChain.removeLast();
+            emit removeOperationWidgetsSignal();
+        });
+
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::removeOperationClicked,
                 this,
