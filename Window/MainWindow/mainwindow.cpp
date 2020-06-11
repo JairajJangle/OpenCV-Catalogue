@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
-    connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
     connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
 
     connect(ui->actionAbout, &QAction::triggered, this,
@@ -254,7 +253,7 @@ void MainWindow::addOperationWidget()
     {
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-        QScrollArea* scrollArea = new QScrollArea();
+//        QScrollArea* scrollArea = new QScrollArea();
         // Remove comment, only for testing
         //        scrollArea->setWidget(
         //                    baseConfigWidgetChain.last()->getConfigWidget());
@@ -347,7 +346,6 @@ void MainWindow::refreshOperationWidgets()
     {
         qDebug() << "Refresh Called";
         baseConfigWidgetChain.last()->setExplodedView(false);
-        ui->labelOperationName->setText(baseConfigWidgetChain.last()->getOperationName());
 
         //        if(baseConfigWidgetChain.size() > 1)
         //        {
@@ -384,6 +382,14 @@ void MainWindow::refreshOperationWidgets()
 
         wgtSub->update();
         wgtSub->repaint();
+
+        ui->scrollAreaChainMenu->widget()->adjustSize();
+        ui->scrollArea->widget()->adjustSize();
+        qApp->processEvents();
+        ui->scrollAreaChainMenu->verticalScrollBar()
+                ->triggerAction(QAbstractSlider::SliderToMaximum);
+        ui->scrollArea->verticalScrollBar()
+                ->triggerAction(QAbstractSlider::SliderToMaximum);
     }
 }
 
@@ -602,12 +608,6 @@ void MainWindow::outputLabelLBClicked(int x, int y)
 {
     if(!baseConfigWidgetChain.empty())
         baseConfigWidgetChain.last()->begin =cv::Point(x, y);
-}
-
-void MainWindow::moreInfoOperationClicked()
-{
-    if(!baseConfigWidgetChain.empty())
-        QDesktopServices::openUrl(QUrl(baseConfigWidgetChain.last()->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
