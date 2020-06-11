@@ -31,7 +31,7 @@
 #include <QWidget>
 #include <QMutex>
 
-// OpenCV libs
+#include "Utils/constants.h"
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
@@ -54,7 +54,7 @@ protected:
      * Assing Values to operationName and moreInfoLink in Constructor of
      * Derived class of OpenCV operation widgets
      */
-    QString operationName = "No operation Selected";
+    QString operationName = Strings::noOperationSelected;
     QString moreInfoLink = "";
 
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
@@ -72,11 +72,10 @@ public:
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
 
-        connect(collapsible, &Collapsible::removeButtonPressed,
+        connect(collapsible, &Collapsible::removeButtonClicked,
                 this, [=]() {
             emit removeOperationSignal();
         });
-
     }
     ~BaseConfigWidget(){}
 
@@ -163,20 +162,20 @@ public:
     + std::string(typeid(this).name()); // Append class name
 }
 
-/*
+    /*
      * Super call this function at the end of overriden initWidget() function in
      * each Operation class to actually show configuration widget in the Scroll Area
      */
-virtual void initWidget()
-{
-    vBoxSub->setAlignment(Qt::AlignHCenter);
-    wgtSub->setMinimumWidth(400);
-    wgtSub->setMaximumWidth(420);
+    virtual void initWidget()
+    {
+        vBoxSub->setAlignment(Qt::AlignHCenter);
+        wgtSub->setMinimumWidth(400);
+        wgtSub->setMaximumWidth(420);
 
-    collapsible->setContentLayout(wgtSub, operationName);
-    //        scrl->setFrameShape(QFrame::NoFrame);
-    //        configWidget = scrl;
-}
+        collapsible->setContentLayout(wgtSub,
+                                      operationName,
+                                      moreInfoLink);
+    }
 };
 
 #endif // BASECONFIGWIDGET_H
