@@ -33,4 +33,8 @@ namespace RegExps {
 const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
 }
 
+namespace Strings {
+const QString noOperationSelected = "No operation Selected";
+}
+
 #endif // CONSTANTS_H

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1493</width>
+    <width>1470</width>
     <height>928</height>
    </rect>
   </property>
@@ -22,139 +22,32 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="3,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0,0,0,0,0,0,0,0,0,0,0,0" columnstretch="3,0,0,0,0,0">
       <property name="spacing">
        <number>0</number>
       </property>
       <item row="0" column="5" rowspan="2">
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="labelOperationName">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>35</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>No operation selected</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="buttonMoreInfo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>More Info about the selected operation</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">#buttonMoreInfo
-{
-background-color: transparent;
-border-image: url(:/assets/info.png);
-background: none;
-border: none;
-background-repeat: none;
-}
-#buttonMoreInfo:pressed
-{
-background-color: transparent;
-border-image: url(:/assets/info_sel.png);
-background: none;
-border: none;
-background-repeat: none;
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
-         <widget class="QStackedWidget" name="stackedWidget">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QScrollArea" name="scrollArea">
           <property name="minimumSize">
            <size>
-            <width>414</width>
-            <height>499</height>
+            <width>460</width>
+            <height>0</height>
            </size>
           </property>
-          <widget class="QWidget" name="Page1">
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
-            </property>
-            <item>
-             <widget class="QScrollArea" name="scrollArea">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="widgetResizable">
-               <bool>true</bool>
-              </property>
-              <widget class="QWidget" name="scrollAreaWidgetContents">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>390</width>
-                 <height>475</height>
-                </rect>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_7">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Please selct an Operation</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-           </layout>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>458</width>
+             <height>541</height>
+            </rect>
+           </property>
           </widget>
          </widget>
         </item>
@@ -539,7 +432,7 @@ background-repeat: none;
             </property>
             <property name="minimumSize">
              <size>
-              <width>325</width>
+              <width>150</width>
               <height>0</height>
              </size>
             </property>
@@ -557,8 +450,8 @@ background-repeat: none;
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>323</width>
-               <height>482</height>
+               <width>301</width>
+               <height>497</height>
               </rect>
              </property>
              <property name="sizePolicy">
@@ -881,7 +774,7 @@ background-repeat: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1493</width>
+     <width>1470</width>
      <height>26</height>
     </rect>
    </property>
