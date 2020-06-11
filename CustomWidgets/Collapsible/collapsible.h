@@ -29,13 +29,13 @@ private:
     QGridLayout* mainLayout = new QGridLayout();
     QToolButton* toggleButton = new QToolButton();
     QFrame* headerLine = new QFrame();
-    QPushButton* infoButton = new QPushButton();
-    QPushButton* removeButton = new QPushButton();
+    QToolButton* infoButton = new QToolButton();
+    QToolButton* removeButton = new QToolButton();
     QParallelAnimationGroup* toggleAnimation = new QParallelAnimationGroup();
     QScrollArea* contentArea = new QScrollArea();
     int animationDuration{300};
 
-    QString infoButtonStyleSheet = QString("QPushButton#infoButton"
+    QString infoButtonStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info.png);"
@@ -43,7 +43,7 @@ private:
                                            "    border: none;"
                                            "    background-repeat: none;"
                                            "}"
-                                           "QPushButton:pressed#infoButton"
+                                           "QToolButton:pressed#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info_sel.png);"
@@ -52,12 +52,12 @@ private:
                                            "    background-repeat: none;"
                                            "}");
 
-    QString removeButtonStyleSheet = QString("QPushButton#removeButton"
+    QString removeButtonStyleSheet = QString("QToolButton#removeButton"
                                              "{"
                                              "  color: red;"
                                              "  font-weight: bold;"
                                              "}"
-                                             "QPushButton:disabled#buttonRemove"
+                                             "QToolButton:disabled#buttonRemove"
                                              "{"
                                              "  color: #787878;"
                                              "  font-weight: bold;"

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>270</width>
-    <height>65</height>
+    <height>67</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -41,17 +41,23 @@
       <number>0</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,10,1">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,10,0">
        <property name="spacing">
         <number>2</number>
        </property>
        <item>
-        <widget class="QPushButton" name="buttonRemove">
+        <widget class="QToolButton" name="buttonRemove">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
          <property name="maximumSize">
           <size>
@@ -74,7 +80,6 @@
 #buttonRemove:disabled
 {
  color: #787878;
-background-color: #ffffff;
 }</string>
          </property>
          <property name="text">
@@ -105,12 +110,18 @@ background-color: #ffffff;
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonAdd">
+        <widget class="QToolButton" name="buttonAdd">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>35</width>
+           <height>35</height>
+          </size>
          </property>
          <property name="maximumSize">
           <size>
@@ -133,7 +144,6 @@ background-color: #ffffff;
 #buttonAdd:disabled
 {
  color: #787878;
-background-color: #ffffff;
 }</string>
          </property>
          <property name="text">
