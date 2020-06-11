@@ -16,12 +16,12 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
         ui->comboBox->addItem(chainMenuItem.second, chainMenuItem.first);
     }
 
-    connect(ui->buttonAdd, &QPushButton::released,this,
+    connect(ui->buttonAdd, &QToolButton::released,this,
             [=](){
         emit addOperationClicked();
     });
 
-    connect(ui->buttonRemove, &QPushButton::released,this,
+    connect(ui->buttonRemove, &QToolButton::released,this,
             [=](){
         emit removeOperationClicked();
     });

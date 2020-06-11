@@ -6,6 +6,8 @@
 Collapsible::Collapsible(const int animationDuration,
                          QWidget *parent) : QFrame(parent), animationDuration(animationDuration)
 {
+    this->setObjectName("collapsibleFrame");
+    this->setStyleSheet("QFrame#collapsibleFrame {  border: 1px solid #54636D; }");
     toggleButton->setText(Strings::noOperationSelected);
     toggleButton->setStyleSheet("QToolButton { border: none; }");
     toggleButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -19,11 +21,11 @@ Collapsible::Collapsible(const int animationDuration,
     infoButton->setStyleSheet(infoButtonStyleSheet);
     infoButton->hide();
 
-    removeButton->setMaximumSize(25, 25);
+    removeButton->setFixedSize(25, 25);
     removeButton->setObjectName("removeButton");
     removeButton->setText("—");
     removeButton->setStyleSheet(removeButtonStyleSheet);
-    connect(removeButton, &QPushButton::released,
+    connect(removeButton, &QToolButton::released,
             this, [=]() {
         emit removeButtonClicked();
     });
@@ -36,7 +38,7 @@ Collapsible::Collapsible(const int animationDuration,
     hBox->addWidget(headerLine);
     hBox->addWidget(infoButton);
 
-    //    contentArea.setStyleSheet("QScrollArea { background-color: white; border: none; }");
+    contentArea->setStyleSheet("QScrollArea {border: none; }");
     contentArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     contentArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     contentArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -54,9 +56,9 @@ Collapsible::Collapsible(const int animationDuration,
     int row = 0;
     mainLayout->addWidget(toggleButton, row, 0, 1, 1, Qt::AlignLeft);
     mainLayout->addWidget(infoButton, row, 1, 1, 1);
-    mainLayout->addWidget(headerLine, row++, 2, 1, 1);
+    mainLayout->addWidget(headerLine, row, 2, 1, 1);
     //    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
-    mainLayout->addWidget(contentArea, row, 0, 1, 8);
+    mainLayout->addWidget(contentArea, ++row, 0, 1, 8);
     setLayout(mainLayout);
     QObject::connect(toggleButton, &QToolButton::clicked, [this](const bool checked) {
         toggleButton->setArrowType(checked ? Qt::ArrowType::DownArrow : Qt::ArrowType::RightArrow);
@@ -97,7 +99,7 @@ void Collapsible::setContentLayout(QWidget* contentLayout,
     if(infoLink != "")
     {
         infoButton->show();
-        connect(infoButton, &QPushButton::released,
+        connect(infoButton, &QToolButton::released,
                 this, [=]() {
             QDesktopServices::openUrl(QUrl(infoLink));
         });
