@@ -101,7 +101,18 @@ MainWindow::MainWindow(QWidget *parent)
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
 
+    ui->scrollArea->setWidgetResizable( true );
+
+    // FIXME: Test
+    connect(ui->scrollArea, SIGNAL(resizeEvent()), this, SLOT(scrollResizeEvent()));
+
     addOperation(NONE);
+}
+
+// FIXME: Test
+void MainWindow::scrollResizeEvent()
+{
+    qDebug() << "Resized" << ui->scrollArea->size();
 }
 
 void MainWindow::initUI(){
@@ -110,7 +121,7 @@ void MainWindow::initUI(){
     vBoxSub->setAlignment(Qt::AlignTop);
     vBoxSub->setSpacing(0);
 
-        testVBox->setAlignment(Qt::AlignTop);
+    testVBox->setAlignment(Qt::AlignTop);
     vboxMain->addWidget(wgtSubtest);
     ui->scrollArea->setWidget(wgtMain);
 
@@ -253,7 +264,7 @@ void MainWindow::addOperationWidget()
     {
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-//        QScrollArea* scrollArea = new QScrollArea();
+        //        QScrollArea* scrollArea = new QScrollArea();
         // Remove comment, only for testing
         //        scrollArea->setWidget(
         //                    baseConfigWidgetChain.last()->getConfigWidget());
@@ -289,7 +300,6 @@ void MainWindow::addOperationWidget()
                 &BaseConfigWidget::removeOperationSignal,
                 this,
                 [=](){
-            baseConfigWidgetChain.last()->~BaseConfigWidget();
             baseConfigWidgetChain.removeLast();
             emit removeOperationWidgetsSignal();
         });
@@ -298,7 +308,6 @@ void MainWindow::addOperationWidget()
                 &ChainMenuWidget::removeOperationClicked,
                 this,
                 [=](){
-            baseConfigWidgetChain.last()->~BaseConfigWidget();
             baseConfigWidgetChain.removeLast();
             emit removeOperationWidgetsSignal();
         });
@@ -462,7 +471,6 @@ void MainWindow::GetSourceCaptureImage()
 
                 capturedOriginalImg.copyTo(outputImage);
 
-                baseConfigWidget->~BaseConfigWidget();
                 baseConfigWidgetChain.removeLast();
                 emit removeOperationWidgetsSignal();
                 break;
