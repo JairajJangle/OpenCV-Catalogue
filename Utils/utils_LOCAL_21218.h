@@ -18,23 +18,22 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef UTILS_H
+#define UTILS_H
 
-#include <QString>
-#include <QRegExp>
+#include <cmath>
 
-namespace Info {
-const QString appName = "OpenCV Catalogue";
-const QString version = "v0.2.1";
+namespace Numeric {
+// extern:
+double setPrecision(double number, int decimalPlaces);
+// inline:
+inline double setPrecision(double number, int decimalPlaces)
+{
+    int n = (int)(number *pow(10, decimalPlaces));
+    return ((double)n) / pow(10, decimalPlaces);
+}
 }
 
-namespace RegExps {
-const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
-}
+#define GET_VARIABLE_NAME(Variable) (#Variable)
 
-namespace Strings {
-const QString noOperationSelected = "No operation Selected";
-}
-
-#endif // CONSTANTS_H
+#endif // UTILS_H

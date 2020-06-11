@@ -29,8 +29,10 @@
 #include <QButtonGroup>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
 #include <QGroupBox>
+#include <QWindow>
 
 #include <iostream>
 
@@ -76,7 +78,6 @@ private slots:
     void GetSourceCaptureImage();
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
-    void moreInfoOperationClicked();
     void addOperation(OPCodes opCode = NONE);
     void lastOperationChanged(OPCodes opCode);
     void showAboutDialog();
@@ -86,6 +87,9 @@ private slots:
     void addOperationWidget();
     void removeOperationWidgets();
     void refreshOperationWidgets();
+
+    // FIXME: Test
+    void scrollResizeEvent();
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
@@ -125,6 +129,14 @@ private:
 
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+
+    // TODO: Add and test Chain Menu Radio buttons grouped working
+    QGroupBox* chainMenuRadioButtonsGroup = new QGroupBox();
+
+    QWidget *wgtSubtest = new QWidget();
+    QWidget *wgtMain = new QWidget();
+    QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
+    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
     void configChainMenuList();
 };

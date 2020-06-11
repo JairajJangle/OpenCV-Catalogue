@@ -31,39 +31,38 @@
 #include <QWidget>
 #include <QMutex>
 
-// OpenCV libs
+#include "Utils/constants.h"
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
+#include "CustomWidgets/Collapsible/collapsible.h"
 
 class BaseConfigWidget : public QWidget
 {
     Q_OBJECT
-private:
-    QScrollArea *scrl = new QScrollArea();
+public:
     QWidget *wgtSub = new QWidget();
 
 protected:
     // TODO: Check need of mutex, probably not required -> remove
     QMutex m;
 
-    QWidget *wgtMain = new QWidget();
-
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
+    Collapsible* collapsible = new Collapsible();
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
      * Derived class of OpenCV operation widgets
      */
-    QString operationName = "No operation Selected";
+    QString operationName = Strings::noOperationSelected;
     QString moreInfoLink = "";
 
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
     bool explodedViewEnabled = false;
 
-private:
-    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
+signals:
+    void removeOperationSignal();
 
 public:
     cv::Point begin;
@@ -72,6 +71,11 @@ public:
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
+
+        connect(collapsible, &Collapsible::removeButtonClicked,
+                this, [=]() {
+            emit removeOperationSignal();
+        });
     }
     ~BaseConfigWidget(){}
 
@@ -81,13 +85,18 @@ public:
      */
     QWidget* getConfigWidget()
     {
-        return scrl;
+        return wgtSub;
     }
 
     ChainMenuWidget* getChainMenuWidget()
     {
         chainMenuWidget->setCurrentOperation(operationName);
         return chainMenuWidget;
+    }
+
+    Collapsible* getParamAdjustWidget()
+    {
+        return collapsible;
     }
 
     /*
@@ -159,11 +168,13 @@ public:
      */
     virtual void initWidget()
     {
-        wgtMain->setMinimumWidth(410);
-        vboxMain->addWidget(wgtSub);
-        scrl->setWidget(wgtMain);
-//        scrl->setFrameShape(QFrame::NoFrame);
-//        configWidget = scrl;
+//        vBoxSub->setAlignment(Qt::AlignHCenter);
+        wgtSub->setMinimumWidth(400);
+        wgtSub->setMaximumWidth(420);
+
+        collapsible->setContentLayout(wgtSub,
+                                      operationName,
+                                      moreInfoLink);
     }
 };
 

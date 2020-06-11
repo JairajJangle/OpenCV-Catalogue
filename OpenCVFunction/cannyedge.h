@@ -93,7 +93,7 @@ void testSliderValChanged(int value){
 }
 void refreshLayout()
 {
-    wgtMain->adjustSize();
+    wgtSub->adjustSize();
 }
 void enableBlurCBToggled(bool isChecked)
 {

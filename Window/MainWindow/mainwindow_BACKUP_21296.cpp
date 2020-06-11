@@ -21,6 +21,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "Utils/constants.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -28,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     initUI();
-
-    configChainMenuList();
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
+    connect(ui->buttonMoreInfo,SIGNAL(released()),this,SLOT(moreInfoOperationClicked()));
     connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
 
     connect(ui->actionAbout, &QAction::triggered, this,
@@ -49,82 +50,63 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionColorSpace, &QAction::triggered, this,
             [=]() {
-        addOperation(COLOR_SPACES);
+        operationSelected(COLOR_SPACES);
+    });
+
+    connect(ui->actionColorSpace, &QAction::triggered, this,
+            [=]() {
+        operationSelected(COLOR_SPACES);
     });
     connect(ui->actionImage_Flip, &QAction::triggered, this,
             [=]() {
-        addOperation(IMAGE_FLIP);
+        operationSelected(IMAGE_FLIP);
     });
     connect(ui->actionColor_Picker, &QAction::triggered, this,
             [=]() {
-        addOperation(COLOR_PICKER);
+        operationSelected(COLOR_PICKER);
     });
     connect(ui->actionThresholding, &QAction::triggered, this,
             [=]() {
-        addOperation(THRESHOLDING);
+        operationSelected(THRESHOLDING);
     });
     connect(ui->actionCanny_Edge, &QAction::triggered, this,
             [=]() {
-        addOperation(CANNY_EDGE);
+        operationSelected(CANNY_EDGE);
     });
     connect(ui->actionBlur, &QAction::triggered, this,
             [=]() {
-        addOperation(BLUR);
+        operationSelected(BLUR);
     });
     connect(ui->actionMotion_detection, &QAction::triggered, this,
             [=]() {
-        addOperation(BKG_SUBTRACT);
+        operationSelected(BKG_SUBTRACT);
     });
     connect(ui->actionHough_Circles, &QAction::triggered, this,
             [=]() {
-        addOperation(HOUGH_CIRCLES);
+        operationSelected(HOUGH_CIRCLES);
     });
     connect(ui->actionHough_Lines, &QAction::triggered, this,
             [=]() {
-        addOperation(HOUGH_LINES);
+        operationSelected(HOUGH_LINES);
     });
     connect(ui->actionHistogram, &QAction::triggered, this,
             [=]() {
-        addOperation(HISTOGRAM_CALCULATION);
+        operationSelected(HISTOGRAM_CALCULATION);
     });
     connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
             [=]() {
-        addOperation(HARRIS_CORNER);
+        operationSelected(HARRIS_CORNER);
     });
+
 
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 
-    connect(this, SIGNAL(removeOperationWidgetsSignal()),
-            this, SLOT(removeOperationWidgets()));
-
-    // Register cv::Mat type to make it queueable
+    // Register cv::Mat type to make it queueable in QT Signal system
     qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
-
-    ui->scrollArea->setWidgetResizable( true );
-
-    // FIXME: Test
-    connect(ui->scrollArea, SIGNAL(resizeEvent()), this, SLOT(scrollResizeEvent()));
-
-    addOperation(NONE);
-}
-
-// FIXME: Test
-void MainWindow::scrollResizeEvent()
-{
-    qDebug() << "Resized" << ui->scrollArea->size();
 }
 
 void MainWindow::initUI(){
-    //    wgtMain->setMinimumWidth(410);
-    ui->scrollAreaChainMenu->setWidget(wgtSub);
-    vBoxSub->setAlignment(Qt::AlignTop);
-    vBoxSub->setSpacing(0);
-
-    testVBox->setAlignment(Qt::AlignTop);
-    vboxMain->addWidget(wgtSubtest);
-    ui->scrollArea->setWidget(wgtMain);
-
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -135,125 +117,76 @@ void MainWindow::initUI(){
     sourceRadioButtonClicked();
 
     setUserMessage("Initializing Done", INFO);
-
-    noOperationWidget = ui->scrollArea;
 }
 
-void MainWindow::addOperation(OPCodes opCode)
+void MainWindow::operationSelected(OPCodes opCode)
 {
-    switch (opCode)
-    {
-    case NONE:
-        baseConfigWidgetChain.append(new BaseConfigWidget());
-        break;
-    case COLOR_SPACES:
-        baseConfigWidgetChain.append(new ColorSpace());
-        break;
-    case IMAGE_FLIP:
-        baseConfigWidgetChain.append(new ImageFlip());
-        break;
-    case COLOR_PICKER:
-        baseConfigWidgetChain.append(new ColorPicker());
-        break;
-    case CANNY_EDGE:
-        baseConfigWidgetChain.append(new CannyEdge());
-        break;
-    case THRESHOLDING:
-        baseConfigWidgetChain.append(new Thresholding());
-        break;
-    case BLUR:
-        baseConfigWidgetChain.append(new Blur());
-        break;
-    case BKG_SUBTRACT:
-        baseConfigWidgetChain.append(new BackgroundSubtraction());
-        break;
-    case HOUGH_CIRCLES:
-        baseConfigWidgetChain.append(new HoughCircles());
-        break;
-    case HOUGH_LINES:
-        baseConfigWidgetChain.append(new HoughLines());
-        break;
-    case HISTOGRAM_CALCULATION:
-        baseConfigWidgetChain.append(new HistogramCalculation());
-        break;
-    case HARRIS_CORNER:
-        baseConfigWidgetChain.append(new HarrisCornerDetector());
-        break;
-    }
+    selectedOpCode = opCode;
 
-    addOperationWidget();
-}
+    baseConfigWidget->setExplodedView(false);
 
+<<<<<<< Updated upstream
+    // FIXME: Many operations are slow in OpenCV 4.x with Ubuntu 20.04: Reason unknown
+
+    switch (selectedOpCode) {
+=======
 void MainWindow::lastOperationChanged(OPCodes opCode)
 {
-    // FIXME: Operation non Changing
     switch (opCode)
     {
     case NONE:
         baseConfigWidgetChain.replace(
                     baseConfigWidgetChain.size() - 1, new BaseConfigWidget());
         break;
+>>>>>>> Stashed changes
     case COLOR_SPACES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ColorSpace());
+        baseConfigWidget = new ColorSpace();
         break;
     case IMAGE_FLIP:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ImageFlip());
+        baseConfigWidget = new ImageFlip();
         break;
     case COLOR_PICKER:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ColorPicker());
+        baseConfigWidget = new ColorPicker();
         break;
     case CANNY_EDGE:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new CannyEdge());
+        baseConfigWidget = new CannyEdge();
         break;
     case THRESHOLDING:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new Thresholding());
+        baseConfigWidget = new Thresholding();
         break;
     case BLUR:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new Blur());
+        baseConfigWidget = new Blur();
         break;
     case BKG_SUBTRACT:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new BackgroundSubtraction());
+        baseConfigWidget = new BackgroundSubtraction();
         break;
     case HOUGH_CIRCLES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HoughCircles());
+        baseConfigWidget = new HoughCircles();
         break;
     case HOUGH_LINES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HoughLines());
+        baseConfigWidget = new HoughLines();
         break;
     case HISTOGRAM_CALCULATION:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HistogramCalculation());
+        baseConfigWidget = new HistogramCalculation();
         break;
     case HARRIS_CORNER:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HarrisCornerDetector());
+        baseConfigWidget = new HarrisCornerDetector();
         break;
     }
 
-    QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
-    itemParamAdjust->widget()->hide();
-    testVBox->removeWidget(itemParamAdjust->widget());
-    testVBox->addWidget(
-                baseConfigWidgetChain.last()->
-                getParamAdjustWidget());
+<<<<<<< Updated upstream
+    ui->labelOperationName->setText(baseConfigWidget->getOperationName());
+    QWidget *configWidget = baseConfigWidget->getConfigWidget();
+    ui->scrollArea->setWidget(configWidget);
+=======
+    // To Replace Paramter Widget in Stacked Widget
+    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
+    ui->stackedWidget->removeWidget(lastWidget);
 
-    // Replace Paramter Widget in Stacked Widget
-    //    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
-    //    ui->stackedWidget->removeWidget(lastWidget);
-
-    //    QScrollArea* scrollArea = new QScrollArea();
-    //    scrollArea->setWidget(
-    //                baseConfigWidgetChain.last()->getConfigWidget());
-    //    ui->stackedWidget->addWidget(scrollArea);
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidget(
+                baseConfigWidgetChain.last()->getConfigWidget());
+    ui->stackedWidget->addWidget(scrollArea);
 
     refreshOperationWidgets();
 }
@@ -264,23 +197,10 @@ void MainWindow::addOperationWidget()
     {
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-        //        QScrollArea* scrollArea = new QScrollArea();
-        // Remove comment, only for testing
-        //        scrollArea->setWidget(
-        //                    baseConfigWidgetChain.last()->getConfigWidget());
-
-
-        // Testing
-        //        testWidget->show();
-
-        testVBox->addWidget(
-                    baseConfigWidgetChain.last()->
-                    getParamAdjustWidget());
-        //        scrollArea->setLayout(testVBox);
-
-        //////////////////////////////////////
-
-        //        ui->stackedWidget->addWidget(scrollArea);
+        QScrollArea* scrollArea = new QScrollArea();
+        scrollArea->setWidget(
+                    baseConfigWidgetChain.last()->getConfigWidget());
+        ui->stackedWidget->addWidget(scrollArea);
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
@@ -296,18 +216,11 @@ void MainWindow::addOperationWidget()
             lastOperationChanged((OPCodes)index);
         });
 
-        connect(baseConfigWidgetChain.last(),
-                &BaseConfigWidget::removeOperationSignal,
-                this,
-                [=](){
-            baseConfigWidgetChain.removeLast();
-            emit removeOperationWidgetsSignal();
-        });
-
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::removeOperationClicked,
                 this,
                 [=](){
+            baseConfigWidgetChain.last()->~BaseConfigWidget();
             baseConfigWidgetChain.removeLast();
             emit removeOperationWidgetsSignal();
         });
@@ -331,15 +244,10 @@ void MainWindow::removeOperationWidgets()
         item->widget()->hide();
         vBoxSub->removeWidget(item->widget());
 
-        QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
-        itemParamAdjust->widget()->hide();
-        testVBox->removeWidget(itemParamAdjust->widget());
-
         qDebug() << "VBox Count After: " << vBoxSub->count();
 
-        //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
-        //        ui->stackedWidget->removeWidget(
-        //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+        ui->stackedWidget->removeWidget(
+                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
 
         vBoxSub->update();
 
@@ -355,6 +263,7 @@ void MainWindow::refreshOperationWidgets()
     {
         qDebug() << "Refresh Called";
         baseConfigWidgetChain.last()->setExplodedView(false);
+        ui->labelOperationName->setText(baseConfigWidgetChain.last()->getOperationName());
 
         //        if(baseConfigWidgetChain.size() > 1)
         //        {
@@ -373,33 +282,22 @@ void MainWindow::refreshOperationWidgets()
 
         if(vBoxSub->count() > 1)
         {
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                          widget())->setEnabled(false);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 2)->widget()->setEnabled(false);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
         }
         else
         {
-            qDebug() << "Refreshed called in else";
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+            vBoxSub->itemAt(vBoxSub->count() - 1)->widget()->setEnabled(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }
 
-        //        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
 
         wgtSub->update();
         wgtSub->repaint();
-
-        ui->scrollAreaChainMenu->widget()->adjustSize();
-        ui->scrollArea->widget()->adjustSize();
-        qApp->processEvents();
-        ui->scrollAreaChainMenu->verticalScrollBar()
-                ->triggerAction(QAbstractSlider::SliderToMaximum);
-        ui->scrollArea->verticalScrollBar()
-                ->triggerAction(QAbstractSlider::SliderToMaximum);
     }
+>>>>>>> Stashed changes
 }
 
 void MainWindow::showAboutDialog()
@@ -441,44 +339,14 @@ void MainWindow::GetSourceCaptureImage()
 
     refreshInputImage(capturedReziedImg);
 
-    QtConcurrent::run([=]
+    if(selectedOpCode != NONE)
     {
-        cv::Mat outputImage;
-        capturedOriginalImg.copyTo(outputImage);
-        bool isChainSuccess = false;
-        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        QtConcurrent::run([=]
         {
-            isChainSuccess = false;
-            try{
-                outputImage = baseConfigWidget->getProcessedImage(outputImage);
-                isChainSuccess = true;
-            }
-            catch(cv::Exception& e)
-            {
-                qDebug() << e.what();
-            }
-            catch(std::exception& e)
-            {
-                qDebug() << e.what();
-            }
-            catch(std::string &error)
-            {
-                qDebug() << QString::fromStdString(error);
-            }
-            if(!isChainSuccess)
-            {
-                qDebug() << "Errored Operation removed from Chain";
-
-                capturedOriginalImg.copyTo(outputImage);
-
-                baseConfigWidgetChain.removeLast();
-                emit removeOperationWidgetsSignal();
-                break;
-            }
-        }
-
-        emit refreshOutputImageSignal(outputImage);
-    });
+            emit refreshOutputImageSignal(baseConfigWidget->
+                                          getProcessedImage(capturedOriginalImg));
+        });
+    }
 }
 
 void MainWindow::GetSourceCaptureError(QString error)
@@ -536,21 +404,19 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    if(!baseConfigWidgetChain.empty())
+    if(baseConfigWidget->isExplodedViewEnabled())
     {
-        if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
+        if(baseConfigWidget->setExplodedView(true))
         {
-            if(baseConfigWidgetChain.last()->setExplodedView(true))
-            {
-                // TODO: Change Icon to minimize
-            }
-        }
-        else
-        {
-            baseConfigWidgetChain.last()->setExplodedView(false);
-            // TODO: Change Icon to exploded
+            // TODO: Change Icon to minimize
         }
     }
+    else
+    {
+        baseConfigWidget->setExplodedView(false);
+        // TODO: Change Icon to exploded
+    }
+
 }
 
 void MainWindow::sourceRadioButtonClicked(){
@@ -577,7 +443,7 @@ void MainWindow::browseClicked()
 
 void MainWindow::sourceSelectClicked()
 {
-    qDebug() << "Source Select Clicked!!";
+    std::cout << "Source Select Clicked!!" << std::endl;
     QString path = ui->textInputSource->toPlainText();
     if(ui->fileRadioButton->isChecked()){
         QFileInfo check_file(path);
@@ -606,7 +472,7 @@ void MainWindow::sourceSelectClicked()
         connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
     }
     else{
-        qDebug() << "Cam Thread already running!!";
+        std::cout << "Cam Thread already running!!" << std::endl;
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }
@@ -614,8 +480,12 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
-    if(!baseConfigWidgetChain.empty())
-        baseConfigWidgetChain.last()->begin =cv::Point(x, y);
+    baseConfigWidget->begin =cv::Point(x, y);
+}
+
+void MainWindow::moreInfoOperationClicked()
+{
+    QDesktopServices::openUrl(QUrl(baseConfigWidget->getInfoURL()));
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
@@ -636,6 +506,14 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
     ui->labelUserMessage->setText(message);
 }
 
+<<<<<<< Updated upstream
+QPoint MainWindow::getWindowCenter()
+{
+    QPoint position = QPoint(0,0);
+    position.setX(this->geometry().x() + this->geometry().width()/2);
+    position.setY(this->geometry().y() + this->geometry().height()/2);
+    return  position;
+=======
 void MainWindow::configChainMenuList()
 {
     chainMenuOpList.append(QPair<OPCodes, QString>(NONE ,BaseConfigWidget().getOperationName()));
@@ -650,6 +528,7 @@ void MainWindow::configChainMenuList()
     chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
+>>>>>>> Stashed changes
 }
 
 MainWindow::~MainWindow()

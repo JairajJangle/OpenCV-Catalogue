@@ -9,6 +9,8 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->verticalLayout_2->setAlignment(Qt::AlignCenter);
+
     for(QPair<int, QString> chainMenuItem : chainMenuOpList)
     {
         ui->comboBox->addItem(chainMenuItem.second, chainMenuItem.first);
@@ -29,8 +31,8 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
         emit operationChanged(index);
     });
 
-//    connect(ui->comboBox, SIGNAL(activated(int)),
-//            this, SLOT(operationChangedSlot(int)));
+    //    connect(ui->comboBox, SIGNAL(activated(int)),
+    //            this, SLOT(operationChangedSlot(int)));
 }
 
 //void ChainMenuWidget::operationChangedSlot(int index)
@@ -61,6 +63,11 @@ void ChainMenuWidget::setCurrentOperation(QString operationName)
 {
     ui->comboBox->setCurrentText(operationName);
 }
+
+//QWidget* ChainMenuWidget::getRadioButton()
+//{
+//    return ui->radioButton;
+//}
 
 ChainMenuWidget::~ChainMenuWidget()
 {

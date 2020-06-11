@@ -18,23 +18,39 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#ifndef UTILS_H
+#define UTILS_H
 
-#include <QString>
-#include <QRegExp>
+#include <cmath>
 
-namespace Info {
-const QString appName = "OpenCV Catalogue";
-const QString version = "v0.2.1";
+#include <QList>
+#include <QPoint>
+#include <QWidget>
+
+namespace Numeric {
+// extern:
+double setPrecision(double number, int decimalPlaces);
+// inline:
+inline double setPrecision(double number, int decimalPlaces)
+{
+    int n = (int)(number *pow(10, decimalPlaces));
+    return ((double)n) / pow(10, decimalPlaces);
+}
 }
 
-namespace RegExps {
-const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
+namespace WidgetUtils {
+QPoint getWidgetCenter(QWidget* widget);
+inline QPoint getWidgetCenter(QWidget* widget)
+{
+    QPoint position = QPoint(0,0);
+    position.setX(widget->geometry().x() + widget->geometry().width()/2);
+    position.setY(widget->geometry().y() + widget->geometry().height()/2);
+    return  position;
+}
 }
 
-namespace Strings {
-const QString noOperationSelected = "No operation Selected";
-}
+inline QList<QPair<int, QString>> chainMenuOpList;
 
-#endif // CONSTANTS_H
+#define GET_VARIABLE_NAME(Variable) (#Variable)
+
+#endif // UTILS_H
