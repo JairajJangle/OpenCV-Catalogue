@@ -5,6 +5,7 @@
 Collapsible::Collapsible(const int animationDuration,
                          QWidget *parent) : QFrame(parent), animationDuration(animationDuration)
 {
+    toggleButton->setText(Strings::noOperationSelected);
     toggleButton->setStyleSheet("QToolButton { border: none; }");
     toggleButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toggleButton->setArrowType(Qt::ArrowType::RightArrow);
@@ -12,13 +13,15 @@ Collapsible::Collapsible(const int animationDuration,
     toggleButton->setChecked(false);
     toggleButton->setMinimumHeight(50);
 
-    infoButton->setText("i");
-    infoButton->setMaximumSize(25, 25);
-    removeButton->setMaximumSize(20, 20);
+    infoButton->setFixedSize(25, 25);
+    infoButton->setObjectName("infoButton");
+    infoButton->setStyleSheet(infoButtonStyleSheet);
+    infoButton->hide();
 
+    removeButton->setMaximumSize(20, 20);
     connect(removeButton, &QPushButton::released,
             this, [=]() {
-        emit removeButtonPressed();
+        emit removeButtonClicked();
     });
 
     headerLine->setFrameShape(QFrame::HLine);
@@ -62,7 +65,8 @@ Collapsible::Collapsible(const int animationDuration,
 }
 
 void Collapsible::setContentLayout(QWidget* contentLayout,
-                                   const QString title)
+                                   const QString title,
+                                   const QString infoLink)
 {
     delete contentArea->layout();
     toggleButton->setText(title);
@@ -84,4 +88,13 @@ void Collapsible::setContentLayout(QWidget* contentLayout,
     contentAnimation->setDuration(animationDuration);
     contentAnimation->setStartValue(0);
     contentAnimation->setEndValue(contentHeight);
+
+    if(infoLink != "")
+    {
+        infoButton->show();
+        connect(infoButton, &QPushButton::released,
+                this, [=]() {
+            QDesktopServices::openUrl(QUrl(infoLink));
+        });
+    }
 }

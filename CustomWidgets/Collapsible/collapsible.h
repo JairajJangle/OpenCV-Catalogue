@@ -5,9 +5,26 @@
 #include <QToolButton>
 #include <QWidget>
 #include <QPushButton>
+#include <QDesktopServices>
+#include <QUrl>
+
+#include "Utils/constants.h"
 
 class Collapsible : public QFrame {
     Q_OBJECT
+
+public:
+    explicit Collapsible(const int animationDuration = 300,
+                         QWidget *parent = 0);
+    void setContentLayout(QWidget* contentLayout,
+                          const QString title,
+                          const QString infoLink);
+    void setInfoButtonVisibility(bool visible);
+
+signals:
+    void removeButtonClicked();
+    void infoButtonClicled();
+
 private:
     QGridLayout* mainLayout = new QGridLayout();
     QToolButton* toggleButton = new QToolButton();
@@ -18,12 +35,20 @@ private:
     QScrollArea* contentArea = new QScrollArea();
     int animationDuration{300};
 
-signals:
-    void removeButtonPressed();
-
-public:
-    explicit Collapsible(const int animationDuration = 300,
-                         QWidget *parent = 0);
-    void setContentLayout(QWidget* contentLayout,
-                          const QString title);
+    QString infoButtonStyleSheet = QString("QPushButton#infoButton"
+                                           "{"
+                                           "    background-color: transparent;"
+                                           "    border-image: url(:/assets/info.png);"
+                                           "    background: none;"
+                                           "    border: none;"
+                                           "    background-repeat: none;"
+                                           "}"
+                                           "QPushButton:pressed#infoButton"
+                                           "{"
+                                           "    background-color: transparent;"
+                                           "    border-image: url(:/assets/info_sel.png);"
+                                           "    background: none;"
+                                           "    border: none;"
+                                           "    background-repeat: none;"
+                                           "}");
 };
