@@ -168,7 +168,7 @@ public:
      */
     virtual void initWidget()
     {
-        vBoxSub->setAlignment(Qt::AlignHCenter);
+//        vBoxSub->setAlignment(Qt::AlignHCenter);
         wgtSub->setMinimumWidth(400);
         wgtSub->setMaximumWidth(420);
 
