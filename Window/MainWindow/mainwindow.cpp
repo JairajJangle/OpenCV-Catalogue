@@ -109,6 +109,11 @@ void MainWindow::initUI(){
     //    wgtMain->setMinimumWidth(410);
     ui->scrollAreaChainMenu->setWidget(wgtSub);
     vBoxSub->setAlignment(Qt::AlignTop);
+    vBoxSub->setSpacing(0);
+
+        testVBox->setAlignment(Qt::AlignTop);
+    vboxMain->addWidget(wgtSubtest);
+    ui->scrollArea->setWidget(wgtMain);
 
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
@@ -224,6 +229,13 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
         break;
     }
 
+    QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
+    itemParamAdjust->widget()->hide();
+    testVBox->removeWidget(itemParamAdjust->widget());
+    testVBox->addWidget(
+                baseConfigWidgetChain.last()->
+                getParamAdjustWidget());
+
     // Replace Paramter Widget in Stacked Widget
     //    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
     //    ui->stackedWidget->removeWidget(lastWidget);
@@ -254,22 +266,11 @@ void MainWindow::addOperationWidget()
         testVBox->addWidget(
                     baseConfigWidgetChain.last()->
                     getParamAdjustWidget());
-        testVBox->setAlignment(Qt::AlignTop);
         //        scrollArea->setLayout(testVBox);
-
-        vboxMain->addWidget(wgtSubtest);
-        ui->scrollArea->setWidget(wgtMain);
 
         //////////////////////////////////////
 
         //        ui->stackedWidget->addWidget(scrollArea);
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                &ChainMenuWidget::radioButtonChecked,
-                this,
-                [=](){
-            qDebug() << "TODO";
-        });
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
