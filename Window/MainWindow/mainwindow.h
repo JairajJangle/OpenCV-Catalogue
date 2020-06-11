@@ -88,6 +88,9 @@ private slots:
     void removeOperationWidgets();
     void refreshOperationWidgets();
 
+    // FIXME: Test
+    void scrollResizeEvent();
+
 signals:
     void refreshOutputImageSignal(cv::Mat);
     void paramWidgetSetSignal(bool isWidgetRemoved);
