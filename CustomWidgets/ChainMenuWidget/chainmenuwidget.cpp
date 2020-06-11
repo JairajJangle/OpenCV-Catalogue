@@ -9,6 +9,8 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->verticalLayout_2->setAlignment(Qt::AlignCenter);
+
     for(QPair<int, QString> chainMenuItem : chainMenuOpList)
     {
         ui->comboBox->addItem(chainMenuItem.second, chainMenuItem.first);
@@ -27,11 +29,6 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
     connect(ui->comboBox, qOverload<int>(&QComboBox::activated), this,
             [=](int index){
         emit operationChanged(index);
-    });
-
-    connect(ui->radioButton, &QRadioButton::clicked, this,
-            [=]() {
-        emit radioButtonChecked();
     });
 
     //    connect(ui->comboBox, SIGNAL(activated(int)),
@@ -65,10 +62,6 @@ void ChainMenuWidget::setEnabled(bool enabled)
 void ChainMenuWidget::setCurrentOperation(QString operationName)
 {
     ui->comboBox->setCurrentText(operationName);
-}
-void ChainMenuWidget::setRadioButtonCheck(bool checked)
-{
-    ui->radioButton->setChecked(checked);
 }
 
 //QWidget* ChainMenuWidget::getRadioButton()
