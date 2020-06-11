@@ -51,4 +51,16 @@ private:
                                            "    border: none;"
                                            "    background-repeat: none;"
                                            "}");
+
+    QString removeButtonStyleSheet = QString("QPushButton#removeButton"
+                                             "{"
+                                             "  color: red;"
+                                             "  font-weight: bold;"
+                                             "}"
+                                             "QPushButton:disabled#buttonRemove"
+                                             "{"
+                                             "  color: #787878;"
+                                             "  font-weight: bold;"
+                                             "  background-color: #ffffff;"
+                                             "}");
 };

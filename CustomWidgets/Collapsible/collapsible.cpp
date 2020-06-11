@@ -18,7 +18,10 @@ Collapsible::Collapsible(const int animationDuration,
     infoButton->setStyleSheet(infoButtonStyleSheet);
     infoButton->hide();
 
-    removeButton->setMaximumSize(20, 20);
+    removeButton->setMaximumSize(25, 25);
+    removeButton->setObjectName("removeButton");
+    removeButton->setText("—");
+    removeButton->setStyleSheet(removeButtonStyleSheet);
     connect(removeButton, &QPushButton::released,
             this, [=]() {
         emit removeButtonClicked();
@@ -49,9 +52,9 @@ Collapsible::Collapsible(const int animationDuration,
     mainLayout->setContentsMargins(0, 0, 0, 0);
     int row = 0;
     mainLayout->addWidget(toggleButton, row, 0, 1, 1, Qt::AlignLeft);
-    mainLayout->addWidget(infoButton, row, 2, 1, 1);
-    mainLayout->addWidget(headerLine, row, 3, 1, 1);
-    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
+    mainLayout->addWidget(infoButton, row, 1, 1, 1);
+    mainLayout->addWidget(headerLine, row++, 2, 1, 1);
+//    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
     mainLayout->addWidget(contentArea, row, 0, 1, 8);
     setLayout(mainLayout);
     QObject::connect(toggleButton, &QToolButton::clicked, [this](const bool checked) {
