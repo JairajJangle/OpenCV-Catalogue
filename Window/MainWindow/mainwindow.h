@@ -29,6 +29,7 @@
 #include <QButtonGroup>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
 #include <QGroupBox>
 #include <QWindow>
@@ -77,7 +78,6 @@ private slots:
     void GetSourceCaptureImage();
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
-    void moreInfoOperationClicked();
     void addOperation(OPCodes opCode = NONE);
     void lastOperationChanged(OPCodes opCode);
     void showAboutDialog();

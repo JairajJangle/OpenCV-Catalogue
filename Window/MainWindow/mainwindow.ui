@@ -29,69 +29,6 @@
       <item row="0" column="5" rowspan="2">
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLabel" name="labelOperationName">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>35</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>No operation selected</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="buttonMoreInfo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>More Info about the selected operation</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">#buttonMoreInfo
-{
-background-color: transparent;
-border-image: url(:/assets/info.png);
-background: none;
-border: none;
-background-repeat: none;
-}
-#buttonMoreInfo:pressed
-{
-background-color: transparent;
-border-image: url(:/assets/info_sel.png);
-background: none;
-border: none;
-background-repeat: none;
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0">
          <widget class="QScrollArea" name="scrollArea">
           <property name="minimumSize">
            <size>
@@ -108,7 +45,7 @@ background-repeat: none;
              <x>0</x>
              <y>0</y>
              <width>458</width>
-             <height>497</height>
+             <height>541</height>
             </rect>
            </property>
           </widget>
