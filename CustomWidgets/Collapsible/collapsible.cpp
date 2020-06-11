@@ -1,6 +1,7 @@
 #include <QPropertyAnimation>
 
 #include "collapsible.h"
+#include <QDebug>
 
 Collapsible::Collapsible(const int animationDuration,
                          QWidget *parent) : QFrame(parent), animationDuration(animationDuration)
@@ -54,7 +55,7 @@ Collapsible::Collapsible(const int animationDuration,
     mainLayout->addWidget(toggleButton, row, 0, 1, 1, Qt::AlignLeft);
     mainLayout->addWidget(infoButton, row, 1, 1, 1);
     mainLayout->addWidget(headerLine, row++, 2, 1, 1);
-//    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
+    //    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
     mainLayout->addWidget(contentArea, row, 0, 1, 8);
     setLayout(mainLayout);
     QObject::connect(toggleButton, &QToolButton::clicked, [this](const bool checked) {
@@ -78,7 +79,8 @@ void Collapsible::setContentLayout(QWidget* contentLayout,
     const auto collapsedHeight = sizeHint().height() - contentArea->maximumHeight();
     auto contentHeight = contentLayout->sizeHint().height() + 10;
 
-    for (int i = 0; i < toggleAnimation->animationCount() - 1; ++i) {
+    for (int i = 0; i < toggleAnimation->animationCount() - 1; ++i)
+    {
         QPropertyAnimation * CollapsibleAnimation =
                 static_cast<QPropertyAnimation*>(toggleAnimation->animationAt(i));
         CollapsibleAnimation->setDuration(animationDuration);
