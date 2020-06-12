@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1470</width>
+    <width>1512</width>
     <height>978</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1470</width>
+    <width>1512</width>
     <height>0</height>
    </size>
   </property>
@@ -35,6 +35,9 @@
             <width>460</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="widgetResizable">
            <bool>true</bool>
@@ -227,7 +230,12 @@ background-repeat: none;
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">border: 1px solid black</string>
+           <string notr="true">#labelOutput 
+{
+ border: 2px solid #54636D;
+ background-color : #32414B; 
+ color : white; 
+}</string>
           </property>
           <property name="text">
            <string>No input source selected</string>
@@ -679,7 +687,12 @@ background-repeat: none;
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">border: 1px solid black</string>
+           <string notr="true">#labelInput 
+{
+ border: 2px solid #54636D;
+ background-color : #32414B; 
+ color : white; 
+}</string>
           </property>
           <property name="text">
            <string>Please select an Input Source</string>
@@ -793,7 +806,7 @@ background-repeat: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1470</width>
+     <width>1512</width>
      <height>26</height>
     </rect>
    </property>
