@@ -58,7 +58,7 @@ Collapsible::Collapsible(const int animationDuration,
     mainLayout->addWidget(infoButton, row, 1, 1, 1);
     mainLayout->addWidget(headerLine, row, 2, 1, 1);
     //    mainLayout->addWidget(removeButton, row++, 4, 1, 2);
-    mainLayout->addWidget(contentArea, ++row, 0, 1, 8);
+    mainLayout->addWidget(contentArea, ++row, 0, 1, 8, Qt::AlignTop);
     setLayout(mainLayout);
     QObject::connect(toggleButton, &QToolButton::clicked, [this](const bool checked) {
         toggleButton->setArrowType(checked ? Qt::ArrowType::DownArrow : Qt::ArrowType::RightArrow);
