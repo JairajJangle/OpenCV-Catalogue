@@ -41,10 +41,17 @@
       <number>0</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,10,0">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,10,0">
        <property name="spacing">
         <number>2</number>
        </property>
+       <item>
+        <widget class="QRadioButton" name="radioButton">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QToolButton" name="buttonRemove">
          <property name="sizePolicy">
