@@ -30,6 +30,7 @@
 #include <QScrollArea>
 #include <QWidget>
 #include <QMutex>
+#include <QDebug>
 
 #include "Utils/constants.h"
 
@@ -63,6 +64,7 @@ protected:
 
 signals:
     void removeOperationSignal();
+    void operationSelected(Collapsible*);
 
 public:
     cv::Point begin;
@@ -75,6 +77,11 @@ public:
         connect(collapsible, &Collapsible::removeButtonClicked,
                 this, [=]() {
             emit removeOperationSignal();
+        });
+
+        connect(chainMenuWidget, &ChainMenuWidget::radioButtonChecked,
+                this, [=]() {
+            emit operationSelected(collapsible);
         });
     }
     ~BaseConfigWidget(){}
