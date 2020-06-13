@@ -49,16 +49,4 @@ private:
                                            "    border: none;"
                                            "    background-repeat: none;"
                                            "}");
-
-    QString removeButtonStyleSheet = QString("QToolButton#removeButton"
-                                             "{"
-                                             "  color: red;"
-                                             "  font-weight: bold;"
-                                             "}"
-                                             "QToolButton:disabled#buttonRemove"
-                                             "{"
-                                             "  color: #787878;"
-                                             "  font-weight: bold;"
-                                             "  background-color: #ffffff;"
-                                             "}");
 };
