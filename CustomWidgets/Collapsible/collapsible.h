@@ -3,6 +3,7 @@
 #include <QParallelAnimationGroup>
 #include <QScrollArea>
 #include <QToolButton>
+#include <QLabel>
 #include <QWidget>
 #include <QPushButton>
 #include <QDesktopServices>
@@ -14,8 +15,7 @@ class Collapsible : public QFrame {
     Q_OBJECT
 
 public:
-    explicit Collapsible(const int animationDuration = 300,
-                         QWidget *parent = 0);
+    explicit Collapsible(QWidget *parent = 0);
     void setContentLayout(QWidget* contentLayout,
                           const QString title,
                           const QString infoLink);
@@ -27,13 +27,11 @@ signals:
 
 private:
     QGridLayout* mainLayout = new QGridLayout();
-    QToolButton* toggleButton = new QToolButton();
+    QLabel* toggleButton = new QLabel();
     QFrame* headerLine = new QFrame();
+    QFrame* headerLine2 = new QFrame();
     QToolButton* infoButton = new QToolButton();
-    QToolButton* removeButton = new QToolButton();
-    QParallelAnimationGroup* toggleAnimation = new QParallelAnimationGroup();
-    QScrollArea* contentArea = new QScrollArea();
-    int animationDuration{300};
+    int row = 0;
 
     QString infoButtonStyleSheet = QString("QToolButton#infoButton"
                                            "{"
