@@ -87,6 +87,7 @@ private slots:
     void addOperationWidget();
     void removeOperationWidgets();
     void refreshOperationWidgets();
+    void switchThemeButtonClicked();
 
     // FIXME: Test
     void operationSelectedToDisplay(Collapsible*);

@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
+    connect(ui->buttonSwitchTheme, SIGNAL(released()), this, SLOT(switchThemeButtonClicked()));
 
     connect(ui->actionAbout, &QAction::triggered, this,
             [=]() {
@@ -110,9 +111,6 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initUI(){
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
-
-    // TODO: To switch to light mode
-    //    qApp->setStyleSheet("");
 
     ui->scrollAreaChainMenu->setWidget(wgtSub);
     vBoxSub->setAlignment(Qt::AlignTop);
@@ -572,6 +570,32 @@ void MainWindow::configChainMenuList()
     chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
+}
+
+void MainWindow::switchThemeButtonClicked()
+{
+    // TODO: To switch to light mode
+
+    if(qApp->styleSheet() == "")
+    {
+
+        QFile f(":qdarkstyle/style.qss");
+
+        if (!f.exists())
+        {
+            printf("Unable to set stylesheet, file not found\n");
+        }
+        else
+        {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+        }
+    }
+    else
+    {
+        qApp->setStyleSheet("");
+    }
 }
 
 MainWindow::~MainWindow()
