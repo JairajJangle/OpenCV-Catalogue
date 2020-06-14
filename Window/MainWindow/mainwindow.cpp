@@ -27,7 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Register cv::Mat type to make it queueable
+    qRegisterMetaType<cv::Mat>("cv::Mat");
+
     initUI();
+
+    switchThemeButtonClicked();
 
     configChainMenuList();
 
@@ -41,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
     connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
+    connect(ui->buttonSwitchTheme, SIGNAL(released()), this, SLOT(switchThemeButtonClicked()));
 
     connect(ui->actionAbout, &QAction::triggered, this,
             [=]() {
@@ -97,36 +103,23 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(removeOperationWidgetsSignal()),
             this, SLOT(removeOperationWidgets()));
 
-    // Register cv::Mat type to make it queueable
-    qRegisterMetaType<cv::Mat>("cv::Mat");
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
 
-    ui->scrollArea->setWidgetResizable( true );
-
-    // FIXME: Test
-    connect(ui->scrollArea, SIGNAL(resizeEvent()), this, SLOT(scrollResizeEvent()));
+    ui->scrollAreaParameterWidget->setWidgetResizable(true);
 
     addOperation(NONE);
 }
 
-// FIXME: Test
-void MainWindow::scrollResizeEvent()
-{
-    qDebug() << "Resized" << ui->scrollArea->size();
-}
-
 void MainWindow::initUI(){
-    //    wgtMain->setMinimumWidth(410);
+    this->setWindowTitle(Info::appName);
+    this->setWindowIcon(QIcon(":/assets/app_logo.png"));
+
     ui->scrollAreaChainMenu->setWidget(wgtSub);
     vBoxSub->setAlignment(Qt::AlignTop);
     vBoxSub->setSpacing(0);
 
     testVBox->setAlignment(Qt::AlignTop);
-    vboxMain->addWidget(wgtSubtest);
-    ui->scrollArea->setWidget(wgtMain);
-
-    this->setWindowTitle(Info::appName);
-    this->setWindowIcon(QIcon(":/assets/app_logo.png"));
+    ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
 
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);
@@ -135,8 +128,6 @@ void MainWindow::initUI(){
     sourceRadioButtonClicked();
 
     setUserMessage("Initializing Done", INFO);
-
-    noOperationWidget = ui->scrollArea;
 }
 
 void MainWindow::addOperation(OPCodes opCode)
@@ -181,81 +172,34 @@ void MainWindow::addOperation(OPCodes opCode)
         break;
     }
 
+    currentSelectionIndex = baseConfigWidgetChain.size() - 1;
+
     addOperationWidget();
+
+    qDebug() << "Current Selection Index = " << currentSelectionIndex;
 }
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
 {
-    // FIXME: Operation non Changing
-    switch (opCode)
+    baseConfigWidgetChain.removeLast();
+    removeOperationWidgets();
+    addOperation(opCode);
+
+    qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
+}
+
+// FIXME: Test
+void MainWindow::operationSelectedToDisplay(Collapsible* collapsible)
+{
+    qDebug() << "Operation Clicked";
+
+    for(int i = 0; i < testVBox->count(); i++)
     {
-    case NONE:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new BaseConfigWidget());
-        break;
-    case COLOR_SPACES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ColorSpace());
-        break;
-    case IMAGE_FLIP:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ImageFlip());
-        break;
-    case COLOR_PICKER:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new ColorPicker());
-        break;
-    case CANNY_EDGE:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new CannyEdge());
-        break;
-    case THRESHOLDING:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new Thresholding());
-        break;
-    case BLUR:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new Blur());
-        break;
-    case BKG_SUBTRACT:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new BackgroundSubtraction());
-        break;
-    case HOUGH_CIRCLES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HoughCircles());
-        break;
-    case HOUGH_LINES:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HoughLines());
-        break;
-    case HISTOGRAM_CALCULATION:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HistogramCalculation());
-        break;
-    case HARRIS_CORNER:
-        baseConfigWidgetChain.replace(
-                    baseConfigWidgetChain.size() - 1, new HarrisCornerDetector());
-        break;
+        QLayoutItem *itemParamAdjust = testVBox->itemAt(i);
+        itemParamAdjust->widget()->hide();
     }
 
-    QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
-    itemParamAdjust->widget()->hide();
-    testVBox->removeWidget(itemParamAdjust->widget());
-    testVBox->addWidget(
-                baseConfigWidgetChain.last()->
-                getParamAdjustWidget());
-
-    // Replace Paramter Widget in Stacked Widget
-    //    QWidget* lastWidget = ui->stackedWidget->widget(ui->stackedWidget->count() - 1);
-    //    ui->stackedWidget->removeWidget(lastWidget);
-
-    //    QScrollArea* scrollArea = new QScrollArea();
-    //    scrollArea->setWidget(
-    //                baseConfigWidgetChain.last()->getConfigWidget());
-    //    ui->stackedWidget->addWidget(scrollArea);
-
-    refreshOperationWidgets();
+    collapsible->show();
 }
 
 void MainWindow::addOperationWidget()
@@ -264,23 +208,17 @@ void MainWindow::addOperationWidget()
     {
         qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
-        //        QScrollArea* scrollArea = new QScrollArea();
-        // Remove comment, only for testing
-        //        scrollArea->setWidget(
-        //                    baseConfigWidgetChain.last()->getConfigWidget());
+        if(testVBox->count() != 0)
+        {
+            QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
+            itemParamAdjust->widget()->hide();
+        }
+        chainMenuRadioButtonsGroup->addButton(baseConfigWidgetChain.last()->
+                                              getChainMenuWidget()->getRadioButton());
 
-
-        // Testing
-        //        testWidget->show();
-
-        testVBox->addWidget(
-                    baseConfigWidgetChain.last()->
-                    getParamAdjustWidget());
-        //        scrollArea->setLayout(testVBox);
-
-        //////////////////////////////////////
-
-        //        ui->stackedWidget->addWidget(scrollArea);
+        testVBox->addWidget(baseConfigWidgetChain.last()->
+                            getParamAdjustWidget());
+        baseConfigWidgetChain.last()->getParamAdjustWidget()->show();
 
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::addOperationClicked,
@@ -296,14 +234,6 @@ void MainWindow::addOperationWidget()
             lastOperationChanged((OPCodes)index);
         });
 
-        connect(baseConfigWidgetChain.last(),
-                &BaseConfigWidget::removeOperationSignal,
-                this,
-                [=](){
-            baseConfigWidgetChain.removeLast();
-            emit removeOperationWidgetsSignal();
-        });
-
         connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
                 &ChainMenuWidget::removeOperationClicked,
                 this,
@@ -311,6 +241,9 @@ void MainWindow::addOperationWidget()
             baseConfigWidgetChain.removeLast();
             emit removeOperationWidgetsSignal();
         });
+
+        connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(Collapsible*)),
+                this, SLOT(operationSelectedToDisplay(Collapsible*)));
 
         vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
         vBoxSub->update();
@@ -323,30 +256,34 @@ void MainWindow::addOperationWidget()
 
 void MainWindow::removeOperationWidgets()
 {
-    if(!baseConfigWidgetChain.empty())
+    qDebug() << "VBox Count Before: " << vBoxSub->count();
+
+    QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
+    item->widget()->hide();
+    vBoxSub->removeWidget(item->widget());
+
+    if(testVBox->count() != 0)
     {
-        qDebug() << "VBox Count Before: " << vBoxSub->count();
-
-        QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
-        item->widget()->hide();
-        vBoxSub->removeWidget(item->widget());
-
         QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
         itemParamAdjust->widget()->hide();
         testVBox->removeWidget(itemParamAdjust->widget());
-
-        qDebug() << "VBox Count After: " << vBoxSub->count();
-
-        //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
-        //        ui->stackedWidget->removeWidget(
-        //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
-
-        vBoxSub->update();
-
-        ui->scrollAreaChainMenu->update();
-
-        refreshOperationWidgets();
     }
+
+    if(!baseConfigWidgetChain.empty())
+        baseConfigWidgetChain.last()->
+                getParamAdjustWidget()->show();
+
+    qDebug() << "VBox Count After: " << vBoxSub->count();
+
+    //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
+    //        ui->stackedWidget->removeWidget(
+    //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
+
+    vBoxSub->update();
+
+    ui->scrollAreaChainMenu->update();
+
+    refreshOperationWidgets();
 }
 
 void MainWindow::refreshOperationWidgets()
@@ -355,21 +292,8 @@ void MainWindow::refreshOperationWidgets()
     {
         qDebug() << "Refresh Called";
         baseConfigWidgetChain.last()->setExplodedView(false);
-
-        //        if(baseConfigWidgetChain.size() > 1)
-        //        {
-        //            baseConfigWidgetChain.at(baseConfigWidgetChain.size() - 2)->
-        //                    getChainMenuWidget()->setEnabled(false);
-        //            baseConfigWidgetChain.last()->
-        //                    getChainMenuWidget()->setEnabled(true);
-        //        }
-        //        else
-        //        {
-        //            baseConfigWidgetChain.last()->
-        //                    getChainMenuWidget()->setEnabled(true);
-        //            baseConfigWidgetChain.last()->
-        //                    getChainMenuWidget()->setRemoveButtonEnabled(false);
-        //        }
+        baseConfigWidgetChain.last()->getChainMenuWidget()->
+                getRadioButton()->setChecked(true);
 
         if(vBoxSub->count() > 1)
         {
@@ -378,26 +302,23 @@ void MainWindow::refreshOperationWidgets()
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setEnabled(true);
         }
-        else
+        else if(vBoxSub->count() == 1)
         {
-            qDebug() << "Refreshed called in else";
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setEnabled(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }
 
-        //        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
-
         wgtSub->update();
         wgtSub->repaint();
 
         ui->scrollAreaChainMenu->widget()->adjustSize();
-        ui->scrollArea->widget()->adjustSize();
+        ui->scrollAreaParameterWidget->widget()->adjustSize();
         qApp->processEvents();
         ui->scrollAreaChainMenu->verticalScrollBar()
                 ->triggerAction(QAbstractSlider::SliderToMaximum);
-        ui->scrollArea->verticalScrollBar()
+        ui->scrollAreaParameterWidget->verticalScrollBar()
                 ->triggerAction(QAbstractSlider::SliderToMaximum);
     }
 }
@@ -597,9 +518,9 @@ void MainWindow::sourceSelectClicked()
     }
 
     if(!cam_thread->isRunning()){
+        // Start capture thread after confirming input source
         captureInputSource = new CaptureInputSource(path.toStdString());
         captureInputSource->moveToThread(cam_thread);
-        // Start capture thread after confirming input source
         cam_thread->start();
 
         connect(captureInputSource, SIGNAL(SourceCaptured()), this, SLOT(GetSourceCaptureImage()));
@@ -614,6 +535,7 @@ void MainWindow::sourceSelectClicked()
 
 void MainWindow::outputLabelLBClicked(int x, int y)
 {
+    // FIXME: Mouse click received by unselected widget
     if(!baseConfigWidgetChain.empty())
         baseConfigWidgetChain.last()->begin =cv::Point(x, y);
 }
@@ -650,6 +572,36 @@ void MainWindow::configChainMenuList()
     chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
+}
+
+void MainWindow::switchThemeButtonClicked()
+{
+    // TODO: To switch to light mode
+
+    if(qApp->styleSheet() == "")
+    {
+
+        QFile f(":qdarkstyle/style.qss");
+
+        if (!f.exists())
+        {
+            qDebug() << "Unable to set stylesheet, file not found\n";
+        }
+        else
+        {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+            ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
+            ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
+        }
+    }
+    else
+    {
+        qApp->setStyleSheet("");
+        ui->labelInput->setStyleSheet("border: 1px solid black");
+        ui->labelOutput->setStyleSheet("border: 1px solid black");
+    }
 }
 
 MainWindow::~MainWindow()

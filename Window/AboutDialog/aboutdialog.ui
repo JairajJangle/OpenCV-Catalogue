@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>434</width>
-    <height>502</height>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,7 +54,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QPushButton" name="buttonDonatePaypal">
+          <widget class="QToolButton" name="buttonDonatePaypal">
            <property name="minimumSize">
             <size>
              <width>147</width>
@@ -83,13 +83,10 @@ background-repeat: none;
            <property name="text">
             <string/>
            </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="buttonDonateLiberaPay">
+          <widget class="QToolButton" name="buttonDonateLiberaPay">
            <property name="minimumSize">
             <size>
              <width>96</width>
