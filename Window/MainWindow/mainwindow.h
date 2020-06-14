@@ -87,13 +87,13 @@ private slots:
     void addOperationWidget();
     void removeOperationWidgets();
     void refreshOperationWidgets();
+    void switchThemeButtonClicked();
 
     // FIXME: Test
-    void scrollResizeEvent();
+    void operationSelectedToDisplay(Collapsible*);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
-    void paramWidgetSetSignal(bool isWidgetRemoved);
     void removeOperationWidgetsSignal();
 
 public:
@@ -101,9 +101,16 @@ public:
     ~MainWindow();
 
 private:
-    QScrollArea* noOperationWidget = new QScrollArea();
-
     Ui::MainWindow *ui;
+
+    void initUI();
+    void closeEvent (QCloseEvent *event) override
+    {
+        if(aboutDialog != nullptr)
+        {
+            aboutDialog->close();
+        }
+    }
 
     QThread *cam_thread = new QThread;
     CaptureInputSource* captureInputSource;
@@ -114,30 +121,21 @@ private:
 
     bool isSourceFlipped = false;
 
-    void initUI();
-
     void refreshInputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
-
-    void closeEvent (QCloseEvent *event) override
-    {
-        if(aboutDialog != nullptr)
-        {
-            aboutDialog->close();
-        }
-    }
 
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
     // TODO: Add and test Chain Menu Radio buttons grouped working
-    QGroupBox* chainMenuRadioButtonsGroup = new QGroupBox();
+    QButtonGroup* chainMenuRadioButtonsGroup = new QButtonGroup();
 
     QWidget *wgtSubtest = new QWidget();
-    QWidget *wgtMain = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
-    QVBoxLayout *vboxMain = new QVBoxLayout(wgtMain);
 
     void configChainMenuList();
+
+    int currentSelectionIndex = 0;
+    int prevSelectionIndex = 0;
 };
 #endif // MAINWINDOW_H

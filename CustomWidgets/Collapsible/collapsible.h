@@ -3,6 +3,7 @@
 #include <QParallelAnimationGroup>
 #include <QScrollArea>
 #include <QToolButton>
+#include <QLabel>
 #include <QWidget>
 #include <QPushButton>
 #include <QDesktopServices>
@@ -14,8 +15,7 @@ class Collapsible : public QFrame {
     Q_OBJECT
 
 public:
-    explicit Collapsible(const int animationDuration = 300,
-                         QWidget *parent = 0);
+    explicit Collapsible(QWidget *parent = 0);
     void setContentLayout(QWidget* contentLayout,
                           const QString title,
                           const QString infoLink);
@@ -27,15 +27,13 @@ signals:
 
 private:
     QGridLayout* mainLayout = new QGridLayout();
-    QToolButton* toggleButton = new QToolButton();
+    QLabel* toggleButton = new QLabel();
     QFrame* headerLine = new QFrame();
-    QPushButton* infoButton = new QPushButton();
-    QPushButton* removeButton = new QPushButton();
-    QParallelAnimationGroup* toggleAnimation = new QParallelAnimationGroup();
-    QScrollArea* contentArea = new QScrollArea();
-    int animationDuration{300};
+    QFrame* headerLine2 = new QFrame();
+    QToolButton* infoButton = new QToolButton();
+    int row = 0;
 
-    QString infoButtonStyleSheet = QString("QPushButton#infoButton"
+    QString infoButtonStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info.png);"
@@ -43,7 +41,7 @@ private:
                                            "    border: none;"
                                            "    background-repeat: none;"
                                            "}"
-                                           "QPushButton:pressed#infoButton"
+                                           "QToolButton:pressed#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info_sel.png);"
@@ -51,16 +49,4 @@ private:
                                            "    border: none;"
                                            "    background-repeat: none;"
                                            "}");
-
-    QString removeButtonStyleSheet = QString("QPushButton#removeButton"
-                                             "{"
-                                             "  color: red;"
-                                             "  font-weight: bold;"
-                                             "}"
-                                             "QPushButton:disabled#buttonRemove"
-                                             "{"
-                                             "  color: #787878;"
-                                             "  font-weight: bold;"
-                                             "  background-color: #ffffff;"
-                                             "}");
 };

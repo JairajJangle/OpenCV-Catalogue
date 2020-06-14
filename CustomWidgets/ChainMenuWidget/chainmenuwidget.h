@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPair>
+#include <QRadioButton>
 
 #include "Utils/utils.h"
 
@@ -22,9 +23,7 @@ public:
     void setComboBoxEnabled(bool enabled);
     void setEnabled(bool enabled);
     void setCurrentOperation(QString operationName);
-
-//private slots:
-//    void operationChangedSlot(int); // OpCode
+    QRadioButton* getRadioButton();
 
     ~ChainMenuWidget();
 
@@ -32,7 +31,7 @@ signals:
     void addOperationClicked();
     void removeOperationClicked();
     void operationChanged(int index);
-//    void operationChangedSignal(int chainMenuOpListIndex); // or OpCode
+    void radioButtonChecked();
 
 private:
     Ui::ChainMenuWidget *ui;
