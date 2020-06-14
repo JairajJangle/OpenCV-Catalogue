@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     initUI();
 
+    switchThemeButtonClicked();
+
     configChainMenuList();
 
     // FIXME: Check FIXME in HybridSlider cpp source
@@ -583,18 +585,22 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            printf("Unable to set stylesheet, file not found\n");
+            qDebug() << "Unable to set stylesheet, file not found\n";
         }
         else
         {
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
+            ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
+            ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
         }
     }
     else
     {
         qApp->setStyleSheet("");
+        ui->labelInput->setStyleSheet("border: 1px solid black");
+        ui->labelOutput->setStyleSheet("border: 1px solid black");
     }
 }
 
