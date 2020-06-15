@@ -23,6 +23,7 @@ public:
     void setComboBoxEnabled(bool enabled);
     void setEnabled(bool enabled);
     void setCurrentOperation(QString operationName);
+    void setLineVisibility(bool visible);
     QRadioButton* getRadioButton();
 
     ~ChainMenuWidget();

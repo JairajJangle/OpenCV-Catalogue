@@ -294,9 +294,13 @@ void MainWindow::refreshOperationWidgets()
         baseConfigWidgetChain.last()->setExplodedView(false);
         baseConfigWidgetChain.last()->getChainMenuWidget()->
                 getRadioButton()->setChecked(true);
+        baseConfigWidgetChain.last()->getChainMenuWidget()->
+                setLineVisibility(false);
 
         if(vBoxSub->count() > 1)
         {
+            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+                                          widget())->setLineVisibility(true);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
                                           widget())->setEnabled(false);
             static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
