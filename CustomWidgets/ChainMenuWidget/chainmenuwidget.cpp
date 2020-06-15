@@ -65,6 +65,11 @@ void ChainMenuWidget::setCurrentOperation(QString operationName)
     ui->comboBox->setCurrentText(operationName);
 }
 
+void ChainMenuWidget::setLineVisibility(bool visible)
+{
+    ui->line->setVisible(visible);
+}
+
 ChainMenuWidget::~ChainMenuWidget()
 {
     delete ui;
