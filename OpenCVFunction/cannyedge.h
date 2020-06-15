@@ -52,9 +52,6 @@ public:
 
         cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
 
-        if(blurEnabled)
-            blur( outputImage, outputImage, cv::Size(3,3));
-
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
 
 //        m.unlock();
@@ -95,19 +92,13 @@ void refreshLayout()
 {
     wgtSub->adjustSize();
 }
-void enableBlurCBToggled(bool isChecked)
-{
-    blurEnabled = isChecked;
-}
 
 private:
 int t1Value = 30;
 int t2Value = 3;
 int appertureValue = 3;
-bool blurEnabled = true;
 
 QComboBox* appertureComboBox = new QComboBox();
-QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
 
 void initWidget()
 {
@@ -148,10 +139,6 @@ void initWidget()
     //        vBoxSub->addWidget(hybridGG);
 
     connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
-
-    vBoxSub->addWidget(enableBlurCB);
-
-    connect(enableBlurCB, SIGNAL(clicked(bool)), this, SLOT(enableBlurCBToggled(bool)));
 
     BaseConfigWidget::initWidget();
 }
