@@ -176,7 +176,7 @@ public:
     virtual void initWidget()
     {
 //        vBoxSub->setAlignment(Qt::AlignHCenter);
-        wgtSub->setMinimumWidth(400);
+        wgtSub->setMinimumWidth(370);
         wgtSub->setMaximumWidth(420);
 
         collapsible->setContentLayout(wgtSub,

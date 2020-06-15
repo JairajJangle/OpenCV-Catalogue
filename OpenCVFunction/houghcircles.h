@@ -71,9 +71,6 @@ public:
             minDistLayout->setText(*minDist);
         }
 
-        if(enableBlurCB->isChecked() && blurKernelSize > 0)
-            blur(grayImage, grayImage, cv::Size(blurKernelSize, blurKernelSize));
-
         std::vector<cv::Vec3f> circles;
 
         /// Apply the Hough Transform to find the circles
@@ -114,16 +111,6 @@ public:
     }
 
 private slots:
-    void blurKernelChanged(int value){
-        blurKernelSize = value;
-    }
-
-    void blurCBClicked(bool isChecked){
-        isBlurEnabled = isChecked;
-
-        blurKernelSliderLayout->setVisible(isChecked);
-    }
-
     void applyClicked(){
         bool paramsApplied = true;
         for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
@@ -156,10 +143,6 @@ private slots:
     }
 
 private:
-    int blurKernelSize = 3;
-    bool isBlurEnabled = true;
-    QCheckBox* enableBlurCB = new QCheckBox("Enable Blur");
-    SliderLayout* blurKernelSliderLayout = new SliderLayout("Blur kernel\nsize", blurKernelSize);
 
     QVariant* dp = new QVariant(1);
     QVariant* minDist = new QVariant(-1.0);
@@ -194,12 +177,6 @@ private:
         minDistLayout->lineEdit->setValidator(minDistValidator);
         // TODO: Add validators to other fields if required
 
-        enableBlurCB->setChecked(true);
-        connect(enableBlurCB, SIGNAL(clicked(bool)),
-                this, SLOT(blurCBClicked(bool)));
-        connect(blurKernelSliderLayout, SIGNAL(sliderValueChanged(int)),
-                this, SLOT(blurKernelChanged(int)));
-
         connect(applyResetBox, SIGNAL(applyClicked()),
                 this, SLOT(applyClicked()));
         connect(applyResetBox, SIGNAL(resetClicked()),
@@ -216,12 +193,6 @@ private:
             vBoxSub->addLayout(lineEditWithParam.first);
 
         vBoxSub->addLayout(applyResetBox);
-
-        vBoxSub->addWidget(new DividerLine(this));
-
-        // TODO: Add Hough Circles function control trackbars
-        vBoxSub->addWidget(enableBlurCB);
-        vBoxSub->addLayout(blurKernelSliderLayout);
 
         BaseConfigWidget::initWidget();
     }
