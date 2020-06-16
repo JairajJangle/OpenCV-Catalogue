@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1545</width>
+    <width>1566</width>
     <height>960</height>
    </rect>
   </property>
@@ -307,6 +307,12 @@ background-repeat: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>370</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">#chainFrame 
 {
@@ -343,7 +349,7 @@ background-repeat: none;
               </property>
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>350</width>
                 <height>0</height>
                </size>
               </property>
@@ -361,8 +367,8 @@ background-repeat: none;
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>317</width>
-                 <height>455</height>
+                 <width>348</width>
+                 <height>461</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -766,8 +772,8 @@ background-repeat: none;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>454</width>
-              <height>519</height>
+              <width>458</width>
+              <height>520</height>
              </rect>
             </property>
            </widget>
@@ -861,8 +867,8 @@ background-repeat: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1545</width>
-     <height>26</height>
+     <width>1566</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
