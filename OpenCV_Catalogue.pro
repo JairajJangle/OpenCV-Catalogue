@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
-    CustomWidgets/Collapsible/collapsible.cpp \
+    CustomWidgets/ParamAdjustWidget/paramadjustwidget.cpp \
     CustomWidgets/focusawarelineedit.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
@@ -28,8 +28,8 @@ SOURCES += \
 HEADERS += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.h \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    CustomWidgets/ParamAdjustWidget/paramadjustwidget.h \
     CustomWidgets/applyresetbuttonlayout.h \
-    CustomWidgets/Collapsible/collapsible.h \
     CustomWidgets/dividerline.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/focusawarelineedit.h \

@@ -36,7 +36,7 @@
 
 #include "CustomWidgets/ClickableLabel/clickablelabel.h"
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
-#include "CustomWidgets/Collapsible/collapsible.h"
+#include "CustomWidgets/ParamAdjustWidget/paramadjustwidget.h"
 
 class BaseConfigWidget : public QWidget
 {
@@ -49,7 +49,7 @@ protected:
     QMutex m;
 
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
-    Collapsible* collapsible = new Collapsible();
+    ParamAdjustWidget* paramAdjustWidget = new ParamAdjustWidget();
 
     /*
      * Assing Values to operationName and moreInfoLink in Constructor of
@@ -64,24 +64,29 @@ protected:
 
 signals:
     void removeOperationSignal();
-    void operationSelected(Collapsible*);
+    void operationSelected(ParamAdjustWidget*);
 
 public:
     cv::Point begin;
     cv::Point end;
 
+    /**
+     * 1. Set @param begin and @param end to -1, -1 which are considered to be the
+     * default selection when there has been no mouse click on outputLabel in
+     * @class MainWindow
+     */
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
 
-        connect(collapsible, &Collapsible::removeButtonClicked,
+        connect(paramAdjustWidget, &ParamAdjustWidget::removeButtonClicked,
                 this, [=]() {
             emit removeOperationSignal();
         });
 
         connect(chainMenuWidget, &ChainMenuWidget::radioButtonChecked,
                 this, [=]() {
-            emit operationSelected(collapsible);
+            emit operationSelected(paramAdjustWidget);
         });
     }
     ~BaseConfigWidget(){}
@@ -101,9 +106,9 @@ public:
         return chainMenuWidget;
     }
 
-    Collapsible* getParamAdjustWidget()
+    ParamAdjustWidget* getParamAdjustWidget()
     {
-        return collapsible;
+        return paramAdjustWidget;
     }
 
     /*
@@ -179,7 +184,7 @@ public:
         wgtSub->setMinimumWidth(370);
         wgtSub->setMaximumWidth(420);
 
-        collapsible->setContentLayout(wgtSub,
+        paramAdjustWidget->setContentLayout(wgtSub,
                                       operationName,
                                       moreInfoLink);
     }

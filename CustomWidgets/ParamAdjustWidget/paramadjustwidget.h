@@ -11,11 +11,11 @@
 
 #include "Utils/constants.h"
 
-class Collapsible : public QFrame {
+class ParamAdjustWidget : public QFrame {
     Q_OBJECT
 
 public:
-    explicit Collapsible(QWidget *parent = 0);
+    explicit ParamAdjustWidget(QWidget *parent = 0);
     void setContentLayout(QWidget* contentLayout,
                           const QString title,
                           const QString infoLink);
