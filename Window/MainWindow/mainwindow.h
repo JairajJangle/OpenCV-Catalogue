@@ -51,6 +51,7 @@
 #include "OpenCVFunction/houghlines.h"
 #include "OpenCVFunction/histogram.h"
 #include "OpenCVFunction/harriscornerdetector.h"
+#include "OpenCVFunction/inrange.h"
 
 #include "Window/AboutDialog/aboutdialog.h"
 
@@ -67,7 +68,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING,
+    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER};
 

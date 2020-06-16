@@ -152,6 +152,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case THRESHOLDING:
         baseConfigWidgetChain.append(new Thresholding());
         break;
+    case INRANGE:
+        baseConfigWidgetChain.append(new InRange());
+        break;
     case BLUR:
         baseConfigWidgetChain.append(new Blur());
         break;
@@ -569,6 +572,7 @@ void MainWindow::configChainMenuList()
     chainMenuOpList.append(QPair<OPCodes, QString>(IMAGE_FLIP ,ImageFlip().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_PICKER ,ColorPicker().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(THRESHOLDING ,Thresholding().getOperationName()));
+    chainMenuOpList.append(QPair<OPCodes, QString>(INRANGE ,InRange().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(CANNY_EDGE ,CannyEdge().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(BLUR ,Blur().getOperationName()));
     chainMenuOpList.append(QPair<OPCodes, QString>(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName()));
