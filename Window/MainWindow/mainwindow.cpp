@@ -53,51 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
         showAboutDialog();
     });
 
-    connect(ui->actionColorSpace, &QAction::triggered, this,
-            [=]() {
-        addOperation(COLOR_SPACES);
-    });
-    connect(ui->actionImage_Flip, &QAction::triggered, this,
-            [=]() {
-        addOperation(IMAGE_FLIP);
-    });
-    connect(ui->actionColor_Picker, &QAction::triggered, this,
-            [=]() {
-        addOperation(COLOR_PICKER);
-    });
-    connect(ui->actionThresholding, &QAction::triggered, this,
-            [=]() {
-        addOperation(THRESHOLDING);
-    });
-    connect(ui->actionCanny_Edge, &QAction::triggered, this,
-            [=]() {
-        addOperation(CANNY_EDGE);
-    });
-    connect(ui->actionBlur, &QAction::triggered, this,
-            [=]() {
-        addOperation(BLUR);
-    });
-    connect(ui->actionMotion_detection, &QAction::triggered, this,
-            [=]() {
-        addOperation(BKG_SUBTRACT);
-    });
-    connect(ui->actionHough_Circles, &QAction::triggered, this,
-            [=]() {
-        addOperation(HOUGH_CIRCLES);
-    });
-    connect(ui->actionHough_Lines, &QAction::triggered, this,
-            [=]() {
-        addOperation(HOUGH_LINES);
-    });
-    connect(ui->actionHistogram, &QAction::triggered, this,
-            [=]() {
-        addOperation(HISTOGRAM_CALCULATION);
-    });
-    connect(ui->actionHarris_Corner_Detection, &QAction::triggered, this,
-            [=]() {
-        addOperation(HARRIS_CORNER);
-    });
-
     connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
 
     connect(this, SIGNAL(removeOperationWidgetsSignal()),

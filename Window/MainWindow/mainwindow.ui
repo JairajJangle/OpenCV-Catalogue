@@ -368,7 +368,7 @@ background-repeat: none;
                  <x>0</x>
                  <y>0</y>
                  <width>348</width>
-                 <height>461</height>
+                 <height>455</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -772,8 +772,8 @@ background-repeat: none;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>458</width>
-              <height>520</height>
+              <width>454</width>
+              <height>519</height>
              </rect>
             </property>
            </widget>
@@ -868,26 +868,17 @@ background-repeat: none;
      <x>0</x>
      <y>0</y>
      <width>1566</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
     <property name="title">
-     <string>Examples</string>
+     <string>File</string>
     </property>
-    <addaction name="actionColorSpace"/>
-    <addaction name="actionImage_Flip"/>
-    <addaction name="actionColor_Picker"/>
-    <addaction name="actionHistogram"/>
-    <addaction name="actionCanny_Edge"/>
-    <addaction name="actionBlur"/>
-    <addaction name="actionMotion_detection"/>
-    <addaction name="actionHough_Circles"/>
-    <addaction name="actionHough_Lines"/>
-    <addaction name="actionHarris_Corner_Detection"/>
-    <addaction name="actionErosion_Dialation"/>
-    <addaction name="actionThresholding"/>
-    <addaction name="actionOptical_Flow"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_Chain"/>
+    <addaction name="actionLoad_Chain"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -996,6 +987,21 @@ background-repeat: none;
   <action name="actionHarris_Corner_Detection">
    <property name="text">
     <string>Harris Corner Detection</string>
+   </property>
+  </action>
+  <action name="actionSave_Chain">
+   <property name="text">
+    <string>Save Chain</string>
+   </property>
+  </action>
+  <action name="actionLoad_Chain">
+   <property name="text">
+    <string>Load Chain</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>
