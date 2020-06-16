@@ -1272,6 +1272,7 @@ QComboBox::item:alternate {
 
 QComboBox::item:checked {
   font-weight: bold;
+  max-height: 30;
 }
 
 QComboBox::item:selected {
