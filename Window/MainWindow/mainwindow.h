@@ -91,7 +91,7 @@ private slots:
     void switchThemeButtonClicked();
 
     // FIXME: Test
-    void operationSelectedToDisplay(Collapsible*);
+    void operationSelectedToDisplay(ParamAdjustWidget*);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);

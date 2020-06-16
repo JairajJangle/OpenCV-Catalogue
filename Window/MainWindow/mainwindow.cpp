@@ -147,7 +147,7 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
 }
 
 // FIXME: Test
-void MainWindow::operationSelectedToDisplay(Collapsible* collapsible)
+void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget)
 {
     qDebug() << "Operation Clicked";
 
@@ -157,7 +157,7 @@ void MainWindow::operationSelectedToDisplay(Collapsible* collapsible)
         itemParamAdjust->widget()->hide();
     }
 
-    collapsible->show();
+    paramAdjustWidget->show();
 }
 
 void MainWindow::addOperationWidget()
@@ -200,8 +200,8 @@ void MainWindow::addOperationWidget()
             emit removeOperationWidgetsSignal();
         });
 
-        connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(Collapsible*)),
-                this, SLOT(operationSelectedToDisplay(Collapsible*)));
+        connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
+                this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
 
         vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
         vBoxSub->update();

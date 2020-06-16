@@ -1,9 +1,9 @@
 #include <QPropertyAnimation>
 
-#include "collapsible.h"
+#include "paramadjustwidget.h"
 #include <QDebug>
 
-Collapsible::Collapsible(QWidget *parent) : QFrame(parent)
+ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
 {
     toggleButton->setText(Strings::noOperationSelected);
     toggleButton->setStyleSheet("QToolButton { border: none; }");
@@ -32,7 +32,7 @@ Collapsible::Collapsible(QWidget *parent) : QFrame(parent)
     this->setLineWidth(1);
 }
 
-void Collapsible::setContentLayout(QWidget* contentLayout,
+void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
                                    const QString title,
                                    const QString infoLink)
 {
