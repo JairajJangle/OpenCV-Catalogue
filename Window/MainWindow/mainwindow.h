@@ -102,6 +102,8 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    QMutex qmutex;
+
     void initUI();
     void closeEvent (QCloseEvent *event) override
     {
