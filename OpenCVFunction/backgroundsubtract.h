@@ -52,8 +52,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-//        m.lock();
-
         cv::Mat outputImage;
 
         switch (selectedTech) {
@@ -83,7 +81,6 @@ public:
         cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(1, 1));
         morphologyEx(outputImage, outputImage, cv::MORPH_OPEN, element);
 
-//        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){

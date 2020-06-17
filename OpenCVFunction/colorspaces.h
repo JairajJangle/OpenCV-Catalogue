@@ -40,15 +40,12 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat outputImage;
         int selectedColorCode = colorCodesAll.at(colorConvCode).first;
 
         // If RGB is selected: o/p = i/p
         if(selectedColorCode == -1)
         {
-            m.unlock();
             return inputImage;
         }
         else
@@ -60,7 +57,6 @@ public:
              */
         }
 
-        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){

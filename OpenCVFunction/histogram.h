@@ -43,8 +43,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         std::vector<cv::Mat> bgrPlanes;
         split(inputImage, bgrPlanes);
 
@@ -96,8 +94,6 @@ public:
                      cv::Point(bin_w*(i), histH - cvRound(rHist.at<float>(i))),
                      cv::Scalar(0, 0, 255), 2, 8, 0);
         }
-
-        m.unlock();
 
         /**
          *  @param histImage is of CV_8UC3 type

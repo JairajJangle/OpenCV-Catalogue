@@ -55,8 +55,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat dst, cdst; // CDST contains canny + lines
         // TODO make Canny params customizable
         Canny(inputImage, dst, 50, 200, 3);
@@ -79,7 +77,6 @@ public:
                     cv::Scalar(0, 0, 255), 3, cv::LINE_AA);
         }
 
-        m.unlock();
         return inputImage;
     }
     catch(cv::Exception& e){

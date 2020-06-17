@@ -42,8 +42,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         if(channelNos != inputImage.channels())
         {
             channelNos = inputImage.channels();
@@ -64,7 +62,6 @@ public:
                         cv::Scalar(c1High, c2High, c3High),
                         outputImage);
 
-        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){

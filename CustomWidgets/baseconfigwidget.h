@@ -27,7 +27,6 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include <QWidget>
-#include <QMutex>
 #include <QDebug>
 
 #include "Utils/constants.h"
@@ -43,9 +42,6 @@ public:
     QWidget *wgtSub = new QWidget();
 
 protected:
-    // TODO: Check need of mutex, probably not required -> remove
-    QMutex m;
-
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
     ParamAdjustWidget* paramAdjustWidget = new ParamAdjustWidget();
 
@@ -155,11 +151,8 @@ public:
      */
     virtual cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock(); // Lock mutex at function start
-
         // Do Operations
 
-        m.unlock(); // Unlock mutex before return
         return inputImage;
     }
     catch(cv::Exception& e){

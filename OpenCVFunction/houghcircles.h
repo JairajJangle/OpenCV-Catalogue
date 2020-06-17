@@ -57,8 +57,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat grayImage;
 
         cvtColor(inputImage, grayImage, cv::COLOR_BGR2GRAY);
@@ -90,7 +88,6 @@ public:
                    cv::Scalar(0,0,255), 3, 8, 0 );
         }
 
-        m.unlock();
         return inputImage;
     }
     catch(cv::Exception& e){

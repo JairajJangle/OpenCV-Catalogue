@@ -40,21 +40,17 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat outputImage;
         int selectedFlipFlag = flipFlagsAll.at(flipFlagCode).first;
 
         // If "No Image Flip" is selected: o/p = i/p
         if(selectedFlipFlag == -99)
         {
-            m.unlock();
             return inputImage;
         }
         else
             flip(inputImage, outputImage, selectedFlipFlag);
 
-        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){

@@ -42,14 +42,11 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat outputImage;
 
         // If No Location is selected: o/p = 0
         if(begin ==cv::Point(-1, -1))
         {
-            m.unlock();
             return inputImage;
         }
         else
@@ -72,7 +69,6 @@ public:
 
         begin =cv::Point(-1, -1);
 
-        m.unlock();
         return inputImage;
     }
     catch(cv::Exception& e){
