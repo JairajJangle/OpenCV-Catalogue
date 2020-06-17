@@ -19,13 +19,14 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
     headerLine2->setFrameShadow(QFrame::Sunken);
     headerLine2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 
-    QHBoxLayout* hBox = new QHBoxLayout();
-    hBox->addWidget(infoButton);
+    QHBoxLayout* titleHBox = new QHBoxLayout();
+    titleHBox->addWidget(toggleButton);
+    titleHBox->addStretch();
+    titleHBox->addWidget(infoButton);
 
     mainLayout->setVerticalSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->addWidget(toggleButton, row, 0, 1, 1, Qt::AlignLeft);
-    mainLayout->addWidget(infoButton, row, 1, 1, 1);
+    mainLayout->addLayout(titleHBox, row, 0, 1, 8);
     mainLayout->addWidget(headerLine2, ++row, 0, 1, 8);
     setLayout(mainLayout);
 
@@ -34,8 +35,8 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
 }
 
 void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
-                                   const QString title,
-                                   const QString infoLink)
+                                         const QString title,
+                                         const QString infoLink)
 {
     toggleButton->setText(title);
 
@@ -50,5 +51,5 @@ void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
         });
     }
 
-//    toggleAnimation->start();
+    //    toggleAnimation->start();
 }
