@@ -56,8 +56,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         blockSizeLayout->setText(borderTypeComboBox->currentData());
 
         cv::Mat inputImageGray, outputImage,
@@ -87,7 +85,6 @@ public:
             }
         }
 
-        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){

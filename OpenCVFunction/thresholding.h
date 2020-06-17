@@ -42,9 +42,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
-        m.unlock();
         return inputImage;
     }
     catch(cv::Exception& e){

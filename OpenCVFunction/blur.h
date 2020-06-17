@@ -46,8 +46,6 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        m.lock();
-
         cv::Mat outputImage;
 
         if((begin.x < kSize.width && begin.y < kSize.height)
@@ -66,7 +64,6 @@ public:
 //            errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
 
-            m.unlock();
             return outputImage;
         }
         else
@@ -76,7 +73,6 @@ public:
 //            if(kSize.width <= 0 || kSize.height <= 0)
 //                errorLabel->setText("Kernel Size should not be <= 0");
 
-            m.unlock();
             return inputImage;
         }
 
