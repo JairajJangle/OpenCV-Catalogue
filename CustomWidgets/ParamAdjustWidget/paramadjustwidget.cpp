@@ -9,6 +9,7 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
     toggleButton->setStyleSheet("QToolButton { border: none; }");
     toggleButton->setMinimumHeight(50);
 
+    this->setStyleSheet("QFrame { border: none; }");
     infoButton->setFixedSize(25, 25);
     infoButton->setObjectName("infoButton");
     infoButton->setStyleSheet(infoButtonStyleSheet);
