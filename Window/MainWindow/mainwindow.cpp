@@ -146,7 +146,6 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
     qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
 }
 
-// FIXME: Test
 void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget)
 {
     qDebug() << "Operation Clicked";
@@ -232,10 +231,6 @@ void MainWindow::removeOperationWidgets()
                 getParamAdjustWidget()->show();
 
     qDebug() << "VBox Count After: " << vBoxSub->count();
-
-    //            vBoxSub->takeAt(ui->stackedWidget->count() - 1)->widget()->close();
-    //        ui->stackedWidget->removeWidget(
-    //                    ui->stackedWidget->widget(ui->stackedWidget->count() - 1));
 
     vBoxSub->update();
 
@@ -366,7 +361,8 @@ void MainWindow::GetSourceCaptureImage()
 
 void MainWindow::GetSourceCaptureError(QString error)
 {
-    setUserMessage(error, ERROR);
+    // FIXME: Commented for DEMO
+//    setUserMessage(error, ERROR);
 }
 
 void MainWindow::refreshInputImage(cv::Mat img)

@@ -35,8 +35,6 @@
 #include "Utils/constants.h"
 #include "Utils/utils.h"
 
-#include <iostream>
-
 class HoughLines: public BaseConfigWidget
 {
     Q_OBJECT
