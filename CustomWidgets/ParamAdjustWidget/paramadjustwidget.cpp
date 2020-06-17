@@ -1,3 +1,23 @@
+/* OpenCV Catalogue is a desktop GUI application to showcase some OpenCV functions
+ * and parameter adjustment using controls in GUI.
+ * Copyright (C) 2020  Jairaj Jangle
+ *
+ * This file is part of OpenCV Catalogue.
+ *
+ * OpenCV Catalogue is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * OpenCV Catalogue is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include <QPropertyAnimation>
 
 #include "paramadjustwidget.h"
@@ -9,7 +29,6 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
     toggleButton->setStyleSheet("QToolButton { border: none; }");
     toggleButton->setMinimumHeight(50);
 
-    this->setStyleSheet("QFrame { border: none; }");
     infoButton->setFixedSize(25, 25);
     infoButton->setObjectName("infoButton");
     infoButton->setStyleSheet(infoButtonStyleSheet);
@@ -31,6 +50,7 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
     setLayout(mainLayout);
 
     this->setFrameShape(QFrame::Box);
+    this->setStyleSheet("QFrame { border: none; }");
     this->setLineWidth(1);
 }
 
@@ -42,6 +62,7 @@ void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
 
     mainLayout->addWidget(contentLayout, 3, 0, 1, 8, Qt::AlignTop);
     setLayout(mainLayout);
+
     if(infoLink != "")
     {
         infoButton->show();
@@ -50,6 +71,4 @@ void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
             QDesktopServices::openUrl(QUrl(infoLink));
         });
     }
-
-    //    toggleAnimation->start();
 }
