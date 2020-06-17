@@ -36,8 +36,7 @@ public:
     InRange()
     {
         operationName = "InRange";
-        // TODO
-        moreInfoLink = "TODO";
+        moreInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html?highlight=inrange#inrange";
         this->initWidget();
     }
 
