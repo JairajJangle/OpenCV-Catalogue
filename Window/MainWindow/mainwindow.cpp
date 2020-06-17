@@ -139,8 +139,7 @@ void MainWindow::addOperation(OPCodes opCode)
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
 {
-    baseConfigWidgetChain.removeLast();
-    removeOperationWidgets();
+    emit removeOperationWidgetsSignal();
     addOperation(opCode);
 
     qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
@@ -195,7 +194,6 @@ void MainWindow::addOperationWidget()
                 &ChainMenuWidget::removeOperationClicked,
                 this,
                 [=](){
-            baseConfigWidgetChain.removeLast();
             emit removeOperationWidgetsSignal();
         });
 
@@ -213,6 +211,9 @@ void MainWindow::addOperationWidget()
 
 void MainWindow::removeOperationWidgets()
 {
+    baseConfigWidgetChain.last()->deleteLater();
+    baseConfigWidgetChain.removeLast();
+
     qDebug() << "VBox Count Before: " << vBoxSub->count();
 
     QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
@@ -321,6 +322,7 @@ void MainWindow::GetSourceCaptureImage()
 
     QtConcurrent::run([=]
     {
+        qmutex.lock();
         cv::Mat outputImage;
         capturedOriginalImg.copyTo(outputImage);
         bool isChainSuccess = false;
@@ -349,13 +351,20 @@ void MainWindow::GetSourceCaptureImage()
 
                 capturedOriginalImg.copyTo(outputImage);
 
-                baseConfigWidgetChain.removeLast();
+                /* FIME: Chain unstable crash:
+                 * No Op
+                 * Canny
+                 * Bkg sub
+                 * Canny
+                 */
+
                 emit removeOperationWidgetsSignal();
                 break;
             }
         }
 
         emit refreshOutputImageSignal(outputImage);
+        qmutex.unlock();
     });
 }
 
