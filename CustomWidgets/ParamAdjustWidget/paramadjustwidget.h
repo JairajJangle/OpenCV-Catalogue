@@ -24,7 +24,6 @@
 #include <QScrollArea>
 #include <QToolButton>
 #include <QLabel>
-#include <QWidget>
 #include <QPushButton>
 #include <QDesktopServices>
 #include <QUrl>
@@ -42,7 +41,6 @@ public:
     void setInfoButtonVisibility(bool visible);
 
 signals:
-    void removeButtonClicked();
     void infoButtonClicled();
 
 private:

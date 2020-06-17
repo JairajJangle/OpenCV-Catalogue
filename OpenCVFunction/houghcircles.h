@@ -36,8 +36,6 @@
 #include "Utils/constants.h"
 #include "Utils/utils.h"
 
-#include <iostream>
-
 class HoughCircles: public BaseConfigWidget
 {
     Q_OBJECT

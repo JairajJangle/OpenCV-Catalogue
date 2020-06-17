@@ -34,8 +34,6 @@
 #include <QGroupBox>
 #include <QWindow>
 
-#include <iostream>
-
 #include "Utils/captureinputsource.h"
 #include "Utils/utils.h"
 

@@ -21,8 +21,6 @@
 #ifndef BASECONFIGWIDGET_H
 #define BASECONFIGWIDGET_H
 
-#include <iostream>
-
 #include <opencv2/opencv.hpp>
 
 // QT libs
@@ -74,15 +72,15 @@ public:
      * 1. Set @param begin and @param end to -1, -1 which are considered to be the
      * default selection when there has been no mouse click on outputLabel in
      * @class MainWindow
+     *
+     * 2. Connect Radio button select signal from @class ChainMenuWidget
+     * signal operationSelected(ParamAdjustWidget*) is connected in @class MainWindow
+     * to display the obtained parameter adjust widget in the parameter adjust box
+     * in MainWindow UI
      */
     BaseConfigWidget(){
         begin =cv::Point(-1, -1);
         end =cv::Point(-1, -1);
-
-        connect(paramAdjustWidget, &ParamAdjustWidget::removeButtonClicked,
-                this, [=]() {
-            emit removeOperationSignal();
-        });
 
         connect(chainMenuWidget, &ChainMenuWidget::radioButtonChecked,
                 this, [=]() {
