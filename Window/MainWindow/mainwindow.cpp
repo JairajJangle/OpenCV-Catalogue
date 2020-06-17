@@ -351,13 +351,6 @@ void MainWindow::GetSourceCaptureImage()
 
                 capturedOriginalImg.copyTo(outputImage);
 
-                /* FIME: Chain unstable crash:
-                 * No Op
-                 * Canny
-                 * Bkg sub
-                 * Canny
-                 */
-
                 emit removeOperationWidgetsSignal();
                 break;
             }
