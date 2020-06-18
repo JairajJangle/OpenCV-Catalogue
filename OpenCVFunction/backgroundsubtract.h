@@ -38,6 +38,7 @@
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
 #include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
 
 class BackgroundSubtraction : public BaseConfigWidget
 {
@@ -148,11 +149,16 @@ private:
                                                                  learningRate,
                                                                  150,
                                                                  150);
-    QPushButton* applyButton = new QPushButton("Apply");
-    QPushButton* resetButton = new QPushButton("Reset");
+
+    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
     void initWidget()
     {
+        connect(applyResetBox, SIGNAL(applyClicked()),
+                this, SLOT(applyChangesClicked()));
+        connect(applyResetBox, SIGNAL(resetClicked()),
+                this, SLOT(resetChangesClicked()));
+
         learningRateEditLayout->lineEdit->setValidator(
                     new QRegExpValidator(RegExps::regEx0_1Decimal));
 
@@ -178,18 +184,8 @@ private:
                 bkgSubTechChanged(jCount);
             });
         }
-
         vBoxSub->addLayout(learningRateEditLayout);
-
-        QHBoxLayout* applyButtonHBox = new QHBoxLayout;
-        applyButtonHBox->setAlignment(Qt::AlignHCenter);
-        applyButtonHBox->addWidget(applyButton);
-        applyButtonHBox->addWidget(resetButton);
-        vBoxSub->addLayout(applyButtonHBox);
-        connect(applyButton, SIGNAL(released()),
-                this, SLOT(applyChangesClicked()));
-        connect(resetButton, SIGNAL(released()),
-                this, SLOT(resetChangesClicked()));
+        vBoxSub->addLayout(applyResetBox);
 
         BaseConfigWidget::initWidget();
     }

@@ -65,7 +65,8 @@ public slots:
         try{
             openSource();
 
-            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);        resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+            resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
 
             //TODO: apply FPS
             while(1)
@@ -80,12 +81,10 @@ public slots:
                     if(!isSuccess)
                     {
                         emit SourceCaptureError("Cannot read the frame from the source");
-                        //                        cap.open("/home/jairaj/Desktop/Projects/JAS.mp4");
                         openSource();
                         continue; // retry
                     }
-                    //            img = loadFromQrc(":/test_file/cam_test_2.jpg");
-                    //img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3); //Black for Simulation Purpose
+
                     emit SourceCaptured();
                     QThread::usleep(1000000/fps);
                 } catch (cv::Exception& e) {
@@ -131,8 +130,6 @@ private:
     //Function to convert QT res image file to OpenCVcv::Mat object
     cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
     {
-        //double tic = double(getTickCount());
-
         QFile file(qrc);
         cv::Mat m;
         if(file.open(QIODevice::ReadOnly))
@@ -142,9 +139,6 @@ private:
             file.read((char*)buf.data(), sz);
             m = cv::imdecode(buf, flag);
         }
-
-        //double toc = (double(getTickCount()) - tic) * 1000.0 / getTickFrequency();
-        //qDebug() << "OpenCV loading time: " << toc;
 
         return m;
     }
