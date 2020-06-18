@@ -88,7 +88,6 @@ public:
 
 private:
     LineEditLayout* rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
-
     LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);
 
     QLabel* infoLabel  = new QLabel("Click on Output feed to pick color\n");

@@ -180,7 +180,6 @@ private:
         anchorMainVBox->setAlignment(Qt::AlignHCenter);
 
         anchorMainVBox->addLayout(anchorLineEditLayout);
-
         anchorMainVBox->addWidget(anchorNoteLabel);
 
         vboxBlurMain->addLayout(anchorMainVBox);

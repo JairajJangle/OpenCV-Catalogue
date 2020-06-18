@@ -50,7 +50,6 @@ AboutDialog::AboutDialog(QWidget *parent) :
             [=]() {
         openURL(githubIssuesLink);
     });
-
     connect(ui->buttonDonatePaypal, &QPushButton::released, this,
             [=]() {
         openURL(paypalDonateUrl);
