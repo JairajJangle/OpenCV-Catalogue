@@ -105,6 +105,11 @@ public:
         return paramAdjustWidget;
     }
 
+    void changeParamAdjustStyleSheet(bool isDarkMode)
+    {
+        paramAdjustWidget->setInfoIconStyleSheet(isDarkMode);
+    }
+
     /*
      * Returns name of operation to be used by calling widget/application(Main Window)
      * to update Operation Name label

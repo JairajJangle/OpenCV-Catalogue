@@ -31,7 +31,7 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
 
     infoButton->setFixedSize(25, 25);
     infoButton->setObjectName("infoButton");
-    infoButton->setStyleSheet(infoButtonStyleSheet);
+    infoButton->setStyleSheet(infoButtonDarkStyleSheet);
     infoButton->hide();
 
     headerLine2->setFrameShape(QFrame::HLine);
@@ -71,4 +71,10 @@ void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
             QDesktopServices::openUrl(QUrl(infoLink));
         });
     }
+}
+
+void ParamAdjustWidget::setInfoIconStyleSheet(bool isDarkMode)
+{
+    infoButton->setStyleSheet(isDarkMode ? infoButtonDarkStyleSheet
+                                         : infoButtonLightStyleSheet);
 }
