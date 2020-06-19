@@ -129,7 +129,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 ### 1. Select Input source
 <p align="center">
-    <img src="media/screenshot_select_input_camera.jpg" alt="Input_Cam" width="512" >
+    <img src="media/screenshot_select_input_camera.png" alt="Input_Cam" width="640" >
   </a>
 </p>
 <p align="center">
@@ -137,16 +137,18 @@ Use this space to show useful examples of how a project can be used. Additional 
 </p>
 
 
+
 <p align="center">
   <b>OR</b>
 </p>
 <p align="center">
-    <img src="media/screenshot_select_input_file.jpg" alt="Input_File" width="512" >
+    <img src="media/screenshot_select_input_file.png" alt="Input_File" width="640" >
   </a>
 </p>
 <p align="center">
   <em>Select Video/Image file as Input Source</em>
 </p>
+
 
 
 - Confirm the source selection by clicking on <img src="assets/done.png" alt="Logo" width="24"> button. 

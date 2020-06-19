@@ -82,6 +82,8 @@ DISTFILES += \
     assets/done.png \
     assets/done_sel.png \
     assets/info.png \
+    assets/info_light.png \
+    assets/info_light_sel.png \
     assets/info_sel.png \
     assets/liberapay_donate.png \
     assets/minimize.png \
@@ -96,5 +98,6 @@ DISTFILES += \
     media/screenshot_histogram.png \
     media/screenshot_hsv.png \
     media/screenshot_menu.png \
-    media/screenshot_select_input_camera.jpg \
-    media/screenshot_select_input_file.jpg
+    media/screenshot_select_input_camera.png \
+    media/screenshot_select_input_file.jpg \
+    media/screenshot_select_input_file.png
