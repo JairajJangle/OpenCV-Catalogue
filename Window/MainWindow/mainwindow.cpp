@@ -364,7 +364,7 @@ void MainWindow::GetSourceCaptureImage()
 void MainWindow::GetSourceCaptureError(QString error)
 {
     // FIXME: Commented for DEMO
-//    setUserMessage(error, ERROR);
+    //    setUserMessage(error, ERROR);
 }
 
 void MainWindow::refreshInputImage(cv::Mat img)
@@ -556,12 +556,22 @@ void MainWindow::switchThemeButtonClicked()
             ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
             ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
         }
+
+        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        {
+            baseConfigWidget->changeParamAdjustStyleSheet(true);
+        }
     }
     else
     {
         qApp->setStyleSheet("");
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
+
+        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        {
+            baseConfigWidget->changeParamAdjustStyleSheet(false);
+        }
     }
 }
 

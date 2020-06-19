@@ -39,6 +39,7 @@ public:
                           const QString title,
                           const QString infoLink);
     void setInfoButtonVisibility(bool visible);
+    void setInfoIconStyleSheet(bool isDarkMode);
 
 signals:
     void infoButtonClicled();
@@ -51,7 +52,7 @@ private:
     QToolButton* infoButton = new QToolButton();
     int row = 0;
 
-    QString infoButtonStyleSheet = QString("QToolButton#infoButton"
+    QString infoButtonLightStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info.png);"
@@ -63,6 +64,23 @@ private:
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info_sel.png);"
+                                           "    background: none;"
+                                           "    border: none;"
+                                           "    background-repeat: none;"
+                                           "}");
+
+    QString infoButtonDarkStyleSheet = QString("QToolButton#infoButton"
+                                           "{"
+                                           "    background-color: transparent;"
+                                           "    border-image: url(:/assets/info_light.png);"
+                                           "    background: none;"
+                                           "    border: none;"
+                                           "    background-repeat: none;"
+                                           "}"
+                                           "QToolButton:pressed#infoButton"
+                                           "{"
+                                           "    background-color: transparent;"
+                                           "    border-image: url(:/assets/info_light_sel.png);"
                                            "    background: none;"
                                            "    border: none;"
                                            "    background-repeat: none;"

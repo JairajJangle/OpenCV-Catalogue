@@ -12,5 +12,7 @@
         <file>assets/minimize_sel.png</file>
         <file>assets/minimize.png</file>
         <file>assets/app_logo.png</file>
+        <file>assets/info_light_sel.png</file>
+        <file>assets/info_light.png</file>
     </qresource>
 </RCC>
