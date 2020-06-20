@@ -40,6 +40,8 @@ inline double setPrecision(double number, int decimalPlaces)
 
 inline QList<QPair<int, QString>> chainMenuOpList;
 
+inline bool isDarkModeOn = true;
+
 namespace WidgetUtils {
 QPoint getWidgetCenter(QWidget* widget);
 inline QPoint getWidgetCenter(QWidget* widget)

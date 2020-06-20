@@ -44,6 +44,7 @@ public:
     void setEnabled(bool enabled);
     void setCurrentOperation(QString operationName);
     void setLineVisibility(bool visible);
+    void setStyleSheet(bool isDarkMode);
     QRadioButton* getRadioButton();
 
     ~ChainMenuWidget();
@@ -56,6 +57,42 @@ signals:
 
 private:
     Ui::ChainMenuWidget *ui;
+
+    const QString buttonAddLightStyle = QString("QToolButton#buttonAdd"
+                                                "{"
+                                                "    color: green;"
+                                                "}"
+                                                "QToolButton:disabled#buttonAdd"
+                                                "{"
+                                                "    color: #787878;"
+                                                "}");
+
+    const QString buttonAddDarkStyle = QString("QToolButton#buttonAdd"
+                                               "{"
+                                               "    color: #22ff00;"
+                                               "}"
+                                               "QToolButton:disabled#buttonAdd"
+                                               "{"
+                                               "    color: #787878;"
+                                               "}");
+
+    const QString buttonRemoveLightStyle = QString("QToolButton#buttonRemove "
+                                                   "{"
+                                                   "    color: red;"
+                                                   "}"
+                                                   "QToolButton:disabled#buttonRemove"
+                                                   "{"
+                                                   "    color: #787878;"
+                                                   "}");
+
+    const QString buttonRemoveDarkStyle = QString("QToolButton#buttonRemove "
+                                                  "{"
+                                                  "    color: #ff2a00;"
+                                                  "}"
+                                                  "QToolButton:disabled#buttonRemove"
+                                                  "{"
+                                                  "    color: #787878;"
+                                                  "}");
 };
 
 #endif // CHAINMENUWIDGET_H

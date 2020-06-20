@@ -82,6 +82,8 @@ public:
                 this, [=]() {
             emit operationSelected(paramAdjustWidget);
         });
+
+        changeWidgetsStyleSheet(isDarkModeOn);
     }
     ~BaseConfigWidget(){}
 
@@ -105,9 +107,10 @@ public:
         return paramAdjustWidget;
     }
 
-    void changeParamAdjustStyleSheet(bool isDarkMode)
+    void changeWidgetsStyleSheet(bool isDarkMode)
     {
         paramAdjustWidget->setInfoIconStyleSheet(isDarkMode);
+        chainMenuWidget->setStyleSheet(isDarkMode);
     }
 
     /*
