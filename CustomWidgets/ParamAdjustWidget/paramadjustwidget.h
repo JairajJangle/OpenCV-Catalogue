@@ -52,7 +52,7 @@ private:
     QToolButton* infoButton = new QToolButton();
     int row = 0;
 
-    QString infoButtonLightStyleSheet = QString("QToolButton#infoButton"
+    const QString infoButtonLightStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info.png);"
@@ -69,7 +69,7 @@ private:
                                            "    background-repeat: none;"
                                            "}");
 
-    QString infoButtonDarkStyleSheet = QString("QToolButton#infoButton"
+    const QString infoButtonDarkStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
                                            "    border-image: url(:/assets/info_light.png);"

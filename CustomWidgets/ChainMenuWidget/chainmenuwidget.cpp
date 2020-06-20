@@ -90,6 +90,14 @@ void ChainMenuWidget::setLineVisibility(bool visible)
     ui->line->setVisible(visible);
 }
 
+void ChainMenuWidget::setStyleSheet(bool isDarkMode)
+{
+    ui->buttonAdd->setStyleSheet(isDarkMode ? buttonAddDarkStyle
+                                         : buttonAddLightStyle);
+    ui->buttonRemove->setStyleSheet(isDarkMode ? buttonRemoveDarkStyle
+                                         : buttonRemoveLightStyle);
+}
+
 ChainMenuWidget::~ChainMenuWidget()
 {
     delete ui;

@@ -541,7 +541,7 @@ void MainWindow::switchThemeButtonClicked()
 
     if(qApp->styleSheet() == "")
     {
-
+        isDarkModeOn = true;
         QFile f(":qdarkstyle/style.qss");
 
         if (!f.exists())
@@ -559,18 +559,19 @@ void MainWindow::switchThemeButtonClicked()
 
         for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
         {
-            baseConfigWidget->changeParamAdjustStyleSheet(true);
+            baseConfigWidget->changeWidgetsStyleSheet(true);
         }
     }
     else
     {
+        isDarkModeOn = false;
         qApp->setStyleSheet("");
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
 
         for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
         {
-            baseConfigWidget->changeParamAdjustStyleSheet(false);
+            baseConfigWidget->changeWidgetsStyleSheet(false);
         }
     }
 }
