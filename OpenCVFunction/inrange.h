@@ -50,17 +50,13 @@ public:
 
         cv::Mat outputImage;
 
-        if(inputImage.channels() == 1)
+        if(lLimits.size() == channelNos && hLimits.size() == channelNos)
+        {
             cv::inRange(inputImage,
-                        cv::Scalar(c1Low),
-                        cv::Scalar(c1High),
+                        lLimits,
+                        hLimits,
                         outputImage);
-
-        else if(inputImage.channels() == 3)
-            cv::inRange(inputImage,
-                        cv::Scalar(c1Low, c2Low, c3Low),
-                        cv::Scalar(c1High, c2High, c3High),
-                        outputImage);
+        }
 
         return outputImage;
     }
@@ -83,60 +79,42 @@ signals:
 void refreshWidget();
 
 private:
-int c1Low = 0;
-int c2Low = 0;
-int c3Low = 0;
+std::vector<int> lLimits;
+std::vector<int> hLimits;
 
-int c1High = 0;
-int c2High = 0;
-int c3High = 0;
-
-bool isWidgetInitialized;
 int channelNos = 0;
 
 void initWidget()
 {
     connect(this, SIGNAL(refreshWidget()), this, SLOT(changeSliderNumbers()));
 
-    qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
-
-    for(unsigned int i = 0; i < channelNos; i++)
-    {
-        SliderLayout* lSliderLayout = new SliderLayout(
-                    QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
-                    c1Low, 0, 255, 200);
-        vBoxSub->addLayout(lSliderLayout);
-
-        SliderLayout* hSliderLayout = new SliderLayout(
-                    QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
-                    c1Low, 0, 255, 200);
-        vBoxSub->addLayout(hSliderLayout);
-    }
-
     BaseConfigWidget::initWidget();
-    isWidgetInitialized = true;
 }
 
 private slots:
 void changeSliderNumbers()
 {
+    lLimits.clear();
+    hLimits.clear();
+
     qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
     for(unsigned int i = 0; i < channelNos; i++)
     {
+        lLimits.push_back(0);
+        hLimits.push_back(0);
         SliderLayout* lSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
-                    c1Low, 0, 255, 200);
+                    lLimits.back(), 0, 255, 200);
         vBoxSub->addLayout(lSliderLayout);
 
         SliderLayout* hSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
-                    c1Low, 0, 255, 200);
+                    hLimits.back(), 0, 255, 200);
         vBoxSub->addLayout(hSliderLayout);
     }
 
     BaseConfigWidget::initWidget();
-    isWidgetInitialized = true;
     // TODO: Add layouts dynamically according to matrix type
 }
 };
