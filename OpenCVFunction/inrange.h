@@ -45,7 +45,7 @@ public:
         if(channelNos != inputImage.channels())
         {
             channelNos = inputImage.channels();
-            changeSliderNumbers();
+            emit refreshWidget();
         }
 
         cv::Mat outputImage;
@@ -79,6 +79,9 @@ public:
     printf("InRange destroyed\n");
 }
 
+signals:
+void refreshWidget();
+
 private:
 int c1Low = 0;
 int c2Low = 0;
@@ -89,36 +92,51 @@ int c2High = 0;
 int c3High = 0;
 
 bool isWidgetInitialized;
-int channelNos = -1;
-
-SliderLayout* c1LSliderLayout = new SliderLayout("Channel 1 Low\n[0-255]", c1Low, 0, 255, 200);
-SliderLayout* c2LSliderLayout = new SliderLayout("Channel 2 Low\n[0-255]", c2Low, 0, 255, 200);
-SliderLayout* c3LSliderLayout = new SliderLayout("Channel 3 Low\n[0-255]", c3Low, 0, 255, 200);
-
-SliderLayout* c1HSliderLayout = new SliderLayout("Channel 1 High\n[0-255]", c1High, 0, 255, 200);
-SliderLayout* c2HSliderLayout = new SliderLayout("Channel 2 High\n[0-255]", c2High, 0, 255, 200);
-SliderLayout* c3HSliderLayout = new SliderLayout("Channel 3 High\n[0-255]", c3High, 0, 255, 200);
+int channelNos = 0;
 
 void initWidget()
 {
+    connect(this, SIGNAL(refreshWidget()), this, SLOT(changeSliderNumbers()));
+
     qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
-    vBoxSub->addLayout(c1LSliderLayout);
-    vBoxSub->addLayout(c2LSliderLayout);
-    vBoxSub->addLayout(c3LSliderLayout);
+    for(unsigned int i = 0; i < channelNos; i++)
+    {
+        SliderLayout* lSliderLayout = new SliderLayout(
+                    QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
+                    c1Low, 0, 255, 200);
+        vBoxSub->addLayout(lSliderLayout);
 
-    vBoxSub->addLayout(c1HSliderLayout);
-    vBoxSub->addLayout(c2HSliderLayout);
-    vBoxSub->addLayout(c3HSliderLayout);
+        SliderLayout* hSliderLayout = new SliderLayout(
+                    QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
+                    c1Low, 0, 255, 200);
+        vBoxSub->addLayout(hSliderLayout);
+    }
 
     BaseConfigWidget::initWidget();
     isWidgetInitialized = true;
 }
 
+private slots:
 void changeSliderNumbers()
 {
-    qDeleteAll(vBoxSub->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
+    qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
+    for(unsigned int i = 0; i < channelNos; i++)
+    {
+        SliderLayout* lSliderLayout = new SliderLayout(
+                    QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
+                    c1Low, 0, 255, 200);
+        vBoxSub->addLayout(lSliderLayout);
+
+        SliderLayout* hSliderLayout = new SliderLayout(
+                    QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
+                    c1Low, 0, 255, 200);
+        vBoxSub->addLayout(hSliderLayout);
+    }
+
+    BaseConfigWidget::initWidget();
+    isWidgetInitialized = true;
     // TODO: Add layouts dynamically according to matrix type
 }
 };
