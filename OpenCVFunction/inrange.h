@@ -50,11 +50,12 @@ public:
 
         cv::Mat outputImage;
 
-        if(lLimits.size() == channelNos && hLimits.size() == channelNos)
+        if(static_cast<int>(lLimits->size()) == channelNos
+                && static_cast<int>(hLimits->size()) == channelNos)
         {
             cv::inRange(inputImage,
-                        lLimits,
-                        hLimits,
+                        *lLimits,
+                        *hLimits,
                         outputImage);
         }
 
@@ -79,8 +80,8 @@ signals:
 void refreshWidget();
 
 private:
-std::vector<int> lLimits;
-std::vector<int> hLimits;
+std::vector<int>* lLimits = new std::vector<int>();
+std::vector<int>* hLimits = new std::vector<int>();
 
 int channelNos = 0;
 
@@ -94,28 +95,36 @@ void initWidget()
 private slots:
 void changeSliderNumbers()
 {
-    lLimits.clear();
-    hLimits.clear();
+    lLimits->clear();
+    hLimits->clear();
 
     qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
-    for(unsigned int i = 0; i < channelNos; i++)
+    // TODO: Add Max Limit according to matrix pixel byte size eg 255 for 8 byte
+    for(int i = 0; i < channelNos; i++)
     {
-        lLimits.push_back(0);
-        hLimits.push_back(0);
+        lLimits->push_back(0);
+        hLimits->push_back(0);
         SliderLayout* lSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
-                    lLimits.back(), 0, 255, 200);
+                    lLimits->back(), 0, 255, 200);
+        connect(lSliderLayout, &SliderLayout::sliderValueChanged, this,
+                [=](int value) {
+            lLimits->at(i) = value;
+        });
         vBoxSub->addLayout(lSliderLayout);
 
         SliderLayout* hSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
-                    hLimits.back(), 0, 255, 200);
+                    hLimits->back(), 0, 255, 200);
+        connect(hSliderLayout, &SliderLayout::sliderValueChanged, this,
+                [=](int value) {
+            hLimits->at(i) = value;
+        });
         vBoxSub->addLayout(hSliderLayout);
     }
 
     BaseConfigWidget::initWidget();
-    // TODO: Add layouts dynamically according to matrix type
 }
 };
 
