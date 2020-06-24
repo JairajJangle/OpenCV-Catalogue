@@ -41,7 +41,6 @@
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
 #include "OpenCVFunction/erosiondilation.h"
-#include "OpenCVFunction/thresholding.h"
 #include "OpenCVFunction/cannyedge.h"
 #include "OpenCVFunction/blur.h"
 #include "OpenCVFunction/backgroundsubtract.h"
@@ -66,7 +65,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, THRESHOLDING, INRANGE,
+    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER};
 
