@@ -135,8 +135,5 @@ private:
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
 
     void configChainMenuList();
-
-    int currentSelectionIndex = 0;
-    int prevSelectionIndex = 0;
 };
 #endif // MAINWINDOW_H

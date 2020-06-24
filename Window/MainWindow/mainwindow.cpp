@@ -130,11 +130,7 @@ void MainWindow::addOperation(OPCodes opCode)
         break;
     }
 
-    currentSelectionIndex = baseConfigWidgetChain.size() - 1;
-
     addOperationWidget();
-
-    qDebug() << "Current Selection Index = " << currentSelectionIndex;
 }
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
