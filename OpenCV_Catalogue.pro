@@ -50,7 +50,6 @@ HEADERS += \
     OpenCVFunction/houghlines.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/inrange.h \
-    OpenCVFunction/thresholding.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/utils.h \
