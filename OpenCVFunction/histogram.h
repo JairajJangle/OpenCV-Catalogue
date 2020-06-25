@@ -57,18 +57,18 @@ public:
          */
         if(inputImage.channels() >= 1)
             calcHist(&bgrPlanes[0], 1, 0, cv::Mat(), bHist, 1,
-                    &histSize, &histRange, uniformCB->isChecked(),
-                    accumulateCB->isChecked());
+                    &histSize, &histRange, uniform,
+                    accumulate);
 
         if(inputImage.channels() >= 2)
             calcHist(&bgrPlanes[1], 1, 0, cv::Mat(), gHist, 1,
-                    &histSize, &histRange, uniformCB->isChecked(),
-                    accumulateCB->isChecked());
+                    &histSize, &histRange, uniform,
+                    accumulate);
 
         if(inputImage.channels() >= 3)
             calcHist(&bgrPlanes[2], 1, 0, cv::Mat(), rHist, 1,
-                    &histSize, &histRange, uniformCB->isChecked(),
-                    accumulateCB->isChecked());
+                    &histSize, &histRange, uniform,
+                    accumulate);
 
         int hist_w = 512, histH = 400;
         int bin_w = cvRound((double)hist_w/histSize);
