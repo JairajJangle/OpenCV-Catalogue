@@ -27,9 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Register cv::Mat type to make it queueable
-    qRegisterMetaType<cv::Mat>("cv::Mat");
-
     initUI();
 
     switchThemeButtonClicked();
