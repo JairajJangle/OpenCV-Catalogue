@@ -24,6 +24,7 @@
 #include "Utils/constants.h"
 
 #include <QDesktopServices>
+#include <QGraphicsDropShadowEffect>
 #include <QUrl>
 
 AboutDialog::AboutDialog(QWidget *parent) :
@@ -31,6 +32,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
+
+    this->setFixedSize(490, 590);
 
     ui->labelAppName->setText(Info::appName);
     ui->labelVersion->setText(Info::version);
@@ -41,6 +44,9 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     connect(ui->labelJairajJangle,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
     connect(ui->labelCopyright,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
+
+    connect(ui->labelQDSSName,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
+    connect(ui->labelQDSSLicense,SIGNAL(linkActivated(const QString&)),this,SLOT(openURL(const QString&)));
 
     connect(ui->buttonContribute, &QPushButton::released, this,
             [=]() {
