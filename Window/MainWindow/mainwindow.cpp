@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->cameraRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
+    connect(ui->ipcamRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
+
     connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
@@ -76,6 +78,7 @@ void MainWindow::initUI(){
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);
     group->addButton(ui->fileRadioButton);
+    group->addButton(ui->ipcamRadioButton);
 
     sourceRadioButtonClicked();
 
@@ -428,14 +431,20 @@ void MainWindow::sourceRadioButtonClicked(){
     if(ui->cameraRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
-        ui->labelCameraIndex->show();
+        ui->labelInputSource->setText("Set Camera Index");
         ui->textInputSource->setPlainText("0");
     }
     else if(ui->fileRadioButton->isChecked())
     {
         ui->buttonBrowse->show();
-        ui->labelCameraIndex->hide();
-        ui->textInputSource->setPlainText("Video/Image file path...");
+        ui->labelInputSource->setText("Browse for Video or Image file");
+        ui->textInputSource->setPlainText("File path...");
+    }
+    else if(ui->ipcamRadioButton->isChecked())
+    {
+        ui->buttonBrowse->hide();
+        ui->labelInputSource->setText("Set Camera IP Address");
+        ui->textInputSource->setPlainText("http://192.168.1.1:8080");
     }
 }
 
@@ -458,11 +467,19 @@ void MainWindow::sourceSelectClicked()
             return;
         }
     }
-    else
+    else if(ui->cameraRadioButton->isChecked())
     {
         if (path == "")
         {
             printf("Camera Number not provided");
+            return;
+        }
+    }
+    else if(ui->ipcamRadioButton->isChecked())
+    {
+        if (path == "")
+        {
+            printf("No IP address entered");
             return;
         }
     }
