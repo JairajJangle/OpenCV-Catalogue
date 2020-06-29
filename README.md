@@ -264,6 +264,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * [Img Shields](https://shields.io)
+* [QDarkStylesheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet) - [The MIT License](https://github.com/ColinDuquesnoy/QDarkStyleSheet/blob/master/LICENSE.rst)
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Pages](https://pages.github.com)
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
@@ -273,6 +274,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/JairajJangle/Open-CV-Catalogue.svg?style=flat-square
 [contributors-url]: https://github.com/JairajJangle/Open-CV-Catalogue/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/JairajJangle/Open-CV-Catalogue.svg?style=flat-square
