@@ -46,15 +46,12 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-//        m.lock();
-
         cv::Mat outputImage;
 
         cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
 
-//        m.unlock();
         return outputImage;
     }
     catch(cv::Exception& e){
