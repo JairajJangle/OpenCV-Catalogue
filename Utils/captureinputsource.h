@@ -73,6 +73,10 @@ public slots:
             {
                 try {
                     double fps = cap.get(cv::CAP_PROP_FPS);
+
+                    if(!instantRefresh)
+                        QThread::usleep(1000000/fps);
+
                     bool isSuccess = cap.read(img);
 
                     if(!cv::Size(img.rows , img.rows).empty()) // Avoid empty image resizing error
@@ -86,7 +90,7 @@ public slots:
                     }
 
                     emit SourceCaptured();
-                    QThread::usleep(1000000/fps);
+
                 } catch (cv::Exception& e) {
                     emit SourceCaptureError(e.what());
                 }
@@ -122,10 +126,17 @@ public:
             cap.open(inputSource); // For file path
     }
 
+    void setInstantFrameRefresh(bool instantRefresh)
+    {
+        this->instantRefresh = instantRefresh;
+    }
+
 private:
 
     cv::VideoCapture cap;
     QTimer *start_cam_once_timer = new QTimer(this);
+
+    bool instantRefresh = false; // Set true for IP/Normal camera input source
 
     //Function to convert QT res image file to OpenCVcv::Mat object
     cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
