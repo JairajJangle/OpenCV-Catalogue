@@ -42,8 +42,8 @@ public:
     std::string inputSource = "";
 
     /*
-     * Constructor to start single shot timer and connect the signal once every loop
-     * in StartCam() slot
+     * Constructor: Start Single Shot Timer and connect timeout signal to start
+     * Video Capture read loop
      */
     CaptureInputSource(std::string inputSource)
     {
