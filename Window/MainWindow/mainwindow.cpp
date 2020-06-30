@@ -487,6 +487,7 @@ void MainWindow::sourceSelectClicked()
     if(!cam_thread->isRunning()){
         // Start capture thread after confirming input source
         captureInputSource = new CaptureInputSource(path.toStdString());
+
         captureInputSource->moveToThread(cam_thread);
         cam_thread->start();
 
@@ -498,6 +499,10 @@ void MainWindow::sourceSelectClicked()
         captureInputSource->inputSource = path.toStdString();
         captureInputSource->relesaseCap();
     }
+
+    // FIXME: Crash
+    // If IP/Normal Camera is selected as input source then refresh the frames instantly else follow the FPS
+//    captureInputSource->setInstantFrameRefresh(ui->fileRadioButton->isChecked() ? false : true);
 }
 
 void MainWindow::outputLabelLBClicked(int x, int y)
