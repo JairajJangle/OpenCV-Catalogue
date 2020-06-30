@@ -31,7 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     switchThemeButtonClicked();
 
-    configChainMenuList();
+    chainMenuInitDone = false;
+    for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
+        addOperation((OPCodes)opCode);
+    }
+    chainMenuInitDone = true;
+
+//    configChainMenuList();
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
@@ -127,7 +133,15 @@ void MainWindow::addOperation(OPCodes opCode)
         break;
     }
 
-    addOperationWidget();
+    if(chainMenuInitDone)
+        addOperationWidget();
+    else
+    {
+        chainMenuOpMap.insert(opCode ,baseConfigWidgetChain.last()->getOperationName());
+
+        baseConfigWidgetChain.last()->deleteLater();
+        baseConfigWidgetChain.removeLast();
+    }
 }
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
@@ -502,7 +516,7 @@ void MainWindow::sourceSelectClicked()
 
     // FIXME: Crash
     // If IP/Normal Camera is selected as input source then refresh the frames instantly else follow the FPS
-//    captureInputSource->setInstantFrameRefresh(ui->fileRadioButton->isChecked() ? false : true);
+    //    captureInputSource->setInstantFrameRefresh(ui->fileRadioButton->isChecked() ? false : true);
 }
 
 void MainWindow::outputLabelLBClicked(int x, int y)
@@ -530,20 +544,21 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
     ui->labelUserMessage->setText(message);
 }
 
+// TODO: Remove after testing centralized Chain Menu List Configuration by reusing addOperation()
 void MainWindow::configChainMenuList()
 {
-    chainMenuOpList.append(QPair<OPCodes, QString>(NONE ,BaseConfigWidget().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_SPACES ,ColorSpace().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(IMAGE_FLIP ,ImageFlip().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(COLOR_PICKER ,ColorPicker().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(INRANGE ,InRange().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(CANNY_EDGE ,CannyEdge().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(BLUR ,Blur().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_CIRCLES ,HoughCircles().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(HOUGH_LINES ,HoughLines().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName()));
-    chainMenuOpList.append(QPair<OPCodes, QString>(HARRIS_CORNER ,HarrisCornerDetector().getOperationName()));
+    chainMenuOpMap.insert(NONE ,BaseConfigWidget().getOperationName());
+    chainMenuOpMap.insert(COLOR_SPACES ,ColorSpace().getOperationName());
+    chainMenuOpMap.insert(IMAGE_FLIP ,ImageFlip().getOperationName());
+    chainMenuOpMap.insert(COLOR_PICKER ,ColorPicker().getOperationName());
+    chainMenuOpMap.insert(INRANGE ,InRange().getOperationName());
+    chainMenuOpMap.insert(CANNY_EDGE ,CannyEdge().getOperationName());
+    chainMenuOpMap.insert(BLUR ,Blur().getOperationName());
+    chainMenuOpMap.insert(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName());
+    chainMenuOpMap.insert(HOUGH_CIRCLES ,HoughCircles().getOperationName());
+    chainMenuOpMap.insert(HOUGH_LINES ,HoughLines().getOperationName());
+    chainMenuOpMap.insert(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName());
+    chainMenuOpMap.insert(HARRIS_CORNER ,HarrisCornerDetector().getOperationName());
 }
 
 void MainWindow::switchThemeButtonClicked()

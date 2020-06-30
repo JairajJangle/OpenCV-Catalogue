@@ -31,9 +31,9 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
 
     ui->verticalLayout_2->setAlignment(Qt::AlignCenter);
 
-    for(QPair<int, QString> chainMenuItem : chainMenuOpList)
+    for(auto key : chainMenuOpMap.keys())
     {
-        ui->comboBox->addItem(chainMenuItem.second, chainMenuItem.first);
+        ui->comboBox->addItem(chainMenuOpMap.value(key), key);
     }
 
     connect(ui->buttonAdd, &QToolButton::released,this,
