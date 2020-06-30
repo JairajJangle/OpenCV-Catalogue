@@ -65,9 +65,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{NONE, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
+    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION, HARRIS_CORNER};
+                 HISTOGRAM_CALCULATION, HARRIS_CORNER,
+
+                 /* Add all other Enum values before this */
+                 NONE};
 
 private slots:
     void sourceRadioButtonClicked();
@@ -102,6 +105,8 @@ private:
     Ui::MainWindow *ui;
 
     QMutex qmutex;
+
+    bool chainMenuInitDone = false;
 
     void initUI();
     void closeEvent (QCloseEvent *event) override

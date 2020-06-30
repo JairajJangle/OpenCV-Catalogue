@@ -23,7 +23,7 @@
 
 #include <cmath>
 
-#include <QList>
+#include <QMap>
 #include <QPoint>
 #include <QWidget>
 
@@ -38,7 +38,7 @@ inline double setPrecision(double number, int decimalPlaces)
 }
 }
 
-inline QList<QPair<int, QString>> chainMenuOpList;
+inline QMap<int, QString> chainMenuOpMap;
 
 inline bool isDarkModeOn = true;
 
