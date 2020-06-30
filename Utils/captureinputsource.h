@@ -101,6 +101,13 @@ public slots:
         }
     }
 
+    void stopTimer()
+    {
+        qDebug() << "Stop TImer Called!";
+        start_cam_once_timer->stop();
+        delete start_cam_once_timer;
+    }
+
 public:
     ~CaptureInputSource()
     {
