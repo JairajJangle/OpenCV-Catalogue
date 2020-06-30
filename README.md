@@ -50,7 +50,7 @@
   * [Run the standalone application](#run-the-standalone-application)
 * [Application usage](#application-usage)
   * [1. Select Input source](#1-select-input-source)
-  * [2. Select OpenCV Operation](#2-select-opencv-operation)
+  * [2. Select and Chain OpenCV Operations](#2-select--and-chain-opencv-operations)
   * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
 * [For Developers](#for-developers)
 * [Roadmap](#roadmap)
@@ -154,7 +154,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 - Confirm the source selection by clicking on <img src="assets/done.png" alt="Logo" width="24"> button. 
 - Select "Mirror" option to make the input Matrix mirrored along Y-axis
 
-### 2. Select OpenCV Operation
+### 2. Select and Chain OpenCV Operations
 <p align="center">
     <img src="media/screenshot_menu.png" alt="Input_File" width="1000" >
   </a>
