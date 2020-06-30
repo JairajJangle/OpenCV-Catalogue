@@ -187,16 +187,29 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 
 - Each OpenCV operation has it's own parameter control GUI
-- Changing parameters values reflect the changes in real time
+
+- **Changing parameters** values reflect the changes in **real time**
+
 - Clicking on <img src="assets/info.png" alt="Logo" width="22"> button at the top right corner besides the selected operation name will reveal the official OpenCV documentation for the selected operation in your internet browser.
+
+- In operation chaining box(left side), click on:
+
+   <span style="color:green; font-size: 1.5em;">**+**</span> 	button to add a OpenCV function in chain
+
+   <span style="color:red; font-size: 1.5em;">**-**</span> 	 button to remove the selected OpenCV function from chain
+
+   <span style="color:; font-size: 1.5em;">◉</span>   radio button to select the OpenCV operation for it's parameter adjustment
+
+- <div class="boxed" markdown="1">  This text is enclosed in a box.</div>
+
+- Click on **Switch Theme** button at the bottom right corner to swtich between Dark Mode and Light Mode Theme
+
 - Various GUI elements are used:
 
-   - Seekbar for definite ranging values
-   - Check box for binary options
-   - Text Input Field for indefinite values and decimal values
-   - Radio Buttons to select one out of many options
-
-
+   - **Seekbar** for definite ranging values
+   - **Check box** for binary options
+   - **Text Input Field** for indefinite values and decimal values
+   - **Radio Buttons** to select one out of many options
 
 ## For Developers
 
