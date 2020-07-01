@@ -164,11 +164,11 @@ Use this space to show useful examples of how a project can be used. Additional 
 </p>
 In the *Select and Chain OpenCV Operations box*(left side), click on:
 
-![](media/plus_button.png)button to add a OpenCV function in chain
+![](media/plus_button.png)   button to add a OpenCV function in chain
 
-![](media/minus_button.png)button to remove the selected OpenCV function from chain
+![](media/minus_button.png)   button to remove the selected OpenCV function from chain
 
- ![](media/radio_button.png) radio button to select the OpenCV operation for it's parameter adjustment
+ ![](media/radio_button.png)   radio button to select the OpenCV operation for it's parameter adjustment
 
 **NOTE:** on adding an incompatible OpenCV Operation to the chain, it will be automatically removed from the chain.
 
