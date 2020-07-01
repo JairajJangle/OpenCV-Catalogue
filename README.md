@@ -1,4 +1,4 @@
-<!-- PROJECT SHIELDS -->
+ <!-- PROJECT SHIELDS -->
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -162,7 +162,15 @@ Use this space to show useful examples of how a project can be used. Additional 
 <p align="center">
   <em>Select OpenCV Operation from the "Examples" Menu</em>
 </p>
+In the *Select and Chain OpenCV Operations box*(left side), click on:
 
+<img src="media/plus_button.png" alt="Logo" width="30">button to add a OpenCV function in chain
+
+<img src="media/minus_button.png" alt="Logo" width="32">button to remove the selected OpenCV function from chain
+
+ <img src="media/radio_button.png" alt="Logo" width="24"> radio button to select the OpenCV operation for it's parameter adjustment
+
+**NOTE:** on adding an incompatible OpenCV Operation to the chain, it will be automatically removed from the chain.
 
 
 ### 3. Adjusting OpenCV Operation parameters
@@ -191,16 +199,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 - **Changing parameters** values reflect the changes in **real time**
 
 - Clicking on <img src="assets/info.png" alt="Logo" width="22"> button at the top right corner besides the selected operation name will reveal the official OpenCV documentation for the selected operation in your internet browser.
-
-- In operation chaining box(left side), click on:
-
-   <span style="color:green; font-size: 1.5em;">**+**</span> 	button to add a OpenCV function in chain
-
-   <span style="color:red; font-size: 1.5em;">**-**</span> 	 button to remove the selected OpenCV function from chain
-
-   <span style="color:; font-size: 1.5em;">◉</span>   radio button to select the OpenCV operation for it's parameter adjustment
-
-- <div class="boxed" markdown="1">  This text is enclosed in a box.</div>
 
 - Click on **Switch Theme** button at the bottom right corner to swtich between Dark Mode and Light Mode Theme
 
