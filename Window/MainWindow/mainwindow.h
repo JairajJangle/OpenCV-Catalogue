@@ -65,12 +65,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    enum OPCodes{COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
+    enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER,
 
                  /* Add all other Enum values before this */
-                 NONE};
+                 NONE /* Corresponds to No Operation itself */ };
 
 private slots:
     void sourceRadioButtonClicked();
@@ -137,7 +137,5 @@ private:
 
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
-
-    void configChainMenuList();
 };
 #endif // MAINWINDOW_H

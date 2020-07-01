@@ -37,8 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
     chainMenuInitDone = true;
 
-//    configChainMenuList();
-
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
     //    hybrid->show();
@@ -95,7 +93,7 @@ void MainWindow::addOperation(OPCodes opCode)
 {
     switch (opCode)
     {
-    case NONE:
+    case NO_OPERATION:
         baseConfigWidgetChain.append(new BaseConfigWidget());
         break;
     case COLOR_SPACES:
@@ -131,6 +129,11 @@ void MainWindow::addOperation(OPCodes opCode)
     case HARRIS_CORNER:
         baseConfigWidgetChain.append(new HarrisCornerDetector());
         break;
+    case NONE:
+        baseConfigWidgetChain.append(new BaseConfigWidget());
+        break;
+    default:
+        baseConfigWidgetChain.append(new BaseConfigWidget());
     }
 
     if(chainMenuInitDone)
@@ -542,23 +545,6 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
     ui->labelUserMessage->setAutoFillBackground(true);
     ui->labelUserMessage->setPalette(sample_palette);
     ui->labelUserMessage->setText(message);
-}
-
-// TODO: Remove after testing centralized Chain Menu List Configuration by reusing addOperation()
-void MainWindow::configChainMenuList()
-{
-    chainMenuOpMap.insert(NONE ,BaseConfigWidget().getOperationName());
-    chainMenuOpMap.insert(COLOR_SPACES ,ColorSpace().getOperationName());
-    chainMenuOpMap.insert(IMAGE_FLIP ,ImageFlip().getOperationName());
-    chainMenuOpMap.insert(COLOR_PICKER ,ColorPicker().getOperationName());
-    chainMenuOpMap.insert(INRANGE ,InRange().getOperationName());
-    chainMenuOpMap.insert(CANNY_EDGE ,CannyEdge().getOperationName());
-    chainMenuOpMap.insert(BLUR ,Blur().getOperationName());
-    chainMenuOpMap.insert(BKG_SUBTRACT ,BackgroundSubtraction().getOperationName());
-    chainMenuOpMap.insert(HOUGH_CIRCLES ,HoughCircles().getOperationName());
-    chainMenuOpMap.insert(HOUGH_LINES ,HoughLines().getOperationName());
-    chainMenuOpMap.insert(HISTOGRAM_CALCULATION ,HistogramCalculation().getOperationName());
-    chainMenuOpMap.insert(HARRIS_CORNER ,HarrisCornerDetector().getOperationName());
 }
 
 void MainWindow::switchThemeButtonClicked()
