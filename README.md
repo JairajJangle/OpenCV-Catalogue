@@ -164,7 +164,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 </p>
 In the *Select and Chain OpenCV Operations box*(left side), click on:
 
-<img src="media/plus_button.png" alt="Logo" width="24">button to add a OpenCV function in chain
+<img src="media/plus_button.png" align="bottom" alt="Logo" width="30"> button to add a OpenCV function in chain
 
 <img src="media/minus_button.png" alt="Logo" width="32">button to remove the selected OpenCV function from chain
 
