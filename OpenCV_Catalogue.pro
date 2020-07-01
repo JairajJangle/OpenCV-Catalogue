@@ -92,6 +92,7 @@ DISTFILES += \
     assets/undock.png \
     assets/undock_sel.png \
     media/picture_gui.jpg \
+    media/plus_button.png \
     media/screenshot_adjust_params.png \
     media/screenshot_canny.png \
     media/screenshot_histogram.png \
