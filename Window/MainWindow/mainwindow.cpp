@@ -558,7 +558,7 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qDebug() << "Unable to set stylesheet, file not found\n";
+            qDebug() << "Unable to set stylesheet, Dark Mode Theme File not found\n";
         }
         else
         {
