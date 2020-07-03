@@ -263,18 +263,18 @@ void MainWindow::refreshOperationWidgets()
 
         if(vBoxSub->count() > 1)
         {
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
                                           widget())->setLineVisibility(true);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
                                           widget())->setEnabled(false);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setEnabled(true);
         }
         else if(vBoxSub->count() == 1)
         {
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setEnabled(true);
-            static_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
                                           widget())->setRemoveButtonEnabled(false);
         }
 
