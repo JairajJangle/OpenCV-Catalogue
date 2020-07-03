@@ -89,8 +89,6 @@ private slots:
     void removeOperationWidgets();
     void refreshOperationWidgets();
     void switchThemeButtonClicked();
-
-    // FIXME: Test
     void operationSelectedToDisplay(ParamAdjustWidget*);
 
 signals:
