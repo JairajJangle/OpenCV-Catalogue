@@ -264,18 +264,18 @@ void MainWindow::refreshOperationWidgets()
         if(vBoxSub->count() > 1)
         {
             dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                          widget())->setLineVisibility(true);
+                                           widget())->setLineVisibility(true);
             dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                          widget())->setEnabled(false);
+                                           widget())->setEnabled(false);
             dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+                                           widget())->setEnabled(true);
         }
         else if(vBoxSub->count() == 1)
         {
             dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setEnabled(true);
+                                           widget())->setEnabled(true);
             dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                          widget())->setRemoveButtonEnabled(false);
+                                           widget())->setRemoveButtonEnabled(false);
         }
 
         wgtSub->update();

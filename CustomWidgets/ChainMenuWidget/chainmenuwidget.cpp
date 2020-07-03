@@ -31,7 +31,7 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
 
     ui->verticalLayout_2->setAlignment(Qt::AlignCenter);
 
-    for(auto key : chainMenuOpMap.keys())
+    for(int &key : chainMenuOpMap.keys())
     {
         ui->comboBox->addItem(chainMenuOpMap.value(key), key);
     }
