@@ -25,7 +25,6 @@
 
 int main(int argc, char *argv[])
 {
-
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
 
