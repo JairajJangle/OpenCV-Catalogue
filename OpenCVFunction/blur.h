@@ -54,7 +54,6 @@ public:
             QString currentAnchorText = QString::number(begin.x)
                     + ", " + QString::number(begin.y);
 
-            // FIXME: Add focus change String assignment and then use it here
             if(prevAnchorText != currentAnchorText)
             {
                 anchorLineEditLayout->setText(currentAnchorText);
