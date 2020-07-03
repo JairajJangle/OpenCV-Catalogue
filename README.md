@@ -211,11 +211,11 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 
 ## For Developers
 
-- Please respect the project file structure while making pull requests
+- Please maintain the project file structure while making pull requests
 
 - Please try to stick to the coding structure as much as you can
 
-- If you find the code struncture should be amended to make it more organized please do make a pull request  or create an issue and explain the need in detail
+- If you find that the project struncture should be amended to make it more organized please do make a pull request  or create an issue and explain the need in detail
 
   
 
