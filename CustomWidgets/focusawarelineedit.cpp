@@ -30,11 +30,11 @@ FocusAwareLineEdit::~FocusAwareLineEdit()
 void FocusAwareLineEdit::focusInEvent(QFocusEvent *e)
 {
     QLineEdit::focusInEvent(e);
-    emit(focussed(true));
+    emit focussed(true);
 }
 
 void FocusAwareLineEdit::focusOutEvent(QFocusEvent *e)
 {
     QLineEdit::focusOutEvent(e);
-    emit(focussed(false));
+    emit focussed(false);
 }

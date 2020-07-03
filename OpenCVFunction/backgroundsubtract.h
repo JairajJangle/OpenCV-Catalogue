@@ -160,7 +160,7 @@ private:
                 this, SLOT(resetChangesClicked()));
 
         learningRateEditLayout->lineEdit->setValidator(
-                    new QRegExpValidator(RegExps::regEx0_1Decimal));
+                    new QRegExpValidator(QRegExp(RegExps::regEx0_1Decimal)));
 
         pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
         pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();

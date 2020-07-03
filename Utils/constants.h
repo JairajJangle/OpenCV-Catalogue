@@ -25,16 +25,16 @@
 #include <QRegExp>
 
 namespace Info {
-const QString appName = "OpenCV Catalogue";
-const QString version = "v0.2.1";
+static const char* appName = "OpenCV Catalogue";
+static const char* version = "v0.2.1";
 }
 
 namespace RegExps {
-const QRegExp regEx0_1Decimal = QRegExp("^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$");
+static const char* regEx0_1Decimal = "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$";
 }
 
 namespace Strings {
-const QString noOperationSelected = "No operation Selected";
+static const char* noOperationSelected = "No operation Selected";
 }
 
 #endif // CONSTANTS_H

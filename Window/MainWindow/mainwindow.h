@@ -79,8 +79,8 @@ private slots:
     void GetSourceCaptureImage();
     void GetSourceCaptureError(QString);
     void toggleFlipSource(bool);
-    void addOperation(OPCodes opCode = NONE);
-    void lastOperationChanged(OPCodes opCode);
+    void addOperation(MainWindow::OPCodes opCode = NO_OPERATION);
+    void lastOperationChanged(MainWindow::OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(int x, int y);
     void showHideExplodedView();
