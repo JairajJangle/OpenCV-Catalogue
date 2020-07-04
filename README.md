@@ -49,7 +49,7 @@
   * [Run the standalone application](#run-the-standalone-application)
 * [Application usage](#application-usage)
   * [1. Select Input source](#1-select-input-source)
-  * [2. Select and Chain OpenCV Operations](#2-select--and-chain-opencv-operations)
+  * [2. Select and Chain OpenCV Operations](#2-select-and-chain-opencv-operations)
   * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
