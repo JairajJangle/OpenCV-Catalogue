@@ -74,6 +74,7 @@ RESOURCES += \
     qdarkstyle/style.qrc
 
 DISTFILES += \
+    CONTRIBUTING.md \
     LICENSE.txt \
     README.md \
     assets/app_logo.png \
