@@ -214,9 +214,7 @@ See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) 
 
 ## Contributing
 
-Check 
-
-[CONTRIBUTING.md]: CONTRIBUTING.md
+Check [CONTRIBUTING.md](https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/CONTRIBUTING.md). 
 
 <!-- LICENSE -->
 
