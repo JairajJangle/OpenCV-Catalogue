@@ -46,13 +46,11 @@
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
-  * [Prerequisites for contribution](#prerequisites-for-contribution)
   * [Run the standalone application](#run-the-standalone-application)
 * [Application usage](#application-usage)
   * [1. Select Input source](#1-select-input-source)
   * [2. Select and Chain OpenCV Operations](#2-select--and-chain-opencv-operations)
   * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
-* [For Developers](#for-developers)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
@@ -104,13 +102,6 @@ Coming Soon:
 <!-- GETTING STARTED -->
 
 ## Getting Started
-
-Get started with contributing to OpenCV Catalogue
-
-### Prerequisites for contribution
-* [Install OpenCV](https://docs.opencv.org/trunk/df/d65/tutorial_table_of_content_introduction.html): Go for 3.x+ version
-* [Install QT libs + QT Creator](https://www.qt.io/download-open-source)
-* For development, supported platforms: Linux, MacOS, Windows
 
 ### Run the standalone application
 ```sh
@@ -209,15 +200,7 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
    - **Text Input Field** for indefinite values and decimal values
    - **Radio Buttons** to select one out of many options
 
-## For Developers
-
-- Please maintain the project file structure while making pull requests
-
-- Please try to stick to the coding structure as much as you can
-
-- If you find that the project struncture should be amended to make it more organized please do make a pull request  or create an issue and explain the need in detail
-
-  
+- 
 
 <!-- ROADMAP -->
 
@@ -228,19 +211,15 @@ See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) 
 
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Check 
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
+[CONTRIBUTING.md]: CONTRIBUTING.md
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the [GNU GPL v3 License](https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/LICENSE.txt). 
