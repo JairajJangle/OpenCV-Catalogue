@@ -83,12 +83,12 @@ This repository also contain release packages with standalone GUI application wh
 Features:
 * Select camera, image files and video files as input source
 * Real time ajustment of paramters of selected OpenCV operation
+* Chaining of various OpenCV operations in a sequence
 * Provide's link to official OpenCV documentation to selected OpenCV operation
 * Paramter adjustment can be done with Seekbars, Text Boxes, Check Boxes, Radio Buttons.
 
 Coming Soon:
 * Exploded View of OpenCV operations to give more insights
-* Chaining of various OpenCV operations in a sequence
 * Support for CUDA operations
 
 ### Built With
@@ -200,7 +200,6 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
    - **Text Input Field** for indefinite values and decimal values
    - **Radio Buttons** to select one out of many options
 
-- 
 
 <!-- ROADMAP -->
 
