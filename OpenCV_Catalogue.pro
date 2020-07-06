@@ -43,7 +43,7 @@ HEADERS += \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
-    OpenCVFunction/erosiondilation.h \
+    OpenCVFunction/dilate.h \
     OpenCVFunction/harriscornerdetector.h \
     OpenCVFunction/histogram.h \
     OpenCVFunction/houghcircles.h \

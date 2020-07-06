@@ -40,7 +40,7 @@
 #include "OpenCVFunction/colorspaces.h"
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
-#include "OpenCVFunction/erosiondilation.h"
+#include "OpenCVFunction/dilate.h"
 #include "OpenCVFunction/cannyedge.h"
 #include "OpenCVFunction/blur.h"
 #include "OpenCVFunction/backgroundsubtract.h"
