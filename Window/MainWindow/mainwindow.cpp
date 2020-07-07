@@ -483,7 +483,7 @@ void MainWindow::sourceSelectClicked()
         QFileInfo check_file(path);
         if (!(check_file.exists() && check_file.isFile()))
         {
-            qWarning() << "Provided file does not exist\n";
+            qWarning() << "Provided file does not exist";
             return;
         }
     }
@@ -561,7 +561,7 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qDebug() << "Unable to set stylesheet, Dark Mode Theme File not found\n";
+            qDebug() << "Unable to set stylesheet, Dark Mode Theme File not found";
         }
         else
         {

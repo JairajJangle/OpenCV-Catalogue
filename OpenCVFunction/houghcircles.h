@@ -102,7 +102,7 @@ public:
 
     ~HoughCircles()
     {
-        qDebug() << "Hough Circle destroyed\n";
+        qDebug() << "Hough Circle destroyed";
     }
 
 private slots:

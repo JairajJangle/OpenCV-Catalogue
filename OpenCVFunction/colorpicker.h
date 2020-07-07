@@ -83,7 +83,7 @@ public:
 
     ~ColorPicker()
     {
-        qDebug() << "Color Picker destroyed\n";
+        qDebug() << "Color Picker destroyed";
     }
 
 private:

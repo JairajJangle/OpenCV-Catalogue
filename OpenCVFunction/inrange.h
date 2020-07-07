@@ -73,7 +73,7 @@ public:
 
 ~InRange()
 {
-    qDebug() << "InRange destroyed\n";
+    qDebug() << "InRange destroyed";
 }
 
 signals:

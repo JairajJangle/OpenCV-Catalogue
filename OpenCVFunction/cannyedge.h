@@ -66,7 +66,7 @@ public:
 
 ~CannyEdge()
 {
-    qDebug() << "Canny Edge destroyed\n";
+    qDebug() << "Canny Edge destroyed";
 }
 
 private slots:
