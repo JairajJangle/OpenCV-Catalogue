@@ -65,7 +65,7 @@ public:
 
     ~ImageFlip()
     {
-        printf("ImageFlip destroyed\n");
+        qDebug() << "ImageFlip destroyed\n";
     }
 
 private slots:

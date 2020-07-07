@@ -483,7 +483,7 @@ void MainWindow::sourceSelectClicked()
         QFileInfo check_file(path);
         if (!(check_file.exists() && check_file.isFile()))
         {
-            printf("Provided file does not exist\n");
+            qWarning() << "Provided file does not exist\n";
             return;
         }
     }
@@ -491,7 +491,7 @@ void MainWindow::sourceSelectClicked()
     {
         if (path == "")
         {
-            printf("Camera Number not provided");
+            qWarning() << "Camera Number not provided";
             return;
         }
     }
@@ -499,7 +499,7 @@ void MainWindow::sourceSelectClicked()
     {
         if (path == "")
         {
-            printf("No IP address entered");
+            qWarning() << "No IP address entered";
             return;
         }
     }
