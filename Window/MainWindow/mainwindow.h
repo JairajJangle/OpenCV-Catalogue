@@ -49,6 +49,7 @@
 #include "OpenCVFunction/histogram.h"
 #include "OpenCVFunction/harriscornerdetector.h"
 #include "OpenCVFunction/inrange.h"
+#include "OpenCVFunction/dilate.h"
 
 #include "Window/AboutDialog/aboutdialog.h"
 
@@ -67,7 +68,7 @@ class MainWindow : public QMainWindow
 private:
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION, HARRIS_CORNER,
+                 HISTOGRAM_CALCULATION, HARRIS_CORNER, DILATE,
 
                  /* Add all other Enum values before this */
                  NONE /* Corresponds to No Operation itself */ };
