@@ -28,9 +28,11 @@ class DividerLine : public QFrame
 {
 public:
 
-    explicit DividerLine(QWidget* parent = Q_NULLPTR,
+    explicit DividerLine(QWidget* parent = nullptr,
                          Qt::WindowFlags f = Qt::WindowFlags())
+        : QFrame(parent)
     {
+        this->setWindowFlags(f);
         this->setObjectName(QString::fromUtf8("line"));
         this->setGeometry(QRect(320, 150, 118, 3));
         this->setFrameShape(QFrame::HLine);

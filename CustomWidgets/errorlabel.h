@@ -28,7 +28,9 @@ class ErrorLabel : public QLabel
     Q_OBJECT
 
 public:
-    explicit ErrorLabel(QString error = "", QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
+    explicit ErrorLabel(QString error = "",
+                        QWidget* parent = nullptr)
+        :QLabel(parent)
     {
         this->setStyleSheet("QLabel { color : red; }");
         this->setText(error);

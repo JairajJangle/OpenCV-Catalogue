@@ -21,6 +21,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+// Include all QT dependencies here
 #include <QMainWindow>
 #include <QThread>
 #include <QDesktopServices>
@@ -34,9 +35,14 @@
 #include <QGroupBox>
 #include <QWindow>
 
+// Include all Utils here
 #include "Utils/captureinputsource.h"
 #include "Utils/utils.h"
 
+/*
+ * Include OpenCV Operation Headers here
+ * To add an operation refer to base class: CustomWidgets/baseconfigwidget.h
+ */
 #include "OpenCVFunction/colorspaces.h"
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
@@ -51,8 +57,8 @@
 #include "OpenCVFunction/inrange.h"
 #include "OpenCVFunction/dilate.h"
 
+// Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
-
 #include "CustomWidgets/HybridSlider/hybridslider.h"
 
 QT_BEGIN_NAMESPACE
@@ -108,7 +114,7 @@ private:
     bool chainMenuInitDone = false;
 
     void initUI();
-    void closeEvent (QCloseEvent *event) override
+    void closeEvent ([[maybe_unused]] QCloseEvent *event) override
     {
         if(aboutDialog != nullptr)
         {
