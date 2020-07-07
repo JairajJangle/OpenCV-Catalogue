@@ -17,6 +17,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+INCLUDEPATH += /usr/local/include/opencv4
+LIBS += -L/usr/local/lib \
+        -lopencv_core \
+        -lopencv_imgcodecs \
+        -lopencv_highgui \
+        -lopencv_imgproc \
+        -lopencv_stitching \
+        -lopencv_videoio \
+        -lopencv_video \
+        -lopencv_photo \
+        -lopencv_bgsegm \
+        -lpthread \
+        -lX11
+
 SOURCES += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
@@ -63,13 +82,6 @@ FORMS += \
     Window/AboutDialog/aboutdialog.ui \
     CustomWidgets/HybridSlider/hybridslider.ui \
     Window/MainWindow/mainwindow.ui
-
-INCLUDEPATH += /usr/local/include/opencv4
-LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc -lopencv_stitching -lopencv_videoio -lopencv_video -lopencv_photo -lopencv_bgsegm -lpthread -lX11
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
     res.qrc \
