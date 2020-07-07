@@ -30,7 +30,7 @@ public:
 
         cv::dilate(inputImage, outputImage, element);
 
-//        dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
+        // dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
 
         return outputImage;
     }
@@ -47,6 +47,7 @@ public:
 protected:
     void initWidget()
     {
+        // TODO: Add Config widgets
         BaseConfigWidget::initWidget();
     }
 };

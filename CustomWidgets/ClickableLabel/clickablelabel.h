@@ -43,7 +43,7 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent* event);
-    //    void mouseMoveEvent(QMouseEvent* event);
+    // void mouseMoveEvent(QMouseEvent* event);
 };
 
 #endif // CLICKABLELABEL_H
