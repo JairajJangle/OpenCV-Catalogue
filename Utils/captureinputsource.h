@@ -112,7 +112,7 @@ public:
     ~CaptureInputSource()
     {
         cap.release();
-        qDebug() << "Camera Closed\n";
+        qDebug() << "Camera Closed";
     }
 
     void relesaseCap()

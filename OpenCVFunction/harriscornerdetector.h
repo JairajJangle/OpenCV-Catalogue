@@ -99,7 +99,7 @@ public:
 
     ~HarrisCornerDetector()
     {
-        qDebug() << "Harris Corner Detector destroyed\n";
+        qDebug() << "Harris Corner Detector destroyed";
     }
 
 private slots:

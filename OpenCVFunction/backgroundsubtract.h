@@ -96,7 +96,7 @@ public:
 
     ~BackgroundSubtraction()
     {
-        qDebug() << "Blur destroyed\n";
+        qDebug() << "Blur destroyed";
     }
 
 private slots:

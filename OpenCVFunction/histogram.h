@@ -112,7 +112,7 @@ public:
 
 ~HistogramCalculation()
 {
-    qDebug() << "Histogram Calculation destroyed\n";
+    qDebug() << "Histogram Calculation destroyed";
 }
 
 private:

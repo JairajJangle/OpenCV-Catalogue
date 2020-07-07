@@ -91,7 +91,7 @@ public:
 
     ~HoughLines()
     {
-        qDebug() << "Hough Lines destroyed\n";
+        qDebug() << "Hough Lines destroyed";
     }
 
 private slots:
