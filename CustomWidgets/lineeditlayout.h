@@ -38,8 +38,8 @@ public:
                             QVariant initialValue,
                             int lineEditFixedWidth = 100,
                             int labelFixedWidth = 100,
-                            QWidget* parent = Q_NULLPTR,
-                            Qt::WindowFlags f = Qt::WindowFlags())
+                            QWidget* parent = nullptr)
+        :QHBoxLayout(parent)
     {
         QSizePolicy sp_retainTitle = titleLabel->sizePolicy();
         sp_retainTitle.setRetainSizeWhenHidden(true);

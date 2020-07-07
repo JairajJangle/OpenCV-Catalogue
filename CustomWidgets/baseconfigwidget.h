@@ -135,7 +135,7 @@ public:
      * Shows exploded windows of OpenCV operation to give user more insights
      * Perform displaying/hiding of exploded views and returns status of operation
      */
-    virtual bool setExplodedView(bool explodedViewEnabled)
+    virtual bool setExplodedView([[maybe_unused]] bool explodedViewEnabled)
     {
         /*
          * If exploded == true:

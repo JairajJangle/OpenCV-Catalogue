@@ -136,7 +136,7 @@ background-repeat: none;
       </layout>
      </item>
      <item row="0" column="0" rowspan="5">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_31">
        <item>
         <widget class="QLabel" name="label_5">
          <property name="sizePolicy">

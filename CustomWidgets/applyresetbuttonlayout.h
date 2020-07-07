@@ -34,11 +34,14 @@ class ApplyResetButtonLayout : public QHBoxLayout
 public:
     explicit ApplyResetButtonLayout(bool resetVisible = true,
                                     bool applyVisible = true,
-                                    QWidget* parent = Q_NULLPTR,
-                                    Qt::WindowFlags f = Qt::WindowFlags()){
+                                    QWidget* parent = nullptr)
+        : QHBoxLayout(parent){
         this->setAlignment(Qt::AlignHCenter);
         this->addWidget(applyButton);
         this->addWidget(resetButton);
+
+        resetButton->setVisible(resetVisible);
+        applyButton->setVisible(applyVisible);
 
         connect(applyButton, &QPushButton::released, this,
                 [=]() {

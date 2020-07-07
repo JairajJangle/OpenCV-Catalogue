@@ -40,8 +40,8 @@ public:
                           int maxValue = 100,
                           int fixedWidth = 160,
                           int fixedHeight = 60,
-                          QWidget* parent = Q_NULLPTR,
-                          Qt::WindowFlags f = Qt::WindowFlags())
+                          QWidget* parent = nullptr)
+        :QHBoxLayout(parent)
     {
         QSizePolicy sp_retainTitle = titleLabel->sizePolicy();
         sp_retainTitle.setRetainSizeWhenHidden(true);
