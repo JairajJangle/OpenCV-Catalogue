@@ -65,6 +65,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+// Types of Messages for User
 enum MESSAGE_TYPE{INFO, ERROR, WARNING};
 
 class MainWindow : public QMainWindow

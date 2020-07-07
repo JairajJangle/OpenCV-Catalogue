@@ -43,10 +43,10 @@ public:
     {
         cv::Mat outputImage;
 
-        int erosion_size = 6;
+        int dilation_size = 6;
         cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS,
-                              cv::Size(2 * erosion_size + 1, 2 * erosion_size + 1),
-                              cv::Point(erosion_size, erosion_size) );
+                              cv::Size(2 * dilation_size + 1, 2 * dilation_size + 1),
+                              cv::Point(dilation_size, dilation_size) );
 
         cv::dilate(inputImage, outputImage, element);
 
