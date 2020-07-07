@@ -88,7 +88,7 @@ public:
 
     ~Blur()
     {
-        printf("Blur destroyed\n");
+        qDebug() << "Blur destroyed\n";
     }
 
 private slots:

@@ -39,6 +39,11 @@ public:
         initWidget();
     }
 
+    ~Dilate()
+    {
+        qDebug() << "Dilate Destroyed";
+    }
+
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
         cv::Mat outputImage;

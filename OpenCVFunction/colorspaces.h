@@ -71,7 +71,7 @@ public:
 
     ~ColorSpace()
     {
-        printf("Colorspace destroyed\n");
+        qDebug() << "Colorspace destroyed\n";
     }
 
 private slots:

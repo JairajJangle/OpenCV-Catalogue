@@ -83,7 +83,7 @@ public:
 
     ~ColorPicker()
     {
-        printf("Color Picker destroyed\n");
+        qDebug() << "Color Picker destroyed\n";
     }
 
 private:

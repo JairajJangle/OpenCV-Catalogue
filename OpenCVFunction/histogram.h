@@ -112,7 +112,7 @@ public:
 
 ~HistogramCalculation()
 {
-    printf("Histogram Calculation destroyed\n");
+    qDebug() << "Histogram Calculation destroyed\n";
 }
 
 private:

@@ -103,7 +103,7 @@ public slots:
 
     void stopTimer()
     {
-        qDebug() << "Stop TImer Called!";
+        qDebug() << "Stop Timer Called!";
         start_cam_once_timer->stop();
         delete start_cam_once_timer;
     }
@@ -112,7 +112,7 @@ public:
     ~CaptureInputSource()
     {
         cap.release();
-        printf("Camera Closed\n");
+        qDebug() << "Camera Closed\n";
     }
 
     void relesaseCap()

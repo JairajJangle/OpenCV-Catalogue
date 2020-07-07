@@ -66,7 +66,7 @@ public:
 
 ~CannyEdge()
 {
-    printf("Canny Edge destroyed\n");
+    qDebug() << "Canny Edge destroyed\n";
 }
 
 private slots:
@@ -80,10 +80,10 @@ void t2ValueChanged(int value){
 
 void appertureValueChanged(int){
     appertureValue = appertureComboBox->currentText().toInt();
-    printf("Apperture: %d", appertureValue);
+    qDebug() << "Apperture: " << appertureValue;
 }
 void testSliderValChanged(int value){
-    printf("Test: %d", value);
+    qDebug() << "Test: " << value;
 }
 void refreshLayout()
 {
