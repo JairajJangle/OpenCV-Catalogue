@@ -132,6 +132,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case NONE:
         baseConfigWidgetChain.append(new BaseConfigWidget());
         break;
+    case DILATE:
+        baseConfigWidgetChain.append(new Dilate());
+        break;
     default:
         baseConfigWidgetChain.append(new BaseConfigWidget());
     }
