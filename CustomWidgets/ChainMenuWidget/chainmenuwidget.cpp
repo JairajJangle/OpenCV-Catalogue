@@ -31,10 +31,18 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
 
     ui->verticalLayout_2->setAlignment(Qt::AlignCenter);
 
-    for(int &key : chainMenuOpMap.keys())
+    QMapIterator<int, QString> i(chainMenuOpMap);
+    while (i.hasNext())
     {
-        ui->comboBox->addItem(chainMenuOpMap.value(key), key);
+        i.next();
+        ui->comboBox->addItem(i.value(), i.key());
     }
+
+//    // FIXED: Above use QMapIterator
+//    for(int &key : chainMenuOpMap.keys())
+//    {
+//        ui->comboBox->addItem(chainMenuOpMap.value(key), key);
+//    }
 
     connect(ui->buttonAdd, &QToolButton::released,this,
             [=](){
