@@ -29,8 +29,10 @@ class LineEditLayout: public QHBoxLayout
 {
     Q_OBJECT
 
-public:
+private:
     QLabel* titleLabel = new QLabel();
+
+public:
     QLineEdit* lineEdit = new QLineEdit();
 
     explicit LineEditLayout(QString title,
