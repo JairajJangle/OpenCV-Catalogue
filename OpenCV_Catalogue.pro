@@ -55,6 +55,7 @@ HEADERS += \
     CustomWidgets/errorlabel.h \
     CustomWidgets/focusawarelineedit.h \
     CustomWidgets/hybridadjustlayout.h \
+    CustomWidgets/LabelledComboBox/labelledcombobox.h \
     CustomWidgets/lineeditlayout.h \
     CustomWidgets/HybridSlider/hybridslider.h \
     CustomWidgets/sliderlayout.h \
