@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef BACKGROUNDSUBTRACT_H
-#define BACKGROUNDSUBTRACT_H
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -190,5 +189,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // BACKGROUNDSUBTRACT_H

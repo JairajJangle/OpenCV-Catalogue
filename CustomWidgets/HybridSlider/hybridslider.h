@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HYBRIDSLIDER_H
-#define HYBRIDSLIDER_H
+#pragma once
 
 #include <QWidget>
 
@@ -63,5 +62,3 @@ private:
 
     bool isLineEditFocused;
 };
-
-#endif // HYBRIDSLIDER_H

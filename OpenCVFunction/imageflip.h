@@ -18,9 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// OpenCV Image Flip class
-#ifndef IMAGEFLIP_H
-#define IMAGEFLIP_H
+#pragma once
 
 // QT libs
 #include <QRadioButton>
@@ -104,5 +102,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // IMAGEFLIP_H

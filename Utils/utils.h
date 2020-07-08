@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 #include <cmath>
 
@@ -54,5 +53,3 @@ inline QPoint getWidgetCenter(QWidget* widget)
 }
 
 #define GET_VARIABLE_NAME(Variable) (#Variable)
-
-#endif // UTILS_H

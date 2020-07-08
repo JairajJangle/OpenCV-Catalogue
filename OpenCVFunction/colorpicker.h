@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef COLORPICKER_H
-#define COLORPICKER_H
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -103,6 +102,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-
-#endif // COLORPICKER_H

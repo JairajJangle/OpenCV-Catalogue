@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CAPTUREINPUTSOURCE_H
-#define CAPTUREINPUTSOURCE_H
+#pragma once
 
 // QT libs
 #include <QThread>
@@ -161,5 +160,3 @@ private:
         return m;
     }
 };
-
-#endif // CAPTUREINPUTSOURCE_H

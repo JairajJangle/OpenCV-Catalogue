@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef FOCUSAWARELINEEDIT_H
-#define FOCUSAWARELINEEDIT_H
+#pragma once
 
 #include <QLineEdit>
 
@@ -38,5 +37,3 @@ protected:
     virtual void focusInEvent(QFocusEvent *e);
     virtual void focusOutEvent(QFocusEvent *e);
 };
-
-#endif // FOCUSAWARELINEEDIT_H

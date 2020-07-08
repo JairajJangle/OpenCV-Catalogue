@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINEEDITLAYOUT_H
-#define LINEEDITLAYOUT_H
+#pragma once
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -94,5 +93,3 @@ public:
         lineEdit->setVisible(visible);
     }
 };
-
-#endif // LINEEDITLAYOUT_H

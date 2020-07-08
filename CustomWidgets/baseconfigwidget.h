@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef BASECONFIGWIDGET_H
-#define BASECONFIGWIDGET_H
+#pragma once
 
 #include <opencv2/opencv.hpp>
 
@@ -188,5 +187,3 @@ public:
                                       moreInfoLink);
     }
 };
-
-#endif // BASECONFIGWIDGET_H

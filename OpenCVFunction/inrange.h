@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef INRANGE_H
-#define INRANGE_H
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -127,5 +126,3 @@ void changeSliderNumbers()
     BaseConfigWidget::initWidget();
 }
 };
-
-#endif // INRANGE_H

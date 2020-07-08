@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HYBRIDLINEEDITSLIDERLAYOUT_H
-#define HYBRIDLINEEDITSLIDERLAYOUT_H
+#pragma once
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -30,5 +29,3 @@ class HybridAdjustLayout: public QVBoxLayout
 {
     Q_OBJECT
 };
-
-#endif // HYBRIDLINEEDITSLIDERLAYOUT_H

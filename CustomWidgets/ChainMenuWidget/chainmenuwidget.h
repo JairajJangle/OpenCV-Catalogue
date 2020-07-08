@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAINMENUWIDGET_H
-#define CHAINMENUWIDGET_H
+#pragma once
 
 #include <QWidget>
 #include <QPair>
@@ -94,5 +93,3 @@ private:
                                                   "    color: #787878;"
                                                   "}");
 };
-
-#endif // CHAINMENUWIDGET_H

@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
 #include <QString>
 #include <QRegExp>
@@ -36,5 +35,3 @@ namespace RegExps {
 namespace Strings {
 [[maybe_unused]] static const char* noOperationSelected = "No operation Selected";
 }
-
-#endif // CONSTANTS_H

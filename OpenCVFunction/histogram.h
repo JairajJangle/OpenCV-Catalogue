@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HISTOGRAMH
-#define HISTOGRAMH
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -138,5 +137,3 @@ void initWidget()
     BaseConfigWidget::initWidget();
 }
 };
-
-#endif // HISTOGRAMH
