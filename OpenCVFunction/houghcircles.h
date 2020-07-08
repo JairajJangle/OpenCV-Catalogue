@@ -31,6 +31,7 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
 #include "CustomWidgets/dividerline.h"
+#include "CustomWidgets/LabelledComboBox/labelledcombobox.h"
 
 #include "Utils/constants.h"
 #include "Utils/utils.h"
@@ -176,12 +177,13 @@ private:
         connect(applyResetBox, SIGNAL(resetClicked()),
                 this, SLOT(resetClicked()));
 
-        QLabel* selectMethodLabel = new QLabel("Select Method");
-        selectMethodComboBox->addItem("CV_HOUGH_GRADIENT");
-        QHBoxLayout* selectMethodHBox = new QHBoxLayout;
-        selectMethodHBox->addWidget(selectMethodLabel);
-        selectMethodHBox->addWidget(selectMethodComboBox);
-        vBoxSub->addLayout(selectMethodHBox);
+        QMap<QString, QVariant> methodMap;
+        methodMap.insert("CV_HOUGH_GRADIENT", CV_HOUGH_GRADIENT);
+
+        LabelledComboBox* selectMethodCB = new LabelledComboBox("Select Method",
+                                                               methodMap);
+
+        vBoxSub->addLayout(selectMethodCB);
 
         for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
             vBoxSub->addLayout(lineEditWithParam.first);
