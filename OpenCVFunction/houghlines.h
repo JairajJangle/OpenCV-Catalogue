@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOUGHLINES_H
-#define HOUGHLINES_H
+#pragma once
 
 // QT libs
 #include <QRadioButton>
@@ -189,6 +188,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-
-#endif // HOUGHLINES_H

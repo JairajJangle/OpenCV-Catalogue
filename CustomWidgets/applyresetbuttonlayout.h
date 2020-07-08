@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef APPLYRESETBUTTONLAYOUT_H
-#define APPLYRESETBUTTONLAYOUT_H
+#pragma once
 
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -58,5 +57,3 @@ signals:
     void applyClicked();
     void resetClicked();
 };
-
-#endif // APPLYRESETBUTTONLAYOUT_H

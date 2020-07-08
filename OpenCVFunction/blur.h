@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef BLUR_H
-#define BLUR_H
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -197,5 +196,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // BLUR_H

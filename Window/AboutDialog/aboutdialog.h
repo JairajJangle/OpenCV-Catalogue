@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -48,5 +47,3 @@ private:
 
     Ui::AboutDialog *ui;
 };
-
-#endif // ABOUTDIALOG_H

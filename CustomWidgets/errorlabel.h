@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ERRORLABEL_H
-#define ERRORLABEL_H
+#pragma once
 
 #include <QLabel>
 
@@ -51,5 +50,3 @@ public:
 
     }
 };
-
-#endif // ERRORLABEL_H

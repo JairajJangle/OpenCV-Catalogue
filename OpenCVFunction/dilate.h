@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DILATE_H
-#define DILATE_H
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -76,5 +75,3 @@ protected:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // DILATE_H

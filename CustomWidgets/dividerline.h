@@ -18,9 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-#ifndef HDIVIDERLINE_H
-#define HDIVIDERLINE_H
+#pragma once
 
 #include <QFrame>
 
@@ -40,5 +38,3 @@ public:
         this->setFixedHeight(20);
     }
 };
-
-#endif // HDIVIDERLINE_H

@@ -18,9 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Customized Label class
-#ifndef CLICKABLELABEL_H
-#define CLICKABLELABEL_H
+#pragma once
 
 #include <QLabel>
 #include <QWidget>
@@ -45,5 +43,3 @@ protected:
     void mousePressEvent(QMouseEvent* event);
     // void mouseMoveEvent(QMouseEvent* event);
 };
-
-#endif // CLICKABLELABEL_H

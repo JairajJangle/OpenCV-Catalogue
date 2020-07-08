@@ -18,9 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HARRISCORNERDETECTOR_H
-#define HARRISCORNERDETECTOR_H
-
+#pragma once
 
 // QT libs
 #include <QHBoxLayout>
@@ -217,5 +215,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // HARRISCORNERDETECTOR_H

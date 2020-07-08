@@ -18,9 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// OpenCV Color Spaces class
-#ifndef COLORSPACES_H
-#define COLORSPACES_H
+#pragma once
 
 // QT libs
 #include <QRadioButton>
@@ -116,5 +114,3 @@ protected:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // COLORSPACES_H

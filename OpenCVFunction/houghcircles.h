@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOUGHCIRCLEDETECTOR_H
-#define HOUGHCIRCLEDETECTOR_H
+#pragma once
 
 // QT libs
 #include <QRadioButton>
@@ -192,5 +191,3 @@ private:
         BaseConfigWidget::initWidget();
     }
 };
-
-#endif // HOUGHCIRCLEDETECTOR_H

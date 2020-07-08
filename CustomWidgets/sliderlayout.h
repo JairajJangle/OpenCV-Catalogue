@@ -18,8 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SLIDERLAYOUT_H
-#define SLIDERLAYOUT_H
+#pragma once
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -95,5 +94,3 @@ private slots:
         valueLabel->setText(QString::number(value));
     }
 };
-
-#endif // SLIDERLAYOUT_H
