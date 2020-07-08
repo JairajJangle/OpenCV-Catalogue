@@ -47,10 +47,7 @@ public:
     {
         cv::Mat outputImage;
 
-        int dilation_size = 6;
-        cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS,
-                              cv::Size(2 * dilation_size + 1, 2 * dilation_size + 1),
-                              cv::Point(dilation_size, dilation_size) );
+        cv::Mat element = cv::getStructuringElement(kernelMorphShape, kSize, kernelAnchor);
 
         cv::dilate(inputImage, outputImage, element);
 
@@ -69,9 +66,14 @@ public:
 }
 
 protected:
-    void initWidget()
-    {
-        // TODO: Add Config widgets
-        BaseConfigWidget::initWidget();
-    }
+int dilation_size = 6;
+int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
+cv::Size kSize = cv::Size(2 * dilation_size + 1, 2 * dilation_size + 1);
+cv::Point kernelAnchor = cv::Point(dilation_size, dilation_size);
+
+void initWidget()
+{
+    // TODO: Add Config widgets
+    BaseConfigWidget::initWidget();
+}
 };
