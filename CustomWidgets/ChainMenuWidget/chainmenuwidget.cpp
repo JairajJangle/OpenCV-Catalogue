@@ -38,12 +38,6 @@ ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
         ui->comboBox->addItem(i.value(), i.key());
     }
 
-//    // FIXED: Above use QMapIterator
-//    for(int &key : chainMenuOpMap.keys())
-//    {
-//        ui->comboBox->addItem(chainMenuOpMap.value(key), key);
-//    }
-
     connect(ui->buttonAdd, &QToolButton::released,this,
             [=](){
         emit addOperationClicked();
