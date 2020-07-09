@@ -20,16 +20,9 @@
 
 #pragma once
 
-// QT libs
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QCheckBox>
-#include <QSlider>
-#include <QComboBox>
-
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
-
+#include "CustomWidgets/labelledcombobox.h"
 #include "CustomWidgets/HybridSlider/hybridslider.h"
 
 class CannyEdge : public BaseConfigWidget
@@ -77,8 +70,8 @@ void t2ValueChanged(int value){
     t2Value = value;
 }
 
-void appertureValueChanged(int){
-    appertureValue = appertureComboBox->currentText().toInt();
+void appertureValueChanged(QVariant value){
+    appertureValue = value.toInt();
     qDebug() << "Apperture: " << appertureValue;
 }
 void testSliderValChanged(int value){
@@ -94,13 +87,8 @@ int t1Value = 30;
 int t2Value = 3;
 int appertureValue = 3;
 
-QComboBox* appertureComboBox = new QComboBox();
-
 void initWidget()
 {
-    QHBoxLayout* t1HBox = new QHBoxLayout;
-    t1HBox->setSpacing(15);
-
     SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
     connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),
             this, SLOT(t1ValueChanged(int)));
@@ -109,21 +97,19 @@ void initWidget()
     connect(t2SliderLayout, SIGNAL(sliderValueChanged(int)),
             this, SLOT(t2ValueChanged(int)));
 
-    QLabel* appertureLabel  = new QLabel("Apperture Value");
+    QList<QVariant> appertureMap;
+    appertureMap.append({3, 5, 7});
+    LabelledComboBox* selectAppertureCB =
+            new LabelledComboBox("Apperture Value",
+                                 appertureMap, 50);
 
-    QHBoxLayout* aprtHBox = new QHBoxLayout;
-    aprtHBox->addWidget(appertureLabel);
-    aprtHBox->setSpacing(30);
-    appertureComboBox->addItems({"3", "5", "7"});
-    appertureComboBox->setFixedWidth(50);
-    connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
+    connect(selectAppertureCB,SIGNAL(currentIndexChanged(QVariant)),
+            this,SLOT(appertureValueChanged(QVariant)));
 
-    aprtHBox->addWidget(appertureComboBox);
-    aprtHBox->insertStretch( -1, 1 );
 
     vBoxSub->addLayout(t1SliderLayout);
     vBoxSub->addLayout(t2SliderLayout);
-    vBoxSub->addLayout(aprtHBox);
+    vBoxSub->addLayout(selectAppertureCB);
 
     // FIXME: Range Box hiding causes Hybrid Slider to retain height
     //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
@@ -133,8 +119,6 @@ void initWidget()
     //                this, SLOT(refreshLayout()));
 
     //        vBoxSub->addWidget(hybridGG);
-
-    connect(appertureComboBox,SIGNAL(activated(int)),this,SLOT(appertureValueChanged(int)));
 
     BaseConfigWidget::initWidget();
 }
