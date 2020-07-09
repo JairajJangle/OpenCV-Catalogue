@@ -23,7 +23,6 @@
 // QT libs
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QCheckBox>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QIntValidator>

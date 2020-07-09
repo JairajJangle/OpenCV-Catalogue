@@ -20,11 +20,6 @@
 
 #pragma once
 
-// QT libs
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 

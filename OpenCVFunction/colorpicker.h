@@ -21,9 +21,7 @@
 #pragma once
 
 // QT libs
-#include <QHBoxLayout>
 #include <QLabel>
-#include <QLineEdit>
 
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"

@@ -20,9 +20,9 @@
 
 #pragma once
 
-#include <QLabel>
 #include <QHBoxLayout>
 #include <QSlider>
+#include <QLabel>
 
 class SliderLayout : public QHBoxLayout
 {
@@ -69,11 +69,10 @@ public:
         this->addWidget(slider);
         this->addWidget(valueLabel);
 
-        connect(slider, SIGNAL(valueChanged(int)),this,
-                SLOT(valueChanged(int)));
         connect(slider, &QSlider::valueChanged, this,
-                [=]() {
-            emit sliderValueChanged(slider->value());
+                [=](int value) {
+            valueChanged(value);
+            emit sliderValueChanged(value);
         });
     }
 
