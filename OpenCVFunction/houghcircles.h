@@ -31,7 +31,7 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
 #include "CustomWidgets/dividerline.h"
-#include "CustomWidgets/LabelledComboBox/labelledcombobox.h"
+#include "CustomWidgets/labelledcombobox.h"
 
 #include "Utils/constants.h"
 #include "Utils/utils.h"
