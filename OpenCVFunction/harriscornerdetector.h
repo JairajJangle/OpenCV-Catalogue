@@ -23,9 +23,7 @@
 // QT libs
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QLineEdit>
 #include <QComboBox>
-#include <QMetaEnum>
 
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"

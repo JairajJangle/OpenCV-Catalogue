@@ -20,12 +20,6 @@
 
 #pragma once
 
-// QT libs
-#include <QRadioButton>
-#include <QCheckBox>
-#include <QComboBox>
-#include <QLineEdit>
-
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
@@ -146,8 +140,6 @@ private:
     QVariant* minRadius = new QVariant(0);
     QVariant* maxRadius = new QVariant(0);
 
-    QComboBox* selectMethodComboBox = new QComboBox();
-
     LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
     LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
     LineEditLayout* param1Layout = new LineEditLayout("param1", *param1);
@@ -179,7 +171,6 @@ private:
 
         QMap<QString, QVariant> methodMap;
         methodMap.insert("CV_HOUGH_GRADIENT", CV_HOUGH_GRADIENT);
-
         LabelledComboBox* selectMethodCB = new LabelledComboBox("Select Method",
                                                                methodMap);
 

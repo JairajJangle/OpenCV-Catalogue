@@ -20,11 +20,6 @@
 
 #pragma once
 
-// QT libs
-#include <QRadioButton>
-#include <QCheckBox>
-#include <QLineEdit>
-
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
