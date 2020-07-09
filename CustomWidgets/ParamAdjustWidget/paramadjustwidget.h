@@ -22,13 +22,11 @@
 
 #include <QFrame>
 #include <QGridLayout>
-#include <QParallelAnimationGroup>
-#include <QScrollArea>
 #include <QToolButton>
 #include <QLabel>
-#include <QPushButton>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QDebug>
 
 #include "Utils/constants.h"
 

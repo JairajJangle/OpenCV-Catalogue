@@ -21,8 +21,8 @@
 #pragma once
 
 #include <QWidget>
-#include <QPair>
 #include <QRadioButton>
+#include <QComboBox>
 
 #include "Utils/utils.h"
 

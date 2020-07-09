@@ -24,7 +24,6 @@
 
 // QT libs
 #include <QVBoxLayout>
-#include <QScrollArea>
 #include <QWidget>
 #include <QDebug>
 

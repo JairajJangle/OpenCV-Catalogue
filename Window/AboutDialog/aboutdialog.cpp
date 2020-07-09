@@ -21,12 +21,6 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
-#include "Utils/constants.h"
-
-#include <QDesktopServices>
-#include <QGraphicsDropShadowEffect>
-#include <QUrl>
-
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutDialog)
