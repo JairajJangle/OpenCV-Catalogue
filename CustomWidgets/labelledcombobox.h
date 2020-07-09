@@ -20,10 +20,9 @@
 
 #pragma once
 
-#include <QLabel>
-#include <QComboBox>
 #include <QHBoxLayout>
-#include <QMap>
+#include <QComboBox>
+#include <QLabel>
 
 class LabelledComboBox : public QHBoxLayout
 {
@@ -36,22 +35,44 @@ public:
     QComboBox* comboBox = new QComboBox();
 
     explicit LabelledComboBox(QString title,
+                              QList<QVariant> valueList,
+                              int comboBoxFixedWidth = 0,
+                              int labelFixedWidth = 0,
+                              QWidget *parent = nullptr)
+        :QHBoxLayout(parent)
+    {
+        for(QVariant i : valueList)
+        {
+            comboBox->addItem(i.toString(), i);
+        }
+
+        initWidget(title, comboBoxFixedWidth, labelFixedWidth);
+    }
+
+    explicit LabelledComboBox(QString title,
                               QMap<QString, QVariant> nameValueMap,
                               int comboBoxFixedWidth = 0,
                               int labelFixedWidth = 0,
                               QWidget *parent = nullptr)
         :QHBoxLayout(parent)
     {
-        titleLabel->setText(title);
-        if(labelFixedWidth != 0)
-            titleLabel->setFixedWidth(labelFixedWidth);
-
         QMapIterator<QString, QVariant> i(nameValueMap);
         while (i.hasNext())
         {
             i.next();
             comboBox->addItem(i.key(), i.value());
         }
+        initWidget(title, comboBoxFixedWidth, labelFixedWidth);
+    }
+
+    void initWidget(QString title,
+                    int comboBoxFixedWidth = 0,
+                    int labelFixedWidth = 0)
+    {
+        if(labelFixedWidth != 0)
+            titleLabel->setFixedWidth(labelFixedWidth);
+
+        titleLabel->setText(title);
 
         if(comboBoxFixedWidth != 0)
             comboBox->setFixedWidth(comboBoxFixedWidth);
@@ -61,10 +82,20 @@ public:
         this->addStretch();
         this->addWidget(comboBox);
         this->addStretch();
+
+        // TODO: Use Lambda SIGNAL SLOT instead
+        connect(comboBox, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(indexChanged(int)));
     }
 
+    virtual ~LabelledComboBox() {};
+
+signals:
+    void currentIndexChanged(QVariant);
+
 private slots:
-    void imgFlipRadioButtonClicked(int flipFlagCode){
+    void indexChanged(int index){
+        emit currentIndexChanged(comboBox->itemData(index));
     }
 };
 
