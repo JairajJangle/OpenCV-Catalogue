@@ -34,6 +34,7 @@ private:
 
 public:
     QComboBox* comboBox = new QComboBox();
+
     explicit LabelledComboBox(QString title,
                               QMap<QString, QVariant> nameValueMap,
                               int comboBoxFixedWidth = 0,
@@ -60,6 +61,10 @@ public:
         this->addStretch();
         this->addWidget(comboBox);
         this->addStretch();
+    }
+
+private slots:
+    void imgFlipRadioButtonClicked(int flipFlagCode){
     }
 };
 
