@@ -20,8 +20,6 @@
 
 #include "chainmenuwidget.h"
 #include "ui_chainmenuwidget.h"
-#include <QComboBox>
-//#include <QDebug>
 
 ChainMenuWidget::ChainMenuWidget(QWidget *parent) :
     QWidget(parent),

@@ -22,7 +22,6 @@
 
 #include <QLabel>
 #include <QWidget>
-#include <Qt>
 #include <QMouseEvent>
 
 //A Custom Label Class inheriting QLabel

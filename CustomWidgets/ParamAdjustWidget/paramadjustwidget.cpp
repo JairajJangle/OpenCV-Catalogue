@@ -18,10 +18,7 @@
  * along with OpenCV Catalogue.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <QPropertyAnimation>
-
 #include "paramadjustwidget.h"
-#include <QDebug>
 
 ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
 {

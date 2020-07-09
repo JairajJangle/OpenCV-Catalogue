@@ -21,8 +21,6 @@
 #include "hybridslider.h"
 #include "ui_hybridslider.h"
 
-#include <QIntValidator>
-
 HybridSlider::HybridSlider(QWidget *parent,
                            QString title,
                            int initVal,

@@ -21,6 +21,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QIntValidator>
 
 namespace Ui {
 class HybridSlider;

@@ -23,6 +23,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QLineEdit>
+
+// Used in included files, do not remove
 #include <QValidator>
 
 class LineEditLayout: public QHBoxLayout

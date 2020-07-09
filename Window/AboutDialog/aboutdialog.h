@@ -20,7 +20,13 @@
 
 #pragma once
 
+// QT Libs
 #include <QDialog>
+#include <QDesktopServices>
+#include <QGraphicsDropShadowEffect>
+#include <QUrl>
+
+#include "Utils/constants.h"
 
 namespace Ui {
 class AboutDialog;

@@ -20,9 +20,6 @@
 
 #pragma once
 
-#include <QString>
-#include <QRegExp>
-
 namespace Info {
 [[maybe_unused]] static const char* appName = "OpenCV Catalogue";
 [[maybe_unused]] static const char* version = "v0.2.1";
