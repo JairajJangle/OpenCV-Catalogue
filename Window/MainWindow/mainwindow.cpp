@@ -173,53 +173,54 @@ void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget
 
 void MainWindow::addOperationWidget()
 {
-    if(!baseConfigWidgetChain.empty())
+    if(baseConfigWidgetChain.empty())
     {
-        qDebug() << "Chain size = " << baseConfigWidgetChain.size();
-
-        if(testVBox->count() != 0)
-        {
-            QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
-            itemParamAdjust->widget()->hide();
-        }
-        chainMenuRadioButtonsGroup->addButton(baseConfigWidgetChain.last()->
-                                              getChainMenuWidget()->getRadioButton());
-
-        testVBox->addWidget(baseConfigWidgetChain.last()->
-                            getParamAdjustWidget());
-        baseConfigWidgetChain.last()->getParamAdjustWidget()->show();
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                &ChainMenuWidget::addOperationClicked,
-                this,
-                [=](){
-            addOperation(NONE);
-        });
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                qOverload<int>(&ChainMenuWidget::operationChanged),
-                this,
-                [=](int index){
-            lastOperationChanged((OPCodes)index);
-        });
-
-        connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
-                &ChainMenuWidget::removeOperationClicked,
-                this,
-                [=](){
-            emit removeOperationWidgetsSignal();
-        });
-
-        connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
-                this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
-
-        vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
-        vBoxSub->update();
-
-        refreshOperationWidgets();
-    }
-    else
         qDebug() << "baseConfigWidgetChain is empty";
+        return;
+    }
+
+    qDebug() << "Chain size = " << baseConfigWidgetChain.size();
+
+    if(testVBox->count() != 0)
+    {
+        QLayoutItem *itemParamAdjust = testVBox->itemAt(testVBox->count() - 1);
+        itemParamAdjust->widget()->hide();
+    }
+    chainMenuRadioButtonsGroup->addButton(baseConfigWidgetChain.last()->
+                                          getChainMenuWidget()->getRadioButton());
+
+    testVBox->addWidget(baseConfigWidgetChain.last()->
+                        getParamAdjustWidget());
+    baseConfigWidgetChain.last()->getParamAdjustWidget()->show();
+
+    connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+            &ChainMenuWidget::addOperationClicked,
+            this,
+            [=](){
+        addOperation(NONE);
+    });
+
+    connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+            qOverload<int>(&ChainMenuWidget::operationChanged),
+            this,
+            [=](int index){
+        lastOperationChanged((OPCodes)index);
+    });
+
+    connect(baseConfigWidgetChain.last()->getChainMenuWidget(),
+            &ChainMenuWidget::removeOperationClicked,
+            this,
+            [=](){
+        emit removeOperationWidgetsSignal();
+    });
+
+    connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
+            this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
+
+    vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
+    vBoxSub->update();
+
+    refreshOperationWidgets();
 }
 
 void MainWindow::removeOperationWidgets()
@@ -255,68 +256,67 @@ void MainWindow::removeOperationWidgets()
 
 void MainWindow::refreshOperationWidgets()
 {
-    if(!baseConfigWidgetChain.empty())
+    if(baseConfigWidgetChain.empty())
+        return;
+
+    qDebug() << "Refresh Called";
+    baseConfigWidgetChain.last()->setExplodedView(false);
+    baseConfigWidgetChain.last()->getChainMenuWidget()->
+            getRadioButton()->setChecked(true);
+    baseConfigWidgetChain.last()->getChainMenuWidget()->
+            setLineVisibility(false);
+
+    if(vBoxSub->count() > 1)
     {
-        qDebug() << "Refresh Called";
-        baseConfigWidgetChain.last()->setExplodedView(false);
-        baseConfigWidgetChain.last()->getChainMenuWidget()->
-                getRadioButton()->setChecked(true);
-        baseConfigWidgetChain.last()->getChainMenuWidget()->
-                setLineVisibility(false);
-
-        if(vBoxSub->count() > 1)
-        {
-            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                           widget())->setLineVisibility(true);
-            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
-                                           widget())->setEnabled(false);
-            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                           widget())->setEnabled(true);
-        }
-        else if(vBoxSub->count() == 1)
-        {
-            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                           widget())->setEnabled(true);
-            dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
-                                           widget())->setRemoveButtonEnabled(false);
-        }
-
-        wgtSub->update();
-        wgtSub->repaint();
-
-        ui->scrollAreaChainMenu->widget()->adjustSize();
-        ui->scrollAreaParameterWidget->widget()->adjustSize();
-        qApp->processEvents();
-        ui->scrollAreaChainMenu->verticalScrollBar()
-                ->triggerAction(QAbstractSlider::SliderToMaximum);
-        ui->scrollAreaParameterWidget->verticalScrollBar()
-                ->triggerAction(QAbstractSlider::SliderToMaximum);
+        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+                                       widget())->setLineVisibility(true);
+        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+                                       widget())->setEnabled(false);
+        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                       widget())->setEnabled(true);
     }
+    else if(vBoxSub->count() == 1)
+    {
+        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                       widget())->setEnabled(true);
+        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+                                       widget())->setRemoveButtonEnabled(false);
+    }
+
+    wgtSub->update();
+    wgtSub->repaint();
+
+    ui->scrollAreaChainMenu->widget()->adjustSize();
+    ui->scrollAreaParameterWidget->widget()->adjustSize();
+    qApp->processEvents();
+    ui->scrollAreaChainMenu->verticalScrollBar()
+            ->triggerAction(QAbstractSlider::SliderToMaximum);
+    ui->scrollAreaParameterWidget->verticalScrollBar()
+            ->triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
 void MainWindow::showAboutDialog()
 {
-    if(aboutDialog != nullptr)
-    {
-        if(!aboutDialog->isVisible())
-        {
-            // Set About Dialog Window Position and Always on Top
-            QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
-            QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
-                                                aboutDialog->geometry().height()/2);
-            aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
-            aboutDialog->show();
-        }
-        else // If dialog is already visible but not in focus
-        {
-            aboutDialog->raise();
-            aboutDialog->activateWindow();
-        }
-    }
-    else // If AboutDialog object holds nullptr which is what it is initialized with
+    if(aboutDialog == nullptr)
     {
         aboutDialog = new AboutDialog(this);
         showAboutDialog();
+        return;
+    }
+
+    if(!aboutDialog->isVisible())
+    {
+        // Set About Dialog Window Position and Always on Top
+        QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
+        QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
+                                            aboutDialog->geometry().height()/2);
+        aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
+        aboutDialog->show();
+    }
+    else // If dialog is already visible but not in focus
+    {
+        aboutDialog->raise();
+        aboutDialog->activateWindow();
     }
 }
 
@@ -430,20 +430,20 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::showHideExplodedView()
 {
-    if(!baseConfigWidgetChain.empty())
+    if(baseConfigWidgetChain.empty())
+        return;
+
+    if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
     {
-        if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
+        if(baseConfigWidgetChain.last()->setExplodedView(true))
         {
-            if(baseConfigWidgetChain.last()->setExplodedView(true))
-            {
-                // TODO: Change Icon to minimize
-            }
+            // TODO: Change Icon to minimize
         }
-        else
-        {
-            baseConfigWidgetChain.last()->setExplodedView(false);
-            // TODO: Change Icon to exploded
-        }
+    }
+    else
+    {
+        baseConfigWidgetChain.last()->setExplodedView(false);
+        // TODO: Change Icon to exploded
     }
 }
 
