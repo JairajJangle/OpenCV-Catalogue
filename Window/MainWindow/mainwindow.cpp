@@ -306,8 +306,7 @@ void MainWindow::showAboutDialog()
     if(aboutDialog == nullptr)
     {
         aboutDialog = new AboutDialog(this);
-        showAboutDialog();
-        return;
+        return showAboutDialog();
     }
 
     if(!aboutDialog->isVisible())
