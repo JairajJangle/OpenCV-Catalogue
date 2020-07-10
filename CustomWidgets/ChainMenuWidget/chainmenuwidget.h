@@ -37,13 +37,28 @@ class ChainMenuWidget : public QWidget
 public:
     explicit ChainMenuWidget(QWidget *parent = nullptr);
 
+    // Enable or Disable Add (+) button
     void setAddButonEnabled(bool enabled);
+    // Enable or Disable Remove (-) button
     void setRemoveButtonEnabled(bool enabled);
+    // Enable or Disable Drop Down Menu / Combo box
     void setComboBoxEnabled(bool enabled);
+    // Enable or Disable the whole ChainMenuWidget Widget
     void setEnabled(bool enabled);
+    /**
+     * Change the current operation displayed in Combo box
+     * @param operationName takes the name of operation that
+     * is to be displayed in the Combo box
+     */
     void setCurrentOperation(QString operationName);
+    /**
+     * Set visibility of vertical "linking" line
+     * Refer the .ui file
+     */
     void setLineVisibility(bool visible);
+    // Change style sheet, called when application theme changes
     void setStyleSheet(bool isDarkMode);
+    // Returns the operation selection Radio button
     QRadioButton* getRadioButton();
 
     ~ChainMenuWidget();
