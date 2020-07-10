@@ -147,14 +147,12 @@ void MainWindow::addOperation(OPCodes opCode)
     }
 
     if(chainMenuInitDone)
-        addOperationWidget();
-    else
-    {
-        chainMenuOpMap.insert(opCode ,baseConfigWidgetChain.last()->getOperationName());
+        return addOperationWidget();
 
-        baseConfigWidgetChain.last()->deleteLater();
-        baseConfigWidgetChain.removeLast();
-    }
+    chainMenuOpMap.insert(opCode ,baseConfigWidgetChain.last()->getOperationName());
+
+    baseConfigWidgetChain.last()->deleteLater();
+    baseConfigWidgetChain.removeLast();
 }
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
