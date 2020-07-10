@@ -43,17 +43,13 @@ public:
 
         // If RGB is selected: o/p = i/p
         if(selectedColorCode == -1)
-        {
             return inputImage;
-        }
-        else
-        {
-            cvtColor(inputImage, outputImage, selectedColorCode);
-            /* As Grayscale is single channel
+
+        cvtColor(inputImage, outputImage, selectedColorCode);
+        /* As Grayscale is single channel
              * Converting to 3 channel matrix is
              * important to display as QPixMap in QLabel
              */
-        }
 
         return outputImage;
     }
@@ -67,50 +63,50 @@ public:
     + std::string(typeid(this).name());
 }
 
-    ~ColorSpace()
-    {
-        qDebug() << "Colorspace destroyed";
-    }
+~ColorSpace()
+{
+    qDebug() << "Colorspace destroyed";
+}
 
 private slots:
-    void colorConvRadioButtonClicked(int colorConvCode){
-        this->colorConvCode = colorConvCode;
-    }
+void colorConvRadioButtonClicked(int colorConvCode){
+    this->colorConvCode = colorConvCode;
+}
 
 private:
-    std::vector<std::pair<int, QString>> colorCodesAll =
-    {
-        {-1, "RGB"},
-        {cv::COLOR_BGR2HSV, "HSV"},
-        {cv::COLOR_BGR2GRAY, "Grayscale"},
-        {cv::COLOR_BGR2Lab, "LAB"},
-        {cv::COLOR_BGR2YCrCb, "YCrCb"},
-        {cv::COLOR_BGR2Luv, "Luv"},
-        {cv::COLOR_BGR2HLS, "HLS"},
-        {cv::COLOR_BGR2XYZ, "XYZ"},
-        {cv::COLOR_BGR2YUV, "YUV"}
-    };
+std::vector<std::pair<int, QString>> colorCodesAll =
+{
+    {-1, "RGB"},
+    {cv::COLOR_BGR2HSV, "HSV"},
+    {cv::COLOR_BGR2GRAY, "Grayscale"},
+    {cv::COLOR_BGR2Lab, "LAB"},
+    {cv::COLOR_BGR2YCrCb, "YCrCb"},
+    {cv::COLOR_BGR2Luv, "Luv"},
+    {cv::COLOR_BGR2HLS, "HLS"},
+    {cv::COLOR_BGR2XYZ, "XYZ"},
+    {cv::COLOR_BGR2YUV, "YUV"}
+};
 
-    int colorConvCode = 0;
+int colorConvCode = 0;
 
 protected:
-    void initWidget()
+void initWidget()
+{
+    for(unsigned int jCount = 0; jCount < colorCodesAll.size(); jCount++)
     {
-        for(unsigned int jCount = 0; jCount < colorCodesAll.size(); jCount++)
-        {
-            QRadioButton *radioButton =
-                    new QRadioButton(colorCodesAll[jCount].second);
-            if(jCount == 0)
-                radioButton->setChecked(true);
+        QRadioButton *radioButton =
+                new QRadioButton(colorCodesAll[jCount].second);
+        if(jCount == 0)
+            radioButton->setChecked(true);
 
-            vBoxSub->addWidget(radioButton);
+        vBoxSub->addWidget(radioButton);
 
-            connect(radioButton, &QRadioButton::clicked, this,
-                    [=]() {
-                colorConvRadioButtonClicked(jCount);
-            });
-        }
-
-        BaseConfigWidget::initWidget();
+        connect(radioButton, &QRadioButton::clicked, this,
+                [=]() {
+            colorConvRadioButtonClicked(jCount);
+        });
     }
+
+    BaseConfigWidget::initWidget();
+}
 };

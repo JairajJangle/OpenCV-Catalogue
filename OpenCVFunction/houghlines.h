@@ -83,103 +83,102 @@ public:
     + std::string(typeid(this).name());
 }
 
-    ~HoughLines()
-    {
-        qDebug() << "Hough Lines destroyed";
-    }
+~HoughLines()
+{
+    qDebug() << "Hough Lines destroyed";
+}
 
 private slots:
-    void applyClicked(){
-        bool paramsApplied = true;
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-        {
-            if(!lineEditWithParam.first->getText().isEmpty())
-                lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
-            else
-            {
-                paramsApplied = false;
-                break;
-            }
-        }
+void applyClicked(){
+    bool paramsApplied = true;
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    {
+        if(!lineEditWithParam.first->getText().isEmpty())
+            return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
 
-        if(!paramsApplied)
-        {
-            // TODO: Update error label message
-        }
+        paramsApplied = false;
+        break;
+
     }
 
-    void resetClicked(){
-        *rho = 1.0;
-        *theta = CV_PI/180;
-        *threshold = 50;
-        *srn = 50.0;
-        *stn = 10.0;
-
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-            lineEditWithParam.first->setText(lineEditWithParam.second->toString());
-
-        // Special case:
-        thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
+    if(!paramsApplied)
+    {
+        // TODO: Update error label message
     }
+}
+
+void resetClicked(){
+    *rho = 1.0;
+    *theta = CV_PI/180;
+    *threshold = 50;
+    *srn = 50.0;
+    *stn = 10.0;
+
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+        lineEditWithParam.first->setText(lineEditWithParam.second->toString());
+
+    // Special case:
+    thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
+}
 
 private:
-    QVariant* rho = new QVariant(1); // double
-    QVariant* theta = new QVariant(CV_PI/180); // double
-    QVariant* threshold = new QVariant(50); // int
-    QVariant* srn = new QVariant(50.0); // double
-    QVariant* stn = new QVariant(10.0); // double
+QVariant* rho = new QVariant(1); // double
+QVariant* theta = new QVariant(CV_PI/180); // double
+QVariant* threshold = new QVariant(50); // int
+QVariant* srn = new QVariant(50.0); // double
+QVariant* stn = new QVariant(10.0); // double
 
-    LineEditLayout* rhoLineEditLayout = new LineEditLayout("rho", *rho);
-    LineEditLayout* thetaLayout = new LineEditLayout("theta", *theta, 150);
-    LineEditLayout* thresholdLayout = new LineEditLayout("threshold", *threshold);
-    LineEditLayout* srnLayout = new LineEditLayout("srn", *srn);
-    LineEditLayout* stnLayout = new LineEditLayout("stn", *stn);
+LineEditLayout* rhoLineEditLayout = new LineEditLayout("rho", *rho);
+LineEditLayout* thetaLayout = new LineEditLayout("theta", *theta, 150);
+LineEditLayout* thresholdLayout = new LineEditLayout("threshold", *threshold);
+LineEditLayout* srnLayout = new LineEditLayout("srn", *srn);
+LineEditLayout* stnLayout = new LineEditLayout("stn", *stn);
 
-    QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
-    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-    void initWidget()
-    {
-        thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
+void initWidget()
+{
+    thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
 
-        QDoubleValidator* rhoValidator = new QDoubleValidator();
-        QDoubleValidator* thetaValidator = new QDoubleValidator();
-        QIntValidator* thresholdValidator = new QIntValidator();
-        QDoubleValidator* srnValidator = new QDoubleValidator();
-        QDoubleValidator* stnValidator = new QDoubleValidator();
+    QDoubleValidator* rhoValidator = new QDoubleValidator();
+    QDoubleValidator* thetaValidator = new QDoubleValidator();
+    QIntValidator* thresholdValidator = new QIntValidator();
+    QDoubleValidator* srnValidator = new QDoubleValidator();
+    QDoubleValidator* stnValidator = new QDoubleValidator();
 
-        thetaValidator->setBottom(0);
-        thetaValidator->setDecimals(6);
-        thetaLayout->lineEdit->setValidator(thetaValidator);
+    thetaValidator->setBottom(0);
+    thetaValidator->setDecimals(6);
+    thetaLayout->lineEdit->setValidator(thetaValidator);
 
-        rhoValidator->setBottom(0);
-        rhoValidator->setDecimals(4);
-        rhoLineEditLayout->lineEdit->setValidator(rhoValidator);
+    rhoValidator->setBottom(0);
+    rhoValidator->setDecimals(4);
+    rhoLineEditLayout->lineEdit->setValidator(rhoValidator);
 
-        thresholdValidator->setBottom(0);
-        thresholdLayout->lineEdit->setValidator(thresholdValidator);
+    thresholdValidator->setBottom(0);
+    thresholdLayout->lineEdit->setValidator(thresholdValidator);
 
-        srnValidator->setBottom(0);
-        srnValidator->setDecimals(4);
-        srnLayout->lineEdit->setValidator(srnValidator);
+    srnValidator->setBottom(0);
+    srnValidator->setDecimals(4);
+    srnLayout->lineEdit->setValidator(srnValidator);
 
-        stnValidator->setBottom(0);
-        stnValidator->setDecimals(4);
-        stnLayout->lineEdit->setValidator(stnValidator);
+    stnValidator->setBottom(0);
+    stnValidator->setDecimals(4);
+    stnLayout->lineEdit->setValidator(stnValidator);
 
-        // TODO: Add validators to other fields if required
+    // TODO: Add validators to other fields if required
 
-        connect(applyResetBox, SIGNAL(applyClicked()),
-                this, SLOT(applyClicked()));
-        connect(applyResetBox, SIGNAL(resetClicked()),
-                this, SLOT(resetClicked()));
+    connect(applyResetBox, SIGNAL(applyClicked()),
+            this, SLOT(applyClicked()));
+    connect(applyResetBox, SIGNAL(resetClicked()),
+            this, SLOT(resetClicked()));
 
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-            vBoxSub->addLayout(lineEditWithParam.first);
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+        vBoxSub->addLayout(lineEditWithParam.first);
 
-        vBoxSub->addLayout(applyResetBox);
+    vBoxSub->addLayout(applyResetBox);
 
-        BaseConfigWidget::initWidget();
-    }
+    BaseConfigWidget::initWidget();
+}
 };

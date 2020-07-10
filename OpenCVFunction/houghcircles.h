@@ -94,93 +94,91 @@ public:
     + std::string(typeid(this).name());
 }
 
-    ~HoughCircles()
-    {
-        qDebug() << "Hough Circle destroyed";
-    }
+~HoughCircles()
+{
+    qDebug() << "Hough Circle destroyed";
+}
 
 private slots:
-    void applyClicked(){
-        bool paramsApplied = true;
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-        {
-            if(!lineEditWithParam.first->getText().isEmpty())
-                lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
-            else
-            {
-                paramsApplied = false;
-                break;
-            }
-        }
+void applyClicked(){
+    bool paramsApplied = true;
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    {
+        if(!lineEditWithParam.first->getText().isEmpty())
+            return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
 
-        if(!paramsApplied)
-        {
-            // TODO: Update error label message
-        }
+        paramsApplied = false;
+        break;
     }
 
-    void resetClicked(){
-        *dp = 1;
-        *minDist = -1.0;
-        *param1 = 100.0;
-        *param2 = 100.0;
-        *minRadius = 0;
-        *maxRadius = 0;
-
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-            lineEditWithParam.first->setText(lineEditWithParam.second->toString());
+    if(!paramsApplied)
+    {
+        // TODO: Update error label message
     }
+}
+
+void resetClicked(){
+    *dp = 1;
+    *minDist = -1.0;
+    *param1 = 100.0;
+    *param2 = 100.0;
+    *minRadius = 0;
+    *maxRadius = 0;
+
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+        lineEditWithParam.first->setText(lineEditWithParam.second->toString());
+}
 
 private:
 
-    QVariant* dp = new QVariant(1);
-    QVariant* minDist = new QVariant(-1.0);
-    QVariant* param1 = new QVariant(200.0);
-    QVariant* param2 = new QVariant(100.0);
-    QVariant* minRadius = new QVariant(0);
-    QVariant* maxRadius = new QVariant(0);
+QVariant* dp = new QVariant(1);
+QVariant* minDist = new QVariant(-1.0);
+QVariant* param1 = new QVariant(200.0);
+QVariant* param2 = new QVariant(100.0);
+QVariant* minRadius = new QVariant(0);
+QVariant* maxRadius = new QVariant(0);
 
-    LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
-    LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
-    LineEditLayout* param1Layout = new LineEditLayout("param1", *param1);
-    LineEditLayout* param2Layout = new LineEditLayout("param2", *param2);
-    LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", *minRadius);
-    LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", *maxRadius);
+LineEditLayout* dpLineEditLayout = new LineEditLayout("dp", *dp);
+LineEditLayout* minDistLayout = new LineEditLayout("minDist", "NA");
+LineEditLayout* param1Layout = new LineEditLayout("param1", *param1);
+LineEditLayout* param2Layout = new LineEditLayout("param2", *param2);
+LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", *minRadius);
+LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", *maxRadius);
 
-    QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
-    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-    void initWidget()
-    {
-        QDoubleValidator* minDistValidator = new QDoubleValidator();
+void initWidget()
+{
+    QDoubleValidator* minDistValidator = new QDoubleValidator();
 
-        minDistValidator->setBottom(0);
-        minDistValidator->setDecimals(2);
+    minDistValidator->setBottom(0);
+    minDistValidator->setDecimals(2);
 
-        QIntValidator* dpValidator = new QIntValidator();
-        dpValidator->setBottom(0);
-        dpLineEditLayout->lineEdit->setValidator(dpValidator);
-        minDistLayout->lineEdit->setValidator(minDistValidator);
-        // TODO: Add validators to other fields if required
+    QIntValidator* dpValidator = new QIntValidator();
+    dpValidator->setBottom(0);
+    dpLineEditLayout->lineEdit->setValidator(dpValidator);
+    minDistLayout->lineEdit->setValidator(minDistValidator);
+    // TODO: Add validators to other fields if required
 
-        connect(applyResetBox, SIGNAL(applyClicked()),
-                this, SLOT(applyClicked()));
-        connect(applyResetBox, SIGNAL(resetClicked()),
-                this, SLOT(resetClicked()));
+    connect(applyResetBox, SIGNAL(applyClicked()),
+            this, SLOT(applyClicked()));
+    connect(applyResetBox, SIGNAL(resetClicked()),
+            this, SLOT(resetClicked()));
 
-        QMap<QString, QVariant> methodMap;
-        methodMap.insert("CV_HOUGH_GRADIENT", CV_HOUGH_GRADIENT);
-        LabelledComboBox* selectMethodCB = new LabelledComboBox("Select Method",
-                                                               methodMap);
+    QMap<QString, QVariant> methodMap;
+    methodMap.insert("CV_HOUGH_GRADIENT", CV_HOUGH_GRADIENT);
+    LabelledComboBox* selectMethodCB = new LabelledComboBox("Select Method",
+                                                            methodMap);
 
-        vBoxSub->addLayout(selectMethodCB);
+    vBoxSub->addLayout(selectMethodCB);
 
-        for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
-            vBoxSub->addLayout(lineEditWithParam.first);
+    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+        vBoxSub->addLayout(lineEditWithParam.first);
 
-        vBoxSub->addLayout(applyResetBox);
+    vBoxSub->addLayout(applyResetBox);
 
-        BaseConfigWidget::initWidget();
-    }
+    BaseConfigWidget::initWidget();
+}
 };
