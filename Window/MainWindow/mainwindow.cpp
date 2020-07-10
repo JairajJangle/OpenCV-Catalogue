@@ -26,46 +26,44 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     initUI();
-
-    switchThemeButtonClicked();
-
-    chainMenuInitDone = false;
-    for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
-        addOperation((OPCodes)opCode);
-    }
-    chainMenuInitDone = true;
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
     //    hybrid->show();
 
-    connect(ui->cameraRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
-    connect(ui->fileRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
-    connect(ui->ipcamRadioButton,SIGNAL(clicked()),this,SLOT(sourceRadioButtonClicked()));
+    // Connect MainWindow UI signals here
+    connect(ui->cameraRadioButton,SIGNAL(clicked()),
+            this,SLOT(sourceRadioButtonClicked()));
+    connect(ui->fileRadioButton,SIGNAL(clicked()),
+            this,SLOT(sourceRadioButtonClicked()));
+    connect(ui->ipcamRadioButton,SIGNAL(clicked()),
+            this,SLOT(sourceRadioButtonClicked()));
 
-    connect(ui->buttonSelectSource,SIGNAL(released()),this,SLOT(sourceSelectClicked()));
-    connect(ui->checkBoxMirror, SIGNAL(clicked(bool)), this, SLOT(toggleFlipSource(bool)));
-    connect(ui->buttonBrowse,SIGNAL(released()),this,SLOT(browseClicked()));
-    connect(ui->buttonExplodedView,SIGNAL(released()),this,SLOT(showHideExplodedView()));
-    connect(ui->buttonSwitchTheme, SIGNAL(released()), this, SLOT(switchThemeButtonClicked()));
+    connect(ui->buttonSelectSource,SIGNAL(released()),
+            this,SLOT(sourceSelectClicked()));
+    connect(ui->checkBoxMirror, SIGNAL(clicked(bool)),
+            this, SLOT(toggleFlipSource(bool)));
+    connect(ui->buttonBrowse,SIGNAL(released()),
+            this,SLOT(browseClicked()));
+    connect(ui->buttonExplodedView,SIGNAL(released()),
+            this,SLOT(showHideExplodedView()));
+    connect(ui->buttonSwitchTheme, SIGNAL(released()),
+            this, SLOT(switchThemeButtonClicked()));
 
     connect(ui->actionAbout, &QAction::triggered, this,
             [=]() {
         showAboutDialog();
     });
 
-    connect(ui->labelOutput, SIGNAL(LBclicked(int, int)), this, SLOT(outputLabelLBClicked(int, int)));
+    connect(ui->labelOutput, SIGNAL(LBclicked(int, int)),
+            this, SLOT(outputLabelLBClicked(int, int)));
 
-    connect(this, SIGNAL(removeOperationWidgetsSignal()),
-            this, SLOT(removeOperationWidgets()));
+    connect(this, SIGNAL(removeOperationWidgetSignal()),
+            this, SLOT(removeOperationWidget()));
 
-    connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)), this, SLOT(refreshOutputImage(cv::Mat)));
-
-    ui->scrollAreaParameterWidget->setWidgetResizable(true);
-
-    addOperation(NONE);
+    connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
+            this, SLOT(refreshOutputImage(cv::Mat)));
 }
 
 void MainWindow::initUI(){
@@ -78,6 +76,7 @@ void MainWindow::initUI(){
 
     testVBox->setAlignment(Qt::AlignTop);
     ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
+    ui->scrollAreaParameterWidget->setWidgetResizable(true);
 
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);
@@ -85,6 +84,14 @@ void MainWindow::initUI(){
     group->addButton(ui->ipcamRadioButton);
 
     sourceRadioButtonClicked();
+    switchThemeButtonClicked();
+
+    chainMenuInitDone = false;
+    for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
+        addOperation((OPCodes)opCode);
+    }
+    chainMenuInitDone = true;
+    addOperation(NONE);
 
     setUserMessage("Initializing Done", INFO);
 }
@@ -152,7 +159,7 @@ void MainWindow::addOperation(OPCodes opCode)
 
 void MainWindow::lastOperationChanged(OPCodes opCode)
 {
-    emit removeOperationWidgetsSignal();
+    emit removeOperationWidgetSignal();
     addOperation(opCode);
 
     qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
@@ -211,7 +218,7 @@ void MainWindow::addOperationWidget()
             &ChainMenuWidget::removeOperationClicked,
             this,
             [=](){
-        emit removeOperationWidgetsSignal();
+        emit removeOperationWidgetSignal();
     });
 
     connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
@@ -223,7 +230,7 @@ void MainWindow::addOperationWidget()
     refreshOperationWidgets();
 }
 
-void MainWindow::removeOperationWidgets()
+void MainWindow::removeOperationWidget()
 {
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
@@ -248,7 +255,6 @@ void MainWindow::removeOperationWidgets()
     qDebug() << "VBox Count After: " << vBoxSub->count();
 
     vBoxSub->update();
-
     ui->scrollAreaChainMenu->update();
 
     refreshOperationWidgets();
@@ -364,7 +370,7 @@ void MainWindow::GetSourceCaptureImage()
 
                 capturedOriginalImg.copyTo(outputImage);
 
-                emit removeOperationWidgetsSignal();
+                emit removeOperationWidgetSignal();
                 break;
             }
         }

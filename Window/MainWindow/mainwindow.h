@@ -93,14 +93,14 @@ private slots:
     void showHideExplodedView();
     void refreshOutputImage(const cv::Mat img);
     void addOperationWidget();
-    void removeOperationWidgets();
+    void removeOperationWidget();
     void refreshOperationWidgets();
     void switchThemeButtonClicked();
     void operationSelectedToDisplay(ParamAdjustWidget*);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
-    void removeOperationWidgetsSignal();
+    void removeOperationWidgetSignal();
 
 public:
     MainWindow(QWidget *parent = nullptr);
