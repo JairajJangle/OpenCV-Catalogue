@@ -379,6 +379,7 @@ void MainWindow::GetSourceCaptureImage()
 
 void MainWindow::GetSourceCaptureError(QString error)
 {
+    qCritical() << "SOURCE CAPTURE ERROR: " << error;
     // FIXME: Commented for DEMO
     //    setUserMessage(error, ERROR);
 }
@@ -507,20 +508,15 @@ void MainWindow::sourceSelectClicked()
         }
     }
 
-    if(!cam_thread->isRunning()){
-        // Start capture thread after confirming input source
-        captureInputSource = new CaptureInputSource(path.toStdString());
-
-        captureInputSource->moveToThread(cam_thread);
-        cam_thread->start();
+    if(captureInputSource == nullptr){
+        captureInputSource = new CaptureInputSource();
+        captureInputSource->setInputSource(path);
 
         connect(captureInputSource, SIGNAL(SourceCaptured()), this, SLOT(GetSourceCaptureImage()));
         connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
     }
     else{
-        qDebug() << "Cam Thread already running!!";
-        captureInputSource->inputSource = path.toStdString();
-        captureInputSource->relesaseCap();
+        captureInputSource->setInputSource(path);
     }
 
     // FIXME: Crash

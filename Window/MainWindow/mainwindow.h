@@ -122,8 +122,7 @@ private:
         }
     }
 
-    QThread *cam_thread = new QThread;
-    CaptureInputSource* captureInputSource;
+    CaptureInputSource* captureInputSource = nullptr;
 
     AboutDialog* aboutDialog = nullptr;
 
