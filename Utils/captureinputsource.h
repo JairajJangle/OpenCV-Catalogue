@@ -30,8 +30,7 @@
 // OpenCV libs
 #include <opencv2/opencv.hpp>
 
-// CaptureInputSource extends QThread
-class CaptureInputSource : public QThread
+class CaptureInputSource : public QObject
 {
     Q_OBJECT
 public:
@@ -78,12 +77,13 @@ public slots:
 
                     bool isSuccess = cap.read(img);
 
-                    if(!cv::Size(img.rows , img.rows).empty()) // Avoid empty image resizing error
+                    // Avoid empty image resizing error
+                    if(!cv::Size(img.rows , img.rows).empty())
                         resize(img, resizedImg, cv::Size(640, 480));
 
                     if(!isSuccess)
                     {
-                        emit SourceCaptureError("Cannot read the frame from the source");
+                        emit SourceCaptureError("Cannot read the input source");
                         openSource();
                         continue; // retry
                     }
@@ -104,17 +104,16 @@ public slots:
     {
         qDebug() << "Stop Timer Called!";
         start_cam_once_timer->stop();
-        delete start_cam_once_timer;
     }
 
 public:
     ~CaptureInputSource()
     {
-        cap.release();
+        releaseCap();
         qDebug() << "Camera Closed";
     }
 
-    void relesaseCap()
+    void releaseCap()
     {
         cap.release();
     }
@@ -123,7 +122,7 @@ public:
     {
         qDebug() << "Path: "
                  << QString::fromStdString(inputSource);
-        cap.release();
+        releaseCap();
         if(std::all_of(inputSource.begin(), inputSource.end(), ::isdigit)) // check if only contains digits
         {
             cap.open(stoi(inputSource)); // For Camera number
