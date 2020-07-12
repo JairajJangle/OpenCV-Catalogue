@@ -26,7 +26,8 @@ namespace Info {
 }
 
 namespace RegExps {
-[[maybe_unused]] static const char* regEx0_1Decimal = "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$";
+[[maybe_unused]] static const char* onlyDigits = "\\d*";
+[[maybe_unused]] static const char* decimal0To1 = "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$";
 }
 
 namespace Strings {

@@ -24,86 +24,130 @@
 #include <QThread>
 #include <QTimer>
 #include <QIODevice>
+#include <QObject>
 #include <QFile>
 #include <QtDebug>
 
 // OpenCV libs
 #include <opencv2/opencv.hpp>
 
+// Utils
+#include <Utils/constants.h>
+
 class CaptureInputSource : public QObject
 {
     Q_OBJECT
 public:
+    QThread *camThread = new QThread;
+
     //Mat to store image from camera
     cv::Mat img, resizedImg;
 
-    std::string inputSource = "";
+    QString inputSource = "";
 
     /*
      * Constructor: Start Single Shot Timer and connect timeout signal to start
      * Video Capture read loop
      */
-    CaptureInputSource(std::string inputSource)
+    explicit CaptureInputSource(QObject* parent = nullptr)
+        :QObject(parent)
     {
-        this->inputSource = inputSource;
-        start_cam_once_timer->setInterval(100);
-        start_cam_once_timer->setSingleShot(true);
-        connect(start_cam_once_timer, SIGNAL(timeout()), this, SLOT(StartCam()));
-        start_cam_once_timer->start();
+        inputSourceCaptureTImer = new QTimer(nullptr);
+        this->moveToThread(camThread);
+        inputSourceCaptureTImer->moveToThread(camThread);
+        QObject::connect(camThread, &QThread::finished,
+                         this, &QObject::deleteLater);
+        camThread->start();
+
+        connect(this, &CaptureInputSource::startTimer,
+                this,
+                [=](int initialDelay){
+            inputSourceCaptureTImer->start(initialDelay);
+            inputSourceCaptureTImer->setInterval(1000);
+        },
+        Qt::QueuedConnection);
+
+        connect(this, &CaptureInputSource::stopCapture,
+                this,
+                [=](){
+            inputSourceCaptureTImer->stop();
+            releaseCap();
+        },
+        Qt::QueuedConnection);
+
+        connect(this, &CaptureInputSource::setInputSource,
+                this,
+                [=](QString inputSource){
+            retryCount = 0;
+            emit stopCapture();
+            this->inputSource = inputSource;
+            emit startTimer(1000);
+        },
+        Qt::QueuedConnection);
+
+        connect(inputSourceCaptureTImer, SIGNAL(timeout()),
+                this, SLOT(StartCam()));
     }
 
 signals:
     //Signal to be emitted from StartCam Slot which is caught by mainwindow
     void SourceCaptured();
     void SourceCaptureError(QString);
+    void setInputSource(QString inputSource);
+    void startTimer(int);
+    void stopCapture();
 
 public slots:
     void StartCam()
     {
         try{
-            openSource();
-
-            img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-            resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-
-            //TODO: apply FPS
-            while(1)
+            if(!cap.isOpened())
             {
-                try {
-                    double fps = cap.get(cv::CAP_PROP_FPS);
+                openSource();
+                ++retryCount;
 
-                    if(!instantRefresh)
-                        QThread::usleep(1000000/fps);
-
-                    bool isSuccess = cap.read(img);
-
-                    // Avoid empty image resizing error
-                    if(!cv::Size(img.rows , img.rows).empty())
-                        resize(img, resizedImg, cv::Size(640, 480));
-
-                    if(!isSuccess)
-                    {
-                        emit SourceCaptureError("Cannot read the input source");
-                        openSource();
-                        continue; // retry
-                    }
-
-                    emit SourceCaptured();
-
-                } catch (cv::Exception& e) {
-                    emit SourceCaptureError(e.what());
+                if(retryCount >= retryLimit)
+                {
+                    emit stopCapture();
+                    return;
                 }
+
+                qDebug() << "Camera Opened";
+
+                img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+                resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+            }
+
+            try {
+                double fps = cap.get(cv::CAP_PROP_FPS);
+
+                qDebug () << "Intervals: " << fps;
+
+                inputSourceCaptureTImer->setInterval(
+                            instantRefresh ? 10 : (1000/fps));
+
+                bool isSuccess = cap.read(img);
+
+                // Avoid empty image resizing error
+                if(!cv::Size(img.rows , img.rows).empty())
+                    resize(img, resizedImg, cv::Size(640, 480));
+
+                if(!isSuccess)
+                {
+                    emit SourceCaptureError("Cannot read the input source");
+                    emit stopCapture();
+                    return;
+                }
+
+                emit SourceCaptured();
+
+            } catch (cv::Exception& e) {
+                emit SourceCaptureError(e.what());
             }
         }
         catch (cv::Exception& e) {
             emit SourceCaptureError(e.what());
         }
-    }
-
-    void stopTimer()
-    {
-        qDebug() << "Stop Timer Called!";
-        start_cam_once_timer->stop();
     }
 
 public:
@@ -120,15 +164,13 @@ public:
 
     void openSource()
     {
-        qDebug() << "Path: "
-                 << QString::fromStdString(inputSource);
+        qDebug() << "Path: " << inputSource;
         releaseCap();
-        if(std::all_of(inputSource.begin(), inputSource.end(), ::isdigit)) // check if only contains digits
-        {
-            cap.open(stoi(inputSource)); // For Camera number
-        }
+
+        if (QRegExp(RegExps::onlyDigits).exactMatch(inputSource))
+            cap.open(inputSource.toInt()); // For Camera number
         else
-            cap.open(inputSource); // For file path
+            cap.open(inputSource.toStdString()); // For file path
     }
 
     void setInstantFrameRefresh(bool instantRefresh)
@@ -137,11 +179,14 @@ public:
     }
 
 private:
-
     cv::VideoCapture cap;
-    QTimer *start_cam_once_timer = new QTimer(this);
+    QTimer *inputSourceCaptureTImer;
 
-    bool instantRefresh = false; // Set true for IP/Normal camera input source
+    short retryCount = 0;
+    const short retryLimit = 3;
+
+    // Set true for IP/Normal camera input source
+    bool instantRefresh = false;
 
     //Function to convert QT res image file to OpenCVcv::Mat object
     cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
