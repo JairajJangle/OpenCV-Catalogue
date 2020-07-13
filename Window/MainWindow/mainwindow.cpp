@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
             this,SLOT(sourceRadioButtonClicked()));
 
     connect(ui->buttonSelectSource,SIGNAL(released()),
-            this,SLOT(sourceSelectClicked()));
+            this,SLOT(applySourceClicked()));
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)),
             this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),
@@ -323,7 +323,7 @@ void MainWindow::showAboutDialog()
     }
 }
 
-void MainWindow::GetSourceCaptureImage()
+void MainWindow::getSourceCaptureImage()
 {
     cv::Mat capturedReziedImg = captureInputSource->resizedImg;
     cv::Mat capturedOriginalImg = captureInputSource->img;
@@ -377,7 +377,7 @@ void MainWindow::GetSourceCaptureImage()
     });
 }
 
-void MainWindow::GetSourceCaptureError(QString error)
+void MainWindow::getSourceCaptureError(QString error)
 {
     qCritical() << "SOURCE CAPTURE ERROR: " << error;
     // FIXME: Commented for DEMO
@@ -479,7 +479,7 @@ void MainWindow::browseClicked()
         ui->textInputSource->setPlainText(filePath);
 }
 
-void MainWindow::sourceSelectClicked()
+void MainWindow::applySourceClicked()
 {
     qDebug() << "Source Select Clicked!!";
     QString path = ui->textInputSource->toPlainText();
@@ -512,8 +512,8 @@ void MainWindow::sourceSelectClicked()
         captureInputSource = new CaptureInputSource();
         captureInputSource->setInputSource(path);
 
-        connect(captureInputSource, SIGNAL(SourceCaptured()), this, SLOT(GetSourceCaptureImage()));
-        connect(captureInputSource, SIGNAL(SourceCaptureError(QString)), this, SLOT(GetSourceCaptureError(QString)));
+        connect(captureInputSource, SIGNAL(sourceCaptured()), this, SLOT(getSourceCaptureImage()));
+        connect(captureInputSource, SIGNAL(sourceCaptureError(QString)), this, SLOT(getSourceCaptureError(QString)));
     }
     else{
         captureInputSource->setInputSource(path);
