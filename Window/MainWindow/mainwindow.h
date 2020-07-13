@@ -77,7 +77,7 @@ private:
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, DILATE,
 
                  /* Add all other Enum values before this */
-                 NONE /* Corresponds to No Operation itself */ };
+                 NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
     void sourceRadioButtonClicked();
@@ -114,13 +114,6 @@ private:
     bool chainMenuInitDone = false;
 
     void initUI();
-    void closeEvent ([[maybe_unused]] QCloseEvent *event) override
-    {
-        if(aboutDialog != nullptr)
-        {
-            aboutDialog->close();
-        }
-    }
 
     CaptureInputSource* captureInputSource = nullptr;
 
@@ -136,9 +129,23 @@ private:
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
 
-    // TODO: Add and test Chain Menu Radio buttons grouped working
     QButtonGroup* chainMenuRadioButtonsGroup = new QButtonGroup();
 
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
+
+    /*
+     * overriden closeEvent to close all opened windows when MainWindow
+     * closeEvent(...) is fired
+     */
+    void closeEvent ([[maybe_unused]] QCloseEvent *event) override
+    {
+        if(aboutDialog != nullptr)
+        {
+            /*
+             * Call close() on all Windows/Dialogs apart from MainWindow here
+             */
+            aboutDialog->close();
+        }
+    }
 };
