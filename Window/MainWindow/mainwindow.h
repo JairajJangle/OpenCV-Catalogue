@@ -81,10 +81,10 @@ private:
 
 private slots:
     void sourceRadioButtonClicked();
-    void sourceSelectClicked();
+    void applySourceClicked();
     void browseClicked();
-    void GetSourceCaptureImage();
-    void GetSourceCaptureError(QString);
+    void getSourceCaptureImage();
+    void getSourceCaptureError(QString);
     void toggleFlipSource(bool);
     void addOperation(MainWindow::OPCodes opCode = NO_OPERATION);
     void lastOperationChanged(MainWindow::OPCodes opCode);
