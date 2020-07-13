@@ -44,7 +44,7 @@ public:
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
     {
-        inputSourceCaptureTImer = new QTimer(nullptr);
+        inputSourceCaptureTImer = new QTimer(this);
         this->moveToThread(camThread);
         inputSourceCaptureTImer->moveToThread(camThread);
         QObject::connect(camThread, &QThread::finished,
@@ -70,7 +70,6 @@ public:
         connect(this, &CaptureInputSource::setInputSource,
                 this,
                 [=](QString inputSource){
-            retryCount = 0;
             emit stopCapture();
             this->inputSource = inputSource;
             emit startTimer(1000);
@@ -100,13 +99,6 @@ private slots:
             if(!cap.isOpened())
             {
                 openSource();
-                ++retryCount;
-
-                if(retryCount >= retryLimit)
-                {
-                    emit stopCapture();
-                    return;
-                }
 
                 img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
                 resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
@@ -114,8 +106,6 @@ private slots:
 
             try {
                 double fps = cap.get(cv::CAP_PROP_FPS);
-
-                qDebug () << "Intervals: " << fps;
 
                 inputSourceCaptureTImer->setInterval(
                             instantRefresh ? 10 : (1000/fps));
@@ -150,9 +140,6 @@ private:
 
     QString inputSource = "";
     cv::VideoCapture cap;
-
-    short retryCount = 0;
-    const short retryLimit = 3;
 
     // Set true for IP/Netword camera input source
     bool instantRefresh = false;
