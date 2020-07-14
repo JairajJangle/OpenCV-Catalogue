@@ -86,7 +86,7 @@ public:
         lineEdits.second->setText(texts.second.toString());
     }
 
-    void setValidator(QIntValidator* validator)
+    void setValidator(QValidator* validator)
     {
         lineEdits.first->setValidator(validator);
         lineEdits.second->setValidator(validator);
