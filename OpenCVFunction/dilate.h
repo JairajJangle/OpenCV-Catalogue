@@ -27,6 +27,7 @@
 
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/duallineeditlayout.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
 
 class Dilate : public BaseConfigWidget
 {
@@ -66,17 +67,27 @@ public:
     + std::string(typeid(this).name());
 }
 
+private slots:
+void applyClicked(){
+ kSize = cv::Size(kSizeDLEL->getTexts().first.toInt(),
+                  kSizeDLEL->getTexts().second.toInt());
+}
+void resetClicked(){
+    kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
+}
+
 protected:
-int dilationSize = 6;
+const int dilationSize = 6;
 int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
 cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
 cv::Point kernelAnchor = cv::Point(dilationSize, dilationSize);
 
-const int lineEditW = 70;
-
 DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
                                                        qMakePair(kSize.width,kSize.height),
                                                        70);
+
+ApplyResetButtonLayout* applyResetBL = new ApplyResetButtonLayout();
+
 void initWidget()
 {
     vBoxSub->setSpacing(15);
@@ -86,7 +97,13 @@ void initWidget()
 
     kSizeDLEL->setValidator(kSizeValidator);
 
+    connect(applyResetBL, SIGNAL(applyClicked()),
+            this, SLOT(applyClicked()));
+    connect(applyResetBL, SIGNAL(resetClicked()),
+            this, SLOT(resetClicked()));
+
     vBoxSub->addLayout(kSizeDLEL);
+    vBoxSub->addLayout(applyResetBL);
 
     // TODO: Add Config widgets
     BaseConfigWidget::initWidget();
