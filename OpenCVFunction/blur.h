@@ -30,6 +30,7 @@
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/errorlabel.h"
+#include "CustomWidgets/duallineeditlayout.h"
 
 class Blur : public BaseConfigWidget
 {
@@ -58,17 +59,17 @@ public:
                 prevAnchorText = currentAnchorText;
             }
 
-//            errorLabel->hide();
+            //            errorLabel->hide();
             cv::blur(inputImage, outputImage, kSize, begin);
 
             return outputImage;
         }
         else
         {
-//            errorLabel->show();
-//            errorLabel->setText("Kernel Size should be < Anchor");
-//            if(kSize.width <= 0 || kSize.height <= 0)
-//                errorLabel->setText("Kernel Size should not be <= 0");
+            //            errorLabel->show();
+            //            errorLabel->setText("Kernel Size should be < Anchor");
+            //            if(kSize.width <= 0 || kSize.height <= 0)
+            //                errorLabel->setText("Kernel Size should not be <= 0");
 
             return inputImage;
         }
@@ -84,114 +85,94 @@ public:
     + std::string(typeid(this).name());
 }
 
-    ~Blur()
-    {
-        qDebug() << "Blur destroyed";
-    }
+~Blur()
+{
+    qDebug() << "Blur destroyed";
+}
 
 private slots:
-    void applyKernelClicked(){
-        kSize = cv::Size(kSizexEdit->text().toInt(),
-                         kSizeyEdit->text().toInt());
-    }
+void applyKernelClicked(){
+    kSize = cv::Size(kSizeDLEL->getTexts().first.toInt(),
+                     kSizeDLEL->getTexts().second.toInt());
+}
 
-    void resetAnchorClicked(){
-        begin = cv::Point(-1, -1);
-    }
+void resetAnchorClicked(){
+    begin = cv::Point(-1, -1);
+}
 
 private:
-    cv::Size kSize = cv::Size(101, 101);
-    const int lineEditW = 50;
+cv::Size kSize = cv::Size(101, 101);
+const int lineEditW = 50;
 
-    QLabel* kSizeLabel  = new QLabel("Kernel Size");
-    QLabel* boLabel  = new QLabel(" ( ");
-    QLineEdit* kSizexEdit = new QLineEdit();
-    QLabel* cmLabel  = new QLabel(" , ");
-    QLineEdit* kSizeyEdit = new QLineEdit();
-    QLabel* bcLabel  = new QLabel(" ) ");
+DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
+                                                       qMakePair(kSize.width,kSize.height),
+                                                       70);
 
-    LineEditLayout* anchorLineEditLayout =
-            new LineEditLayout("Current Anchor", "Default = (-1, -1)",
-                               160, 150);
+LineEditLayout* anchorLineEditLayout =
+        new LineEditLayout("Current Anchor", "Default = (-1, -1)",
+                           160, 150);
 
-    QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
+QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
 
-    QPushButton* applyButton = new QPushButton("Apply Kernel");
-    QPushButton* resetAnchorButton = new QPushButton("Reset Anchor Position");
+QPushButton* applyButton = new QPushButton("Apply Kernel");
+QPushButton* resetAnchorButton = new QPushButton("Reset Anchor Position");
 
-    ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
+ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
 
-    QString prevAnchorText = "";
+QString prevAnchorText = "";
 
-    void initWidget()
-    {
-        anchorLineEditLayout->lineEdit->setReadOnly(true);
+void initWidget()
+{
+    anchorLineEditLayout->lineEdit->setReadOnly(true);
 
-        kSizexEdit->setText(QString::number(kSize.width));
-        kSizeyEdit->setText(QString::number(kSize.height));
+    errorLabel->hide();
 
-        errorLabel->hide();
+    applyButton->setFixedWidth(200);
+    resetAnchorButton->setFixedWidth(220);
 
-        applyButton->setFixedWidth(200);
-        resetAnchorButton->setFixedWidth(220);
+    QVBoxLayout* vboxBlurMain = new QVBoxLayout;
+    vboxBlurMain->setAlignment(Qt::AlignCenter);
+    vboxBlurMain->setSpacing(15);
 
-        QVBoxLayout* vboxBlurMain = new QVBoxLayout;
-        vboxBlurMain->setAlignment(Qt::AlignCenter);
-        vboxBlurMain->setSpacing(15);
+    QFont font = anchorNoteLabel->font();
+    font.setPointSize(8);
+    anchorNoteLabel->setFont(font);
+    anchorNoteLabel->setAlignment(Qt::AlignCenter);
 
-        QFont font = anchorNoteLabel->font();
-        font.setPointSize(8);
-        anchorNoteLabel->setFont(font);
-        anchorNoteLabel->setAlignment(Qt::AlignCenter);
+    QIntValidator* kSizeValidator = new QIntValidator();
+    kSizeValidator->setBottom(1);
 
-        QIntValidator* kSizeValidator = new QIntValidator();
-        kSizeValidator->setBottom(1);
-        kSizexEdit->setValidator(kSizeValidator);
+    kSizeDLEL->lineEdits.first->setValidator(kSizeValidator);
+    kSizeDLEL->lineEdits.second->setValidator(kSizeValidator);
 
-        kSizexEdit->setFixedWidth(lineEditW);
-        kSizeyEdit->setFixedWidth(lineEditW);
+    vboxBlurMain->addLayout(kSizeDLEL);
 
-        QHBoxLayout* kSizeHBox = new QHBoxLayout;
-        kSizeHBox->setSpacing(10);
+    QHBoxLayout* applyButtonHBox = new QHBoxLayout;
+    applyButtonHBox->setAlignment(Qt::AlignHCenter);
+    applyButtonHBox->addWidget(applyButton);
+    vboxBlurMain->addLayout(applyButtonHBox);
+    connect(applyButton, SIGNAL(released()),
+            this, SLOT(applyKernelClicked()));
 
-        kSizeHBox->addWidget(kSizeLabel);
-        kSizeHBox->addWidget(boLabel);
-        kSizeHBox->addWidget(kSizexEdit);
-        kSizeHBox->addWidget(cmLabel);
-        kSizeHBox->addWidget(kSizeyEdit);
-        kSizeHBox->addWidget(bcLabel);
+    QVBoxLayout* anchorMainVBox = new QVBoxLayout;
+    anchorMainVBox->setAlignment(Qt::AlignHCenter);
 
-        QVBoxLayout* kSizeMainVBox = new QVBoxLayout;
-        kSizeMainVBox->setAlignment(Qt::AlignHCenter);
-        kSizeMainVBox->addLayout(kSizeHBox);
-        vboxBlurMain->addLayout(kSizeMainVBox);
+    anchorMainVBox->addLayout(anchorLineEditLayout);
+    anchorMainVBox->addWidget(anchorNoteLabel);
 
-        QHBoxLayout* applyButtonHBox = new QHBoxLayout;
-        applyButtonHBox->setAlignment(Qt::AlignHCenter);
-        applyButtonHBox->addWidget(applyButton);
-        vboxBlurMain->addLayout(applyButtonHBox);
-        connect(applyButton, SIGNAL(released()),
-                this, SLOT(applyKernelClicked()));
+    vboxBlurMain->addLayout(anchorMainVBox);
 
-        QVBoxLayout* anchorMainVBox = new QVBoxLayout;
-        anchorMainVBox->setAlignment(Qt::AlignHCenter);
+    QHBoxLayout* resetAnchorHBox = new QHBoxLayout;
+    resetAnchorHBox->setAlignment(Qt::AlignHCenter);
+    resetAnchorHBox->addWidget(resetAnchorButton);
+    vboxBlurMain->addLayout(resetAnchorHBox);
+    connect(resetAnchorButton, SIGNAL(released()),
+            this, SLOT(resetAnchorClicked()));
 
-        anchorMainVBox->addLayout(anchorLineEditLayout);
-        anchorMainVBox->addWidget(anchorNoteLabel);
+    vboxBlurMain->addWidget(errorLabel);
 
-        vboxBlurMain->addLayout(anchorMainVBox);
+    vBoxSub->addLayout(vboxBlurMain);
 
-        QHBoxLayout* resetAnchorHBox = new QHBoxLayout;
-        resetAnchorHBox->setAlignment(Qt::AlignHCenter);
-        resetAnchorHBox->addWidget(resetAnchorButton);
-        vboxBlurMain->addLayout(resetAnchorHBox);
-        connect(resetAnchorButton, SIGNAL(released()),
-                this, SLOT(resetAnchorClicked()));
-
-        vboxBlurMain->addWidget(errorLabel);
-
-        vBoxSub->addLayout(vboxBlurMain);
-
-        BaseConfigWidget::initWidget();
-    }
+    BaseConfigWidget::initWidget();
+}
 };
