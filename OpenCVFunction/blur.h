@@ -130,9 +130,7 @@ void initWidget()
     applyButton->setFixedWidth(200);
     resetAnchorButton->setFixedWidth(220);
 
-    QVBoxLayout* vboxBlurMain = new QVBoxLayout;
-    vboxBlurMain->setAlignment(Qt::AlignCenter);
-    vboxBlurMain->setSpacing(15);
+    vBoxSub->setSpacing(15);
 
     QFont font = anchorNoteLabel->font();
     font.setPointSize(8);
@@ -142,15 +140,14 @@ void initWidget()
     QIntValidator* kSizeValidator = new QIntValidator();
     kSizeValidator->setBottom(1);
 
-    kSizeDLEL->lineEdits.first->setValidator(kSizeValidator);
-    kSizeDLEL->lineEdits.second->setValidator(kSizeValidator);
+    kSizeDLEL->setValidator(kSizeValidator);
 
-    vboxBlurMain->addLayout(kSizeDLEL);
+    vBoxSub->addLayout(kSizeDLEL);
 
     QHBoxLayout* applyButtonHBox = new QHBoxLayout;
     applyButtonHBox->setAlignment(Qt::AlignHCenter);
     applyButtonHBox->addWidget(applyButton);
-    vboxBlurMain->addLayout(applyButtonHBox);
+    vBoxSub->addLayout(applyButtonHBox);
     connect(applyButton, SIGNAL(released()),
             this, SLOT(applyKernelClicked()));
 
@@ -160,18 +157,16 @@ void initWidget()
     anchorMainVBox->addLayout(anchorLineEditLayout);
     anchorMainVBox->addWidget(anchorNoteLabel);
 
-    vboxBlurMain->addLayout(anchorMainVBox);
+    vBoxSub->addLayout(anchorMainVBox);
 
     QHBoxLayout* resetAnchorHBox = new QHBoxLayout;
     resetAnchorHBox->setAlignment(Qt::AlignHCenter);
     resetAnchorHBox->addWidget(resetAnchorButton);
-    vboxBlurMain->addLayout(resetAnchorHBox);
+    vBoxSub->addLayout(resetAnchorHBox);
     connect(resetAnchorButton, SIGNAL(released()),
             this, SLOT(resetAnchorClicked()));
 
-    vboxBlurMain->addWidget(errorLabel);
-
-    vBoxSub->addLayout(vboxBlurMain);
+    vBoxSub->addWidget(errorLabel);
 
     BaseConfigWidget::initWidget();
 }
