@@ -26,6 +26,7 @@
 #include <QLineEdit>
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "CustomWidgets/duallineeditlayout.h"
 
 class Dilate : public BaseConfigWidget
 {
@@ -66,13 +67,27 @@ public:
 }
 
 protected:
-int dilation_size = 6;
+int dilationSize = 6;
 int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
-cv::Size kSize = cv::Size(2 * dilation_size + 1, 2 * dilation_size + 1);
-cv::Point kernelAnchor = cv::Point(dilation_size, dilation_size);
+cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
+cv::Point kernelAnchor = cv::Point(dilationSize, dilationSize);
 
+const int lineEditW = 70;
+
+DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
+                                                       qMakePair(kSize.width,kSize.height),
+                                                       70);
 void initWidget()
 {
+    vBoxSub->setSpacing(15);
+
+    QIntValidator* kSizeValidator = new QIntValidator();
+    kSizeValidator->setBottom(1);
+
+    kSizeDLEL->setValidator(kSizeValidator);
+
+    vBoxSub->addLayout(kSizeDLEL);
+
     // TODO: Add Config widgets
     BaseConfigWidget::initWidget();
 }
