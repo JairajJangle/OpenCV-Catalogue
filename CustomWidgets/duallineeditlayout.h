@@ -86,6 +86,12 @@ public:
         lineEdits.second->setText(texts.second.toString());
     }
 
+    void setValidator(QIntValidator* validator)
+    {
+        lineEdits.first->setValidator(validator);
+        lineEdits.second->setValidator(validator);
+    }
+
     void setVisible(bool visible)
     {
         titleLabel->setVisible(visible);
