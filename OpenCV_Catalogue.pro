@@ -52,6 +52,7 @@ HEADERS += \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.h \
     CustomWidgets/applyresetbuttonlayout.h \
     CustomWidgets/dividerline.h \
+    CustomWidgets/duallineeditlayout.h \
     CustomWidgets/errorlabel.h \
     CustomWidgets/focusawarelineedit.h \
     CustomWidgets/labelledcombobox.h \
