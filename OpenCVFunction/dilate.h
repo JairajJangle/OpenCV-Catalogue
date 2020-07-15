@@ -134,7 +134,7 @@ void initWidget()
 
     anchorLineEditLayout->lineEdit->setReadOnly(true);
 
-    vBoxSub->setSpacing(30);
+    vBoxSub->setSpacing(20);
 
     QFont font = anchorNoteLabel->font();
     font.setPointSize(8);
@@ -150,8 +150,6 @@ void initWidget()
             this, SLOT(applyClicked()));
     connect(applyResetBL, SIGNAL(resetClicked()),
             this, SLOT(resetClicked()));
-
-    vBoxSub->addLayout(kSizeDLEL);
 
     QVBoxLayout* anchorMainVBox = new QVBoxLayout;
     anchorMainVBox->setAlignment(Qt::AlignHCenter);
@@ -196,11 +194,12 @@ void initWidget()
     connect(borderTypeLCB,SIGNAL(currentIndexChanged(QVariant)),
             this,SLOT(borderChanged(QVariant)));
 
+    vBoxSub->addLayout(kSizeDLEL);
+    vBoxSub->addLayout(applyResetBL);
     vBoxSub->addLayout(anchorMainVBox);
     vBoxSub->addLayout(morphShapeLCB);
     vBoxSub->addLayout(iterationCountSL);
     vBoxSub->addLayout(borderTypeLCB);
-    vBoxSub->addLayout(applyResetBL);
 
     // TODO: Add Config widgets
     BaseConfigWidget::initWidget();
