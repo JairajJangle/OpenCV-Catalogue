@@ -28,6 +28,7 @@
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/duallineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
+#include "CustomWidgets/lineeditlayout.h"
 
 class Dilate : public BaseConfigWidget
 {
@@ -47,15 +48,30 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        cv::Mat outputImage;
+        if((begin.x < kSize.width && begin.y < kSize.height)
+                && (kSize.width > 0 && kSize.height > 0))
+        {
+            QString currentAnchorText = QString::number(begin.x)
+                    + ", " + QString::number(begin.y);
+            if(prevAnchorText != currentAnchorText)
+            {
+                anchorLineEditLayout->setText(currentAnchorText);
+                prevAnchorText = currentAnchorText;
+            }
 
-        cv::Mat element = cv::getStructuringElement(kernelMorphShape, kSize, kernelAnchor);
+            cv::Mat outputImage;
 
-        cv::dilate(inputImage, outputImage, element);
+            cv::Mat element = cv::getStructuringElement(kernelMorphShape,
+                                                        kSize,
+                                                        begin);
 
-        // dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
+            cv::dilate(inputImage, outputImage, element);
 
-        return outputImage;
+            // dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
+
+            return outputImage;
+        }
+        return inputImage;
     }
     catch(cv::Exception& e){
         throw e;
@@ -69,8 +85,8 @@ public:
 
 private slots:
 void applyClicked(){
- kSize = cv::Size(kSizeDLEL->getTexts().first.toInt(),
-                  kSizeDLEL->getTexts().second.toInt());
+    kSize = cv::Size(kSizeDLEL->getTexts().first.toInt(),
+                     kSizeDLEL->getTexts().second.toInt());
 }
 void resetClicked(){
     kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
@@ -80,17 +96,31 @@ protected:
 const int dilationSize = 6;
 int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
 cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
-cv::Point kernelAnchor = cv::Point(dilationSize, dilationSize);
+cv::Point kernelAnchor = cv::Point(-1, -1);
 
 DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
                                                        qMakePair(kSize.width,kSize.height),
                                                        70);
 
+LineEditLayout* anchorLineEditLayout =
+        new LineEditLayout("Current Anchor", "Default = (-1, -1)",
+                           160, 150);
+
+QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
+QString prevAnchorText = "";
+
 ApplyResetButtonLayout* applyResetBL = new ApplyResetButtonLayout();
 
 void initWidget()
 {
+    anchorLineEditLayout->lineEdit->setReadOnly(true);
+
     vBoxSub->setSpacing(15);
+
+    QFont font = anchorNoteLabel->font();
+    font.setPointSize(8);
+    anchorNoteLabel->setFont(font);
+    anchorNoteLabel->setAlignment(Qt::AlignCenter);
 
     QIntValidator* kSizeValidator = new QIntValidator();
     kSizeValidator->setBottom(1);
@@ -103,6 +133,13 @@ void initWidget()
             this, SLOT(resetClicked()));
 
     vBoxSub->addLayout(kSizeDLEL);
+
+    QVBoxLayout* anchorMainVBox = new QVBoxLayout;
+    anchorMainVBox->setAlignment(Qt::AlignHCenter);
+    anchorMainVBox->addLayout(anchorLineEditLayout);
+    anchorMainVBox->addWidget(anchorNoteLabel);
+
+    vBoxSub->addLayout(anchorMainVBox);
     vBoxSub->addLayout(applyResetBL);
 
     // TODO: Add Config widgets
