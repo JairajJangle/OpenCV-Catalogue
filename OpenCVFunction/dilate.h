@@ -29,6 +29,8 @@
 #include "CustomWidgets/duallineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/labelledcombobox.h"
+#include "CustomWidgets/sliderlayout.h"
 
 class Dilate : public BaseConfigWidget
 {
@@ -63,9 +65,12 @@ public:
 
             cv::Mat element = cv::getStructuringElement(kernelMorphShape,
                                                         kSize,
-                                                        begin);
+                                                        cv::Point(-1, -1));
 
-            cv::dilate(inputImage, outputImage, element);
+            // FIXME: Check need to customize borderValue parameter for dilate(...)
+            cv::dilate(inputImage, outputImage,
+                       element, begin, iterationCount,
+                       borderType);
 
             // dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
 
@@ -91,12 +96,25 @@ void applyClicked(){
 void resetClicked(){
     kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
 }
+void morphShapeChanged(QVariant value){
+    kernelMorphShape = value.toInt();
+    qDebug() << "Morph Shape: " << kernelMorphShape;
+}
+void iterationChanged(int value){
+    iterationCount = value;
+}
+void borderChanged(QVariant value){
+    qDebug() << "Border Type: " << value;
+    borderType = value.toInt();
+}
 
 protected:
 const int dilationSize = 6;
 int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
 cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
 cv::Point kernelAnchor = cv::Point(-1, -1);
+int iterationCount = 1;
+int borderType = cv::BORDER_CONSTANT;
 
 DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
                                                        qMakePair(kSize.width,kSize.height),
@@ -106,16 +124,17 @@ LineEditLayout* anchorLineEditLayout =
         new LineEditLayout("Current Anchor", "Default = (-1, -1)",
                            160, 150);
 
-QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
 QString prevAnchorText = "";
 
 ApplyResetButtonLayout* applyResetBL = new ApplyResetButtonLayout();
 
 void initWidget()
 {
+    QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
+
     anchorLineEditLayout->lineEdit->setReadOnly(true);
 
-    vBoxSub->setSpacing(15);
+    vBoxSub->setSpacing(30);
 
     QFont font = anchorNoteLabel->font();
     font.setPointSize(8);
@@ -136,10 +155,51 @@ void initWidget()
 
     QVBoxLayout* anchorMainVBox = new QVBoxLayout;
     anchorMainVBox->setAlignment(Qt::AlignHCenter);
+    anchorMainVBox->setSpacing(5);
     anchorMainVBox->addLayout(anchorLineEditLayout);
     anchorMainVBox->addWidget(anchorNoteLabel);
 
+    QMap<QString, QVariant> morphShapeMap;
+    morphShapeMap.insert("MORPH_RECT", cv::MORPH_RECT);
+    morphShapeMap.insert("MORPH_CROSS", cv::MORPH_CROSS);
+    morphShapeMap.insert("MORPH_ELLIPSE", cv::MORPH_ELLIPSE);
+
+    LabelledComboBox* morphShapeLCB = new LabelledComboBox("kernelMorhShape",
+                                                           morphShapeMap);
+    connect(morphShapeLCB,SIGNAL(currentIndexChanged(QVariant)),
+            this,SLOT(morphShapeChanged(QVariant)));
+    SliderLayout* iterationCountSL = new SliderLayout("iterations", iterationCount);
+    connect(iterationCountSL, SIGNAL(sliderValueChanged(int)),
+            this, SLOT(iterationChanged(int)));
+
+    QMap<QString, QVariant> borderTypes;
+    borderTypes.insert("BORDER_CONSTANT", cv::BORDER_CONSTANT);
+    borderTypes.insert("BORDER_REPLICATE", cv::BORDER_REPLICATE);
+    borderTypes.insert("BORDER_REFLECT", cv::BORDER_REFLECT);
+    /*!
+         * borderTypeLCB->addItem( "BORDER_WRAP", 3);
+         * BORDER_WRAP is not supported, see @var moreInfoLink page
+         */
+    borderTypes.insert("BORDER_DEFAULT", cv::BORDER_DEFAULT);
+    borderTypes.insert("BORDER_REFLECT_101", cv::BORDER_REFLECT_101);
+    /*!
+         * FIXME:
+         * borderTypeLCB->addItem("BORDER_TRANSPARENT", cv::BORDER_TRANSPARENT);
+         * BORDER_TRANSPARENT is causing crash
+         */
+    borderTypes.insert("BORDER_REFLECT101", cv::BORDER_REFLECT101);
+    borderTypes.insert("BORDER_ISOLATED", cv::BORDER_ISOLATED);
+
+    LabelledComboBox* borderTypeLCB = new LabelledComboBox("borderType",
+                                                           borderTypes);
+    borderTypeLCB->comboBox->setCurrentText("BORDER_CONSTANT");
+    connect(borderTypeLCB,SIGNAL(currentIndexChanged(QVariant)),
+            this,SLOT(borderChanged(QVariant)));
+
     vBoxSub->addLayout(anchorMainVBox);
+    vBoxSub->addLayout(morphShapeLCB);
+    vBoxSub->addLayout(iterationCountSL);
+    vBoxSub->addLayout(borderTypeLCB);
     vBoxSub->addLayout(applyResetBL);
 
     // TODO: Add Config widgets
