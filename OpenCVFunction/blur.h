@@ -64,16 +64,13 @@ public:
 
             return outputImage;
         }
-        else
-        {
-            //            errorLabel->show();
-            //            errorLabel->setText("Kernel Size should be < Anchor");
-            //            if(kSize.width <= 0 || kSize.height <= 0)
-            //                errorLabel->setText("Kernel Size should not be <= 0");
 
-            return inputImage;
-        }
+        //            errorLabel->show();
+        //            errorLabel->setText("Kernel Size should be < Anchor");
+        //            if(kSize.width <= 0 || kSize.height <= 0)
+        //                errorLabel->setText("Kernel Size should not be <= 0");
 
+        return inputImage;
     }
     catch(cv::Exception& e){
         throw e;
