@@ -43,9 +43,9 @@ public:
         operationName = "Harris Corner Detector";
         moreInfoLink = "https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#gac1fc3598018010880e370e2f709b4345";
 
-        lineEditsWithParams.push_back(std::make_pair(blockSizeLayout, blockSize));
-        lineEditsWithParams.push_back(std::make_pair(apertureSizeLayout, apertureSize));
-        lineEditsWithParams.push_back(std::make_pair(kLayout, k));
+        lineEditsWithParams.push_back(qMakePair(blockSizeLayout, blockSize));
+        lineEditsWithParams.push_back(qMakePair(apertureSizeLayout, apertureSize));
+        lineEditsWithParams.push_back(qMakePair(kLayout, k));
 
         initWidget();
     }
@@ -107,7 +107,7 @@ void threshChanged(int value)
 void applyClicked()
 {
     bool paramsApplied = true;
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
     {
         if(!lineEditWithParam.first->getText().isEmpty())
             return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
@@ -128,7 +128,7 @@ void resetClicked()
     *apertureSize = 3;
     *k = 0.04;
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         lineEditWithParam.first->setText(lineEditWithParam.second->toString());
 
     borderTypeComboBox->setCurrentText("BORDER_DEFAULT");
@@ -157,7 +157,7 @@ LineEditLayout* apertureSizeLayout = new LineEditLayout("ksize", *apertureSize);
 LineEditLayout* kLayout = new LineEditLayout("k", *k);
 QComboBox* borderTypeComboBox = new QComboBox();
 
-QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
@@ -181,7 +181,7 @@ void initWidget()
     borderTypeComboBox->addItem("BORDER_ISOLATED", cv::BORDER_ISOLATED);
     borderTypeComboBox->setCurrentText("BORDER_DEFAULT");
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         vBoxSub->addLayout(lineEditWithParam.first);
 
     connect(applyResetBox, SIGNAL(applyClicked()),

@@ -125,7 +125,7 @@ private:
     cv::Ptr< cv::BackgroundSubtractor> pCNT;
     cv::Ptr< cv::BackgroundSubtractor> pLSBP;
 
-    std::vector<QString> bkgSubTechs =
+    QVector<QString> bkgSubTechs =
     {
         {GET_VARIABLE_NAME(KNN)},
         {GET_VARIABLE_NAME(MOG)},
@@ -164,7 +164,7 @@ private:
         pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
         pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
 
-        for(unsigned int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
+        for(int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
         {
             QRadioButton *radioButton =
                     new QRadioButton(bkgSubTechs[jCount]);
