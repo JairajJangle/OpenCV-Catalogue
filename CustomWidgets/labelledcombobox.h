@@ -41,7 +41,7 @@ public:
                               QWidget *parent = nullptr)
         :QHBoxLayout(parent)
     {
-        for(auto& i : valueList)
+        for(auto const & i : valueList)
         {
             comboBox->addItem(i.toString(), i);
         }
