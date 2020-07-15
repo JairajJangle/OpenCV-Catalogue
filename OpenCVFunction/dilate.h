@@ -72,8 +72,6 @@ public:
                        element, begin, iterationCount,
                        borderType);
 
-            // dilate(inputImage, outputImage, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
-
             return outputImage;
         }
         return inputImage;
