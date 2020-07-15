@@ -71,7 +71,7 @@ void imgFlipRadioButtonClicked(int flipFlagCode){
 private:
 int flipFlagCode = 0;
 
-std::vector<std::pair<int, QString>> flipFlagsAll =
+QVector<QPair<int, QString>> flipFlagsAll =
 {
     {-99, "No flip"},
     {0, "X axis"},
@@ -81,7 +81,7 @@ std::vector<std::pair<int, QString>> flipFlagsAll =
 
 void initWidget()
 {
-    for(unsigned int jCount = 0; jCount < flipFlagsAll.size(); jCount++)
+    for(int jCount = 0; jCount < flipFlagsAll.size(); jCount++)
     {
         QRadioButton *radioButton =
                 new QRadioButton(flipFlagsAll.at(jCount).second);

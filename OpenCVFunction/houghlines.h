@@ -38,11 +38,11 @@ public:
         operationName = "Hough Lines Detector";
         moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=HoughLines#houghlines";
 
-        lineEditsWithParams.push_back(std::make_pair(rhoLineEditLayout, rho));
-        lineEditsWithParams.push_back(std::make_pair(thetaLayout, theta));
-        lineEditsWithParams.push_back(std::make_pair(thresholdLayout, threshold));
-        lineEditsWithParams.push_back(std::make_pair(srnLayout, srn));
-        lineEditsWithParams.push_back(std::make_pair(stnLayout, stn));
+        lineEditsWithParams.push_back(qMakePair(rhoLineEditLayout, rho));
+        lineEditsWithParams.push_back(qMakePair(thetaLayout, theta));
+        lineEditsWithParams.push_back(qMakePair(thresholdLayout, threshold));
+        lineEditsWithParams.push_back(qMakePair(srnLayout, srn));
+        lineEditsWithParams.push_back(qMakePair(stnLayout, stn));
 
         initWidget();
     }
@@ -91,7 +91,7 @@ public:
 private slots:
 void applyClicked(){
     bool paramsApplied = true;
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
     {
         if(!lineEditWithParam.first->getText().isEmpty())
             return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
@@ -114,7 +114,7 @@ void resetClicked(){
     *srn = 50.0;
     *stn = 10.0;
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         lineEditWithParam.first->setText(lineEditWithParam.second->toString());
 
     // Special case:
@@ -134,7 +134,7 @@ LineEditLayout* thresholdLayout = new LineEditLayout("threshold", *threshold);
 LineEditLayout* srnLayout = new LineEditLayout("srn", *srn);
 LineEditLayout* stnLayout = new LineEditLayout("stn", *stn);
 
-QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
@@ -174,7 +174,7 @@ void initWidget()
     connect(applyResetBox, SIGNAL(resetClicked()),
             this, SLOT(resetClicked()));
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         vBoxSub->addLayout(lineEditWithParam.first);
 
     vBoxSub->addLayout(applyResetBox);

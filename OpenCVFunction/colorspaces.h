@@ -74,7 +74,7 @@ void colorConvRadioButtonClicked(int colorConvCode){
 }
 
 private:
-std::vector<std::pair<int, QString>> colorCodesAll =
+QVector<QPair<int, QString>> colorCodesAll =
 {
     {-1, "RGB"},
     {cv::COLOR_BGR2HSV, "HSV"},
@@ -92,7 +92,7 @@ int colorConvCode = 0;
 protected:
 void initWidget()
 {
-    for(unsigned int jCount = 0; jCount < colorCodesAll.size(); jCount++)
+    for(int jCount = 0; jCount < colorCodesAll.size(); jCount++)
     {
         QRadioButton *radioButton =
                 new QRadioButton(colorCodesAll[jCount].second);

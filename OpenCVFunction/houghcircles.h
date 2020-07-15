@@ -39,12 +39,12 @@ public:
         operationName = "Hough Circle Detector";
         moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=houghcircles#houghcircles";
 
-        lineEditsWithParams.push_back(std::make_pair(dpLineEditLayout, dp));
-        lineEditsWithParams.push_back(std::make_pair(minDistLayout, minDist));
-        lineEditsWithParams.push_back(std::make_pair(param1Layout, param1));
-        lineEditsWithParams.push_back(std::make_pair(param2Layout, param2));
-        lineEditsWithParams.push_back(std::make_pair(minRadiusLayout, minRadius));
-        lineEditsWithParams.push_back(std::make_pair(maxRadiusLayout, maxRadius));
+        lineEditsWithParams.push_back(qMakePair(dpLineEditLayout, dp));
+        lineEditsWithParams.push_back(qMakePair(minDistLayout, minDist));
+        lineEditsWithParams.push_back(qMakePair(param1Layout, param1));
+        lineEditsWithParams.push_back(qMakePair(param2Layout, param2));
+        lineEditsWithParams.push_back(qMakePair(minRadiusLayout, minRadius));
+        lineEditsWithParams.push_back(qMakePair(maxRadiusLayout, maxRadius));
 
         initWidget();
     }
@@ -102,7 +102,7 @@ public:
 private slots:
 void applyClicked(){
     bool paramsApplied = true;
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
     {
         if(!lineEditWithParam.first->getText().isEmpty())
             return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
@@ -125,7 +125,7 @@ void resetClicked(){
     *minRadius = 0;
     *maxRadius = 0;
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         lineEditWithParam.first->setText(lineEditWithParam.second->toString());
 }
 
@@ -145,7 +145,7 @@ LineEditLayout* param2Layout = new LineEditLayout("param2", *param2);
 LineEditLayout* minRadiusLayout = new LineEditLayout("minRadius", *minRadius);
 LineEditLayout* maxRadiusLayout = new LineEditLayout("maxRadius", *maxRadius);
 
-QVector<std::pair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
@@ -157,7 +157,7 @@ void initWidget()
     minDistValidator->setDecimals(2);
 
     QIntValidator* dpValidator = new QIntValidator();
-    dpValidator->setBottom(0);
+    dpValidator->setBottom(1);
     dpLineEditLayout->lineEdit->setValidator(dpValidator);
     minDistLayout->lineEdit->setValidator(minDistValidator);
     // TODO: Add validators to other fields if required
@@ -174,7 +174,7 @@ void initWidget()
 
     vBoxSub->addLayout(selectMethodCB);
 
-    for(std::pair<LineEditLayout*, QVariant*> lineEditWithParam : lineEditsWithParams)
+    for(auto& lineEditWithParam : lineEditsWithParams)
         vBoxSub->addLayout(lineEditWithParam.first);
 
     vBoxSub->addLayout(applyResetBox);
