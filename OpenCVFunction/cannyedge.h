@@ -106,7 +106,6 @@ void initWidget()
     connect(selectAppertureCB,SIGNAL(currentIndexChanged(QVariant)),
             this,SLOT(appertureValueChanged(QVariant)));
 
-
     vBoxSub->addLayout(t1SliderLayout);
     vBoxSub->addLayout(t2SliderLayout);
     vBoxSub->addLayout(selectAppertureCB);
