@@ -342,7 +342,7 @@ void MainWindow::getSourceCaptureImage()
         cv::Mat outputImage;
         capturedOriginalImg.copyTo(outputImage);
         bool isChainSuccess = false;
-        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        for(auto& baseConfigWidget : baseConfigWidgetChain)
         {
             isChainSuccess = false;
             try{
@@ -510,13 +510,13 @@ void MainWindow::applySourceClicked()
 
     if(captureInputSource == nullptr){
         captureInputSource = new CaptureInputSource();
-        captureInputSource->setInputSource(path);
+        emit captureInputSource->setInputSource(path);
 
         connect(captureInputSource, SIGNAL(sourceCaptured()), this, SLOT(getSourceCaptureImage()));
         connect(captureInputSource, SIGNAL(sourceCaptureError(QString)), this, SLOT(getSourceCaptureError(QString)));
     }
     else{
-        captureInputSource->setInputSource(path);
+        emit captureInputSource->setInputSource(path);
     }
 
     // FIXME: Crash
@@ -571,7 +571,7 @@ void MainWindow::switchThemeButtonClicked()
             ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
         }
 
-        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        for(auto& baseConfigWidget : baseConfigWidgetChain)
         {
             baseConfigWidget->changeWidgetsStyleSheet(true);
         }
@@ -583,7 +583,7 @@ void MainWindow::switchThemeButtonClicked()
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
 
-        for(BaseConfigWidget* baseConfigWidget : baseConfigWidgetChain)
+        for(auto& baseConfigWidget : baseConfigWidgetChain)
         {
             baseConfigWidget->changeWidgetsStyleSheet(false);
         }
