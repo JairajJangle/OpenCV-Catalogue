@@ -90,6 +90,7 @@ void MainWindow::initUI(){
     for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
         addOperation((OPCodes)opCode);
     }
+    qDebug() << "All OpenCV OPeration Widgets Initialized";
     chainMenuInitDone = true;
     addOperation(NONE);
 
@@ -355,19 +356,19 @@ void MainWindow::getSourceCaptureImage()
             }
             catch(cv::Exception& e)
             {
-                qDebug() << e.what();
+                qWarning() << e.what();
             }
             catch(std::exception& e)
             {
-                qDebug() << e.what();
+                qWarning() << e.what();
             }
             catch(std::string &error)
             {
-                qDebug() << QString::fromStdString(error);
+                qWarning() << QString::fromStdString(error);
             }
             if(!isChainSuccess)
             {
-                qDebug() << "Errored Operation removed from Chain";
+                qWarning() << "Errored Operation removed from Chain";
 
                 capturedOriginalImg.copyTo(outputImage);
 
@@ -564,7 +565,7 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qDebug() << "Unable to set stylesheet, Dark Mode Theme File not found";
+            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found";
         }
         else
         {
