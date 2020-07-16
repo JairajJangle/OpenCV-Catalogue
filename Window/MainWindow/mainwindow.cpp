@@ -139,8 +139,11 @@ void MainWindow::addOperation(OPCodes opCode)
     case NONE:
         baseConfigWidgetChain.append(new BaseConfigWidget());
         break;
+    case ERODE:
+        baseConfigWidgetChain.append(new ErodeDilate(ErodeDilate::ERODE));
+        break;
     case DILATE:
-        baseConfigWidgetChain.append(new Dilate());
+        baseConfigWidgetChain.append(new ErodeDilate(ErodeDilate::DILATE));
         break;
     default:
         baseConfigWidgetChain.append(new BaseConfigWidget());
