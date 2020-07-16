@@ -37,7 +37,10 @@ class ChainMenuWidget : public QWidget
 public:
     explicit ChainMenuWidget(QWidget *parent = nullptr);
 
-    // Enable or Disable Add (+) button
+    /**
+     * @brief setAddButonEnabled Enable or Disable Add (+) button
+     * @param enabled flag to change the state
+     */
     void setAddButonEnabled(bool enabled);
     // Enable or Disable Remove (-) button
     void setRemoveButtonEnabled(bool enabled);
