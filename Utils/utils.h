@@ -62,6 +62,12 @@ inline QMap<int, QString> chainMenuOpMap;
  */
 inline bool isDarkModeOn = true;
 
+/**
+ * @brief WidgetUtils namespace
+ *
+ * WidgetUtils namespace should hold all the Utility based operation to be performed on
+ * QWidget derivatives
+ */
 namespace WidgetUtils {
 QPoint getWidgetCenter(QWidget* widget);
 inline QPoint getWidgetCenter(QWidget* widget)
