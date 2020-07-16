@@ -345,10 +345,11 @@ void MainWindow::getSourceCaptureImage()
         cv::Mat outputImage;
         capturedOriginalImg.copyTo(outputImage);
         bool isChainSuccess = false;
-        for(auto& baseConfigWidget : baseConfigWidgetChain)
+        for(auto baseConfigWidget : baseConfigWidgetChain)
         {
             isChainSuccess = false;
             try{
+                // FIXME: Segmentation fault in large chains
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
                 isChainSuccess = true;
             }
