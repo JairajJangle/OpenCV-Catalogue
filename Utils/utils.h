@@ -69,6 +69,12 @@ inline bool isDarkModeOn = true;
  * QWidget derivatives
  */
 namespace WidgetUtils {
+
+/**
+ * @brief getWidgetCenter
+ * @param widget Takes the widget whose centered is to be found
+ * @return Returns center of @param widget in as QPoint(x, y)
+ */
 QPoint getWidgetCenter(QWidget* widget);
 inline QPoint getWidgetCenter(QWidget* widget)
 {
