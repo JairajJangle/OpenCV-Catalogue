@@ -75,11 +75,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~ColorPicker()
-{
-    qDebug() << "Color Picker destroyed";
-}
-
 private:
 LineEditLayout* rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
 LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);

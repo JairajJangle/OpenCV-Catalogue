@@ -45,11 +45,6 @@ public:
         initWidget();
     }
 
-    ~ErodeDilate()
-    {
-        qDebug() << "ErodeDilate Destroyed";
-    }
-
     cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
         if((begin.x < kSize.width && begin.y < kSize.height)

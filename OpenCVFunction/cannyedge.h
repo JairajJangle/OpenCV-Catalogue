@@ -56,11 +56,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~CannyEdge()
-{
-    qDebug() << "Canny Edge destroyed";
-}
-
 private slots:
 void t1ValueChanged(int value){
     t1Value = value;

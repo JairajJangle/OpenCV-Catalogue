@@ -82,11 +82,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~Blur()
-{
-    qDebug() << "Blur destroyed";
-}
-
 private slots:
 void applyKernelClicked(){
     kSize = cv::Size(kSizeDLEL->getTexts().first.toInt(),

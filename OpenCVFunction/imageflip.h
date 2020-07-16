@@ -58,11 +58,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~ImageFlip()
-{
-    qDebug() << "ImageFlip destroyed";
-}
-
 private slots:
 void imgFlipRadioButtonClicked(int flipFlagCode){
     this->flipFlagCode = flipFlagCode;

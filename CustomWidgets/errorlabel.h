@@ -45,8 +45,4 @@ public:
     {
         this->setVisible(true);
     }
-    ~ErrorLabel()
-    {
-
-    }
 };

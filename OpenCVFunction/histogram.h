@@ -106,11 +106,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~HistogramCalculation()
-{
-    qDebug() << "Histogram Calculation destroyed";
-}
-
 private:
 int histSize = 256;
 bool uniform = true, accumulate = false;

@@ -83,8 +83,6 @@ public:
         slider->setVisible(visible);
     }
 
-    virtual ~SliderLayout() {};
-
 signals:
     void sliderValueChanged(int);
 
