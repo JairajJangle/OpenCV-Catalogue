@@ -32,20 +32,22 @@
 #include "CustomWidgets/labelledcombobox.h"
 #include "CustomWidgets/sliderlayout.h"
 
-class Dilate : public BaseConfigWidget
+class ErodeDilate : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    Dilate()
+    enum MorphologyType{ERODE, DILATE};
+    ErodeDilate(MorphologyType morphologyType): morphType(morphologyType)
     {
-        operationName = "Dilate";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html#dilate";
+        operationName = morphType == DILATE ? "Dilate" : "Erode";
+        moreInfoLink = morphType == DILATE ? "https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html#dilate"
+                                           : "https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html#erode";
         initWidget();
     }
 
-    ~Dilate()
+    ~ErodeDilate()
     {
-        qDebug() << "Dilate Destroyed";
+        qDebug() << "ErodeDilate Destroyed";
     }
 
     cv::Mat getProcessedImage(cv::Mat inputImage)try
@@ -68,9 +70,13 @@ public:
                                                         cv::Point(-1, -1));
 
             // FIXME: Check need to customize borderValue parameter for dilate(...)
-            cv::dilate(inputImage, outputImage,
-                       element, begin, iterationCount,
-                       borderType);
+            morphType == DILATE
+                    ? cv::dilate(inputImage, outputImage,
+                                 element, begin, iterationCount,
+                                 borderType)
+                    : cv::erode(inputImage, outputImage,
+                                 element, begin, iterationCount,
+                                 borderType);
 
             return outputImage;
         }
@@ -113,6 +119,7 @@ cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
 cv::Point kernelAnchor = cv::Point(-1, -1);
 int iterationCount = 1;
 int borderType = cv::BORDER_CONSTANT;
+const MorphologyType morphType;
 
 DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
                                                        qMakePair(kSize.width,kSize.height),

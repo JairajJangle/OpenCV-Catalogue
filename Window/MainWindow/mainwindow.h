@@ -45,7 +45,7 @@
 #include "OpenCVFunction/colorspaces.h"
 #include "OpenCVFunction/imageflip.h"
 #include "OpenCVFunction/colorpicker.h"
-#include "OpenCVFunction/dilate.h"
+#include "OpenCVFunction/erodedilate.h"
 #include "OpenCVFunction/cannyedge.h"
 #include "OpenCVFunction/blur.h"
 #include "OpenCVFunction/backgroundsubtract.h"
@@ -54,7 +54,7 @@
 #include "OpenCVFunction/histogram.h"
 #include "OpenCVFunction/harriscornerdetector.h"
 #include "OpenCVFunction/inrange.h"
-#include "OpenCVFunction/dilate.h"
+#include "OpenCVFunction/erodedilate.h"
 
 // Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
@@ -74,7 +74,7 @@ class MainWindow : public QMainWindow
 private:
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION, HARRIS_CORNER, DILATE,
+                 HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE,
 
                  /* Add all other Enum values before this */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
