@@ -27,6 +27,10 @@
 #include <QWidget>
 
 namespace Numeric {
+/**
+ * setPrecision(...) to set decimal precision of
+ * @param number double by @param decimalPlaces
+ */
 // extern:
 double setPrecision(double number, int decimalPlaces);
 // inline:
@@ -37,6 +41,12 @@ inline double setPrecision(double number, int decimalPlaces)
 }
 }
 
+/**
+ * @brief chainMenuOpMap
+ *
+ * Stores map of MainWindow::OpCodes as OpenCV operation codes and
+ * name of the operation in QString
+ */
 inline QMap<int, QString> chainMenuOpMap;
 
 inline bool isDarkModeOn = true;
