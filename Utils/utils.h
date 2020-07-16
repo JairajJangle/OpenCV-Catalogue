@@ -27,11 +27,13 @@
 #include <QWidget>
 
 namespace Numeric {
+
 /**
- * setPrecision(...) to set decimal precision of
- * @param number double by @param decimalPlaces
+ * @brief setPrecision To set precision of a decimal value(double)
+ * @param number Decimal value whose precision is to be changed
+ * @param decimalPlaces Precision of @param number is to be changed by
+ * @return
  */
-// extern:
 double setPrecision(double number, int decimalPlaces);
 // inline:
 inline double setPrecision(double number, int decimalPlaces)
