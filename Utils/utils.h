@@ -49,6 +49,17 @@ inline double setPrecision(double number, int decimalPlaces)
  */
 inline QMap<int, QString> chainMenuOpMap;
 
+/**
+ * @brief isDarkModeOn
+ *
+ * Stores the theme mode OpenCV Catalogue is in
+ * This value can be accessed by all widgets to switch their style sheets
+ * if necessary.
+ *
+ * Generally, BaseConfigWidget have changeWidgetsStyleSheet(...) exposed
+ * when called, it should invoke the style sheet change of all children widgets
+ * whether they are derived or members of derived classes
+ */
 inline bool isDarkModeOn = true;
 
 namespace WidgetUtils {
