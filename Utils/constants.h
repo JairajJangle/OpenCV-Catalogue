@@ -21,15 +21,38 @@
 #pragma once
 
 namespace Info {
+/**
+ * @brief appName Application name
+ */
 [[maybe_unused]] static const char* appName = "OpenCV Catalogue";
+
+/**
+ * @brief version Application version name
+ */
 [[maybe_unused]] static const char* version = "v0.2.1";
 }
 
+/**
+ * @namespace RegExps Holds all Regexes to be used by OpenCV Catalogue
+ */
 namespace RegExps {
+
+/**
+ * @brief onlyDigits Regex to filter our only integer values
+ */
 [[maybe_unused]] static const char* onlyDigits = "\\d*";
+
+/**
+ * @brief decimal0To1 Regex to filter decimal values between 0 to 1 with precision = 4
+ */
 [[maybe_unused]] static const char* decimal0To1 = "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$";
 }
 
+/**
+ * @namespace Strings Holds all constant stirng values to be used by OpenCV Catalogue
+ *
+ * Note that, these strings exclude above defined strings
+ */
 namespace Strings {
 [[maybe_unused]] static const char* noOperationSelected = "No operation Selected";
 }
