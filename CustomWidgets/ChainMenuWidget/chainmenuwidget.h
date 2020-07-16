@@ -39,12 +39,20 @@ public:
 
     /**
      * @brief setAddButonEnabled Enable or Disable Add (+) button
-     * @param enabled flag to change the state
+     * @param enabled Flag to change the state
      */
     void setAddButonEnabled(bool enabled);
-    // Enable or Disable Remove (-) button
+
+    /**
+     * @brief setRemoveButtonEnabled Enable or Disable Remove (-) button
+     * @param enabled Flag to change the state
+     */
     void setRemoveButtonEnabled(bool enabled);
-    // Enable or Disable Drop Down Menu / Combo box
+
+    /**
+     * @brief setComboBoxEnabled Enable or Disable Drop Down Menu / Combo box
+     * @param enabled Flag to change the state
+     */
     void setComboBoxEnabled(bool enabled);
     // Enable or Disable the whole ChainMenuWidget Widget
     void setEnabled(bool enabled);
