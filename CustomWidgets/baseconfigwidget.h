@@ -83,7 +83,7 @@ public:
 
         changeWidgetsStyleSheet(isDarkModeOn);
     }
-    ~BaseConfigWidget(){}
+    virtual ~BaseConfigWidget(){}
 
     /*
      * Returned widget to be used by calling widget/application(Main Window)
