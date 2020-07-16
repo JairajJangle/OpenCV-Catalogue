@@ -65,11 +65,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~InRange()
-{
-    qDebug() << "InRange destroyed";
-}
-
 signals:
 void refreshWidget();
 

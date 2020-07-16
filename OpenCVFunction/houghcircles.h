@@ -94,11 +94,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~HoughCircles()
-{
-    qDebug() << "Hough Circle destroyed";
-}
-
 private slots:
 void applyClicked(){
     bool paramsApplied = true;

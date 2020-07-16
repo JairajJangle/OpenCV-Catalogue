@@ -93,11 +93,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~HarrisCornerDetector()
-{
-    qDebug() << "Harris Corner Detector destroyed";
-}
-
 private slots:
 void threshChanged(int value)
 {

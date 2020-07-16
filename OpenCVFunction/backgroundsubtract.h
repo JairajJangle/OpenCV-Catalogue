@@ -88,11 +88,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-    ~BackgroundSubtraction()
-    {
-        qDebug() << "Blur destroyed";
-    }
-
 private slots:
     void bkgSubTechChanged(int bkgSubTech){
         selectedTech = bkgSubTech;

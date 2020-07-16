@@ -63,11 +63,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~ColorSpace()
-{
-    qDebug() << "Colorspace destroyed";
-}
-
 private slots:
 void colorConvRadioButtonClicked(int colorConvCode){
     this->colorConvCode = colorConvCode;

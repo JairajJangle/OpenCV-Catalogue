@@ -83,11 +83,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-~HoughLines()
-{
-    qDebug() << "Hough Lines destroyed";
-}
-
 private slots:
 void applyClicked(){
     bool paramsApplied = true;
