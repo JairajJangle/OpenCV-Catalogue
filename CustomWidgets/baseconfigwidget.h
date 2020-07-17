@@ -149,14 +149,19 @@ public:
      * Returns URL of opertaion documentation in OpenCV docs to be used by calling
      * widget/application(Main Window) to update Operation Name label
      */
+    /**
+     * @brief getInfoURL Returns URL of opertaion documentation in OpenCV docs
+     * @return Documentation URL of selected OpenCV Operation
+     */
     QString getInfoURL()
     {
         return moreInfoLink;
     }
 
-    /*
-     * Shows exploded windows of OpenCV operation to give user more insights
-     * Perform displaying/hiding of exploded views and returns status of operation
+    /**
+     * @brief setExplodedView Shows exploded windows of OpenCV operation to give user more insights
+     * @param explodedViewEnabled
+     * @return Status of operation, true if Exploded view is enabled else false
      */
     virtual bool setExplodedView([[maybe_unused]] bool explodedViewEnabled)
     {
