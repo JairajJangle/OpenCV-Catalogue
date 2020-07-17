@@ -114,6 +114,9 @@ signals:
 private:
     Ui::ChainMenuWidget *ui;
 
+    /**
+     * @brief buttonAddLightStyle Light Theme Style sheet for Add button (+)
+     */
     const QString buttonAddLightStyle = QString("QToolButton#buttonAdd"
                                                 "{"
                                                 "    color: green;"
@@ -123,6 +126,9 @@ private:
                                                 "    color: #787878;"
                                                 "}");
 
+    /**
+     * @brief buttonAddDarkStyle Dark Theme Style sheet for Add button (+)
+     */
     const QString buttonAddDarkStyle = QString("QToolButton#buttonAdd"
                                                "{"
                                                "    color: #22ff00;"
@@ -132,6 +138,9 @@ private:
                                                "    color: #787878;"
                                                "}");
 
+    /**
+     * @brief buttonRemoveLightStyle Light Theme Style sheet for Remove button (-)
+     */
     const QString buttonRemoveLightStyle = QString("QToolButton#buttonRemove "
                                                    "{"
                                                    "    color: red;"
@@ -141,6 +150,9 @@ private:
                                                    "    color: #787878;"
                                                    "}");
 
+    /**
+     * @brief buttonRemoveDarkStyle Dark Theme Style sheet for Remove button (-)
+     */
     const QString buttonRemoveDarkStyle = QString("QToolButton#buttonRemove "
                                                   "{"
                                                   "    color: #ff2a00;"
