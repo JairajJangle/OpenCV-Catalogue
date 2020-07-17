@@ -38,18 +38,44 @@ class BaseConfigWidget : public QWidget
     Q_OBJECT
 
 protected:
+    /**
+     * @brief wgtSub Sub-widget of BaseConfigWidget
+     *  This widget is parent to the QVBoxLayout where all the
+     *  configuration widgets and layouts are added in respective
+     *  derived classes (OpenCV Operation widget classes)
+     */
     QWidget *wgtSub = new QWidget();
+
+    /**
+     * @brief vBoxSub is the main QVBoxLayout which should be populated in
+     *  derived classes @fn initWidget with all the adjustment widgets
+     *
+     *  Parent of vBoxSub is @var wgtSub
+     */
+    QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+
+    /**
+     * @brief chainMenuWidget Chain Menu Widget is member of this class
+     */
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
+
+    /**
+     * @brief paramAdjustWidget This widget contains all the parameter adjustment widget
+     *  Content for this widget is @var wgtSub, @var moreInfoLink, @var operationName
+     */
     ParamAdjustWidget* paramAdjustWidget = new ParamAdjustWidget();
 
-    /*
-     * Assing Values to operationName and moreInfoLink in Constructor of
-     * Derived class of OpenCV operation widgets
+    /**
+     * @brief operationName Holds the name of the selected operation
+     *  This is set in constructor of each derived class
      */
     QString operationName = Strings::noOperationSelected;
-    QString moreInfoLink = "";
 
-    QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+    /**
+     * @brief moreInfoLink Holds the documentation link for the selected operation
+     *  This is set in constructor of each derived class
+     */
+    QString moreInfoLink = "";
 
     bool explodedViewEnabled = false;
 
@@ -170,18 +196,18 @@ public:
     + std::string(typeid(this).name()); // Append class name
 }
 
-    /*
+/*
      * Super call this function at the end of overriden initWidget() function in
      * each Operation class to actually show configuration widget in the Scroll Area
      */
-    virtual void initWidget()
-    {
-//        vBoxSub->setAlignment(Qt::AlignHCenter);
-        wgtSub->setMinimumWidth(370);
-        wgtSub->setMaximumWidth(420);
+virtual void initWidget()
+{
+    //        vBoxSub->setAlignment(Qt::AlignHCenter);
+    wgtSub->setMinimumWidth(370);
+    wgtSub->setMaximumWidth(420);
 
-        paramAdjustWidget->setContentLayout(wgtSub,
-                                      operationName,
-                                      moreInfoLink);
-    }
+    paramAdjustWidget->setContentLayout(wgtSub,
+                                        operationName,
+                                        moreInfoLink);
+}
 };
