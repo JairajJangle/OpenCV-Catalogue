@@ -36,10 +36,9 @@
 class BaseConfigWidget : public QWidget
 {
     Q_OBJECT
-public:
-    QWidget *wgtSub = new QWidget();
 
 protected:
+    QWidget *wgtSub = new QWidget();
     ChainMenuWidget* chainMenuWidget = new ChainMenuWidget();
     ParamAdjustWidget* paramAdjustWidget = new ParamAdjustWidget();
 
