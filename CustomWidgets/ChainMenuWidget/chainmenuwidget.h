@@ -30,6 +30,15 @@ namespace Ui {
 class ChainMenuWidget;
 }
 
+/**
+ * @brief The ChainMenuWidget class A custom Widget to select a OpenCV operation
+ *  from list of operations displayed in QComboBox in .ui file
+ *
+ * ChainMenuWidget provides Add, Remove buttons to add or remove a OpenCV operation
+ * from the chain of operation/s
+ *
+ * For implementation see @class MainWindow
+ */
 class ChainMenuWidget : public QWidget
 {
     Q_OBJECT
@@ -63,21 +72,43 @@ public:
      */
     void setCurrentOperation(QString operationName);
     /**
-     * Set visibility of vertical "linking" line
-     * Refer the .ui file
+     * @brief setLineVisibility changes the visibility of vertical line linking two ChainMenuWidgets.
+     *  For the vertical line refer the .ui file
+     *
+     * @param visible set this true to make line visible
      */
     void setLineVisibility(bool visible);
-    // Change style sheet, called when application theme changes
+    /**
+     * @brief setStyleSheet Change style sheet, called when application theme changes
+     * @param isDarkMode Set this true for Dark Theme Mode
+     */
     void setStyleSheet(bool isDarkMode);
-    // Returns the operation selection Radio button
+    /**
+     * @brief getRadioButton Returns the operation selection - Radio button
+     * @return QRadioButton* object
+     */
     QRadioButton* getRadioButton();
 
     ~ChainMenuWidget();
 
 signals:
+    /**
+     * @brief addOperationClicked Emitted when click event on Add button (+) is recorded
+     */
     void addOperationClicked();
+    /**
+     * @brief removeOperationClicked Emitted when click event on Remove button (-) is recorded
+     */
     void removeOperationClicked();
+    /**
+     * @brief operationChanged Emitted when ChainMenuWidget QComboBox selection is changed
+     * @param index Index is the position of the selected operation in the QComboBox.
+     *  This index corresponds to MainWindow::OpCodes
+     */
     void operationChanged(int index);
+    /**
+     * @brief radioButtonChecked Emitted when click event on Radio button is recorded
+     */
     void radioButtonChecked();
 
 private:
