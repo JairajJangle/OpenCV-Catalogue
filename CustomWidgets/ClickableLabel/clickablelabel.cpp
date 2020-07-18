@@ -32,11 +32,11 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        emit LBclicked(event->x(), event->y());
+        emit LBclicked(QPoint(event->x(), event->y()));
     }
     if(event->button() == Qt::RightButton)
     {
-        emit RBclicked(event->x(), event->y());
+        emit RBclicked(QPoint(event->x(), event->y()));
     }
 }
 

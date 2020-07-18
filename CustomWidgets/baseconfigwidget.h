@@ -29,7 +29,6 @@
 
 #include "Utils/constants.h"
 
-#include "CustomWidgets/ClickableLabel/clickablelabel.h"
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 #include "CustomWidgets/ParamAdjustWidget/paramadjustwidget.h"
 
