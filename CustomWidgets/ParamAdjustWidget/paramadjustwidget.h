@@ -63,8 +63,16 @@ signals:
     void infoButtonClicled();
 
 private:
+    /**
+     * @brief mainLayout GridLayout which have all other widgets of this class as children
+     *  This is used to set the positions of each child widget in ParamAdjustWidget
+     */
     QGridLayout* mainLayout = new QGridLayout();
 
+    /**
+     * @brief dividerLine Line to separate Title Name, Info Link button from parameter
+     *  adjustment widgets
+     */
     DividerLine* dividerLine = new DividerLine(1);
 
     /**
