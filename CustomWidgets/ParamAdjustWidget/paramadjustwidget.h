@@ -30,6 +30,8 @@
 
 #include "Utils/constants.h"
 
+#include "CustomWidgets/dividerline.h"
+
 class ParamAdjustWidget : public QFrame {
     Q_OBJECT
 
@@ -62,9 +64,17 @@ signals:
 
 private:
     QGridLayout* mainLayout = new QGridLayout();
-    QLabel* toggleButton = new QLabel();
-    QFrame* headerLine = new QFrame();
-    QFrame* headerLine2 = new QFrame();
+
+    DividerLine* dividerLine = new DividerLine(1);
+
+    /**
+     * @brief titleLabel Label to display OpenCV operation name
+     */
+    QLabel* titleLabel = new QLabel();
+
+    /**
+     * @brief infoButton Button to open OpenCV opertaion info link
+     */
     QToolButton* infoButton = new QToolButton();
     int row = 0;
 
