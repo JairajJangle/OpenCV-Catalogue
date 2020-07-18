@@ -197,7 +197,7 @@ void initWidget()
     borderTypeHBox->insertStretch( -1, 1 );
     vBoxSub->addLayout(borderTypeHBox);
 
-    vBoxSub->addWidget(new DividerLine(this));
+    vBoxSub->addWidget(new DividerLine(0, this));
 
     vBoxSub->addLayout(threshSliderLayout);
     connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
