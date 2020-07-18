@@ -24,8 +24,11 @@
 #include <QWidget>
 #include <QMouseEvent>
 
-//A Custom Label Class inheriting QLabel
-// Inherits QLabel with adding mousePressEvent overriden function to return mouse position
+
+/**
+ * @brief The ClickableLabel class Custom Label Class inheriting QLabel
+ *  To emit signal when there are Mouse events on this widget
+ */
 class ClickableLabel : public QLabel
 {
     Q_OBJECT
@@ -35,10 +38,21 @@ public:
     ~ClickableLabel();
 
 signals:
+    /**
+     * @brief LBclicked Signal fired when Left Mouse Button click is recorded on this widget
+     */
     void LBclicked(int, int);
+
+    /**
+     * @brief LBclicked Signal fired when Right Mouse Button click is recorded on this widget
+     */
     void RBclicked(int, int);
 
 protected:
-    void mousePressEvent(QMouseEvent* event);
+    /**
+     * @brief mousePressEvent Overriden method from QLabel
+     * @param event See QLabel::mousePressEvent
+     */
+    void mousePressEvent(QMouseEvent* event) override;
     // void mouseMoveEvent(QMouseEvent* event);
 };
