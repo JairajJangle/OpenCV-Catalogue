@@ -23,14 +23,15 @@
 #include <QFrame>
 
 /**
- * @brief Custom DividerLine class to draw horizontal line/divider
+ * @brief DividerLine Custom QFrame class to draw horizontal line/divider
  * to seperate two widget forms or to organize by seperating widgets
  */
 class DividerLine : public QFrame
 {
 public:
 
-    explicit DividerLine(QWidget* parent = nullptr,
+    explicit DividerLine(int fixedHeight = 0,
+                         QWidget* parent = nullptr,
                          Qt::WindowFlags f = Qt::WindowFlags())
         : QFrame(parent)
     {
@@ -39,6 +40,7 @@ public:
         this->setGeometry(QRect(320, 150, 118, 3));
         this->setFrameShape(QFrame::HLine);
         this->setFrameShadow(QFrame::Sunken);
-        this->setFixedHeight(20);
+        this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+        this->setFixedHeight(fixedHeight == 0 ? 20 : fixedHeight);
     }
 };
