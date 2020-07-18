@@ -89,7 +89,7 @@ private slots:
     void addOperation(MainWindow::OPCodes opCode = NO_OPERATION);
     void lastOperationChanged(MainWindow::OPCodes opCode);
     void showAboutDialog();
-    void outputLabelLBClicked(int x, int y);
+    void outputLabelLBClicked(QPoint);
     void showHideExplodedView();
     void refreshOutputImage(const cv::Mat img);
     void addOperationWidget();

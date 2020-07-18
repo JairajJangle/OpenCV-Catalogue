@@ -56,8 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
         showAboutDialog();
     });
 
-    connect(ui->labelOutput, SIGNAL(LBclicked(int, int)),
-            this, SLOT(outputLabelLBClicked(int, int)));
+    connect(ui->labelOutput, SIGNAL(LBclicked(QPoint)),
+            this, SLOT(outputLabelLBClicked(QPoint)));
 
     connect(this, SIGNAL(removeOperationWidgetSignal()),
             this, SLOT(removeOperationWidget()));
@@ -529,11 +529,11 @@ void MainWindow::applySourceClicked()
     //    captureInputSource->setInstantFrameRefresh(ui->fileRadioButton->isChecked() ? false : true);
 }
 
-void MainWindow::outputLabelLBClicked(int x, int y)
+void MainWindow::outputLabelLBClicked(QPoint point)
 {
     // FIXME: Mouse click received by unselected widget
     if(!baseConfigWidgetChain.empty())
-        baseConfigWidgetChain.last()->begin =cv::Point(x, y);
+        baseConfigWidgetChain.last()->begin = cv::Point(point.x(), point.y());
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)

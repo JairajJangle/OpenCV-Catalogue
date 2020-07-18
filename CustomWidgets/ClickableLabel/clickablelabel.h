@@ -41,12 +41,12 @@ signals:
     /**
      * @brief LBclicked Signal fired when Left Mouse Button click is recorded on this widget
      */
-    void LBclicked(int, int);
+    void LBclicked(QPoint);
 
     /**
      * @brief LBclicked Signal fired when Right Mouse Button click is recorded on this widget
      */
-    void RBclicked(int, int);
+    void RBclicked(QPoint);
 
 protected:
     /**
