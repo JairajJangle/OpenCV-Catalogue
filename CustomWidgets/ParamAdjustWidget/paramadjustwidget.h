@@ -35,13 +35,29 @@ class ParamAdjustWidget : public QFrame {
 
 public:
     explicit ParamAdjustWidget(QWidget *parent = 0);
-    void setContentLayout(QWidget* contentLayout,
+
+    /**
+     * @brief setContentLayout Adds Content to parameter adjust widget. This is invoked
+     *  from OpenCV operation widgets to set BaseConfigWidget::wgtSub as content widget
+     * @param contentWidget takes QWidget as input to set the content widget for ParamAdjustWidget
+     * @param title Name of the OpenCV operation
+     * @param infoLink Documentation link of OpenCV operation
+     */
+    void setContentLayout(QWidget* contentWidget,
                           const QString title,
                           const QString infoLink);
-    void setInfoButtonVisibility(bool visible);
+
+    /**
+     * @brief setInfoIconStyleSheet tO change style sheet of the info button
+     * @param isDarkMode Set true for Dark Theme, false for Light Theme
+     */
     void setInfoIconStyleSheet(bool isDarkMode);
 
 signals:
+    /**
+     * @brief infoButtonClicled Signal is emitted when click event on info button is
+     *  recorded
+     */
     void infoButtonClicled();
 
 private:
@@ -52,6 +68,9 @@ private:
     QToolButton* infoButton = new QToolButton();
     int row = 0;
 
+    /**
+     * @brief infoButtonLightStyleSheet Light Theme stylesheet for info button
+     */
     const QString infoButtonLightStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
@@ -69,6 +88,9 @@ private:
                                            "    background-repeat: none;"
                                            "}");
 
+    /**
+     * @brief infoButtonDarkStyleSheet Dark Theme stylesheet for info button
+     */
     const QString infoButtonDarkStyleSheet = QString("QToolButton#infoButton"
                                            "{"
                                            "    background-color: transparent;"
