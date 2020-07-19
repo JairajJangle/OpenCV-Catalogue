@@ -502,7 +502,7 @@ void MainWindow::applySourceClicked()
 {
     qDebug() << "Source Select Clicked!!";
     QString path = ui->textInputSource->toPlainText();
-    int inputSourceType;
+    int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
         inputSourceType = CaptureInputSource::FILE;
         QFileInfo check_file(path);
@@ -533,15 +533,14 @@ void MainWindow::applySourceClicked()
 
     if(captureInputSource == nullptr){
         captureInputSource = new CaptureInputSource();
-        emit captureInputSource->setInputSource(path, inputSourceType);
 
         connect(captureInputSource, SIGNAL(sourceCaptured(cv::Mat)),
                 this, SLOT(getSourceCaptureImage(cv::Mat)));
-        connect(captureInputSource, SIGNAL(sourceCaptureError(QString)), this, SLOT(getSourceCaptureError(QString)));
+        connect(captureInputSource, SIGNAL(sourceCaptureError(QString)),
+                this, SLOT(getSourceCaptureError(QString)));
     }
-    else{
-        emit captureInputSource->setInputSource(path, inputSourceType);
-    }
+
+    emit captureInputSource->setInputSource(path, inputSourceType);
 }
 
 void MainWindow::outputLabelLBClicked(QPoint point)
@@ -560,9 +559,12 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
 {
     QPalette sample_palette;
 
-    messageType == ERROR ? sample_palette.setColor(QPalette::WindowText, Qt::red):
-                           messageType == WARNING ? sample_palette.setColor(QPalette::WindowText, Qt::yellow):
-                                                    sample_palette.setColor(QPalette::WindowText, Qt::black);
+    messageType == ERROR ?
+                sample_palette.setColor(
+                    QPalette::WindowText, Qt::red):
+                messageType == WARNING ?
+                    sample_palette.setColor(QPalette::WindowText, Qt::yellow):
+                    sample_palette.setColor(QPalette::WindowText, Qt::black);
 
     ui->labelUserMessage->setAutoFillBackground(true);
     ui->labelUserMessage->setPalette(sample_palette);
