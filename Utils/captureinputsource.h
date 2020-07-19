@@ -164,7 +164,7 @@ private:
 
     InputSourceType inputSourceType = FILE;
 
-    //Mat to store image from camera
+    // Mat to store image from camera
     cv::Mat img, resizedImg;
 
     void openSource()
@@ -175,21 +175,5 @@ private:
             cap.open(inputSource.toInt()); // Camera Index
         else
             cap.open(inputSource.toStdString()); // Source File path
-    }
-
-    //Function to convert QT res image file to OpenCVcv::Mat object
-    cv::Mat loadFromQrc(QString qrc, int flag = cv::IMREAD_COLOR)
-    {
-        QFile file(qrc);
-        cv::Mat m;
-        if(file.open(QIODevice::ReadOnly))
-        {
-            qint64 sz = file.size();
-            std::vector<uchar> buf(sz);
-            file.read((char*)buf.data(), sz);
-            m = cv::imdecode(buf, flag);
-        }
-
-        return m;
     }
 };
