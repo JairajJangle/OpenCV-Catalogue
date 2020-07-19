@@ -38,8 +38,7 @@ class CaptureInputSource : public QObject
 {
     Q_OBJECT
 public:
-    //Mat to store image from camera
-    cv::Mat img, resizedImg;
+    enum InputSourceType {HARDWARE_CAM, FILE, NETWORK_STREAM};
 
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
@@ -69,8 +68,9 @@ public:
 
         connect(this, &CaptureInputSource::setInputSource,
                 this,
-                [=](QString inputSource){
+                [=](QString inputSource, int inputSourceType){
             emit stopCapture();
+            this->inputSourceType = InputSourceType(inputSourceType);
             this->inputSource = inputSource;
             emit startTimer(1000);
         },
@@ -86,9 +86,9 @@ public:
     }
 
 signals:
-    void sourceCaptured();
+    void sourceCaptured(cv::Mat originalImg);
     void sourceCaptureError(QString);
-    void setInputSource(QString inputSource);
+    void setInputSource(QString inputSource, int inputSourceType);
     void startTimer(int);
     void stopCapture();
 
@@ -96,21 +96,42 @@ private slots:
     void captureSource()
     {
         try{
+            bool isSuccess = true;
             if(!cap.isOpened())
             {
                 openSource();
 
-                img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-                resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+                // img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+                // resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
             }
 
             try {
                 double fps = cap.get(cv::CAP_PROP_FPS);
 
                 inputSourceCaptureTImer->setInterval(
-                            instantRefresh ? 10 : (1000/fps));
+                            inputSourceType == NETWORK_STREAM ? 10 : (1000/fps));
 
-                bool isSuccess = cap.read(img);
+                if(inputSourceType == FILE)
+                {
+                    /*
+                     * TODO: Implement a more elegant way to differentiate between Image and Video
+                     *
+                     * First try to read input source as Video File
+                     * If it is not a continuos stream then it is a Image File
+                     */
+                    isSuccess = cap.read(img);
+
+                    /*
+                     * If the selected path is not a video then try to read it as an Image
+                     */
+                    if(!isSuccess)
+                    {
+                        img = cv::imread(inputSource.toStdString());
+                        isSuccess = !img.empty();
+                    }
+                }
+                else if(inputSourceType == NETWORK_STREAM || inputSourceType == HARDWARE_CAM)
+                    isSuccess = cap.read(img);
 
                 // Avoid empty image resizing error
                 if(!cv::Size(img.rows , img.rows).empty())
@@ -123,7 +144,7 @@ private slots:
                     return;
                 }
 
-                emit sourceCaptured();
+                emit sourceCaptured(img);
 
             } catch (cv::Exception& e) {
                 emit sourceCaptureError(e.what());
@@ -141,8 +162,10 @@ private:
     QString inputSource = "";
     cv::VideoCapture cap;
 
-    // Set true for IP/Netword camera input source
-    bool instantRefresh = false;
+    InputSourceType inputSourceType = FILE;
+
+    //Mat to store image from camera
+    cv::Mat img, resizedImg;
 
     void openSource()
     {
@@ -152,11 +175,6 @@ private:
             cap.open(inputSource.toInt()); // Camera Index
         else
             cap.open(inputSource.toStdString()); // Source File path
-    }
-
-    void setInstantFrameRefresh(bool instantRefresh)
-    {
-        this->instantRefresh = instantRefresh;
     }
 
     //Function to convert QT res image file to OpenCVcv::Mat object
