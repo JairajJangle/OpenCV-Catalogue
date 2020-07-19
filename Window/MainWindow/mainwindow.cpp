@@ -26,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // Register cv::Mat type to make it queueable
+    qRegisterMetaType<cv::Mat>("cv::Mat");
+
     initUI();
 
     // FIXME: Check FIXME in HybridSlider cpp source
@@ -327,24 +331,32 @@ void MainWindow::showAboutDialog()
     }
 }
 
-void MainWindow::getSourceCaptureImage()
+void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 {
-    cv::Mat capturedReziedImg = captureInputSource->resizedImg;
-    cv::Mat capturedOriginalImg = captureInputSource->img;
+    //    cv::Mat capturedReziedImg = captureInputSource->resizedImg;
+    //    cv::Mat capturedOriginalImg = captureInputSource->img;
+
+    if(cv::Size(originalImg.rows , originalImg.rows).empty())
+    {
+        qCritical() << "Invalid input image";
+        return;
+    }
+    cv::Mat resizedImg;
+    cv::resize(originalImg, resizedImg, cv::Size(640, 480));
 
     if(isSourceFlipped)
     {
-        cv::flip(capturedReziedImg, capturedReziedImg, 1);
-        cv::flip(capturedOriginalImg, capturedOriginalImg, 1);
+        cv::flip(resizedImg, resizedImg, 1);
+        cv::flip(originalImg, originalImg, 1);
     }
 
-    refreshInputImage(capturedReziedImg);
+    refreshInputImage(resizedImg);
 
     QtConcurrent::run([=]
     {
         qmutex.lock();
         cv::Mat outputImage;
-        capturedOriginalImg.copyTo(outputImage);
+        originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
         for(auto baseConfigWidget : baseConfigWidgetChain)
         {
@@ -370,7 +382,7 @@ void MainWindow::getSourceCaptureImage()
             {
                 qWarning() << "Errored Operation removed from Chain";
 
-                capturedOriginalImg.copyTo(outputImage);
+                originalImg.copyTo(outputImage);
 
                 emit removeOperationWidgetSignal();
                 break;
@@ -408,7 +420,8 @@ void MainWindow::refreshInputImage(cv::Mat img)
 
     catch(cv::Exception& e)
     {
-        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+        // TODO
+        //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
 }
 
@@ -433,7 +446,8 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
     catch(cv::Exception& e)
     {
-        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+        // TODO
+        //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
 }
 
@@ -488,7 +502,9 @@ void MainWindow::applySourceClicked()
 {
     qDebug() << "Source Select Clicked!!";
     QString path = ui->textInputSource->toPlainText();
+    int inputSourceType;
     if(ui->fileRadioButton->isChecked()){
+        inputSourceType = CaptureInputSource::FILE;
         QFileInfo check_file(path);
         if (!(check_file.exists() && check_file.isFile()))
         {
@@ -498,6 +514,7 @@ void MainWindow::applySourceClicked()
     }
     else if(ui->cameraRadioButton->isChecked())
     {
+        inputSourceType = CaptureInputSource::HARDWARE_CAM;
         if (path == "")
         {
             qWarning() << "Camera Number not provided";
@@ -506,6 +523,7 @@ void MainWindow::applySourceClicked()
     }
     else if(ui->ipcamRadioButton->isChecked())
     {
+        inputSourceType = CaptureInputSource::NETWORK_STREAM;
         if (path == "")
         {
             qWarning() << "No IP address entered";
@@ -515,13 +533,14 @@ void MainWindow::applySourceClicked()
 
     if(captureInputSource == nullptr){
         captureInputSource = new CaptureInputSource();
-        emit captureInputSource->setInputSource(path);
+        emit captureInputSource->setInputSource(path, inputSourceType);
 
-        connect(captureInputSource, SIGNAL(sourceCaptured()), this, SLOT(getSourceCaptureImage()));
+        connect(captureInputSource, SIGNAL(sourceCaptured(cv::Mat)),
+                this, SLOT(getSourceCaptureImage(cv::Mat)));
         connect(captureInputSource, SIGNAL(sourceCaptureError(QString)), this, SLOT(getSourceCaptureError(QString)));
     }
     else{
-        emit captureInputSource->setInputSource(path);
+        emit captureInputSource->setInputSource(path, inputSourceType);
     }
 
     // FIXME: Crash
