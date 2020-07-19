@@ -542,10 +542,6 @@ void MainWindow::applySourceClicked()
     else{
         emit captureInputSource->setInputSource(path, inputSourceType);
     }
-
-    // FIXME: Crash
-    // If IP/Normal Camera is selected as input source then refresh the frames instantly else follow the FPS
-    //    captureInputSource->setInstantFrameRefresh(ui->fileRadioButton->isChecked() ? false : true);
 }
 
 void MainWindow::outputLabelLBClicked(QPoint point)
