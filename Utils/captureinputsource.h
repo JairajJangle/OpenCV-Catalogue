@@ -40,51 +40,6 @@ class CaptureInputSource : public QObject
 public:
     enum InputSourceType {HARDWARE_CAM, FILE, NETWORK_STREAM};
 
-    explicit CaptureInputSource(QObject* parent = nullptr)
-        :QObject(parent)
-    {
-        inputSourceCaptureTImer = new QTimer(this);
-        this->moveToThread(camThread);
-        inputSourceCaptureTImer->moveToThread(camThread);
-        QObject::connect(camThread, &QThread::finished,
-                         this, &QObject::deleteLater);
-        camThread->start();
-
-        connect(this, &CaptureInputSource::startTimer,
-                this,
-                [=](int initialDelay){
-            inputSourceCaptureTImer->start(initialDelay);
-            inputSourceCaptureTImer->setInterval(1000);
-        },
-        Qt::QueuedConnection);
-
-        connect(this, &CaptureInputSource::stopCapture,
-                this,
-                [=](){
-            inputSourceCaptureTImer->stop();
-            cap.release();
-        },
-        Qt::QueuedConnection);
-
-        connect(this, &CaptureInputSource::setInputSource,
-                this,
-                [=](QString inputSource, int inputSourceType){
-            emit stopCapture();
-            this->inputSourceType = InputSourceType(inputSourceType);
-            this->inputSource = inputSource;
-            emit startTimer(1000);
-        },
-        Qt::QueuedConnection);
-
-        connect(inputSourceCaptureTImer, SIGNAL(timeout()),
-                this, SLOT(captureSource()));
-    }
-    ~CaptureInputSource()
-    {
-        cap.release();
-        qDebug() << "VideoCapture release() called";
-    }
-
 signals:
     void sourceCaptured(cv::Mat originalImg);
     void sourceCaptureError(QString);
@@ -153,6 +108,51 @@ private slots:
         catch (cv::Exception& e) {
             emit sourceCaptureError(e.what());
         }
+    }
+
+    explicit CaptureInputSource(QObject* parent = nullptr)
+        :QObject(parent)
+    {
+        inputSourceCaptureTImer = new QTimer(this);
+        this->moveToThread(camThread);
+        inputSourceCaptureTImer->moveToThread(camThread);
+        QObject::connect(camThread, &QThread::finished,
+                         this, &QObject::deleteLater);
+        camThread->start();
+
+        connect(this, &CaptureInputSource::startTimer,
+                this,
+                [=](int initialDelay){
+            inputSourceCaptureTImer->start(initialDelay);
+            inputSourceCaptureTImer->setInterval(1000);
+        },
+        Qt::QueuedConnection);
+
+        connect(this, &CaptureInputSource::stopCapture,
+                this,
+                [=](){
+            inputSourceCaptureTImer->stop();
+            cap.release();
+        },
+        Qt::QueuedConnection);
+
+        connect(this, &CaptureInputSource::setInputSource,
+                this,
+                [=](QString inputSource, int inputSourceType){
+            emit stopCapture();
+            this->inputSourceType = InputSourceType(inputSourceType);
+            this->inputSource = inputSource;
+            emit startTimer(1000);
+        },
+        Qt::QueuedConnection);
+
+        connect(inputSourceCaptureTImer, SIGNAL(timeout()),
+                this, SLOT(captureSource()));
+    }
+    ~CaptureInputSource()
+    {
+        cap.release();
+        qDebug() << "VideoCapture release() called";
     }
 
 private:
