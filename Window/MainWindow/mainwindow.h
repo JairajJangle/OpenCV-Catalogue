@@ -72,11 +72,20 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
+    /**
+     * @brief The OPCodes enum Enum for OpenCV Operations Base Config Widget
+     *  To add a enum value see the note below
+     */
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE,
 
-                 /* Add all other Enum values before this */
+                 /*
+                  * Add all other Enum values before this
+                  *
+                  * To connect OpenCV operation Base Config widget to
+                  * the added OpCodes enum, see MainWindow::addOperation(...)
+                  */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:

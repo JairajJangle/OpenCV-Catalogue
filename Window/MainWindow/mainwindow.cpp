@@ -150,12 +150,14 @@ void MainWindow::addOperation(OPCodes opCode)
     case DILATE:
         baseConfigWidgetChain.append(new ErodeDilate(ErodeDilate::DILATE));
         break;
+
         /*
          * Append other OpenCV Operation Base Config Widgets
          * in corresponding case blocks above this line
          *
          * To add the case enumns, see MainWindow::OPCodes enum defined in mainwindow.h
          */
+
     default:
         baseConfigWidgetChain.append(new BaseConfigWidget());
     }
