@@ -110,6 +110,7 @@ private slots:
         }
     }
 
+public:
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
     {
