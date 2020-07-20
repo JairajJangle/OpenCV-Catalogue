@@ -24,6 +24,10 @@
 #include <QComboBox>
 #include <QLabel>
 
+/**
+ * @brief The LabelledComboBox class A Custom Layout for displaying a labelled QComboBox
+ *  Consists of a Horizontal Layout with QLabel and QComboBox
+ */
 class LabelledComboBox : public QHBoxLayout
 {
     Q_OBJECT
