@@ -27,6 +27,10 @@
 // Used in included files, do not remove
 #include <QValidator>
 
+/**
+ * @brief The LineEditLayout class Cusotm Layout to show a labelled QLineEdit
+ *  Consists for a Horizontal Layout with QLabel and a QLineEdit
+ */
 class LineEditLayout: public QHBoxLayout
 {
     Q_OBJECT
