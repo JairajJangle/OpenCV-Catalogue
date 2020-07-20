@@ -23,6 +23,10 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
+/**
+ * @brief The ApplyResetButtonLayout class Custom Layout consiting of Apply and Reset
+ *  button in a Horizontal Box Layout.
+ */
 class ApplyResetButtonLayout : public QHBoxLayout
 {
     Q_OBJECT
