@@ -22,6 +22,10 @@
 
 #include <QLabel>
 
+/**
+ * @brief The ErrorLabel class Custom widget to show Colored label
+ *  Color is set according to the level of info message: Warning, Error, Info...
+ */
 class ErrorLabel : public QLabel
 {
     Q_OBJECT
@@ -37,10 +41,17 @@ public:
         sp_retain.setRetainSizeWhenHidden(true);
         this->setSizePolicy(sp_retain);
     }
+
+    /**
+     * @brief hide Hides the Error Label
+     */
     void hide()
     {
         this->setVisible(false);
     }
+    /**
+     * @brief show Shows the Error Label
+     */
     void show()
     {
         this->setVisible(true);
