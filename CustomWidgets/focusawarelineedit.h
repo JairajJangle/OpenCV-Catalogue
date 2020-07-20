@@ -22,6 +22,10 @@
 
 #include <QLineEdit>
 
+/**
+ * @brief The FocusAwareLineEdit class Custom widget to emit signal when there is
+ *  focus change on this customized Line Edit widget
+ */
 class FocusAwareLineEdit : public QLineEdit
 {
     Q_OBJECT
@@ -31,9 +35,16 @@ public:
     ~FocusAwareLineEdit();
 
 signals:
+    /**
+     * @brief focussed Signal emitted when focus on this widget is changed
+     * @param hasFocus True when this widget is in focus else false
+     */
     void focussed(bool hasFocus);
 
 protected:
+    /*
+     * See QLineEdit docs by QT
+     */
     virtual void focusInEvent(QFocusEvent *e);
     virtual void focusOutEvent(QFocusEvent *e);
 };
