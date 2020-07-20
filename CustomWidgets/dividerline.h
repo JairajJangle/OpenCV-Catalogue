@@ -30,6 +30,12 @@ class DividerLine : public QFrame
 {
 public:
 
+    /**
+     * @brief DividerLine Constructor for Divider Line Custom Widget
+     * @param fixedHeight Set Fixed Height of the Divider Line
+     * @param parent Set parent of Divider Line widget, nullable optional parameter
+     * @param f Optional Window Flag
+     */
     explicit DividerLine(int fixedHeight = 0,
                          QWidget* parent = nullptr,
                          Qt::WindowFlags f = Qt::WindowFlags())
