@@ -109,8 +109,9 @@ public:
     }
     virtual ~BaseConfigWidget(){}
 
-    /*
-     * Returned widget to be used by calling widget/application(Main Window)
+    /**
+     * @brief getConfigWidget To get the Configuration Widget
+     * @return Returned widget to be used by calling widget/application(Main Window)
      * to set it in Scroll Area
      */
     QWidget* getConfigWidget()
@@ -118,17 +119,30 @@ public:
         return wgtSub;
     }
 
+    /**
+     * @brief getChainMenuWidget TO get the OpenCV Operation Menu widget
+     * @return The Chain Menu Widget which lets user to add, change, remove OpenCV operations
+     */
     ChainMenuWidget* getChainMenuWidget()
     {
         chainMenuWidget->setCurrentOperation(operationName);
         return chainMenuWidget;
     }
 
+    /**
+     * @brief getParamAdjustWidget To get the Parameter Adjustment Widget
+     * @return The Parameter Adjustment widget which lets user change the OpenCV operation
+     *  parameters in real-time.
+     */
     ParamAdjustWidget* getParamAdjustWidget()
     {
         return paramAdjustWidget;
     }
 
+    /**
+     * @brief changeWidgetsStyleSheet Changes the theme of children widgets
+     * @param isDarkMode Set true to enable dark mode style sheet to children widgets
+     */
     void changeWidgetsStyleSheet(bool isDarkMode)
     {
         paramAdjustWidget->setInfoIconStyleSheet(isDarkMode);
@@ -181,12 +195,17 @@ public:
         return  explodedViewEnabled;
     }
 
-    /*
-     * Override this function in individual operation classes
+    /**
+     * @brief getProcessedImage All OpenCV operations is done in this function
+     *  Override this function in individual derived operation classes
+     * @param inputImage The input image for OpenCV operation
+     * @return The output image after OpenCV operation is performed
      */
     virtual cv::Mat getProcessedImage(cv::Mat inputImage)try
     {
-        // Do Operations
+        /*
+         * Perform OpenCV operations here in derived classes
+         */
 
         return inputImage;
     }
@@ -200,13 +219,13 @@ public:
     + std::string(typeid(this).name()); // Append class name
 }
 
-/*
-     * Super call this function at the end of overriden initWidget() function in
-     * each Operation class to actually show configuration widget in the Scroll Area
-     */
+/**
+ * @brief initWidget Super call this function at the end of overriden initWidget() function in
+ * each derived Operation class to actually set configuration widget in @var wgtSub
+ */
 virtual void initWidget()
 {
-    //        vBoxSub->setAlignment(Qt::AlignHCenter);
+    // vBoxSub->setAlignment(Qt::AlignHCenter);
     wgtSub->setMinimumWidth(370);
     wgtSub->setMaximumWidth(420);
 
