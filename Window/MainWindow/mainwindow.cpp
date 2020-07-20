@@ -483,19 +483,22 @@ void MainWindow::sourceRadioButtonClicked(){
     {
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera Index");
-        ui->textInputSource->setPlainText("0");
+        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setPlaceholderText("0");
     }
     else if(ui->fileRadioButton->isChecked())
     {
         ui->buttonBrowse->show();
         ui->labelInputSource->setText("Browse for Video or Image file");
-        ui->textInputSource->setPlainText("File path...");
+        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setPlaceholderText("File path...");
     }
     else if(ui->ipcamRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera IP Address");
-        ui->textInputSource->setPlainText("http://192.168.1.1:8080");
+        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setPlaceholderText("http://192.168.1.10:8080/video");
     }
 }
 
