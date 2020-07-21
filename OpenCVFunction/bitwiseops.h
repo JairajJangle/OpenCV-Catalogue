@@ -21,6 +21,7 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "Utils/captureinputsource.h"
 
 class BitWise: public BaseConfigWidget
 {
@@ -40,10 +41,17 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         // TODO
-        return inputImage;
+        cv::Mat outputImage;
+        cv::Mat inpputImageChanneled;
+
+        cv::cvtColor(inputImage, inpputImageChanneled, cv::COLOR_GRAY2BGR);
+
+        cv::bitwise_and(inpputImageChanneled, CaptureInputSource::img, outputImage);
+
+        return outputImage;
     }
     catch(cv::Exception& e){
         throw e;
