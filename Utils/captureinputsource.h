@@ -111,6 +111,9 @@ private slots:
     }
 
 public:
+    // Mat to store image from camera
+    inline static cv::Mat img, resizedImg;
+
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
     {
@@ -164,9 +167,6 @@ private:
     cv::VideoCapture cap;
 
     InputSourceType inputSourceType = FILE;
-
-    // Mat to store image from camera
-    cv::Mat img, resizedImg;
 
     void openSource()
     {
