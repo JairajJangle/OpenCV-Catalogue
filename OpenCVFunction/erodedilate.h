@@ -70,8 +70,8 @@ public:
                                  element, begin, iterationCount,
                                  borderType)
                     : cv::erode(inputImage, outputImage,
-                                 element, begin, iterationCount,
-                                 borderType);
+                                element, begin, iterationCount,
+                                borderType);
 
             return outputImage;
         }
@@ -107,7 +107,7 @@ void borderChanged(QVariant value){
     borderType = value.toInt();
 }
 
-protected:
+private:
 const int dilationSize = 6;
 int kernelMorphShape = cv::MORPH_CROSS; // cv::MorphShapes
 cv::Size kSize = cv::Size(2 * dilationSize + 1, 2 * dilationSize + 1);
