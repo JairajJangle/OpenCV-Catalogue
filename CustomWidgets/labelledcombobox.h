@@ -33,6 +33,9 @@ class LabelledComboBox : public QHBoxLayout
     Q_OBJECT
 
 private:
+    /**
+     * @brief titleLabel Title Label Widget which goes in the Horizontal Layout
+     */
     QLabel* titleLabel = new QLabel();
 
 public:
