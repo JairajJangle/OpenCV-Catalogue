@@ -61,6 +61,7 @@ HEADERS += \
     CustomWidgets/sliderlayout.h \
     CustomWidgets/baseconfigwidget.h \
     OpenCVFunction/backgroundsubtract.h \
+    OpenCVFunction/bitwiseops.h \
     OpenCVFunction/blur.h \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
