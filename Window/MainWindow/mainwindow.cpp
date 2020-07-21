@@ -150,6 +150,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case DILATE:
         baseConfigWidgetChain.append(new ErodeDilate(ErodeDilate::DILATE));
         break;
+    case BITWISE_OPS:
+        baseConfigWidgetChain.append(new BitWise(BitWise::BitWiseLogic::AND));
+        break;
 
         /*
          * Append other OpenCV Operation Base Config Widgets
@@ -246,6 +249,10 @@ void MainWindow::addOperationWidget()
 
 void MainWindow::removeOperationWidget()
 {
+    // TODO: Check if user need to notify of the wait?
+    if(future.isRunning())
+        future.waitForFinished();
+
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
 
@@ -360,17 +367,21 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 
     refreshInputImage(resizedImg);
 
-    QtConcurrent::run([=]
+    if(future.isRunning())
+        return;
+
+    future = QtConcurrent::run([=]
     {
         qmutex.lock();
         cv::Mat outputImage;
         originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
-        for(auto baseConfigWidget : baseConfigWidgetChain)
+        for(auto&& baseConfigWidget : baseConfigWidgetChain)
         {
             isChainSuccess = false;
             try{
-                // FIXME: Segmentation fault in large chains
+                // FIXME: Segmentation fault for intensive operations
+                // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
                 isChainSuccess = true;
             }

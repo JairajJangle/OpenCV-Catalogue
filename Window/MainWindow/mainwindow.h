@@ -33,6 +33,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QGroupBox>
 #include <QWindow>
+#include <QFuture>
 
 // Include all Utils here
 #include "Utils/captureinputsource.h"
@@ -55,6 +56,7 @@
 #include "OpenCVFunction/harriscornerdetector.h"
 #include "OpenCVFunction/inrange.h"
 #include "OpenCVFunction/erodedilate.h"
+#include "OpenCVFunction/bitwiseops.h"
 
 // Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
@@ -78,7 +80,7 @@ private:
      */
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
-                 HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE,
+                 HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE, BITWISE_OPS,
 
                  /*
                   * Add all other Enum values before this
@@ -119,6 +121,8 @@ private:
     Ui::MainWindow *ui;
 
     QMutex qmutex;
+
+    QFuture<void> future;
 
     bool chainMenuInitDone = false;
 
