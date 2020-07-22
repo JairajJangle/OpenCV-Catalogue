@@ -37,7 +37,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         std::vector<cv::Mat> bgrPlanes;
         split(inputImage, bgrPlanes);
@@ -115,7 +115,7 @@ float range[2]; //the upper boundary is exclusive
 QCheckBox* uniformCB = new QCheckBox("uniform");
 QCheckBox* accumulateCB = new QCheckBox("accumulate");
 
-void initWidget()
+void initWidget() override
 {
     uniformCB->setChecked(true);
     range[0] = 0; //the upper boundary is exclusive

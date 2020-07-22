@@ -37,7 +37,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
 
@@ -81,7 +81,7 @@ LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location 
 
 QLabel* infoLabel  = new QLabel("Click on Output feed to pick color\n");
 
-void initWidget()
+void initWidget() override
 {
     locLineEditLayout->lineEdit->setReadOnly(true);
     vBoxSub->addWidget(infoLabel);

@@ -36,7 +36,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
         int selectedColorCode = colorCodesAll.at(colorConvCode).first;
@@ -85,7 +85,7 @@ QVector<QPair<int, QString>> colorCodesAll =
 int colorConvCode = 0;
 
 protected:
-void initWidget()
+void initWidget() override
 {
     for(int jCount = 0; jCount < colorCodesAll.size(); jCount++)
     {

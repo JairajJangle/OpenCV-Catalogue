@@ -34,7 +34,7 @@ public:
         this->initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         if(channelNos != inputImage.channels())
         {
@@ -74,7 +74,7 @@ std::vector<int>* hLimits = new std::vector<int>();
 
 int channelNos = 0;
 
-void initWidget()
+void initWidget() override
 {
     connect(this, SIGNAL(refreshWidget()), this, SLOT(changeSliderNumbers()));
 

@@ -45,7 +45,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         if((begin.x < kSize.width && begin.y < kSize.height)
                 && (kSize.width > 0 && kSize.height > 0))
@@ -128,7 +128,7 @@ QString prevAnchorText = "";
 
 ApplyResetButtonLayout* applyResetBL = new ApplyResetButtonLayout();
 
-void initWidget()
+void initWidget() override
 {
     QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
 

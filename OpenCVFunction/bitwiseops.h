@@ -97,7 +97,6 @@ BitWiseLogic selectedLogic = AND;
 
 void initWidget() override
 {
-    // TODO
     LabelledComboBox* logicTypeLCB = new LabelledComboBox("Bitwise Logic Type", logicNameMap);
 
     vBoxSub->addLayout(logicTypeLCB);

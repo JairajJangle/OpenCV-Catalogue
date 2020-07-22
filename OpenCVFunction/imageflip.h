@@ -36,7 +36,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
         int selectedFlipFlag = flipFlagsAll.at(flipFlagCode).first;
@@ -74,7 +74,7 @@ QVector<QPair<int, QString>> flipFlagsAll =
     {-1, "X and Y axis"}
 };
 
-void initWidget()
+void initWidget() override
 {
     for(int jCount = 0; jCount < flipFlagsAll.size(); jCount++)
     {
