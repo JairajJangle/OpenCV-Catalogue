@@ -24,5 +24,31 @@
 
 class Contours : public BaseConfigWidget
 {
+    Q_OBJECT
+public:
+    Contours()
+    {
+        operationName = "Contours";
+        moreInfoLink = ""; // TODO
+        initWidget();
+    }
 
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
+    {
+        return inputImage;
+    }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
+private:
+void initWidget() override
+{
+    BaseConfigWidget::initWidget();
+}
 };
