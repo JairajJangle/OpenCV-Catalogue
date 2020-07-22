@@ -72,6 +72,22 @@ public:
         initWidget(title, comboBoxFixedWidth, labelFixedWidth);
     }
 
+    explicit LabelledComboBox(QString title,
+                              QMap<QVariant, QString> nameValueMap,
+                              int comboBoxFixedWidth = 0,
+                              int labelFixedWidth = 0,
+                              QWidget *parent = nullptr)
+        :QHBoxLayout(parent)
+    {
+        QMapIterator<QVariant, QString> i(nameValueMap);
+        while (i.hasNext())
+        {
+            i.next();
+            comboBox->addItem(i.value(), i.key());
+        }
+        initWidget(title, comboBoxFixedWidth, labelFixedWidth);
+    }
+
     void initWidget(QString title,
                     int comboBoxFixedWidth = 0,
                     int labelFixedWidth = 0)
