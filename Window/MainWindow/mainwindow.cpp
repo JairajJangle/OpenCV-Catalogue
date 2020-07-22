@@ -151,7 +151,7 @@ void MainWindow::addOperation(OPCodes opCode)
         baseConfigWidgetChain.append(new ErodeDilate(ErodeDilate::DILATE));
         break;
     case BITWISE_OPS:
-        baseConfigWidgetChain.append(new BitWise(BitWise::BitWiseLogic::AND));
+        baseConfigWidgetChain.append(new BitWise());
         break;
 
         /*

@@ -21,35 +21,52 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "CustomWidgets/labelledcombobox.h"
+
 #include "Utils/captureinputsource.h"
 
 class BitWise: public BaseConfigWidget
 {
     Q_OBJECT
+private:
+    const QString baseInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#bitwise-";
 public:
     enum BitWiseLogic{AND, OR, XOR, NOT};
-    QMap <BitWiseLogic, QString> logicNameMap = {
+    QMap <QVariant, QString> logicNameMap = {
         {AND, "AND"},
         {OR, "OR"},
         {XOR, "XOR"},
         {NOT, "NOT"}
     };
-    BitWise(BitWiseLogic bitWiseLogic): logic(bitWiseLogic)
+    BitWise()
     {
-        operationName = "Bitwise " + logicNameMap.value(logic, "Unknown");
-        moreInfoLink = ""; // TODO
+        operationName = "Bitwise Operation";
+        moreInfoLink = "";
         initWidget();
     }
 
     cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
-        // TODO
         cv::Mat outputImage;
         cv::Mat inpputImageChanneled;
 
         cv::cvtColor(inputImage, inpputImageChanneled, cv::COLOR_GRAY2BGR);
 
-        cv::bitwise_and(inpputImageChanneled, CaptureInputSource::img, outputImage);
+        // TODO: Check need to optional parameter: mas in bitwise operations
+        switch (selectedLogic) {
+        case AND:
+            cv::bitwise_and(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case OR:
+            cv::bitwise_or(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case XOR:
+            cv::bitwise_xor(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case NOT:
+            cv::bitwise_not(inpputImageChanneled, outputImage);
+            break;
+        }
 
         return outputImage;
     }
@@ -63,12 +80,28 @@ public:
     + std::string(typeid(this).name());
 }
 
+private slots:
+void logicTypeChanged(QVariant value){
+    selectedLogic = static_cast<BitWiseLogic>(value.toInt());
+    moreInfoLink = baseInfoLink + logicNameMap.value(value).toLower();
+    qDebug() << "Selected Bitwise operator: " << selectedLogic;
+}
+
 private:
-const BitWiseLogic logic;
+BitWiseLogic selectedLogic = AND;
 
 void initWidget() override
 {
     // TODO
+    LabelledComboBox* logicTypeLCB = new LabelledComboBox("Bitwise Logic Type", logicNameMap);
+
+    vBoxSub->addLayout(logicTypeLCB);
+
+    connect(logicTypeLCB,SIGNAL(currentIndexChanged(QVariant)),
+            this,SLOT(logicTypeChanged(QVariant)));
+
+    logicTypeChanged(AND);
+
     BaseConfigWidget::initWidget();
 }
 };
