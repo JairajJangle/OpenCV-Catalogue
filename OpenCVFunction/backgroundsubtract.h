@@ -89,93 +89,93 @@ public:
 }
 
 private slots:
-    void bkgSubTechChanged(int bkgSubTech){
-        selectedTech = bkgSubTech;
-    }
+void bkgSubTechChanged(int bkgSubTech){
+    selectedTech = bkgSubTech;
+}
 
-    void applyChangesClicked(){
-        learningRate = learningRateEditLayout->getText().toDouble();
-    }
+void applyChangesClicked(){
+    learningRate = learningRateEditLayout->getText().toDouble();
+}
 
-    void resetChangesClicked(){
-        learningRate = 0.1;
-        learningRateEditLayout->setText(QString::number(learningRate));
-    }
+void resetChangesClicked(){
+    learningRate = 0.1;
+    learningRateEditLayout->setText(QString::number(learningRate));
+}
 
-    void resetAnchorClicked(){
-        begin = cv::Point(-1, -1);
-    }
+void resetAnchorClicked(){
+    begin = cv::Point(-1, -1);
+}
 
 private:
-    enum MotionSubtractionTypes{
-        KNN, MOG, MOG2, GMG, GSOC, CNT, LSBP
-        /* More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html */
-    };
+enum MotionSubtractionTypes{
+    KNN, MOG, MOG2, GMG, GSOC, CNT, LSBP
+    /* More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html */
+};
 
-    cv::Ptr< cv::BackgroundSubtractor> pMOG;
-    cv::Ptr< cv::BackgroundSubtractor> pMOG2;
-    cv::Ptr< cv::BackgroundSubtractor> pGMG;
-    cv::Ptr< cv::BackgroundSubtractor> pKNN;
-    cv::Ptr< cv::BackgroundSubtractor> pGSOC;
-    cv::Ptr< cv::BackgroundSubtractor> pCNT;
-    cv::Ptr< cv::BackgroundSubtractor> pLSBP;
+cv::Ptr< cv::BackgroundSubtractor> pMOG;
+cv::Ptr< cv::BackgroundSubtractor> pMOG2;
+cv::Ptr< cv::BackgroundSubtractor> pGMG;
+cv::Ptr< cv::BackgroundSubtractor> pKNN;
+cv::Ptr< cv::BackgroundSubtractor> pGSOC;
+cv::Ptr< cv::BackgroundSubtractor> pCNT;
+cv::Ptr< cv::BackgroundSubtractor> pLSBP;
 
-    QVector<QString> bkgSubTechs =
+QVector<QString> bkgSubTechs =
+{
+    {GET_VARIABLE_NAME(KNN)},
+    {GET_VARIABLE_NAME(MOG)},
+    {GET_VARIABLE_NAME(MOG2)},
+    {GET_VARIABLE_NAME(GMG)},
+    {GET_VARIABLE_NAME(GSOC)},
+    {GET_VARIABLE_NAME(CNT)},
+    {GET_VARIABLE_NAME(LSBP)},
+};
+
+int selectedTech = KNN;
+
+double learningRate = 0.1;
+LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
+                                                             learningRate,
+                                                             150,
+                                                             150);
+
+ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+
+void initWidget() override
+{
+    connect(applyResetBox, SIGNAL(applyClicked()),
+            this, SLOT(applyChangesClicked()));
+    connect(applyResetBox, SIGNAL(resetClicked()),
+            this, SLOT(resetChangesClicked()));
+
+    learningRateEditLayout->lineEdit->setValidator(
+                new QRegExpValidator(QRegExp(RegExps::decimal0To1)));
+
+    pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
+    pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
+    pMOG2 = cv::createBackgroundSubtractorMOG2();
+    pGMG = cv::bgsegm::createBackgroundSubtractorGMG();
+    pGSOC = cv::bgsegm::createBackgroundSubtractorGSOC();
+    pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
+    pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
+
+    for(int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
     {
-        {GET_VARIABLE_NAME(KNN)},
-        {GET_VARIABLE_NAME(MOG)},
-        {GET_VARIABLE_NAME(MOG2)},
-        {GET_VARIABLE_NAME(GMG)},
-        {GET_VARIABLE_NAME(GSOC)},
-        {GET_VARIABLE_NAME(CNT)},
-        {GET_VARIABLE_NAME(LSBP)},
-    };
+        QRadioButton *radioButton =
+                new QRadioButton(bkgSubTechs[jCount]);
+        if(jCount == 0)
+            radioButton->setChecked(true);
 
-    int selectedTech = KNN;
+        vBoxSub->addWidget(radioButton);
 
-    double learningRate = 0.1;
-    LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
-                                                                 learningRate,
-                                                                 150,
-                                                                 150);
-
-    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
-
-    void initWidget() override
-    {
-        connect(applyResetBox, SIGNAL(applyClicked()),
-                this, SLOT(applyChangesClicked()));
-        connect(applyResetBox, SIGNAL(resetClicked()),
-                this, SLOT(resetChangesClicked()));
-
-        learningRateEditLayout->lineEdit->setValidator(
-                    new QRegExpValidator(QRegExp(RegExps::decimal0To1)));
-
-        pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
-        pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
-        pMOG2 = cv::createBackgroundSubtractorMOG2();
-        pGMG = cv::bgsegm::createBackgroundSubtractorGMG();
-        pGSOC = cv::bgsegm::createBackgroundSubtractorGSOC();
-        pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
-        pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
-
-        for(int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
-        {
-            QRadioButton *radioButton =
-                    new QRadioButton(bkgSubTechs[jCount]);
-            if(jCount == 0)
-                radioButton->setChecked(true);
-
-            vBoxSub->addWidget(radioButton);
-
-            connect(radioButton, &QRadioButton::clicked, this,
-                    [=]() {
-                bkgSubTechChanged(jCount);
-            });
-        }
-        vBoxSub->addLayout(learningRateEditLayout);
-        vBoxSub->addLayout(applyResetBox);
-
-        BaseConfigWidget::initWidget();
+        connect(radioButton, &QRadioButton::clicked, this,
+                [=]() {
+            bkgSubTechChanged(jCount);
+        });
     }
+    vBoxSub->addLayout(learningRateEditLayout);
+    vBoxSub->addLayout(applyResetBox);
+
+    BaseConfigWidget::initWidget();
+}
 };
