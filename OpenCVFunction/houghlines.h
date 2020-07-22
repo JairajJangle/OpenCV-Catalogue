@@ -47,7 +47,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat dst, cdst; // CDST contains canny + lines
         // TODO make Canny params customizable
@@ -133,7 +133,7 @@ QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-void initWidget()
+void initWidget() override
 {
     thetaLayout->setText(Numeric::setPrecision(theta->toDouble(), 6));
 

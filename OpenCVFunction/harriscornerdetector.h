@@ -50,7 +50,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         blockSizeLayout->setText(borderTypeComboBox->currentData());
 
@@ -156,7 +156,7 @@ QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-void initWidget()
+void initWidget() override
 {
     borderTypeComboBox->addItem("BORDER_CONSTANT", cv::BORDER_CONSTANT);
     borderTypeComboBox->addItem("BORDER_REPLICATE", cv::BORDER_REPLICATE);

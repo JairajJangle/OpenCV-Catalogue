@@ -43,7 +43,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
 
@@ -113,7 +113,7 @@ ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
 
 QString prevAnchorText = "";
 
-void initWidget()
+void initWidget() override
 {
     anchorLineEditLayout->lineEdit->setReadOnly(true);
 

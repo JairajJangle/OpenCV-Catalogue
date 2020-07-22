@@ -36,7 +36,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
 
@@ -82,7 +82,7 @@ int t1Value = 30;
 int t2Value = 3;
 int appertureValue = 3;
 
-void initWidget()
+void initWidget() override
 {
     SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
     connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),

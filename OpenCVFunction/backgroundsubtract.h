@@ -45,7 +45,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
 
@@ -141,7 +141,7 @@ private:
 
     ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-    void initWidget()
+    void initWidget() override
     {
         connect(applyResetBox, SIGNAL(applyClicked()),
                 this, SLOT(applyChangesClicked()));

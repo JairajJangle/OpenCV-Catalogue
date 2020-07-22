@@ -49,7 +49,7 @@ public:
         initWidget();
     }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage)try
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat grayImage;
 
@@ -144,7 +144,7 @@ QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
 ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
-void initWidget()
+void initWidget() override
 {
     QDoubleValidator* minDistValidator = new QDoubleValidator();
 
