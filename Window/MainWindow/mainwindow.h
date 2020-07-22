@@ -122,7 +122,7 @@ private:
 
     QMutex qmutex;
 
-    QFuture<void> future;
+    QFuture<void> chainProcessFuture;
 
     bool chainMenuInitDone = false;
 
@@ -138,6 +138,8 @@ private:
 
     void refreshInputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
+
+    void waitForChainProcessing();
 
     QWidget *wgtSub = new QWidget();
     QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
