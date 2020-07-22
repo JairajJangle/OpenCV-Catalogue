@@ -48,23 +48,28 @@ public:
     cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
         cv::Mat outputImage;
-        cv::Mat inpputImageChanneled;
+        cv::Mat inputImageChanneled;
 
-        cv::cvtColor(inputImage, inpputImageChanneled, cv::COLOR_GRAY2BGR);
+        qDebug() << "Image Type: " << inputImage.channels();
+
+        if(inputImage.channels() == 1)
+            cv::cvtColor(inputImage, inputImageChanneled, cv::COLOR_GRAY2BGR);
+        else if(inputImage.channels() == 3)
+            inputImage.copyTo(inputImageChanneled);
 
         // TODO: Check need to optional parameter: mas in bitwise operations
         switch (selectedLogic) {
         case AND:
-            cv::bitwise_and(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            cv::bitwise_and(inputImageChanneled, CaptureInputSource::img, outputImage);
             break;
         case OR:
-            cv::bitwise_or(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            cv::bitwise_or(inputImageChanneled, CaptureInputSource::img, outputImage);
             break;
         case XOR:
-            cv::bitwise_xor(inpputImageChanneled, CaptureInputSource::img, outputImage);
+            cv::bitwise_xor(inputImageChanneled, CaptureInputSource::img, outputImage);
             break;
         case NOT:
-            cv::bitwise_not(inpputImageChanneled, outputImage);
+            cv::bitwise_not(inputImageChanneled, outputImage);
             break;
         }
 
