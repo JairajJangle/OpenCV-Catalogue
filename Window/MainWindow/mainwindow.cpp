@@ -153,6 +153,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case BITWISE_OPS:
         baseConfigWidgetChain.append(new BitWise());
         break;
+    case CONTOURS:
+        baseConfigWidgetChain.append(new Contours());
+        break;
 
         /*
          * Append other OpenCV Operation Base Config Widgets
