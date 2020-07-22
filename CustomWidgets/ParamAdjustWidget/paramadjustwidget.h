@@ -46,8 +46,8 @@ public:
      * @param infoLink Documentation link of OpenCV operation
      */
     void setContentLayout(QWidget* contentWidget,
-                          const QString title,
-                          const QString infoLink);
+                          QString* title,
+                          QString* infoLink);
 
     /**
      * @brief setInfoIconStyleSheet tO change style sheet of the info button

@@ -230,7 +230,7 @@ virtual void initWidget()
     wgtSub->setMaximumWidth(420);
 
     paramAdjustWidget->setContentLayout(wgtSub,
-                                        operationName,
-                                        moreInfoLink);
+                                        &operationName,
+                                        &moreInfoLink);
 }
 };

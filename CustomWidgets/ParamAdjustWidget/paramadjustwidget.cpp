@@ -52,20 +52,20 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
 }
 
 void ParamAdjustWidget::setContentLayout(QWidget* contentLayout,
-                                         const QString title,
-                                         const QString infoLink)
+                                          QString* title,
+                                          QString* infoLink)
 {
-    titleLabel->setText(title);
+    titleLabel->setText(*title);
 
     mainLayout->addWidget(contentLayout, 3, 0, 1, 8, Qt::AlignTop);
     setLayout(mainLayout);
 
-    if(infoLink != "")
+    if(*infoLink != "")
     {
         infoButton->show();
         connect(infoButton, &QToolButton::released,
                 this, [=]() {
-            QDesktopServices::openUrl(QUrl(infoLink));
+            QDesktopServices::openUrl(QUrl(*infoLink));
         });
     }
 }
