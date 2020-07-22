@@ -197,6 +197,8 @@ void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget
 
 void MainWindow::addOperationWidget()
 {
+    waitForChainProcessing();
+
     if(baseConfigWidgetChain.empty())
     {
         qDebug() << "baseConfigWidgetChain is empty";
@@ -249,9 +251,7 @@ void MainWindow::addOperationWidget()
 
 void MainWindow::removeOperationWidget()
 {
-    // TODO: Check if user need to notify of the wait?
-    if(future.isRunning())
-        future.waitForFinished();
+    waitForChainProcessing();
 
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
@@ -367,10 +367,10 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 
     refreshInputImage(resizedImg);
 
-    if(future.isRunning())
+    if(chainProcessFuture.isRunning())
         return;
 
-    future = QtConcurrent::run([=]
+    chainProcessFuture = QtConcurrent::run([=]
     {
         qmutex.lock();
         cv::Mat outputImage;
@@ -632,6 +632,13 @@ void MainWindow::switchThemeButtonClicked()
             baseConfigWidget->changeWidgetsStyleSheet(false);
         }
     }
+}
+
+void MainWindow::waitForChainProcessing()
+{
+    // TODO: Check if user need to notify of the wait?
+    if(chainProcessFuture.isRunning())
+        chainProcessFuture.waitForFinished();
 }
 
 MainWindow::~MainWindow()
