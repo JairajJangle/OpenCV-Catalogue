@@ -66,6 +66,7 @@ HEADERS += \
     OpenCVFunction/cannyedge.h \
     OpenCVFunction/colorpicker.h \
     OpenCVFunction/colorspaces.h \
+    OpenCVFunction/contours.h \
     OpenCVFunction/erodedilate.h \
     OpenCVFunction/harriscornerdetector.h \
     OpenCVFunction/histogram.h \
