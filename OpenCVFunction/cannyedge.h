@@ -98,7 +98,7 @@ void initWidget() override
             new LabelledComboBox("Apperture Value",
                                  appertureMap, 50);
 
-    connect(selectAppertureCB,SIGNAL(currentIndexChanged(QVariant)),
+    connect(selectAppertureCB,SIGNAL(currentDataChanged(QVariant)),
             this,SLOT(appertureValueChanged(QVariant)));
 
     vBoxSub->addLayout(t1SliderLayout);
