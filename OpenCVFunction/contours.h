@@ -35,7 +35,23 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
-        return inputImage;
+        std::vector<std::vector<cv::Point> > contours;
+        std::vector<cv::Vec4i> hierarchy;
+
+        /// Find contours
+        cv::findContours(inputImage, contours, hierarchy,
+                         CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE,
+                         cv::Point(0, 0));
+
+        /// Draw contours
+        cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
+        for(unsigned int i = 0; i < contours.size(); i++)
+        {
+            cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255));
+            drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point());
+        }
+
+        return drawing;
     }
     catch(cv::Exception& e){
         throw e;
@@ -47,6 +63,7 @@ public:
     + std::string(typeid(this).name());
 }
 private:
+cv::RNG rng = cv::RNG(12345);
 void initWidget() override
 {
     BaseConfigWidget::initWidget();
