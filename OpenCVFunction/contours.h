@@ -21,6 +21,7 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "CustomWidgets/labelledcombobox.h"
 
 class Contours : public BaseConfigWidget
 {
@@ -29,7 +30,7 @@ public:
     Contours()
     {
         operationName = "Contours";
-        moreInfoLink = ""; // TODO
+        moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html#findcontours";
         initWidget();
     }
 
@@ -40,8 +41,8 @@ public:
 
         /// Find contours
         cv::findContours(inputImage, contours, hierarchy,
-                         CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE,
-                         cv::Point(0, 0));
+                         mode, method,
+                         cv::Point(120, 40));
 
         /// Draw contours
         cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
@@ -62,10 +63,55 @@ public:
     throw std::string("Unknown Exception in ")
     + std::string(typeid(this).name());
 }
+
+private slots:
+void modeChanged(int value)
+{
+    qDebug() << "Contour retrieval mode: " << value;
+    mode = value;
+}
+void methodChanged(int value)
+{
+    qDebug() << "Contour approximation method: " << value;
+    method = value;
+}
+
 private:
 cv::RNG rng = cv::RNG(12345);
+
+int mode = CV_RETR_TREE;
+int method = CV_CHAIN_APPROX_SIMPLE;
+
 void initWidget() override
 {
+    QList<QVariant> modeList = {
+        "CV_RETR_EXTERNAL",
+        "CV_RETR_LIST",
+        "CV_RETR_CCOMP",
+        "CV_RETR_TREE",
+        "CV_RETR_FLOODFILL (CV_32SC1 only)"};
+
+    LabelledComboBox* modeLCB = new LabelledComboBox("mode", modeList);
+    connect(modeLCB, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(modeChanged(int)));
+    modeLCB->comboBox->setCurrentIndex(mode);
+
+    QList<QVariant> methodList = {
+        "CV_CHAIN_CODE", // Crashes
+        "CV_CHAIN_APPROX_NONE",
+        "CV_CHAIN_APPROX_SIMPLE",
+        "CV_CHAIN_APPROX_TC89_L1",
+        "CV_CHAIN_APPROX_TC89_KCOS",
+        "CV_LINK_RUNS"}; // Crashes
+
+    LabelledComboBox* methodLCB = new LabelledComboBox("method", methodList);
+    connect(methodLCB, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(methodChanged(int)));
+    methodLCB->comboBox->setCurrentIndex(method);
+
+    vBoxSub->addLayout(modeLCB);
+    vBoxSub->addLayout(methodLCB);
+
     BaseConfigWidget::initWidget();
 }
 };
