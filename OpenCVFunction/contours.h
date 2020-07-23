@@ -22,6 +22,7 @@
 
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/labelledcombobox.h"
+#include "CustomWidgets/lineeditlayout.h"
 
 class Contours : public BaseConfigWidget
 {
@@ -39,10 +40,21 @@ public:
         std::vector<std::vector<cv::Point> > contours;
         std::vector<cv::Vec4i> hierarchy;
 
+        if(begin.x < 0 || begin.y < 0)
+            begin = cv::Point(0,0);
+        QString currentOffsetText = QString::number(begin.x)
+                + ", " + QString::number(begin.y);
+
+        if(prevOffsetText != currentOffsetText)
+        {
+            offsetLEL->setText(currentOffsetText);
+            prevOffsetText = currentOffsetText;
+        }
+
         /// Find contours
         cv::findContours(inputImage, contours, hierarchy,
                          mode, method,
-                         cv::Point(0, 0));
+                         begin);
 
         /// Draw contours
         cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
@@ -82,7 +94,12 @@ cv::RNG rng = cv::RNG(12345);
 int mode = CV_RETR_TREE;
 int method = CV_CHAIN_APPROX_SIMPLE;
 
-// TODO: Add offset customization
+LineEditLayout* offsetLEL =
+        new LineEditLayout("Current Offset", "Default = (-1, -1)",
+                           160, 150);
+QString prevOffsetText = "";
+QLabel* offsetNoteLabel  = new QLabel("Click on Output to select offset");
+
 // TODO: Add drawCOntours customization
 void initWidget() override
 {
@@ -111,8 +128,23 @@ void initWidget() override
             this, SLOT(methodChanged(int)));
     methodLCB->comboBox->setCurrentIndex(method);
 
+    QVBoxLayout* offsetMainVBox = new QVBoxLayout;
+    offsetMainVBox->setAlignment(Qt::AlignHCenter);
+
+    offsetLEL->lineEdit->setReadOnly(true);
+    offsetMainVBox->addLayout(offsetLEL);
+    offsetMainVBox->setSpacing(0);
+
+    QFont font = offsetNoteLabel->font();
+    font.setPointSize(8);
+    offsetNoteLabel->setFont(font);
+    offsetNoteLabel->setAlignment(Qt::AlignCenter);
+    offsetMainVBox->addWidget(offsetNoteLabel);
+
+    vBoxSub->setSpacing(25);
     vBoxSub->addLayout(modeLCB);
     vBoxSub->addLayout(methodLCB);
+    vBoxSub->addLayout(offsetMainVBox);
 
     BaseConfigWidget::initWidget();
 }
