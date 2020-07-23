@@ -114,11 +114,13 @@ public:
     virtual ~LabelledComboBox() {};
 
 signals:
-    void currentIndexChanged(QVariant);
+    void currentDataChanged(QVariant);
+    void currentIndexChanged(int);
 
 private slots:
     void indexChanged(int index){
-        emit currentIndexChanged(comboBox->itemData(index));
+        emit currentDataChanged(comboBox->itemData(index));
+        emit currentIndexChanged(index);
     }
 };
 

@@ -164,7 +164,7 @@ void initWidget() override
 
     LabelledComboBox* morphShapeLCB = new LabelledComboBox("kernelMorhShape",
                                                            morphShapeMap);
-    connect(morphShapeLCB,SIGNAL(currentIndexChanged(QVariant)),
+    connect(morphShapeLCB,SIGNAL(currentDataChanged(QVariant)),
             this,SLOT(morphShapeChanged(QVariant)));
     SliderLayout* iterationCountSL = new SliderLayout("iterations", iterationCount);
     connect(iterationCountSL, SIGNAL(sliderValueChanged(int)),
@@ -191,7 +191,7 @@ void initWidget() override
     LabelledComboBox* borderTypeLCB = new LabelledComboBox("borderType",
                                                            borderTypes);
     borderTypeLCB->comboBox->setCurrentText("BORDER_CONSTANT");
-    connect(borderTypeLCB,SIGNAL(currentIndexChanged(QVariant)),
+    connect(borderTypeLCB,SIGNAL(currentDataChanged(QVariant)),
             this,SLOT(borderChanged(QVariant)));
 
     vBoxSub->addLayout(kSizeDLEL);

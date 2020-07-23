@@ -50,8 +50,6 @@ public:
         cv::Mat outputImage;
         cv::Mat inputImageChanneled;
 
-        qDebug() << "Image Type: " << inputImage.channels();
-
         if(inputImage.channels() == 1)
             cv::cvtColor(inputImage, inputImageChanneled, cv::COLOR_GRAY2BGR);
         else if(inputImage.channels() == 3)
@@ -101,7 +99,7 @@ void initWidget() override
 
     vBoxSub->addLayout(logicTypeLCB);
 
-    connect(logicTypeLCB,SIGNAL(currentIndexChanged(QVariant)),
+    connect(logicTypeLCB,SIGNAL(currentDataChanged(QVariant)),
             this,SLOT(logicTypeChanged(QVariant)));
 
     logicTypeChanged(AND);
