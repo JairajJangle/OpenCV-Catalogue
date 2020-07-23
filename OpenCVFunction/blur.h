@@ -148,6 +148,7 @@ void initWidget() override
 
     anchorMainVBox->addLayout(anchorLineEditLayout);
     anchorMainVBox->addWidget(anchorNoteLabel);
+    anchorMainVBox->setSpacing(0);
 
     vBoxSub->addLayout(anchorMainVBox);
 
