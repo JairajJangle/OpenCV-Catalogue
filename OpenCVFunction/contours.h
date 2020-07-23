@@ -42,7 +42,7 @@ public:
         /// Find contours
         cv::findContours(inputImage, contours, hierarchy,
                          mode, method,
-                         cv::Point(120, 40));
+                         cv::Point(0, 0));
 
         /// Draw contours
         cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
@@ -82,6 +82,8 @@ cv::RNG rng = cv::RNG(12345);
 int mode = CV_RETR_TREE;
 int method = CV_CHAIN_APPROX_SIMPLE;
 
+// TODO: Add offset customization
+// TODO: Add drawCOntours customization
 void initWidget() override
 {
     QList<QVariant> modeList = {
