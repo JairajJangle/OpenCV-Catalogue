@@ -102,7 +102,6 @@ QLabel* offsetNoteLabel  = new QLabel("Click on Output to select offset");
 
 unsigned int lineB = 0, lineG = 255, lineR = 204;
 
-// TODO: Add drawContours customization
 void initWidget() override
 {
     QList<QVariant> modeList = {
