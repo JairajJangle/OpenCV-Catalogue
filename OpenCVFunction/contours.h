@@ -23,6 +23,8 @@
 #include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/labelledcombobox.h"
 #include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/dividerline.h"
+#include "CustomWidgets/sliderlayout.h"
 
 class Contours : public BaseConfigWidget
 {
@@ -60,8 +62,8 @@ public:
         cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
         for(unsigned int i = 0; i < contours.size(); i++)
         {
-            cv::Scalar color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255));
-            drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point());
+            cv::Scalar color = cv::Scalar(lineB, lineG, lineR);
+            drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, begin);
         }
 
         return drawing;
@@ -100,7 +102,9 @@ LineEditLayout* offsetLEL =
 QString prevOffsetText = "";
 QLabel* offsetNoteLabel  = new QLabel("Click on Output to select offset");
 
-// TODO: Add drawCOntours customization
+unsigned int lineB = 0, lineG = 255, lineR = 204;
+
+// TODO: Add drawContours customization
 void initWidget() override
 {
     QList<QVariant> modeList = {
@@ -141,10 +145,33 @@ void initWidget() override
     offsetNoteLabel->setAlignment(Qt::AlignCenter);
     offsetMainVBox->addWidget(offsetNoteLabel);
 
+    QVBoxLayout* lineColorsMainLayout = new QVBoxLayout();
+    QHBoxLayout* lineColorsLayout = new QHBoxLayout();
+    SliderLayout* bSL = new SliderLayout("B", lineB, 0, 255, 60);
+    SliderLayout* gSL = new SliderLayout("G", lineG, 0, 255, 60);
+    SliderLayout* rSL = new SliderLayout("R", lineR, 0, 255, 60);
+    connect(bSL, &SliderLayout::sliderValueChanged,
+            this, [=](int value){lineB = value;});
+    connect(gSL, &SliderLayout::sliderValueChanged,
+            this, [=](int value){lineG = value;});
+    connect(rSL, &SliderLayout::sliderValueChanged,
+            this, [=](int value){lineR = value;});
+    bSL->setSpacing(5); gSL->setSpacing(5); rSL->setSpacing(5);
+    lineColorsLayout->setSpacing(5);
+    lineColorsLayout->addLayout(bSL);
+    lineColorsLayout->addLayout(gSL);
+    lineColorsLayout->addLayout(rSL);
+
+    lineColorsMainLayout->addWidget(new QLabel("Contour Line"));
+    lineColorsMainLayout->addLayout(lineColorsLayout);
+    lineColorsMainLayout->setSpacing(2);
+
     vBoxSub->setSpacing(25);
     vBoxSub->addLayout(modeLCB);
     vBoxSub->addLayout(methodLCB);
     vBoxSub->addLayout(offsetMainVBox);
+    vBoxSub->addWidget(new DividerLine(1));
+    vBoxSub->addLayout(lineColorsMainLayout);
 
     BaseConfigWidget::initWidget();
 }
