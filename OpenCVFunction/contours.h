@@ -91,8 +91,6 @@ void methodChanged(int value)
 }
 
 private:
-cv::RNG rng = cv::RNG(12345);
-
 int mode = CV_RETR_TREE;
 int method = CV_CHAIN_APPROX_SIMPLE;
 
