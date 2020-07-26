@@ -414,6 +414,9 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         emit refreshOutputImageSignal(outputImage);
         qmutex.unlock();
     });
+
+    // If Chain becomes empty, add NO_OPERATION to the chain
+    if(testVBox->count() == 0) addOperation();
 }
 
 void MainWindow::getSourceCaptureError(QString error)
