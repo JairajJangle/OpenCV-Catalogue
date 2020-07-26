@@ -359,16 +359,13 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         qCritical() << "Invalid input image";
         return;
     }
-    cv::Mat resizedImg;
-    cv::resize(originalImg, resizedImg, cv::Size(640, 480));
 
     if(isSourceFlipped)
     {
-        cv::flip(resizedImg, resizedImg, 1);
         cv::flip(originalImg, originalImg, 1);
     }
 
-    refreshInputImage(resizedImg);
+    refreshInputImage(originalImg);
 
     if(chainProcessFuture.isRunning())
         return;
@@ -432,12 +429,31 @@ void MainWindow::refreshInputImage(cv::Mat img)
     {
         cv::Mat inputImage;
         cvtColor(img, inputImage, cv::COLOR_BGR2RGB);
-        cv::resize(inputImage, inputImage, cv::Size(320, 240));
+
+        cv::Size inputImageScaledSize = cv::Size(320, 240);
+        double w = -1, h = -1;
+
+        if(inputImage.cols >= inputImage.rows)
+        {
+            w = inputImageScaledSize.width;
+            h = (w / inputImage.cols) * inputImage.rows;
+            if(h > inputImageScaledSize.height) h = inputImageScaledSize.height;
+        }
+        else if(inputImage.rows > inputImage.cols)
+        {
+            h = inputImageScaledSize.height;
+            w = (h / inputImage.rows) * inputImage.cols;
+            if(w > inputImageScaledSize.width) w = inputImageScaledSize.width;
+        }
+        inputImageScaledSize = cv::Size(w, h);
+
+        cv::Mat scaledInputImage;
+        cv::resize(inputImage, scaledInputImage, inputImageScaledSize);
 
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        inputImage.data, inputImage.cols,
-                        inputImage.rows, inputImage.step,
+                        scaledInputImage.data, scaledInputImage.cols,
+                        scaledInputImage.rows, scaledInputImage.step,
                         QImage::Format_RGB888));
 
         ui->labelInput->setPixmap(OpenCV2QTOP);
@@ -460,10 +476,31 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
             cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
+
+        cv::Size outputImageScaledSize = cv::Size(640, 480);
+        double w = -1, h = -1;
+
+        if(outputImage.cols >= outputImage.rows)
+        {
+            w = outputImageScaledSize.width;
+            h = (w / outputImage.cols) * outputImage.rows;
+            if(h > outputImageScaledSize.height) h = outputImageScaledSize.height;
+        }
+        else if(outputImage.rows > outputImage.cols)
+        {
+            h = outputImageScaledSize.height;
+            w = (h / outputImage.rows) * outputImage.cols;
+            if(w > outputImageScaledSize.width) w = outputImageScaledSize.width;
+        }
+        outputImageScaledSize = cv::Size(w, h);
+
+        cv::Mat scaledOutputImage;
+        cv::resize(outputImage, scaledOutputImage, outputImageScaledSize);
+
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        outputImage.data, outputImage.cols,
-                        outputImage.rows, outputImage.step,
+                        scaledOutputImage.data, scaledOutputImage.cols,
+                        scaledOutputImage.rows, scaledOutputImage.step,
                         QImage::Format_RGB888));
 
         ui->labelOutput->setPixmap(OpenCV2QTOP);
