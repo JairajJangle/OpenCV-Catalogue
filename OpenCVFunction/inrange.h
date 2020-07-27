@@ -97,19 +97,15 @@ void changeSliderNumbers()
         SliderLayout* lSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
                     lLimits->back(), 0, 255, 200);
-        connect(lSliderLayout, &SliderLayout::sliderValueChanged, this,
-                [=](int value) {
-            lLimits->at(i) = value;
-        });
+        connect(lSliderLayout, &SliderLayout::sliderValueChanged,
+                this, [=](int value) { lLimits->at(i) = value; });
         vBoxSub->addLayout(lSliderLayout);
 
         SliderLayout* hSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
                     hLimits->back(), 0, 255, 200);
-        connect(hSliderLayout, &SliderLayout::sliderValueChanged, this,
-                [=](int value) {
-            hLimits->at(i) = value;
-        });
+        connect(hSliderLayout, &SliderLayout::sliderValueChanged,
+                this, [=](int value) { hLimits->at(i) = value; });
         vBoxSub->addLayout(hSliderLayout);
     }
 
