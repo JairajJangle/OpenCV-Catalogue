@@ -94,6 +94,11 @@ public:
 }
 
 private slots:
+void threshChanged(int value)
+{
+    threshold = value;
+}
+
 void applyClicked()
 {
     bool paramsApplied = true;
@@ -196,8 +201,9 @@ void initWidget() override
     vBoxSub->addWidget(new DividerLine(0, this));
 
     vBoxSub->addLayout(threshSliderLayout);
-    connect(threshSliderLayout, &SliderLayout::sliderValueChanged,
-            this, [=](int value) { threshold = value; });
+    connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
+            this, SLOT(threshChanged(int)));
+
     BaseConfigWidget::initWidget();
 }
 };
