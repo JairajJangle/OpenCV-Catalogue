@@ -143,8 +143,8 @@ private:
 
     void waitForChainProcessing();
 
-    QWidget *wgtSub = new QWidget();
-    QVBoxLayout *vBoxSub = new QVBoxLayout(wgtSub);
+    QWidget *chainMenuSubWgt = new QWidget();
+    QVBoxLayout *chainMenuVBox = new QVBoxLayout(chainMenuSubWgt);
 
     QButtonGroup* chainMenuRadioButtonsGroup = new QButtonGroup();
 

@@ -74,9 +74,9 @@ void MainWindow::initUI(){
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
-    ui->scrollAreaChainMenu->setWidget(wgtSub);
-    vBoxSub->setAlignment(Qt::AlignTop);
-    vBoxSub->setSpacing(0);
+    ui->scrollAreaChainMenu->setWidget(chainMenuSubWgt);
+    chainMenuVBox->setAlignment(Qt::AlignTop);
+    chainMenuVBox->setSpacing(0);
 
     testVBox->setAlignment(Qt::AlignTop);
     ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
@@ -246,8 +246,8 @@ void MainWindow::addOperationWidget()
     connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
             this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
 
-    vBoxSub->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
-    vBoxSub->update();
+    chainMenuVBox->addWidget(baseConfigWidgetChain.last()->getChainMenuWidget());
+    chainMenuVBox->update();
 
     refreshOperationWidgets();
 }
@@ -259,11 +259,11 @@ void MainWindow::removeOperationWidget()
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
 
-    qDebug() << __PRETTY_FUNCTION__ << "VBox Count Before: " << vBoxSub->count();
+    qDebug() << __PRETTY_FUNCTION__ << "VBox Count Before: " << chainMenuVBox->count();
 
-    QLayoutItem *item = vBoxSub->itemAt(vBoxSub->count() - 1);
+    QLayoutItem *item = chainMenuVBox->itemAt(chainMenuVBox->count() - 1);
     item->widget()->hide();
-    vBoxSub->removeWidget(item->widget());
+    chainMenuVBox->removeWidget(item->widget());
 
     if(testVBox->count() != 0)
     {
@@ -276,9 +276,9 @@ void MainWindow::removeOperationWidget()
         baseConfigWidgetChain.last()->
                 getParamAdjustWidget()->show();
 
-    qDebug() << __PRETTY_FUNCTION__ << "VBox Count After: " << vBoxSub->count();
+    qDebug() << __PRETTY_FUNCTION__ << "VBox Count After: " << chainMenuVBox->count();
 
-    vBoxSub->update();
+    chainMenuVBox->update();
     ui->scrollAreaChainMenu->update();
 
     refreshOperationWidgets();
@@ -296,25 +296,25 @@ void MainWindow::refreshOperationWidgets()
     baseConfigWidgetChain.last()->getChainMenuWidget()->
             setLineVisibility(false);
 
-    if(vBoxSub->count() > 1)
+    if(chainMenuVBox->count() > 1)
     {
-        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+        dynamic_cast<ChainMenuWidget*>(chainMenuVBox->itemAt(chainMenuVBox->count() - 2)->
                                        widget())->setLineVisibility(true);
-        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 2)->
+        dynamic_cast<ChainMenuWidget*>(chainMenuVBox->itemAt(chainMenuVBox->count() - 2)->
                                        widget())->setEnabled(false);
-        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+        dynamic_cast<ChainMenuWidget*>(chainMenuVBox->itemAt(chainMenuVBox->count() - 1)->
                                        widget())->setEnabled(true);
     }
-    else if(vBoxSub->count() == 1)
+    else if(chainMenuVBox->count() == 1)
     {
-        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+        dynamic_cast<ChainMenuWidget*>(chainMenuVBox->itemAt(chainMenuVBox->count() - 1)->
                                        widget())->setEnabled(true);
-        dynamic_cast<ChainMenuWidget*>(vBoxSub->itemAt(vBoxSub->count() - 1)->
+        dynamic_cast<ChainMenuWidget*>(chainMenuVBox->itemAt(chainMenuVBox->count() - 1)->
                                        widget())->setRemoveButtonEnabled(false);
     }
 
-    wgtSub->update();
-    wgtSub->repaint();
+    chainMenuSubWgt->update();
+    chainMenuSubWgt->repaint();
 
     ui->scrollAreaChainMenu->widget()->adjustSize();
     ui->scrollAreaParameterWidget->widget()->adjustSize();
