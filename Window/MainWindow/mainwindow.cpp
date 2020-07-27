@@ -428,34 +428,15 @@ void MainWindow::refreshInputImage(cv::Mat img)
     try
     {
         cv::Mat inputImage;
+        // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(img, inputImage, cv::COLOR_BGR2RGB);
 
-        cv::Size inputImageScaledSize = cv::Size(320, 240);
-        double w = -1, h = -1;
-
-        if(inputImage.cols >= inputImage.rows)
-        {
-            w = inputImageScaledSize.width;
-            h = (w / inputImage.cols) * inputImage.rows;
-            if(h > inputImageScaledSize.height) h = inputImageScaledSize.height;
-        }
-        else if(inputImage.rows > inputImage.cols)
-        {
-            h = inputImageScaledSize.height;
-            w = (h / inputImage.rows) * inputImage.cols;
-            if(w > inputImageScaledSize.width) w = inputImageScaledSize.width;
-        }
-        inputImageScaledSize = cv::Size(w, h);
-
-        cv::Mat scaledInputImage;
-        cv::resize(inputImage, scaledInputImage, inputImageScaledSize);
-
+        cv::Mat scaledInputImage = fitToLargestDimen(inputImage, cv::Size(320, 240));
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
                         scaledInputImage.data, scaledInputImage.cols,
                         scaledInputImage.rows, scaledInputImage.step,
                         QImage::Format_RGB888));
-
         ui->labelInput->setPixmap(OpenCV2QTOP);
     }
 
@@ -470,39 +451,25 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 {
     cv::Mat outputImage;
     img.copyTo(outputImage);
+
     try
     {
+        /*
+         * Output matrix should have three channels
+         * If channel count is 1 then convert the image to 3 channeled matrix
+         */
         if(outputImage.type() == CV_8UC1)
             cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
+        // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
 
-        cv::Size outputImageScaledSize = cv::Size(640, 480);
-        double w = -1, h = -1;
-
-        if(outputImage.cols >= outputImage.rows)
-        {
-            w = outputImageScaledSize.width;
-            h = (w / outputImage.cols) * outputImage.rows;
-            if(h > outputImageScaledSize.height) h = outputImageScaledSize.height;
-        }
-        else if(outputImage.rows > outputImage.cols)
-        {
-            h = outputImageScaledSize.height;
-            w = (h / outputImage.rows) * outputImage.cols;
-            if(w > outputImageScaledSize.width) w = outputImageScaledSize.width;
-        }
-        outputImageScaledSize = cv::Size(w, h);
-
-        cv::Mat scaledOutputImage;
-        cv::resize(outputImage, scaledOutputImage, outputImageScaledSize);
-
+        cv::Mat scaledOutputImage = fitToLargestDimen(outputImage, cv::Size(640, 480));
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
                         scaledOutputImage.data, scaledOutputImage.cols,
                         scaledOutputImage.rows, scaledOutputImage.step,
                         QImage::Format_RGB888));
-
         ui->labelOutput->setPixmap(OpenCV2QTOP);
     }
 
@@ -511,6 +478,30 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
+}
+
+cv::Mat MainWindow::fitToLargestDimen(cv::Mat input, cv::Size fitToSize)
+{
+    double w = -1, h = -1;
+
+    if(input.cols >= input.rows)
+    {
+        w = fitToSize.width;
+        h = (w / input.cols) * input.rows;
+        if(h > fitToSize.height) h = fitToSize.height;
+    }
+    else if(input.rows > input.cols)
+    {
+        h = fitToSize.height;
+        w = (h / input.rows) * input.cols;
+        if(w > fitToSize.width) w = fitToSize.width;
+    }
+    fitToSize = cv::Size(w, h);
+
+    cv::Mat scaledOutputImage;
+    cv::resize(input, scaledOutputImage, fitToSize);
+
+    return scaledOutputImage;
 }
 
 void MainWindow::showHideExplodedView()
