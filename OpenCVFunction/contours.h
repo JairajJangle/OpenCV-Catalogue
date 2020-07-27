@@ -78,18 +78,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-private slots:
-void modeChanged(int value)
-{
-    qDebug() << "Contour retrieval mode: " << value;
-    mode = value;
-}
-void methodChanged(int value)
-{
-    qDebug() << "Contour approximation method: " << value;
-    method = value;
-}
-
 private:
 int mode = CV_RETR_TREE;
 int method = CV_CHAIN_APPROX_SIMPLE;
@@ -112,8 +100,8 @@ void initWidget() override
         "CV_RETR_FLOODFILL (CV_32SC1 only)"};
 
     LabelledComboBox* modeLCB = new LabelledComboBox("mode", modeList);
-    connect(modeLCB, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(modeChanged(int)));
+    connect(modeLCB, &LabelledComboBox::currentIndexChanged,
+            this, [=](int value){ mode = value; });
     modeLCB->comboBox->setCurrentIndex(mode);
 
     QList<QVariant> methodList = {
@@ -125,8 +113,8 @@ void initWidget() override
         "CV_LINK_RUNS"}; // Crashes
 
     LabelledComboBox* methodLCB = new LabelledComboBox("method", methodList);
-    connect(methodLCB, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(methodChanged(int)));
+    connect(methodLCB, &LabelledComboBox::currentIndexChanged,
+            this, [=](int value){ method = value; });
     methodLCB->comboBox->setCurrentIndex(method);
 
     QVBoxLayout* offsetMainVBox = new QVBoxLayout;
