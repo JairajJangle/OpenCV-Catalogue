@@ -85,10 +85,8 @@ void initWidget() override
 
         vBoxSub->addWidget(radioButton);
 
-        connect(radioButton, &QRadioButton::clicked, this,
-                [=]() {
-            imgFlipRadioButtonClicked(jCount);
-        });
+        connect(radioButton, &QRadioButton::clicked,
+                this, [=]() { imgFlipRadioButtonClicked(jCount); });
     }
 
     BaseConfigWidget::initWidget();

@@ -94,18 +94,14 @@ public:
 }
 
 private slots:
-void threshChanged(int value)
-{
-    threshold = value;
-}
-
 void applyClicked()
 {
     bool paramsApplied = true;
     for(auto& lineEditWithParam : lineEditsWithParams)
     {
         if(!lineEditWithParam.first->getText().isEmpty())
-            return lineEditWithParam.second->setValue(QVariant(lineEditWithParam.first->getText()));
+            return lineEditWithParam.second->setValue(
+                        QVariant(lineEditWithParam.first->getText()));
 
         paramsApplied = false;
         break;
@@ -200,9 +196,8 @@ void initWidget() override
     vBoxSub->addWidget(new DividerLine(0, this));
 
     vBoxSub->addLayout(threshSliderLayout);
-    connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
-            this, SLOT(threshChanged(int)));
-
+    connect(threshSliderLayout, &SliderLayout::sliderValueChanged,
+            this, [=](int value) { threshold = value; });
     BaseConfigWidget::initWidget();
 }
 };
