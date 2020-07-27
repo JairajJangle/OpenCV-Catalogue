@@ -49,29 +49,7 @@ public:
     {
         cv::Mat outputImage;
 
-        switch (selectedTech) {
-        case KNN:
-            pKNN->apply(inputImage, outputImage, learningRate);
-            break;
-        case MOG:
-            pMOG->apply(inputImage, outputImage, learningRate);
-            break;
-        case MOG2:
-            pMOG2->apply(inputImage, outputImage, learningRate);
-            break;
-        case GMG:
-            pGMG->apply(inputImage, outputImage, learningRate);
-            break;
-        case GSOC:
-            pGSOC->apply(inputImage, outputImage, learningRate);
-            break;
-        case CNT:
-            pCNT->apply(inputImage, outputImage, learningRate);
-            break;
-        case LSBP:
-            pLSBP->apply(inputImage, outputImage, learningRate);
-            break;
-        }
+        bkgSubTechList.at(selectedTech)->apply(inputImage, outputImage, learningRate);
 
         cv::Mat element = getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3), cv::Point(1, 1));
         morphologyEx(outputImage, outputImage, cv::MORPH_OPEN, element);
@@ -93,45 +71,19 @@ void bkgSubTechChanged(int bkgSubTech){
     selectedTech = bkgSubTech;
 }
 
-void applyChangesClicked(){
-    learningRate = learningRateEditLayout->getText().toDouble();
-}
-
-void resetChangesClicked(){
-    learningRate = 0.1;
-    learningRateEditLayout->setText(QString::number(learningRate));
-}
-
 void resetAnchorClicked(){
     begin = cv::Point(-1, -1);
 }
 
 private:
-enum MotionSubtractionTypes{
-    KNN, MOG, MOG2, GMG, GSOC, CNT, LSBP
-    /* More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html */
-};
+QList<cv::Ptr< cv::BackgroundSubtractor>> bkgSubTechList;
 
-cv::Ptr< cv::BackgroundSubtractor> pMOG;
-cv::Ptr< cv::BackgroundSubtractor> pMOG2;
-cv::Ptr< cv::BackgroundSubtractor> pGMG;
-cv::Ptr< cv::BackgroundSubtractor> pKNN;
-cv::Ptr< cv::BackgroundSubtractor> pGSOC;
-cv::Ptr< cv::BackgroundSubtractor> pCNT;
-cv::Ptr< cv::BackgroundSubtractor> pLSBP;
+/*
+ * More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html
+ */
+QList<QString> bkgSubTechs = { "KNN", "MOG", "MOG2", "GMG", "GSOC", "CNT", "LSBP" };
 
-QVector<QString> bkgSubTechs =
-{
-    {GET_VARIABLE_NAME(KNN)},
-    {GET_VARIABLE_NAME(MOG)},
-    {GET_VARIABLE_NAME(MOG2)},
-    {GET_VARIABLE_NAME(GMG)},
-    {GET_VARIABLE_NAME(GSOC)},
-    {GET_VARIABLE_NAME(CNT)},
-    {GET_VARIABLE_NAME(LSBP)},
-};
-
-int selectedTech = KNN;
+int selectedTech = 0; // KNN
 
 double learningRate = 0.1;
 LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
@@ -143,34 +95,37 @@ ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
 void initWidget() override
 {
-    connect(applyResetBox, SIGNAL(applyClicked()),
-            this, SLOT(applyChangesClicked()));
-    connect(applyResetBox, SIGNAL(resetClicked()),
-            this, SLOT(resetChangesClicked()));
+    connect(applyResetBox, &ApplyResetButtonLayout::applyClicked,
+            this, [=](){ learningRate = learningRateEditLayout->getText().toDouble(); });
+    connect(applyResetBox, &ApplyResetButtonLayout::resetClicked,
+            this, [=](){
+        learningRate = 0.1;
+        learningRateEditLayout->setText(QString::number(learningRate));
+    });
 
     learningRateEditLayout->lineEdit->setValidator(
                 new QRegExpValidator(QRegExp(RegExps::decimal0To1)));
 
-    pKNN = cv::createBackgroundSubtractorKNN(1,2000.0,false); //int history=500, double dist2Threshold=400.0, bool detectShadows=true
-    pMOG =  cv::bgsegm::createBackgroundSubtractorMOG();
-    pMOG2 = cv::createBackgroundSubtractorMOG2();
-    pGMG = cv::bgsegm::createBackgroundSubtractorGMG();
-    pGSOC = cv::bgsegm::createBackgroundSubtractorGSOC();
-    pCNT = cv::bgsegm::createBackgroundSubtractorCNT();
-    pLSBP = cv::bgsegm::createBackgroundSubtractorLSBP();
+    bkgSubTechList.append(cv::createBackgroundSubtractorKNN(1,2000.0,false)); // KNN
+    bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorMOG()); // MOG
+    bkgSubTechList.append(cv::createBackgroundSubtractorMOG2()); // MOG2
+    bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorGMG()); // GMG
+    bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorGSOC()); // GSOC
+    bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorCNT()); // CNT
+    bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorLSBP()); // LSBP
 
-    for(int jCount = 0; jCount < bkgSubTechs.size(); jCount++)
+    for(int ibkgSubTech = 0; ibkgSubTech < bkgSubTechs.size(); ibkgSubTech++)
     {
         QRadioButton *radioButton =
-                new QRadioButton(bkgSubTechs[jCount]);
-        if(jCount == 0)
+                new QRadioButton(bkgSubTechs[ibkgSubTech]);
+        if(ibkgSubTech == 0)
             radioButton->setChecked(true);
 
         vBoxSub->addWidget(radioButton);
 
         connect(radioButton, &QRadioButton::clicked, this,
                 [=]() {
-            bkgSubTechChanged(jCount);
+            selectedTech = ibkgSubTech;
         });
     }
     vBoxSub->addLayout(learningRateEditLayout);
