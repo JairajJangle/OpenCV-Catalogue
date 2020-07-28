@@ -21,11 +21,15 @@
 #include "Window/MainWindow/mainwindow.h"
 
 #include "Utils/logger.h"
+#include "Utils/constants.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+    qInfo() <<Info::appName << ", " << Info::version;
+    // TODO: Add license, and credits
+
     QApplication a(argc, argv);
 
     qInstallMessageHandler(logger);
