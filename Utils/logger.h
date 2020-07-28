@@ -38,23 +38,23 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
 
     switch (type) {
     case QtDebugMsg:
-        fprintf(stderr, "\u001b[37m%s : \x1b[32mDebug:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+        fprintf(stderr, "\u001b[37m%s :\x1b[32m Debug:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtInfoMsg:
-        fprintf(stderr, "\u001b[37m%s : \x1b[34mInfo:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+        fprintf(stderr, "\u001b[37m%s :\x1b[34m Info:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtWarningMsg:
-        fprintf(stderr, "\u001b[37m%s : \x1b[33mWarning:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+        fprintf(stderr, "\u001b[37m%s :\x1b[33m Warning:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtCriticalMsg:
-        fprintf(stderr, "\u001b[37m%s : \x1b[31mCritical:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+        fprintf(stderr, "\u001b[37m%s :\x1b[31m Critical:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtFatalMsg:
-        fprintf(stderr, "\u001b[37m%s : \x1b[31mFatal:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+        fprintf(stderr, "\u001b[37m%s :\x1b[31m Fatal:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         abort();
     }

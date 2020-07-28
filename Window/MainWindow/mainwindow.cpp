@@ -351,9 +351,6 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 {
-    //    cv::Mat capturedReziedImg = captureInputSource->resizedImg;
-    //    cv::Mat capturedOriginalImg = captureInputSource->img;
-
     if(cv::Size(originalImg.rows , originalImg.rows).empty())
     {
         qCritical() << "Invalid input image";
@@ -380,26 +377,25 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         {
             isChainSuccess = false;
             try{
-                // FIXME: Segmentation fault for intensive operations
                 // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
             {
-                qWarning() << e.what();
+                qCritical() << e.what();
             }
             catch(std::exception& e)
             {
-                qWarning() << e.what();
+                qCritical() << e.what();
             }
             catch(std::string &error)
             {
-                qWarning() << QString::fromStdString(error);
+                qCritical() << QString::fromStdString(error);
             }
             if(!isChainSuccess)
             {
-                qWarning() << "Errored Operation removed from Chain";
+                qCritical() << "Errored Operation removed from Chain";
 
                 originalImg.copyTo(outputImage);
 
@@ -476,6 +472,7 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
     catch(cv::Exception& e)
     {
+        qWarning() << e.what();
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
