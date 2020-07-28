@@ -20,11 +20,15 @@
 
 #include "Window/MainWindow/mainwindow.h"
 
+#include "Utils/logger.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    qInstallMessageHandler(logger);
 
     MainWindow w;
     w.show();
