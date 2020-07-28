@@ -76,6 +76,7 @@ HEADERS += \
     OpenCVFunction/inrange.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
+    Utils/logger.h \
     Utils/utils.h \
     Window/AboutDialog/aboutdialog.h \
     Window/MainWindow/mainwindow.h
