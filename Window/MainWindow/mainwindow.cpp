@@ -94,7 +94,7 @@ void MainWindow::initUI(){
     for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
         addOperation((OPCodes)opCode);
     }
-    qDebug() << __PRETTY_FUNCTION__ << "All OpenCV OPeration Widgets Initialized";
+    qDebug() <<  "All OpenCV Operation Widgets Initialized";
     chainMenuInitDone = true;
     addOperation(NONE);
 
@@ -182,12 +182,12 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
     emit removeOperationWidgetSignal();
     addOperation(opCode);
 
-    qDebug() << __PRETTY_FUNCTION__ << "Base Config size = " << baseConfigWidgetChain.size();
+    qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
 }
 
 void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget)
 {
-    qDebug() << __PRETTY_FUNCTION__ << "Operation radio button clicked: ";
+    qDebug() << "Operation radio button clicked: ";
 
     for(int i = 0; i < testVBox->count(); i++)
     {
@@ -204,11 +204,11 @@ void MainWindow::addOperationWidget()
 
     if(baseConfigWidgetChain.empty())
     {
-        qDebug() << __PRETTY_FUNCTION__ << "baseConfigWidgetChain is empty";
+        qDebug() << "baseConfigWidgetChain is empty";
         return;
     }
 
-    qDebug() << __PRETTY_FUNCTION__ << "Chain size = " << baseConfigWidgetChain.size();
+    qDebug() << "Chain size = " << baseConfigWidgetChain.size();
 
     if(testVBox->count() != 0)
     {
@@ -259,7 +259,7 @@ void MainWindow::removeOperationWidget()
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
 
-    qDebug() << __PRETTY_FUNCTION__ << "VBox Count Before: " << chainMenuVBox->count();
+    qDebug() << "VBox Count Before: " << chainMenuVBox->count();
 
     QLayoutItem *item = chainMenuVBox->itemAt(chainMenuVBox->count() - 1);
     item->widget()->hide();
@@ -276,7 +276,7 @@ void MainWindow::removeOperationWidget()
         baseConfigWidgetChain.last()->
                 getParamAdjustWidget()->show();
 
-    qDebug() << __PRETTY_FUNCTION__ << "VBox Count After: " << chainMenuVBox->count();
+    qDebug() << "VBox Count After: " << chainMenuVBox->count();
 
     chainMenuVBox->update();
     ui->scrollAreaChainMenu->update();
@@ -289,7 +289,7 @@ void MainWindow::refreshOperationWidgets()
     if(baseConfigWidgetChain.empty())
         return;
 
-    qDebug() << __PRETTY_FUNCTION__ << "called";
+    qDebug() << "called";
     baseConfigWidgetChain.last()->setExplodedView(false);
     baseConfigWidgetChain.last()->getChainMenuWidget()->
             getRadioButton()->setChecked(true);
@@ -356,7 +356,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 
     if(cv::Size(originalImg.rows , originalImg.rows).empty())
     {
-        qCritical() << __PRETTY_FUNCTION__ << "Invalid input image";
+        qCritical() << "Invalid input image";
         return;
     }
 
@@ -387,19 +387,19 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
             }
             catch(cv::Exception& e)
             {
-                qWarning() << __PRETTY_FUNCTION__ << e.what();
+                qWarning() << e.what();
             }
             catch(std::exception& e)
             {
-                qWarning() << __PRETTY_FUNCTION__ << e.what();
+                qWarning() << e.what();
             }
             catch(std::string &error)
             {
-                qWarning() << __PRETTY_FUNCTION__ << QString::fromStdString(error);
+                qWarning() << QString::fromStdString(error);
             }
             if(!isChainSuccess)
             {
-                qWarning() << __PRETTY_FUNCTION__ << "Errored Operation removed from Chain";
+                qWarning() << "Errored Operation removed from Chain";
 
                 originalImg.copyTo(outputImage);
 
@@ -418,7 +418,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 
 void MainWindow::getSourceCaptureError(QString error)
 {
-    qCritical() << __PRETTY_FUNCTION__ << error;
+    qCritical() << error;
     // FIXME: Commented for DEMO
     //    setUserMessage(error, ERROR);
 }
@@ -442,7 +442,7 @@ void MainWindow::refreshInputImage(cv::Mat img)
 
     catch(cv::Exception& e)
     {
-        qWarning() << __PRETTY_FUNCTION__ << e.what();
+        qWarning() << e.what();
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
@@ -558,14 +558,14 @@ void MainWindow::browseClicked()
 void MainWindow::applySourceClicked()
 {
     QString path = ui->textInputSource->toPlainText();
-    qDebug() << __PRETTY_FUNCTION__ << "Source Selected: " << path;
+    qDebug() << "Source Selected: " << path;
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
         inputSourceType = CaptureInputSource::FILE;
         QFileInfo check_file(path);
         if (!(check_file.exists() && check_file.isFile()))
         {
-            qWarning() << __PRETTY_FUNCTION__ << " Provided file does not exist";
+            qWarning() << " Provided file does not exist";
             return;
         }
     }
@@ -574,7 +574,7 @@ void MainWindow::applySourceClicked()
         inputSourceType = CaptureInputSource::HARDWARE_CAM;
         if (path == "")
         {
-            qWarning() << __PRETTY_FUNCTION__ << "Camera Number not provided";
+            qWarning() << "Camera Number not provided";
             return;
         }
     }
@@ -583,7 +583,7 @@ void MainWindow::applySourceClicked()
         inputSourceType = CaptureInputSource::NETWORK_STREAM;
         if (path == "")
         {
-            qWarning() << __PRETTY_FUNCTION__ << "No IP address entered";
+            qWarning() << "No IP address entered";
             return;
         }
     }
@@ -639,7 +639,7 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qCritical() << __PRETTY_FUNCTION__ << "Unable to set stylesheet, Dark Mode Theme File not found";
+            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found";
         }
         else
         {
