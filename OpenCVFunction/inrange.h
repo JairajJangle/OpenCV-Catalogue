@@ -40,6 +40,7 @@ public:
         {
             channelNos = inputImage.channels();
             emit refreshWidget();
+            qDebug() << "Refreshed Parameter Adjustment Widget";
         }
 
         cv::Mat outputImage = cv::Mat::zeros(inputImage.size(), CV_8U);
