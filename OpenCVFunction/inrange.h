@@ -42,7 +42,7 @@ public:
             emit refreshWidget();
         }
 
-        cv::Mat outputImage;
+        cv::Mat outputImage = cv::Mat::zeros(inputImage.size(), CV_8U);
 
         if(static_cast<int>(lLimits->size()) == channelNos
                 && static_cast<int>(hLimits->size()) == channelNos)
@@ -93,7 +93,7 @@ void changeSliderNumbers()
     for(int i = 0; i < channelNos; i++)
     {
         lLimits->push_back(0);
-        hLimits->push_back(0);
+        hLimits->push_back(100);
         SliderLayout* lSliderLayout = new SliderLayout(
                     QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
                     lLimits->back(), 0, 255, 200);
