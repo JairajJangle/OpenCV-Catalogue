@@ -88,7 +88,7 @@ void MainWindow::initUI(){
     group->addButton(ui->ipcamRadioButton);
 
     sourceRadioButtonClicked();
-    ui->labelSrcStatus->setText("");
+    inputSrcErrorMessage("");
     switchThemeButtonClicked();
 
     chainMenuInitDone = false;
@@ -527,7 +527,8 @@ void MainWindow::showHideExplodedView()
 }
 
 void MainWindow::sourceRadioButtonClicked(){
-    ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
+
+    inputSrcErrorMessage("");
     if(ui->cameraRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
@@ -570,11 +571,10 @@ void MainWindow::applySourceClicked()
     if(path.isEmpty())
     {
         qWarning() << "Input source path empty!";
-        ui->labelSrcStatus->setText("Please enter input source path!");
-        ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
+        inputSrcErrorMessage("Please enter input source path!");
         return;
     }
-    ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
+    inputSrcErrorMessage("");
 
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
@@ -582,7 +582,8 @@ void MainWindow::applySourceClicked()
         QFileInfo check_file(path);
         if (!(check_file.exists() && check_file.isFile()))
         {
-            qWarning() << " Provided file does not exist";
+            qWarning() << "No file present on entered path";
+            inputSrcErrorMessage("Provided file path does not exist!");
             return;
         }
     }
@@ -592,8 +593,7 @@ void MainWindow::applySourceClicked()
         if (!QRegExp(RegExps::onlyDigits).exactMatch(path))
         {
             qWarning() << "Invalid camera index";
-            ui->labelSrcStatus->setText("Please enter a valid camera index!");
-            ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
+            inputSrcErrorMessage("Please enter a valid camera index!");
             return;
         }
     }
@@ -617,6 +617,17 @@ void MainWindow::applySourceClicked()
     }
 
     emit captureInputSource->setInputSource(path, inputSourceType);
+}
+
+void MainWindow::inputSrcErrorMessage(QString message)
+{
+    if(message.isEmpty())
+    {
+        ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
+        return;
+    }
+    ui->labelSrcStatus->setText(message);
+    ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
 }
 
 void MainWindow::outputLabelLBClicked(QPoint point)
