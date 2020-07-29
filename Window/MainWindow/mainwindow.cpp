@@ -182,12 +182,12 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
     emit removeOperationWidgetSignal();
     addOperation(opCode);
 
-    qDebug() << "Base Config size = " << baseConfigWidgetChain.size();
+    qDebug() << "baseConfigWidgetChain size = " << baseConfigWidgetChain.size();
 }
 
 void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget)
 {
-    qDebug() << "Operation radio button clicked: ";
+    qDebug() << "Operation selection radio button clicked: ";
 
     for(int i = 0; i < testVBox->count(); i++)
     {
@@ -259,7 +259,7 @@ void MainWindow::removeOperationWidget()
     baseConfigWidgetChain.last()->deleteLater();
     baseConfigWidgetChain.removeLast();
 
-    qDebug() << "VBox Count Before: " << chainMenuVBox->count();
+    qDebug() << "Chain Menu vBox count before: " << chainMenuVBox->count();
 
     QLayoutItem *item = chainMenuVBox->itemAt(chainMenuVBox->count() - 1);
     item->widget()->hide();
@@ -276,7 +276,7 @@ void MainWindow::removeOperationWidget()
         baseConfigWidgetChain.last()->
                 getParamAdjustWidget()->show();
 
-    qDebug() << "VBox Count After: " << chainMenuVBox->count();
+    qDebug() << "Chain Menu vBox count after: " << chainMenuVBox->count();
 
     chainMenuVBox->update();
     ui->scrollAreaChainMenu->update();
@@ -327,6 +327,7 @@ void MainWindow::refreshOperationWidgets()
 
 void MainWindow::showAboutDialog()
 {
+    qDebug() << "Opening About Dialog";
     if(aboutDialog == nullptr)
     {
         aboutDialog = new AboutDialog(this);
@@ -395,7 +396,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
             }
             if(!isChainSuccess)
             {
-                qCritical() << "Errored Operation removed from Chain";
+                qCritical() << "Errored operation removed from Chain";
 
                 originalImg.copyTo(outputImage);
 
@@ -555,7 +556,7 @@ void MainWindow::browseClicked()
 void MainWindow::applySourceClicked()
 {
     QString path = ui->textInputSource->toPlainText();
-    qDebug() << "Source Selected: " << path;
+    qDebug() << "Source Selected, path = " << path;
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
         inputSourceType = CaptureInputSource::FILE;
@@ -631,6 +632,8 @@ void MainWindow::switchThemeButtonClicked()
 
     if(qApp->styleSheet() == "")
     {
+        qDebug() << "Switching to Dark Theme";
+
         isDarkModeOn = true;
         QFile f(":qdarkstyle/style.qss");
 
@@ -654,6 +657,8 @@ void MainWindow::switchThemeButtonClicked()
     }
     else
     {
+        qDebug() << "Switching to Light Theme";
+
         isDarkModeOn = false;
         qApp->setStyleSheet("");
         ui->labelInput->setStyleSheet("border: 1px solid black");
@@ -676,4 +681,5 @@ void MainWindow::waitForChainProcessing()
 MainWindow::~MainWindow()
 {
     delete ui;
+    qDebug() << "Application Closed!";
 }
