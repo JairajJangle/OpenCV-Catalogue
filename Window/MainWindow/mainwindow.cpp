@@ -527,25 +527,26 @@ void MainWindow::showHideExplodedView()
 }
 
 void MainWindow::sourceRadioButtonClicked(){
+    ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
     if(ui->cameraRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera Index");
-        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setText("");
         ui->textInputSource->setPlaceholderText("Ex: 0");
     }
     else if(ui->fileRadioButton->isChecked())
     {
         ui->buttonBrowse->show();
         ui->labelInputSource->setText("Browse for Video or Image file");
-        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setText("");
         ui->textInputSource->setPlaceholderText("File path...");
     }
     else if(ui->ipcamRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera IP Address");
-        ui->textInputSource->setPlainText("");
+        ui->textInputSource->setText("");
         ui->textInputSource->setPlaceholderText("Ex: http://192.168.1.10:8080/video");
     }
 }
@@ -554,12 +555,12 @@ void MainWindow::browseClicked()
 {
     QString filePath = QFileDialog::getOpenFileName(this);
     if(filePath.length() > 0)
-        ui->textInputSource->setPlainText(filePath);
+        ui->textInputSource->setText(filePath);
 }
 
 void MainWindow::applySourceClicked()
 {
-    QString path = ui->textInputSource->toPlainText();
+    QString path = ui->textInputSource->text();
     qDebug() << "Source Selected, path = " << path;
 
     /*
@@ -588,9 +589,11 @@ void MainWindow::applySourceClicked()
     else if(ui->cameraRadioButton->isChecked())
     {
         inputSourceType = CaptureInputSource::HARDWARE_CAM;
-        if (path == "")
+        if (!QRegExp(RegExps::onlyDigits).exactMatch(path))
         {
-            qWarning() << "Camera Number not provided";
+            qWarning() << "Invalid camera index";
+            ui->labelSrcStatus->setText("Please enter a valid camera index!");
+            ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
             return;
         }
     }
