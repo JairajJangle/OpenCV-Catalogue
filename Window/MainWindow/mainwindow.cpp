@@ -529,7 +529,7 @@ void MainWindow::sourceRadioButtonClicked(){
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera Index");
         ui->textInputSource->setPlainText("");
-        ui->textInputSource->setPlaceholderText("0");
+        ui->textInputSource->setPlaceholderText("Ex: 0");
     }
     else if(ui->fileRadioButton->isChecked())
     {
@@ -543,7 +543,7 @@ void MainWindow::sourceRadioButtonClicked(){
         ui->buttonBrowse->hide();
         ui->labelInputSource->setText("Set Camera IP Address");
         ui->textInputSource->setPlainText("");
-        ui->textInputSource->setPlaceholderText("http://192.168.1.10:8080/video");
+        ui->textInputSource->setPlaceholderText("Ex: http://192.168.1.10:8080/video");
     }
 }
 
@@ -559,6 +559,10 @@ void MainWindow::applySourceClicked()
     QString path = ui->textInputSource->toPlainText();
     qDebug() << "Source Selected, path = " << path;
 
+    /*
+     * If input source path text box is empty then notify the user
+     * and log it
+     */
     if(path.isEmpty())
     {
         qWarning() << "Input source path empty!";
