@@ -244,6 +244,9 @@ void MainWindow::addOperationWidget()
         emit removeOperationWidgetSignal();
     });
 
+    connect(ui->labelOutput, SIGNAL(LBclicked(QPoint)),
+            baseConfigWidgetChain.last(), SLOT(beginPointChanged(QPoint)));
+
     connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
             this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
 
@@ -615,9 +618,7 @@ void MainWindow::applySourceClicked()
 
 void MainWindow::outputLabelLBClicked(QPoint point)
 {
-    // FIXME: Mouse click received by unselected widget
-    if(!baseConfigWidgetChain.empty())
-        baseConfigWidgetChain.last()->begin = cv::Point(point.x(), point.y());
+    qDebug() << "Output label Mouse LB button click pos = " << point;
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
