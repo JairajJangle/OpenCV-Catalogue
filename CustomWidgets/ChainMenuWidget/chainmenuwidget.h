@@ -63,14 +63,17 @@ public:
      * @param enabled Flag to change the state
      */
     void setComboBoxEnabled(bool enabled);
+
     // Enable or Disable the whole ChainMenuWidget Widget
     void setEnabled(bool enabled);
+
     /**
      * Change the current operation displayed in Combo box
      * @param operationName takes the name of operation that
      * is to be displayed in the Combo box
      */
     void setCurrentOperation(QString operationName);
+
     /**
      * @brief setLineVisibility changes the visibility of vertical line linking two ChainMenuWidgets.
      *  For the vertical line refer the .ui file
@@ -78,11 +81,13 @@ public:
      * @param visible set this true to make line visible
      */
     void setLineVisibility(bool visible);
+
     /**
      * @brief setStyleSheet Change style sheet, called when application theme changes
      * @param isDarkMode Set this true for Dark Theme Mode
      */
     void setStyleSheet(bool isDarkMode);
+
     /**
      * @brief getRadioButton Returns the operation selection - Radio button
      * @return QRadioButton* object
@@ -92,20 +97,24 @@ public:
     ~ChainMenuWidget();
 
 signals:
+
     /**
      * @brief addOperationClicked Emitted when click event on Add button (+) is recorded
      */
     void addOperationClicked();
+
     /**
      * @brief removeOperationClicked Emitted when click event on Remove button (-) is recorded
      */
     void removeOperationClicked();
+
     /**
      * @brief operationChanged Emitted when ChainMenuWidget QComboBox selection is changed
      * @param index Index is the position of the selected operation in the QComboBox.
      *  This index corresponds to MainWindow::OpCodes
      */
     void operationChanged(int index);
+
     /**
      * @brief radioButtonChecked Emitted when click event on Radio button is recorded
      */
