@@ -536,11 +536,11 @@ background-repeat: none;
  border: 1px solid #54636D;
 }</string>
                </property>
-               <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,1,2,0">
-                <item row="2" column="3">
-                 <widget class="Line" name="line_8">
+               <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,0,0,0">
+                <item row="1" column="1" colspan="4">
+                 <widget class="Line" name="line_3">
                   <property name="orientation">
-                   <enum>Qt::Vertical</enum>
+                   <enum>Qt::Horizontal</enum>
                   </property>
                  </widget>
                 </item>
@@ -557,6 +557,43 @@ background-repeat: none;
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QPlainTextEdit" name="textInputSource">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="lineWrapMode">
+                   <enum>QPlainTextEdit::NoWrap</enum>
+                  </property>
+                  <property name="plainText">
+                   <string>0</string>
                   </property>
                  </widget>
                 </item>
@@ -600,10 +637,17 @@ background-repeat: none;
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1" colspan="4">
-                 <widget class="Line" name="line_3">
+                <item row="2" column="3">
+                 <widget class="Line" name="line_8">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLabel" name="labelSrcStatus">
+                  <property name="text">
+                   <string>&lt;input_source_status&gt;</string>
                   </property>
                  </widget>
                 </item>
@@ -619,56 +663,6 @@ background-repeat: none;
                    <string>Browse</string>
                   </property>
                  </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QPlainTextEdit" name="textInputSource">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <weight>50</weight>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                  <property name="verticalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="horizontalScrollBarPolicy">
-                   <enum>Qt::ScrollBarAlwaysOff</enum>
-                  </property>
-                  <property name="lineWrapMode">
-                   <enum>QPlainTextEdit::NoWrap</enum>
-                  </property>
-                  <property name="plainText">
-                   <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1" colspan="4">
-                 <spacer name="verticalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                </layout>
               </widget>

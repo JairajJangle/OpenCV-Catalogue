@@ -88,6 +88,7 @@ void MainWindow::initUI(){
     group->addButton(ui->ipcamRadioButton);
 
     sourceRadioButtonClicked();
+    ui->labelSrcStatus->setText("");
     switchThemeButtonClicked();
 
     chainMenuInitDone = false;
@@ -557,6 +558,16 @@ void MainWindow::applySourceClicked()
 {
     QString path = ui->textInputSource->toPlainText();
     qDebug() << "Source Selected, path = " << path;
+
+    if(path.isEmpty())
+    {
+        qWarning() << "Input source path empty!";
+        ui->labelSrcStatus->setText("Please enter input source path!");
+        ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
+        return;
+    }
+    ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
+
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
         inputSourceType = CaptureInputSource::FILE;
