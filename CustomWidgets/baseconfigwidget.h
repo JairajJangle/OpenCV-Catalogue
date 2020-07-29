@@ -82,6 +82,13 @@ signals:
     void removeOperationSignal();
     void operationSelected(ParamAdjustWidget*);
 
+public slots:
+    void beginPointChanged(QPoint point)
+    {
+        if(chainMenuWidget->getRadioButton()->isChecked())
+        begin = cv::Point(point.x(), point.y());
+    }
+
 public:
     cv::Point begin;
     cv::Point end;
