@@ -140,6 +140,7 @@ private:
 
     void refreshInputImage(cv::Mat img);
     void setUserMessage(QString message, MESSAGE_TYPE);
+    void inputSrcErrorMessage(QString message);
 
     void waitForChainProcessing();
 
