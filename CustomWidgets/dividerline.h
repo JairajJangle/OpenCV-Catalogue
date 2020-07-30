@@ -24,7 +24,6 @@
 
 /**
  * @brief DividerLine Custom QFrame class to draw horizontal line/divider
- * to seperate two widget forms or to organize by seperating widgets
  */
 class DividerLine : public QFrame
 {
