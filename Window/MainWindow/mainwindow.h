@@ -153,8 +153,6 @@ private:
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
 
-    cv::Mat fitToLargestDimen(cv::Mat, cv::Size);
-
     /*
      * overriden closeEvent to close all opened windows when MainWindow
      * closeEvent(...) is fired

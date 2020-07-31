@@ -426,21 +426,24 @@ void MainWindow::getSourceCaptureError(QString error)
     //    setUserMessage(error, ERROR);
 }
 
-void MainWindow::refreshInputImage(cv::Mat img)
+void MainWindow::refreshInputImage(const cv::Mat img)
 {
     try
     {
         cv::Mat inputImage;
-        // QT expects RGB Matrix instead of OpenCV's defalt BGR
-        cvtColor(img, inputImage, cv::COLOR_BGR2RGB);
+        img.copyTo(inputImage);
 
-        cv::Mat scaledInputImage = fitToLargestDimen(inputImage, cv::Size(320, 240));
+        // QT expects RGB Matrix instead of OpenCV's defalt BGR
+        cvtColor(inputImage, inputImage, cv::COLOR_BGR2RGB);
+
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        scaledInputImage.data, scaledInputImage.cols,
-                        scaledInputImage.rows, scaledInputImage.step,
+                        inputImage.data, inputImage.cols,
+                        inputImage.rows, inputImage.step,
                         QImage::Format_RGB888));
-        ui->labelInput->setPixmap(OpenCV2QTOP);
+        ui->labelInput->setPixmap(OpenCV2QTOP.scaled(320,
+                                                     240,
+                                                     Qt::KeepAspectRatio));
     }
 
     catch(cv::Exception& e)
@@ -468,13 +471,14 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
 
-        cv::Mat scaledOutputImage = fitToLargestDimen(outputImage, cv::Size(640, 480));
         QPixmap OpenCV2QTOP = QPixmap::fromImage(
                     QImage(
-                        scaledOutputImage.data, scaledOutputImage.cols,
-                        scaledOutputImage.rows, scaledOutputImage.step,
+                        outputImage.data, outputImage.cols,
+                        outputImage.rows, outputImage.step,
                         QImage::Format_RGB888));
-        ui->labelOutput->setPixmap(OpenCV2QTOP);
+        ui->labelOutput->setPixmap(OpenCV2QTOP.scaled(640,
+                                                      480,
+                                                      Qt::KeepAspectRatio));
     }
 
     catch(cv::Exception& e)
@@ -483,30 +487,6 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
-}
-
-cv::Mat MainWindow::fitToLargestDimen(cv::Mat input, cv::Size fitToSize)
-{
-    double w = -1, h = -1;
-
-    if(input.cols >= input.rows)
-    {
-        w = fitToSize.width;
-        h = (w / input.cols) * input.rows;
-        if(h > fitToSize.height) h = fitToSize.height;
-    }
-    else if(input.rows > input.cols)
-    {
-        h = fitToSize.height;
-        w = (h / input.rows) * input.cols;
-        if(w > fitToSize.width) w = fitToSize.width;
-    }
-    fitToSize = cv::Size(w, h);
-
-    cv::Mat scaledOutputImage;
-    cv::resize(input, scaledOutputImage, fitToSize);
-
-    return scaledOutputImage;
 }
 
 void MainWindow::showHideExplodedView()
@@ -568,6 +548,13 @@ void MainWindow::exportBrowseClicked()
     {
         qDebug() << "Export path is set to: " << folderPath;
     }
+
+    QFile file(folderPath + "/" +
+               QDateTime::currentDateTimeUtc().toString(Qt::DateFormat::ISODate) +
+               "_input.png");
+    file.open(QIODevice::WriteOnly);
+    const QPixmap* inputPixMap = ui->labelInput->pixmap();
+    inputPixMap->save(&file, "PNG");
 }
 
 void MainWindow::applySourceClicked()
