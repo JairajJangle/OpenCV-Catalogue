@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),
             this,SLOT(browseClicked()));
+    connect(ui->buttonExportBrowse, SIGNAL(released()),
+            this, SLOT(exportBrowseClicked()));
     connect(ui->buttonExplodedView,SIGNAL(released()),
             this,SLOT(showHideExplodedView()));
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
@@ -557,6 +559,15 @@ void MainWindow::browseClicked()
     QString filePath = QFileDialog::getOpenFileName(this);
     if(filePath.length() > 0)
         ui->textInputSource->setText(filePath);
+}
+
+void MainWindow::exportBrowseClicked()
+{
+    QString folderPath = QFileDialog::getExistingDirectory(this);
+    if(folderPath.length() > 0)
+    {
+        qDebug() << "Export path is set to: " << folderPath;
+    }
 }
 
 void MainWindow::applySourceClicked()
