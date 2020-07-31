@@ -441,8 +441,8 @@ void MainWindow::refreshInputImage(const cv::Mat img)
                         inputImage.data, inputImage.cols,
                         inputImage.rows, inputImage.step,
                         QImage::Format_RGB888));
-        ui->labelInput->setPixmap(OpenCV2QTOP.scaled(320,
-                                                     240,
+        ui->labelInput->setPixmap(OpenCV2QTOP.scaled(ui->labelInput->width(),
+                                                     ui->labelInput->height(),
                                                      Qt::KeepAspectRatio));
     }
 
@@ -476,8 +476,8 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
                         outputImage.data, outputImage.cols,
                         outputImage.rows, outputImage.step,
                         QImage::Format_RGB888));
-        ui->labelOutput->setPixmap(OpenCV2QTOP.scaled(640,
-                                                      480,
+        ui->labelOutput->setPixmap(OpenCV2QTOP.scaled(ui->labelOutput->width(),
+                                                      ui->labelOutput->height(),
                                                       Qt::KeepAspectRatio));
     }
 
