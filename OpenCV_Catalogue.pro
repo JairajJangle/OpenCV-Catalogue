@@ -96,6 +96,8 @@ DISTFILES += \
     LICENSE.txt \
     README.md \
     assets/app_logo.png \
+    assets/capture_dark.png \
+    assets/capture_light.png \
     assets/demo_video.gif \
     assets/done.png \
     assets/done_sel.png \
@@ -108,6 +110,10 @@ DISTFILES += \
     assets/minimize_sel.png \
     assets/opencv_logo.png \
     assets/paypal_donate.png \
+    assets/play_dark.png \
+    assets/play_light.png \
+    assets/stop_dark.png \
+    assets/stop_light.png \
     assets/undock.png \
     assets/undock_sel.png \
     media/minus_button.png \
