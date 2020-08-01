@@ -35,6 +35,8 @@
 #include <QWindow>
 #include <QFuture>
 
+#include <QDateTime>
+
 // Include all Utils here
 #include "Utils/captureinputsource.h"
 #include "Utils/utils.h"
@@ -85,11 +87,11 @@ private:
                  CONTOURS,
 
                  /*
-                  * Add all other Enum values before this
-                  *
-                  * To connect OpenCV operation Base Config widget to
-                  * the added OpCodes enum, see MainWindow::addOperation(...)
-                  */
+                           * Add all other Enum values before this
+                           *
+                           * To connect OpenCV operation Base Config widget to
+                           * the added OpCodes enum, see MainWindow::addOperation(...)
+                           */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
@@ -152,6 +154,9 @@ private:
 
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
+
+    QPixmap inputPixMap;
+    QPixmap outputPixMap;
 
     /*
      * overriden closeEvent to close all opened windows when MainWindow
