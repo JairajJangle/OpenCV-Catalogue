@@ -763,7 +763,7 @@ background-repeat: none;
               <item row="4" column="0">
                <widget class="QPushButton" name="buttonExportBrowse">
                 <property name="text">
-                 <string>Browse</string>
+                 <string>Export</string>
                 </property>
                </widget>
               </item>
@@ -789,7 +789,7 @@ background-repeat: none;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Export</string>
+                 <string>Output</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
