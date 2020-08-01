@@ -436,12 +436,12 @@ void MainWindow::refreshInputImage(const cv::Mat img)
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(inputImage, inputImage, cv::COLOR_BGR2RGB);
 
-        QPixmap OpenCV2QTOP = QPixmap::fromImage(
+        inputPixMap = QPixmap::fromImage(
                     QImage(
                         inputImage.data, inputImage.cols,
                         inputImage.rows, inputImage.step,
                         QImage::Format_RGB888));
-        ui->labelInput->setPixmap(OpenCV2QTOP.scaled(ui->labelInput->width(),
+        ui->labelInput->setPixmap(inputPixMap.scaled(ui->labelInput->width(),
                                                      ui->labelInput->height(),
                                                      Qt::KeepAspectRatio));
     }
@@ -471,14 +471,14 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
 
-        QPixmap OpenCV2QTOP = QPixmap::fromImage(
+        outputPixMap = QPixmap::fromImage(
                     QImage(
                         outputImage.data, outputImage.cols,
                         outputImage.rows, outputImage.step,
                         QImage::Format_RGB888));
-        ui->labelOutput->setPixmap(OpenCV2QTOP.scaled(ui->labelOutput->width(),
-                                                      ui->labelOutput->height(),
-                                                      Qt::KeepAspectRatio));
+        ui->labelOutput->setPixmap(outputPixMap.scaled(ui->labelOutput->width(),
+                                                       ui->labelOutput->height(),
+                                                       Qt::KeepAspectRatio));
     }
 
     catch(cv::Exception& e)
@@ -546,15 +546,25 @@ void MainWindow::exportBrowseClicked()
     QString folderPath = QFileDialog::getExistingDirectory(this);
     if(folderPath.length() > 0)
     {
-        qDebug() << "Export path is set to: " << folderPath;
-    }
+        QString inputFilename = "Input-" + QDateTime::currentDateTime()
+                .toString(Qt::DateFormat::ISODateWithMs)
+                .replace(":", "-")
+                .replace(".", "-")
+                + ".png";
+        QString outputFilename = "Output-" + QDateTime::currentDateTime()
+                .toString(Qt::DateFormat::ISODateWithMs)
+                .replace(":", "-")
+                .replace(".", "-")
+                + ".png";
 
-    QFile file(folderPath + "/" +
-               QDateTime::currentDateTimeUtc().toString(Qt::DateFormat::ISODate) +
-               "_input.png");
-    file.open(QIODevice::WriteOnly);
-    const QPixmap* inputPixMap = ui->labelInput->pixmap();
-    inputPixMap->save(&file, "PNG");
+        QFile ifile(folderPath + "/" + inputFilename);
+        QFile ofile(folderPath + "/" + outputFilename);
+
+        if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
+            qWarning() << "Image Exporting Failed";
+        else
+            qInfo() << "Image Exporting Success!";
+    }
 }
 
 void MainWindow::applySourceClicked()
