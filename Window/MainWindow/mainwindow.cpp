@@ -543,6 +543,7 @@ void MainWindow::browseClicked()
 
 void MainWindow::exportBrowseClicked()
 {
+    // TODO: If no input source is selected, show warning
     QString folderPath = QFileDialog::getExistingDirectory(this);
     if(folderPath.length() > 0)
     {
@@ -631,11 +632,11 @@ void MainWindow::inputSrcErrorMessage(QString message)
 {
     if(message.isEmpty())
     {
-        ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
+        ui->labelIOStatus->setText(""); ui->labelIOStatus->setStyleSheet("");
         return;
     }
-    ui->labelSrcStatus->setText(message);
-    ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
+    ui->labelIOStatus->setText(message);
+    ui->labelIOStatus->setStyleSheet("QLabel { color : red; }");
 }
 
 void MainWindow::outputLabelLBClicked(QPoint point)
@@ -666,7 +667,7 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
 
 void MainWindow::switchThemeButtonClicked()
 {
-    // TODO: To switch to light mode
+    // TODO: FIXME: Add Export button dynamic styling
 
     if(qApp->styleSheet() == "")
     {
