@@ -50,8 +50,20 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),
             this,SLOT(browseClicked()));
-    connect(ui->buttonExportBrowse, SIGNAL(released()),
-            this, SLOT(exportBrowseClicked()));
+
+    connect(ui->buttonExportBrowse, &QToolButton::released,
+            this, [=]()
+    {
+        exportFolderPath =
+                QFileDialog::getExistingDirectory(this);
+    });
+    connect(ui->buttonStartRec, SIGNAL(released()),
+            this, SLOT(startRecClicked()));
+    connect(ui->buttonStopRec, SIGNAL(released()),
+            this, SLOT(stopRecClicked()));
+    connect(ui->buttonCapture, SIGNAL(released()),
+            this, SLOT(captureClicked()));
+
     connect(ui->buttonExplodedView,SIGNAL(released()),
             this,SLOT(showHideExplodedView()));
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
@@ -541,31 +553,55 @@ void MainWindow::browseClicked()
         ui->textInputSource->setText(filePath);
 }
 
-void MainWindow::exportBrowseClicked()
+void MainWindow::startRecClicked()
 {
-    // TODO: If no input source is selected, show warning
-    QString folderPath = QFileDialog::getExistingDirectory(this);
-    if(folderPath.length() > 0)
+    /*
+     * TODO:
+     *  1. Start Video Write
+     *  2. Disable Start Record Button
+     *  3. Disable Select Folder button
+     *  4. Enable Stop Button
+     */
+}
+
+void MainWindow::stopRecClicked()
+{
+    /*
+     * TODO:
+     *  1. Stop and ensure Video save, notify user accordingly
+     *  2. Enable Start Record Button
+     *  3. Enable Select Folder button
+     *  4. Disable Stop Button
+     */
+}
+
+void MainWindow::captureClicked()
+{
+    if(exportFolderPath.isEmpty())
     {
-        QString inputFilename = "Input-" + QDateTime::currentDateTime()
-                .toString(Qt::DateFormat::ISODateWithMs)
-                .replace(":", "-")
-                .replace(".", "-")
-                + ".png";
-        QString outputFilename = "Output-" + QDateTime::currentDateTime()
-                .toString(Qt::DateFormat::ISODateWithMs)
-                .replace(":", "-")
-                .replace(".", "-")
-                + ".png";
-
-        QFile ifile(folderPath + "/" + inputFilename);
-        QFile ofile(folderPath + "/" + outputFilename);
-
-        if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
-            qWarning() << "Image Exporting Failed";
-        else
-            qInfo() << "Image Exporting Success!";
+        qWarning() << "Export Folder not selected";
+        // User msg: Please select a folder to export the output
+        return;
     }
+
+    QString inputFilename = "Input-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".png";
+    QString outputFilename = "Output-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".png";
+
+    QFile ifile(exportFolderPath + "/" + inputFilename);
+    QFile ofile(exportFolderPath + "/" + outputFilename);
+
+    if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
+        qWarning() << "Image Exporting Failed";
+    else
+        qInfo() << "Image Exporting Success!";
 }
 
 void MainWindow::applySourceClicked()

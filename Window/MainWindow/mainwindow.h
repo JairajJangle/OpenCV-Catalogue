@@ -98,7 +98,9 @@ private slots:
     void sourceRadioButtonClicked();
     void applySourceClicked();
     void browseClicked();
-    void exportBrowseClicked();
+    void startRecClicked();
+    void stopRecClicked();
+    void captureClicked();
     void getSourceCaptureImage(cv::Mat originalImg);
     void getSourceCaptureError(QString);
     void toggleFlipSource(bool);
@@ -155,6 +157,7 @@ private:
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
 
+    QString exportFolderPath = "";
     QPixmap inputPixMap;
     QPixmap outputPixMap;
 
