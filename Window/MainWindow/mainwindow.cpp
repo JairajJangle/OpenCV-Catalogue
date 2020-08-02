@@ -667,8 +667,6 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
 
 void MainWindow::switchThemeButtonClicked()
 {
-    // TODO: FIXME: Add Export button dynamic styling
-
     if(qApp->styleSheet() == "")
     {
         qDebug() << "Switching to Dark Theme";
