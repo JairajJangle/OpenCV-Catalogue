@@ -343,31 +343,6 @@ void MainWindow::refreshOperationWidgets()
             ->triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
-void MainWindow::showAboutDialog()
-{
-    qDebug() << "Opening About Dialog";
-    if(aboutDialog == nullptr)
-    {
-        aboutDialog = new AboutDialog(this);
-        return showAboutDialog();
-    }
-
-    if(!aboutDialog->isVisible())
-    {
-        // Set About Dialog Window Position and Always on Top
-        QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
-        QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
-                                            aboutDialog->geometry().height()/2);
-        aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
-        aboutDialog->show();
-    }
-    else // If dialog is already visible but not in focus
-    {
-        aboutDialog->raise();
-        aboutDialog->activateWindow();
-    }
-}
-
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 {
     if(cv::Size(originalImg.rows , originalImg.rows).empty())
@@ -764,6 +739,32 @@ void MainWindow::waitForChainProcessing()
     // TODO: Check if user need to notify of the wait?
     if(chainProcessFuture.isRunning())
         chainProcessFuture.waitForFinished();
+}
+
+
+void MainWindow::showAboutDialog()
+{
+    qDebug() << "Opening About Dialog";
+    if(aboutDialog == nullptr)
+    {
+        aboutDialog = new AboutDialog(this);
+        return showAboutDialog();
+    }
+
+    if(!aboutDialog->isVisible())
+    {
+        // Set About Dialog Window Position and Always on Top
+        QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
+        QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
+                                            aboutDialog->geometry().height()/2);
+        aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
+        aboutDialog->show();
+    }
+    else // If dialog is already visible but not in focus
+    {
+        aboutDialog->raise();
+        aboutDialog->activateWindow();
+    }
 }
 
 MainWindow::~MainWindow()
