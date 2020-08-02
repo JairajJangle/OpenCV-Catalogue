@@ -102,7 +102,7 @@ void MainWindow::initUI(){
     group->addButton(ui->ipcamRadioButton);
 
     sourceRadioButtonClicked();
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
     switchThemeButtonClicked();
 
     chainMenuInitDone = false;
@@ -522,7 +522,7 @@ void MainWindow::showHideExplodedView()
 
 void MainWindow::sourceRadioButtonClicked(){
 
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
     if(ui->cameraRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
@@ -623,10 +623,10 @@ void MainWindow::applySourceClicked()
     if(path.isEmpty())
     {
         qWarning() << "Input source path empty!";
-        inputSrcErrorMessage("Please enter input source path!");
+        ioErrorMessage("Please enter input source path!");
         return;
     }
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
 
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
@@ -635,7 +635,7 @@ void MainWindow::applySourceClicked()
         if (!(check_file.exists() && check_file.isFile()))
         {
             qWarning() << "No file present on entered path";
-            inputSrcErrorMessage("Provided file path does not exist!");
+            ioErrorMessage("Provided file path does not exist!");
             return;
         }
     }
@@ -645,7 +645,7 @@ void MainWindow::applySourceClicked()
         if (!QRegExp(RegExps::onlyDigits).exactMatch(path))
         {
             qWarning() << "Invalid camera index";
-            inputSrcErrorMessage("Please enter a valid camera index!");
+            ioErrorMessage("Please enter a valid camera index!");
             return;
         }
     }
@@ -671,7 +671,7 @@ void MainWindow::applySourceClicked()
     emit captureInputSource->setInputSource(path, inputSourceType);
 }
 
-void MainWindow::inputSrcErrorMessage(QString message)
+void MainWindow::ioErrorMessage(QString message)
 {
     if(message.isEmpty())
     {
