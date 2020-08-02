@@ -35,6 +35,8 @@
 #include <QWindow>
 #include <QFuture>
 
+#include <QDateTime>
+
 // Include all Utils here
 #include "Utils/captureinputsource.h"
 #include "Utils/utils.h"
@@ -85,17 +87,20 @@ private:
                  CONTOURS,
 
                  /*
-                  * Add all other Enum values before this
-                  *
-                  * To connect OpenCV operation Base Config widget to
-                  * the added OpCodes enum, see MainWindow::addOperation(...)
-                  */
+                                                      * Add all other Enum values before this
+                                                      *
+                                                      * To connect OpenCV operation Base Config widget to
+                                                      * the added OpCodes enum, see MainWindow::addOperation(...)
+                                                      */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
     void sourceRadioButtonClicked();
     void applySourceClicked();
     void browseClicked();
+    void startRecClicked();
+    void stopRecClicked();
+    void captureClicked();
     void getSourceCaptureImage(cv::Mat originalImg);
     void getSourceCaptureError(QString);
     void toggleFlipSource(bool);
@@ -139,8 +144,11 @@ private:
     bool isSourceFlipped = false;
 
     void refreshInputImage(cv::Mat img);
+    QTimer* userMsgTimer = new QTimer(this);
     void setUserMessage(QString message, MESSAGE_TYPE);
-    void inputSrcErrorMessage(QString message);
+
+    QTimer* ioMsgTimer = new QTimer(this);
+    void ioErrorMessage(QString message);
 
     void waitForChainProcessing();
 
@@ -152,7 +160,10 @@ private:
     QWidget *wgtSubtest = new QWidget();
     QVBoxLayout* testVBox = new QVBoxLayout(wgtSubtest);
 
-    cv::Mat fitToLargestDimen(cv::Mat, cv::Size);
+    QString exportFolderPath = "";
+    QPixmap inputPixMap;
+    QPixmap outputPixMap;
+    bool isRecording = false;
 
     /*
      * overriden closeEvent to close all opened windows when MainWindow
@@ -168,4 +179,33 @@ private:
             aboutDialog->close();
         }
     }
+
+    cv::VideoWriter inputVideo, outputVideo;
+
+    void writeToVideo(cv::VideoWriter, cv::Mat);
+
+    QString exportButtonsStyleSheet = "QToolButton"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%1.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}"
+                                      "QToolButton:pressed"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%2.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}"
+                                      "QToolButton:disabled"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%3.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}";
 };
