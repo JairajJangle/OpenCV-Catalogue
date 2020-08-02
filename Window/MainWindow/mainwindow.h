@@ -144,7 +144,10 @@ private:
     bool isSourceFlipped = false;
 
     void refreshInputImage(cv::Mat img);
+    QTimer* userMsgTimer = new QTimer(this);
     void setUserMessage(QString message, MESSAGE_TYPE);
+
+    QTimer* ioMsgTimer = new QTimer(this);
     void ioErrorMessage(QString message);
 
     void waitForChainProcessing();
@@ -193,6 +196,14 @@ private:
                                       "{"
                                       "  background-color: transparent;"
                                       "  border-image: url(:/assets/%2.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}"
+                                      "QToolButton:disabled"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%3.png);"
                                       "  background: none;"
                                       "  border: none;"
                                       "  background-repeat: none;"
