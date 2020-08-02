@@ -14,5 +14,14 @@
         <file>assets/app_logo.png</file>
         <file>assets/info_light_sel.png</file>
         <file>assets/info_light.png</file>
+        <file>assets/play_dark.png</file>
+        <file>assets/play_light.png</file>
+        <file>assets/stop_light.png</file>
+        <file>assets/stop_dark.png</file>
+        <file>assets/capture_light.png</file>
+        <file>assets/capture_dark.png</file>
+        <file>assets/play_disabled.png</file>
+        <file>assets/stop_disabled.png</file>
+        <file>assets/capture_disabled.png</file>
     </qresource>
 </RCC>

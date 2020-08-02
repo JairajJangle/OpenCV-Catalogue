@@ -50,6 +50,25 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(toggleFlipSource(bool)));
     connect(ui->buttonBrowse,SIGNAL(released()),
             this,SLOT(browseClicked()));
+
+    connect(ui->buttonExportBrowse, &QToolButton::released,
+            this, [=]()
+    {
+        exportFolderPath =
+                QFileDialog::getExistingDirectory(this);
+        if(!exportFolderPath.isEmpty())
+        {
+            ui->buttonStopRec->setDisabled(true);
+            ui->buttonExportBrowse->setEnabled(true);
+        }
+    });
+    connect(ui->buttonStartRec, SIGNAL(released()),
+            this, SLOT(startRecClicked()));
+    connect(ui->buttonStopRec, SIGNAL(released()),
+            this, SLOT(stopRecClicked()));
+    connect(ui->buttonCapture, SIGNAL(released()),
+            this, SLOT(captureClicked()));
+
     connect(ui->buttonExplodedView,SIGNAL(released()),
             this,SLOT(showHideExplodedView()));
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
@@ -68,9 +87,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
+
+    userMsgTimer->setSingleShot(true);
+    connect(userMsgTimer, &QTimer::timeout,
+            this, [=](){
+        setUserMessage("", INFO);
+    });
+
+    ioMsgTimer->setSingleShot(true);
+    connect(ioMsgTimer, &QTimer::timeout,
+            this, [=](){
+        ioErrorMessage("");
+    });
 }
 
-void MainWindow::initUI(){
+void MainWindow::initUI()
+{
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -87,8 +119,11 @@ void MainWindow::initUI(){
     group->addButton(ui->fileRadioButton);
     group->addButton(ui->ipcamRadioButton);
 
+    ui->buttonStopRec->setDisabled(true);
+    ui->buttonExportBrowse->setEnabled(true);
+
     sourceRadioButtonClicked();
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
     switchThemeButtonClicked();
 
     chainMenuInitDone = false;
@@ -329,31 +364,6 @@ void MainWindow::refreshOperationWidgets()
             ->triggerAction(QAbstractSlider::SliderToMaximum);
 }
 
-void MainWindow::showAboutDialog()
-{
-    qDebug() << "Opening About Dialog";
-    if(aboutDialog == nullptr)
-    {
-        aboutDialog = new AboutDialog(this);
-        return showAboutDialog();
-    }
-
-    if(!aboutDialog->isVisible())
-    {
-        // Set About Dialog Window Position and Always on Top
-        QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
-        QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
-                                            aboutDialog->geometry().height()/2);
-        aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
-        aboutDialog->show();
-    }
-    else // If dialog is already visible but not in focus
-    {
-        aboutDialog->raise();
-        aboutDialog->activateWindow();
-    }
-}
-
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 {
     if(cv::Size(originalImg.rows , originalImg.rows).empty())
@@ -424,21 +434,27 @@ void MainWindow::getSourceCaptureError(QString error)
     //    setUserMessage(error, ERROR);
 }
 
-void MainWindow::refreshInputImage(cv::Mat img)
+void MainWindow::refreshInputImage(const cv::Mat img)
 {
     try
     {
         cv::Mat inputImage;
-        // QT expects RGB Matrix instead of OpenCV's defalt BGR
-        cvtColor(img, inputImage, cv::COLOR_BGR2RGB);
+        img.copyTo(inputImage);
 
-        cv::Mat scaledInputImage = fitToLargestDimen(inputImage, cv::Size(320, 240));
-        QPixmap OpenCV2QTOP = QPixmap::fromImage(
+        if(isRecording)
+            writeToVideo(inputVideo, inputImage);
+
+        // QT expects RGB Matrix instead of OpenCV's defalt BGR
+        cvtColor(inputImage, inputImage, cv::COLOR_BGR2RGB);
+
+        inputPixMap = QPixmap::fromImage(
                     QImage(
-                        scaledInputImage.data, scaledInputImage.cols,
-                        scaledInputImage.rows, scaledInputImage.step,
+                        inputImage.data, inputImage.cols,
+                        inputImage.rows, inputImage.step,
                         QImage::Format_RGB888));
-        ui->labelInput->setPixmap(OpenCV2QTOP);
+        ui->labelInput->setPixmap(inputPixMap.scaled(ui->labelInput->width(),
+                                                     ui->labelInput->height(),
+                                                     Qt::KeepAspectRatio));
     }
 
     catch(cv::Exception& e)
@@ -463,16 +479,20 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         if(outputImage.type() == CV_8UC1)
             cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
 
+        if(isRecording)
+            writeToVideo(outputVideo, outputImage);
+
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
 
-        cv::Mat scaledOutputImage = fitToLargestDimen(outputImage, cv::Size(640, 480));
-        QPixmap OpenCV2QTOP = QPixmap::fromImage(
+        outputPixMap = QPixmap::fromImage(
                     QImage(
-                        scaledOutputImage.data, scaledOutputImage.cols,
-                        scaledOutputImage.rows, scaledOutputImage.step,
+                        outputImage.data, outputImage.cols,
+                        outputImage.rows, outputImage.step,
                         QImage::Format_RGB888));
-        ui->labelOutput->setPixmap(OpenCV2QTOP);
+        ui->labelOutput->setPixmap(outputPixMap.scaled(ui->labelOutput->width(),
+                                                       ui->labelOutput->height(),
+                                                       Qt::KeepAspectRatio));
     }
 
     catch(cv::Exception& e)
@@ -481,30 +501,6 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
-}
-
-cv::Mat MainWindow::fitToLargestDimen(cv::Mat input, cv::Size fitToSize)
-{
-    double w = -1, h = -1;
-
-    if(input.cols >= input.rows)
-    {
-        w = fitToSize.width;
-        h = (w / input.cols) * input.rows;
-        if(h > fitToSize.height) h = fitToSize.height;
-    }
-    else if(input.rows > input.cols)
-    {
-        h = fitToSize.height;
-        w = (h / input.rows) * input.cols;
-        if(w > fitToSize.width) w = fitToSize.width;
-    }
-    fitToSize = cv::Size(w, h);
-
-    cv::Mat scaledOutputImage;
-    cv::resize(input, scaledOutputImage, fitToSize);
-
-    return scaledOutputImage;
 }
 
 void MainWindow::showHideExplodedView()
@@ -528,7 +524,7 @@ void MainWindow::showHideExplodedView()
 
 void MainWindow::sourceRadioButtonClicked(){
 
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
     if(ui->cameraRadioButton->isChecked())
     {
         ui->buttonBrowse->hide();
@@ -559,22 +555,141 @@ void MainWindow::browseClicked()
         ui->textInputSource->setText(filePath);
 }
 
+void MainWindow::startRecClicked()
+{
+    if(captureInputSource == nullptr || inputPixMap.isNull() || outputPixMap.isNull())
+    {
+        qWarning() << "No input Source selected to start recording";
+        ioErrorMessage("Please select an input source!");
+        return;
+    }
+    if(exportFolderPath.isEmpty())
+    {
+        qWarning() << "Export Folder not selected";
+        ioErrorMessage("Please select a folder to export recording");
+        return;
+    }
+
+    QString inputVideoFileName = "Input-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".avi";
+
+    inputVideo = cv::VideoWriter((exportFolderPath + "/" + inputVideoFileName).toStdString(),
+                                 CV_FOURCC('M','J','P','G'),
+                                 captureInputSource->getCurrentFPS(),
+                                 cv::Size(inputPixMap.width(), inputPixMap.height()),
+                                 true);
+
+    QString outputVideoFileName = "Output-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".avi";
+
+    outputVideo = cv::VideoWriter((exportFolderPath + "/" + outputVideoFileName).toStdString(),
+                                  CV_FOURCC('M','J','P','G'),
+                                  captureInputSource->getCurrentFPS(),
+                                  cv::Size(outputPixMap.width(), outputPixMap.height()),
+                                  true);
+
+    isRecording = true;
+
+    ui->buttonStopRec->setEnabled(true);
+    ui->buttonStartRec->setDisabled(true);
+    ui->buttonExportBrowse->setDisabled(false);
+}
+
+void MainWindow::stopRecClicked()
+{
+    isRecording = false;
+
+    inputVideo.release();
+    outputVideo.release();
+
+    ui->buttonStopRec->setDisabled(true);
+    ui->buttonStartRec->setEnabled(true);
+    ui->buttonExportBrowse->setEnabled(true);
+
+    setUserMessage("", INFO);
+}
+
+void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
+{
+    if(!videoWriter.isOpened() || img.total() == 0)
+    {
+        qCritical() << "Video Write failed!";
+        return;
+    }
+    try
+    {
+        videoWriter.write(img);
+        setUserMessage("Recording...", WARNING);
+    }
+    catch (cv::Exception e)
+    {
+        qCritical() << "Video writing failed. Aborting!";
+        ioErrorMessage("Video Writing Failed! Please retry.");
+        isRecording = false;
+        setUserMessage("Recording Failer", ERROR);
+    }
+}
+
+void MainWindow::captureClicked()
+{
+    if(inputPixMap.isNull() || outputPixMap.isNull())
+    {
+        qWarning() << "No input Source selected to start recording";
+        ioErrorMessage("Please select an input source!");
+        return;
+    }
+    if(exportFolderPath.isEmpty())
+    {
+        qWarning() << "Export Folder not selected";
+        ioErrorMessage("Please select a folder to export captured images");
+        return;
+    }
+
+    QString inputFilename = "Input-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".png";
+    QString outputFilename = "Output-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".png";
+
+    try
+    {
+        QFile ifile(exportFolderPath + "/" + inputFilename);
+        QFile ofile(exportFolderPath + "/" + outputFilename);
+
+        if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
+            qWarning() << "Image Exporting Failed";
+        else
+            qInfo() << "Image Exporting Success!";
+    }
+    catch(QException e)
+    {
+        qCritical() << "Error: " << e.what();
+    }
+}
+
 void MainWindow::applySourceClicked()
 {
     QString path = ui->textInputSource->text();
     qDebug() << "Source Selected, path = " << path;
 
-    /*
-     * If input source path text box is empty then notify the user
-     * and log it
-     */
     if(path.isEmpty())
     {
         qWarning() << "Input source path empty!";
-        inputSrcErrorMessage("Please enter input source path!");
+        ioErrorMessage("Please enter input source path!");
         return;
     }
-    inputSrcErrorMessage("");
+    ioErrorMessage("");
 
     int inputSourceType = CaptureInputSource::FILE;
     if(ui->fileRadioButton->isChecked()){
@@ -583,7 +698,7 @@ void MainWindow::applySourceClicked()
         if (!(check_file.exists() && check_file.isFile()))
         {
             qWarning() << "No file present on entered path";
-            inputSrcErrorMessage("Provided file path does not exist!");
+            ioErrorMessage("Provided file path does not exist!");
             return;
         }
     }
@@ -593,7 +708,7 @@ void MainWindow::applySourceClicked()
         if (!QRegExp(RegExps::onlyDigits).exactMatch(path))
         {
             qWarning() << "Invalid camera index";
-            inputSrcErrorMessage("Please enter a valid camera index!");
+            ioErrorMessage("Please enter a valid camera index!");
             return;
         }
     }
@@ -619,17 +734,6 @@ void MainWindow::applySourceClicked()
     emit captureInputSource->setInputSource(path, inputSourceType);
 }
 
-void MainWindow::inputSrcErrorMessage(QString message)
-{
-    if(message.isEmpty())
-    {
-        ui->labelSrcStatus->setText(""); ui->labelSrcStatus->setStyleSheet("");
-        return;
-    }
-    ui->labelSrcStatus->setText(message);
-    ui->labelSrcStatus->setStyleSheet("QLabel { color : red; }");
-}
-
 void MainWindow::outputLabelLBClicked(QPoint point)
 {
     qDebug() << "Output label Mouse LB button click pos = " << point;
@@ -640,26 +744,42 @@ void MainWindow::toggleFlipSource(bool isChecked)
     isSourceFlipped = isChecked;
 }
 
+void MainWindow::ioErrorMessage(QString message)
+{
+    if(message.isEmpty())
+    {
+        ui->labelIOStatus->setText(""); ui->labelIOStatus->setStyleSheet("");
+        return;
+    }
+    ui->labelIOStatus->setText(message);
+    ui->labelIOStatus->setStyleSheet("QLabel { color : red; }");
+
+    ioMsgTimer->start(5000);
+}
+
 void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
 {
-    QPalette sample_palette;
+    if(message.isEmpty())
+    {
+        ui->labelUserMessage->setText("");
+        return;
+    }
 
-    messageType == ERROR ?
-                sample_palette.setColor(
-                    QPalette::WindowText, Qt::red):
-                messageType == WARNING ?
-                    sample_palette.setColor(QPalette::WindowText, Qt::yellow):
-                    sample_palette.setColor(QPalette::WindowText, Qt::black);
+    if(messageType != INFO)
+        ui->labelUserMessage->setStyleSheet(QString("QLabel { color : ")
+                                            + (messageType == ERROR ? "red":
+                                                                      "yellow")
+                                            + "; }");
+    else if(messageType == INFO)
+        ui->labelUserMessage->setStyleSheet("");
 
-    ui->labelUserMessage->setAutoFillBackground(true);
-    ui->labelUserMessage->setPalette(sample_palette);
     ui->labelUserMessage->setText(message);
+
+    userMsgTimer->start(5000);
 }
 
 void MainWindow::switchThemeButtonClicked()
 {
-    // TODO: To switch to light mode
-
     if(qApp->styleSheet() == "")
     {
         qDebug() << "Switching to Dark Theme";
@@ -669,16 +789,16 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found";
+            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found!";
+            return;
         }
-        else
-        {
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
-            ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
-            ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
-        }
+
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+
+        ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
+        ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
 
         for(auto& baseConfigWidget : baseConfigWidgetChain)
         {
@@ -691,6 +811,7 @@ void MainWindow::switchThemeButtonClicked()
 
         isDarkModeOn = false;
         qApp->setStyleSheet("");
+
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
 
@@ -699,6 +820,16 @@ void MainWindow::switchThemeButtonClicked()
             baseConfigWidget->changeWidgetsStyleSheet(false);
         }
     }
+
+    ui->buttonStartRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "play_dark": "play_light",
+                                                                  isDarkModeOn ? "play_light": "play_dark",
+                                                                  "play_disabled"));
+    ui->buttonStopRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "stop_dark": "stop_light",
+                                                                 isDarkModeOn ? "stop_light": "stop_dark",
+                                                                 "stop_disabled"));
+    ui->buttonCapture->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "capture_dark": "capture_light",
+                                                                 isDarkModeOn ? "capture_light": "capture_dark",
+                                                                 "capture_disabled"));
 }
 
 void MainWindow::waitForChainProcessing()
@@ -706,6 +837,32 @@ void MainWindow::waitForChainProcessing()
     // TODO: Check if user need to notify of the wait?
     if(chainProcessFuture.isRunning())
         chainProcessFuture.waitForFinished();
+}
+
+
+void MainWindow::showAboutDialog()
+{
+    qDebug() << "Opening About Dialog";
+    if(aboutDialog == nullptr)
+    {
+        aboutDialog = new AboutDialog(this);
+        return showAboutDialog();
+    }
+
+    if(!aboutDialog->isVisible())
+    {
+        // Set About Dialog Window Position and Always on Top
+        QPoint mainWindowCenter = WidgetUtils::getWidgetCenter(this);
+        QPoint aboutDialogHalfSize = QPoint(aboutDialog->geometry().width()/2,
+                                            aboutDialog->geometry().height()/2);
+        aboutDialog->move(mainWindowCenter - aboutDialogHalfSize);
+        aboutDialog->show();
+    }
+    else // If dialog is already visible but not in focus
+    {
+        aboutDialog->raise();
+        aboutDialog->activateWindow();
+    }
 }
 
 MainWindow::~MainWindow()
