@@ -595,13 +595,20 @@ void MainWindow::captureClicked()
             .replace(".", "-")
             + ".png";
 
-    QFile ifile(exportFolderPath + "/" + inputFilename);
-    QFile ofile(exportFolderPath + "/" + outputFilename);
+    try
+    {
+        QFile ifile(exportFolderPath + "/" + inputFilename);
+        QFile ofile(exportFolderPath + "/" + outputFilename);
 
-    if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
-        qWarning() << "Image Exporting Failed";
-    else
-        qInfo() << "Image Exporting Success!";
+        if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
+            qWarning() << "Image Exporting Failed";
+        else
+            qInfo() << "Image Exporting Success!";
+    }
+    catch(QException e)
+    {
+        qCritical() << "Error: " << e.what();
+    }
 }
 
 void MainWindow::applySourceClicked()
