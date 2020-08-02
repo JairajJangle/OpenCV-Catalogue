@@ -61,7 +61,7 @@ private slots:
             }
 
             try {
-                double fps = cap.get(cv::CAP_PROP_FPS);
+                fps = cap.get(cv::CAP_PROP_FPS);
 
                 inputSourceCaptureTImer->setInterval(
                             inputSourceType == NETWORK_STREAM ? 10 : (1000/fps));
@@ -153,6 +153,12 @@ public:
         connect(inputSourceCaptureTImer, SIGNAL(timeout()),
                 this, SLOT(captureSource()));
     }
+
+    int getCurrentFPS()
+    {
+        return fps;
+    }
+
     ~CaptureInputSource()
     {
         cap.release();
@@ -167,6 +173,8 @@ private:
     cv::VideoCapture cap;
 
     InputSourceType inputSourceType = FILE;
+
+    double fps = 30;
 
     void openSource()
     {

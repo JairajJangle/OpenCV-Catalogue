@@ -420,6 +420,9 @@ void MainWindow::refreshInputImage(const cv::Mat img)
         cv::Mat inputImage;
         img.copyTo(inputImage);
 
+        if(isRecording)
+            writeToVideo(inputVideo, inputImage);
+
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(inputImage, inputImage, cv::COLOR_BGR2RGB);
 
@@ -454,6 +457,9 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
          */
         if(outputImage.type() == CV_8UC1)
             cvtColor(outputImage, outputImage, cv::COLOR_GRAY2BGR);
+
+        if(isRecording)
+            writeToVideo(outputVideo, outputImage);
 
         // QT expects RGB Matrix instead of OpenCV's defalt BGR
         cvtColor(outputImage, outputImage, cv::COLOR_BGR2RGB);
@@ -530,6 +536,39 @@ void MainWindow::browseClicked()
 
 void MainWindow::startRecClicked()
 {
+    if(exportFolderPath.isEmpty())
+    {
+        qWarning() << "Export Folder not selected";
+        // User msg: Please select a folder to export the output
+        return;
+    }
+
+    QString inputVideoFileName = "Input-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".avi";
+
+    inputVideo = cv::VideoWriter((exportFolderPath + "/" + inputVideoFileName).toStdString(),
+                                 CV_FOURCC('M','J','P','G'),
+                                 captureInputSource->getCurrentFPS(),
+                                 cv::Size(inputPixMap.width(), inputPixMap.height()),
+                                 true);
+
+    QString outputVideoFileName = "Output-" + QDateTime::currentDateTime()
+            .toString(Qt::DateFormat::ISODateWithMs)
+            .replace(":", "-")
+            .replace(".", "-")
+            + ".avi";
+
+    outputVideo = cv::VideoWriter((exportFolderPath + "/" + outputVideoFileName).toStdString(),
+                                  CV_FOURCC('M','J','P','G'),
+                                  captureInputSource->getCurrentFPS(),
+                                  cv::Size(outputPixMap.width(), outputPixMap.height()),
+                                  true);
+
+    isRecording = true;
+
     /*
      * TODO:
      *  1. Start Video Write
@@ -541,6 +580,11 @@ void MainWindow::startRecClicked()
 
 void MainWindow::stopRecClicked()
 {
+    isRecording = false;
+
+    inputVideo.release();
+    outputVideo.release();
+
     /*
      * TODO:
      *  1. Stop and ensure Video save, notify user accordingly
@@ -548,6 +592,16 @@ void MainWindow::stopRecClicked()
      *  3. Enable Select Folder button
      *  4. Disable Stop Button
      */
+}
+
+void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
+{
+    if(!videoWriter.isOpened() || img.total() == 0)
+    {
+        qCritical() << "Video Write failed!";
+        return;
+    }
+    videoWriter.write(img);
 }
 
 void MainWindow::captureClicked()

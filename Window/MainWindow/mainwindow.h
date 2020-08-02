@@ -160,6 +160,7 @@ private:
     QString exportFolderPath = "";
     QPixmap inputPixMap;
     QPixmap outputPixMap;
+    bool isRecording = false;
 
     /*
      * overriden closeEvent to close all opened windows when MainWindow
@@ -175,6 +176,10 @@ private:
             aboutDialog->close();
         }
     }
+
+    cv::VideoWriter inputVideo, outputVideo;
+
+    void writeToVideo(cv::VideoWriter, cv::Mat);
 
     QString exportButtonsStyleSheet = "QToolButton"
                                       "{"
