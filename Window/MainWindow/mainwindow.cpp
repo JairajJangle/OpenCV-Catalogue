@@ -678,16 +678,16 @@ void MainWindow::switchThemeButtonClicked()
 
         if (!f.exists())
         {
-            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found";
+            qCritical() << "Unable to set stylesheet, Dark Mode Theme File not found!";
+            return;
         }
-        else
-        {
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
-            ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
-            ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
-        }
+
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+
+        ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
+        ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
 
         for(auto& baseConfigWidget : baseConfigWidgetChain)
         {
@@ -700,6 +700,7 @@ void MainWindow::switchThemeButtonClicked()
 
         isDarkModeOn = false;
         qApp->setStyleSheet("");
+
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
 
@@ -708,6 +709,13 @@ void MainWindow::switchThemeButtonClicked()
             baseConfigWidget->changeWidgetsStyleSheet(false);
         }
     }
+
+    ui->buttonStartRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "play_dark": "play_light",
+                                                                  isDarkModeOn ? "play_light": "play_dark"));
+    ui->buttonStopRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "stop_dark": "stop_light",
+                                                                 isDarkModeOn ? "stop_light": "stop_dark"));
+    ui->buttonCapture->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "capture_dark": "capture_light",
+                                                                 isDarkModeOn ? "capture_light": "capture_dark"));
 }
 
 void MainWindow::waitForChainProcessing()

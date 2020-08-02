@@ -54,5 +54,7 @@ namespace RegExps {
  * Note that, these strings exclude above defined strings
  */
 namespace Strings {
+[[maybe_unused]] static const char* dark = "dark";
+[[maybe_unused]] static const char* light = "light";
 [[maybe_unused]] static const char* noOperationSelected = "No operation Selected";
 }
