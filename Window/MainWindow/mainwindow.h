@@ -87,11 +87,11 @@ private:
                  CONTOURS,
 
                  /*
-                           * Add all other Enum values before this
-                           *
-                           * To connect OpenCV operation Base Config widget to
-                           * the added OpCodes enum, see MainWindow::addOperation(...)
-                           */
+                                                      * Add all other Enum values before this
+                                                      *
+                                                      * To connect OpenCV operation Base Config widget to
+                                                      * the added OpCodes enum, see MainWindow::addOperation(...)
+                                                      */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
@@ -172,4 +172,21 @@ private:
             aboutDialog->close();
         }
     }
+
+    QString exportButtonsStyleSheet = "QToolButton"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%1.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}"
+                                      "QToolButton:pressed"
+                                      "{"
+                                      "  background-color: transparent;"
+                                      "  border-image: url(:/assets/%2.png);"
+                                      "  background: none;"
+                                      "  border: none;"
+                                      "  background-repeat: none;"
+                                      "}";
 };
