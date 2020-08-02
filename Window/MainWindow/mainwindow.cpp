@@ -56,6 +56,11 @@ MainWindow::MainWindow(QWidget *parent)
     {
         exportFolderPath =
                 QFileDialog::getExistingDirectory(this);
+        if(!exportFolderPath.isEmpty())
+        {
+            ui->buttonStopRec->setDisabled(true);
+            ui->buttonExportBrowse->setEnabled(true);
+        }
     });
     connect(ui->buttonStartRec, SIGNAL(released()),
             this, SLOT(startRecClicked()));
@@ -82,9 +87,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
+
+    userMsgTimer->setSingleShot(true);
+    connect(userMsgTimer, &QTimer::timeout,
+            this, [=](){
+        setUserMessage("", INFO);
+    });
+
+    ioMsgTimer->setSingleShot(true);
+    connect(ioMsgTimer, &QTimer::timeout,
+            this, [=](){
+        ioErrorMessage("");
+    });
 }
 
-void MainWindow::initUI(){
+void MainWindow::initUI()
+{
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -100,6 +118,9 @@ void MainWindow::initUI(){
     group->addButton(ui->cameraRadioButton);
     group->addButton(ui->fileRadioButton);
     group->addButton(ui->ipcamRadioButton);
+
+    ui->buttonStopRec->setDisabled(true);
+    ui->buttonExportBrowse->setEnabled(true);
 
     sourceRadioButtonClicked();
     ioErrorMessage("");
@@ -536,10 +557,16 @@ void MainWindow::browseClicked()
 
 void MainWindow::startRecClicked()
 {
+    if(captureInputSource == nullptr || inputPixMap.isNull() || outputPixMap.isNull())
+    {
+        qWarning() << "No input Source selected to start recording";
+        ioErrorMessage("Please select an input source!");
+        return;
+    }
     if(exportFolderPath.isEmpty())
     {
         qWarning() << "Export Folder not selected";
-        // User msg: Please select a folder to export the output
+        ioErrorMessage("Please select a folder to export recording");
         return;
     }
 
@@ -569,13 +596,9 @@ void MainWindow::startRecClicked()
 
     isRecording = true;
 
-    /*
-     * TODO:
-     *  1. Start Video Write
-     *  2. Disable Start Record Button
-     *  3. Disable Select Folder button
-     *  4. Enable Stop Button
-     */
+    ui->buttonStopRec->setEnabled(true);
+    ui->buttonStartRec->setDisabled(true);
+    ui->buttonExportBrowse->setDisabled(false);
 }
 
 void MainWindow::stopRecClicked()
@@ -585,13 +608,11 @@ void MainWindow::stopRecClicked()
     inputVideo.release();
     outputVideo.release();
 
-    /*
-     * TODO:
-     *  1. Stop and ensure Video save, notify user accordingly
-     *  2. Enable Start Record Button
-     *  3. Enable Select Folder button
-     *  4. Disable Stop Button
-     */
+    ui->buttonStopRec->setDisabled(true);
+    ui->buttonStartRec->setEnabled(true);
+    ui->buttonExportBrowse->setEnabled(true);
+
+    setUserMessage("", INFO);
 }
 
 void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
@@ -601,15 +622,32 @@ void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
         qCritical() << "Video Write failed!";
         return;
     }
-    videoWriter.write(img);
+    try
+    {
+        videoWriter.write(img);
+        setUserMessage("Recording...", WARNING);
+    }
+    catch (cv::Exception e)
+    {
+        qCritical() << "Video writing failed. Aborting!";
+        ioErrorMessage("Video Writing Failed! Please retry.");
+        isRecording = false;
+        setUserMessage("Recording Failer", ERROR);
+    }
 }
 
 void MainWindow::captureClicked()
 {
+    if(inputPixMap.isNull() || outputPixMap.isNull())
+    {
+        qWarning() << "No input Source selected to start recording";
+        ioErrorMessage("Please select an input source!");
+        return;
+    }
     if(exportFolderPath.isEmpty())
     {
         qWarning() << "Export Folder not selected";
-        // User msg: Please select a folder to export the output
+        ioErrorMessage("Please select a folder to export captured images");
         return;
     }
 
@@ -645,10 +683,6 @@ void MainWindow::applySourceClicked()
     QString path = ui->textInputSource->text();
     qDebug() << "Source Selected, path = " << path;
 
-    /*
-     * If input source path text box is empty then notify the user
-     * and log it
-     */
     if(path.isEmpty())
     {
         qWarning() << "Input source path empty!";
@@ -700,17 +734,6 @@ void MainWindow::applySourceClicked()
     emit captureInputSource->setInputSource(path, inputSourceType);
 }
 
-void MainWindow::ioErrorMessage(QString message)
-{
-    if(message.isEmpty())
-    {
-        ui->labelIOStatus->setText(""); ui->labelIOStatus->setStyleSheet("");
-        return;
-    }
-    ui->labelIOStatus->setText(message);
-    ui->labelIOStatus->setStyleSheet("QLabel { color : red; }");
-}
-
 void MainWindow::outputLabelLBClicked(QPoint point)
 {
     qDebug() << "Output label Mouse LB button click pos = " << point;
@@ -721,20 +744,38 @@ void MainWindow::toggleFlipSource(bool isChecked)
     isSourceFlipped = isChecked;
 }
 
+void MainWindow::ioErrorMessage(QString message)
+{
+    if(message.isEmpty())
+    {
+        ui->labelIOStatus->setText(""); ui->labelIOStatus->setStyleSheet("");
+        return;
+    }
+    ui->labelIOStatus->setText(message);
+    ui->labelIOStatus->setStyleSheet("QLabel { color : red; }");
+
+    ioMsgTimer->start(5000);
+}
+
 void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
 {
-    QPalette sample_palette;
+    if(message.isEmpty())
+    {
+        ui->labelUserMessage->setText("");
+        return;
+    }
 
-    messageType == ERROR ?
-                sample_palette.setColor(
-                    QPalette::WindowText, Qt::red):
-                messageType == WARNING ?
-                    sample_palette.setColor(QPalette::WindowText, Qt::yellow):
-                    sample_palette.setColor(QPalette::WindowText, Qt::black);
+    if(messageType != INFO)
+        ui->labelUserMessage->setStyleSheet(QString("QLabel { color : ")
+                                            + (messageType == ERROR ? "red":
+                                                                      "yellow")
+                                            + "; }");
+    else if(messageType == INFO)
+        ui->labelUserMessage->setStyleSheet("");
 
-    ui->labelUserMessage->setAutoFillBackground(true);
-    ui->labelUserMessage->setPalette(sample_palette);
     ui->labelUserMessage->setText(message);
+
+    userMsgTimer->start(5000);
 }
 
 void MainWindow::switchThemeButtonClicked()
@@ -781,11 +822,14 @@ void MainWindow::switchThemeButtonClicked()
     }
 
     ui->buttonStartRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "play_dark": "play_light",
-                                                                  isDarkModeOn ? "play_light": "play_dark"));
+                                                                  isDarkModeOn ? "play_light": "play_dark",
+                                                                  "play_disabled"));
     ui->buttonStopRec->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "stop_dark": "stop_light",
-                                                                 isDarkModeOn ? "stop_light": "stop_dark"));
+                                                                 isDarkModeOn ? "stop_light": "stop_dark",
+                                                                 "stop_disabled"));
     ui->buttonCapture->setStyleSheet(exportButtonsStyleSheet.arg(isDarkModeOn ? "capture_dark": "capture_light",
-                                                                 isDarkModeOn ? "capture_light": "capture_dark"));
+                                                                 isDarkModeOn ? "capture_light": "capture_dark",
+                                                                 "capture_disabled"));
 }
 
 void MainWindow::waitForChainProcessing()

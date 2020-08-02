@@ -97,6 +97,7 @@ DISTFILES += \
     README.md \
     assets/app_logo.png \
     assets/capture_dark.png \
+    assets/capture_disabled.png \
     assets/capture_light.png \
     assets/demo_video.gif \
     assets/done.png \
@@ -111,8 +112,10 @@ DISTFILES += \
     assets/opencv_logo.png \
     assets/paypal_donate.png \
     assets/play_dark.png \
+    assets/play_disabled.png \
     assets/play_light.png \
     assets/stop_dark.png \
+    assets/stop_disabled.png \
     assets/stop_light.png \
     assets/undock.png \
     assets/undock_sel.png \
