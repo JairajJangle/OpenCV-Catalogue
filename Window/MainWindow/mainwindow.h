@@ -34,7 +34,6 @@
 #include <QGroupBox>
 #include <QWindow>
 #include <QFuture>
-
 #include <QDateTime>
 
 // Include all Utils here
@@ -64,6 +63,7 @@
 // Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
 #include "CustomWidgets/HybridSlider/hybridslider.h"
+#include "CustomWidgets/ErrorDialog/errordialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -102,7 +102,7 @@ private slots:
     void stopRecClicked();
     void captureClicked();
     void getSourceCaptureImage(cv::Mat originalImg);
-    void getSourceCaptureError(QString);
+    void showOperationalError(QString title, QString error);
     void toggleFlipSource(bool);
     void addOperation(MainWindow::OPCodes opCode = NO_OPERATION);
     void lastOperationChanged(MainWindow::OPCodes opCode);
@@ -119,6 +119,7 @@ private slots:
 signals:
     void refreshOutputImageSignal(cv::Mat);
     void removeOperationWidgetSignal();
+    void showErrorDialog(QString, QString);
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -143,12 +144,16 @@ private:
 
     bool isSourceFlipped = false;
 
+    const int continuousErrorThreshold = 5;
+    int continuousErrorCount = 0;
+
     void refreshInputImage(cv::Mat img);
     QTimer* userMsgTimer = new QTimer(this);
     void setUserMessage(QString message, MESSAGE_TYPE);
 
     QTimer* ioMsgTimer = new QTimer(this);
     void ioErrorMessage(QString message);
+    ErrorDialog* errorDialog = new ErrorDialog();
 
     void waitForChainProcessing();
 

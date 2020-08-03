@@ -15,6 +15,12 @@ public:
     explicit ErrorDialog(QWidget *parent = nullptr);
     ~ErrorDialog();
 
+    void setText(QString title, QString details);
+    QString getDetails();
+
+private slots:
+    void hideDialog();
+
 private:
     Ui::ErrorDialog *ui;
 };
