@@ -444,199 +444,6 @@ background-repeat: none;
            <property name="rightMargin">
             <number>40</number>
            </property>
-           <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
-             <property name="spacing">
-              <number>10</number>
-             </property>
-             <item>
-              <widget class="QFrame" name="frame2">
-               <property name="styleSheet">
-                <string notr="true">#frame2 
-{
- border: 1px solid #54636D;
-}</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_8">
-                <item row="4" column="0">
-                 <widget class="QRadioButton" name="ipcamRadioButton">
-                  <property name="text">
-                   <string>IP Camera</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="Line" name="line_6">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QRadioButton" name="cameraRadioButton">
-                  <property name="text">
-                   <string>Camera Input</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QRadioButton" name="fileRadioButton">
-                  <property name="text">
-                   <string>Video/Picture file</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>Input Source</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QFrame" name="frame3">
-               <property name="styleSheet">
-                <string notr="true">#frame3
-{
- border: 1px solid #54636D;
-}</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,0,0,0">
-                <item row="0" column="1" colspan="4">
-                 <widget class="QLabel" name="labelInputSource">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Camera Index  </string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QPushButton" name="buttonBrowse">
-                  <property name="toolTip">
-                   <string>Open File Browser to select Media Files</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>Browse</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="4">
-                 <widget class="QToolButton" name="buttonSelectSource">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>40</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>Select the Input source</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">#buttonSelectSource
-{
-background-color: transparent;
-border-image: url(:/assets/done.png);
-background: none;
-border: none;
-background-repeat: none;
-}
-#buttonSelectSource:pressed
-{
-background-color: transparent;
-border-image: url(:/assets/done_sel.png);
-background: none;
-border: none;
-background-repeat: none;
-}</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="1">
-                 <widget class="QLineEdit" name="textInputSource">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <weight>50</weight>
-                    <bold>false</bold>
-                   </font>
-                  </property>
-                  <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1" colspan="4">
-                 <widget class="Line" name="line_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="3">
-                 <widget class="Line" name="line_8">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="1">
-                 <widget class="QCheckBox" name="checkBoxMirror">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Mirrored input</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </item>
            <item row="0" column="1">
             <widget class="QFrame" name="gridFrame_2">
              <property name="sizePolicy">
@@ -854,17 +661,210 @@ background-repeat: none;
              </layout>
             </widget>
            </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="Line" name="line_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="0" colspan="2">
             <widget class="QLabel" name="labelIOStatus">
              <property name="text">
               <string>&lt;io_status&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <item>
+              <widget class="QFrame" name="frame2">
+               <property name="styleSheet">
+                <string notr="true">#frame2 
+{
+ border: 1px solid #54636D;
+}</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_8">
+                <item row="4" column="0">
+                 <widget class="QRadioButton" name="ipcamRadioButton">
+                  <property name="text">
+                   <string>IP Camera</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="Line" name="line_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QRadioButton" name="cameraRadioButton">
+                  <property name="text">
+                   <string>Camera Input</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QRadioButton" name="fileRadioButton">
+                  <property name="text">
+                   <string>Video/Picture file</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>Input Source</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame3">
+               <property name="styleSheet">
+                <string notr="true">#frame3
+{
+ border: 1px solid #54636D;
+}</string>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,0,0,0">
+                <item row="0" column="1" colspan="4">
+                 <widget class="QLabel" name="labelInputSource">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Camera Index  </string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QPushButton" name="buttonBrowse">
+                  <property name="toolTip">
+                   <string>Open File Browser to select Media Files</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Browse</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="4">
+                 <widget class="QToolButton" name="buttonSelectSource">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Select the Input source</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#buttonSelectSource
+{
+background-color: transparent;
+border-image: url(:/assets/done.png);
+background: none;
+border: none;
+background-repeat: none;
+}
+#buttonSelectSource:pressed
+{
+background-color: transparent;
+border-image: url(:/assets/done_sel.png);
+background: none;
+border: none;
+background-repeat: none;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="textInputSource">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>50</weight>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::LeftToRight</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1" colspan="4">
+                 <widget class="Line" name="line_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="Line" name="line_8">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QCheckBox" name="checkBoxMirror">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Mirrored input</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="Line" name="line_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
