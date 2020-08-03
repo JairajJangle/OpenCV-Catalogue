@@ -39,6 +39,7 @@ LIBS += -L/usr/local/lib \
 SOURCES += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
+    CustomWidgets/ErrorDialog/errordialog.cpp \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.cpp \
     CustomWidgets/focusawarelineedit.cpp \
     Window/AboutDialog/aboutdialog.cpp \
@@ -49,6 +50,7 @@ SOURCES += \
 HEADERS += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.h \
     CustomWidgets/ClickableLabel/clickablelabel.h \
+    CustomWidgets/ErrorDialog/errordialog.h \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.h \
     CustomWidgets/applyresetbuttonlayout.h \
     CustomWidgets/dividerline.h \
@@ -83,6 +85,7 @@ HEADERS += \
 
 FORMS += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.ui \
+    CustomWidgets/ErrorDialog/errordialog.ui \
     Window/AboutDialog/aboutdialog.ui \
     CustomWidgets/HybridSlider/hybridslider.ui \
     Window/MainWindow/mainwindow.ui
