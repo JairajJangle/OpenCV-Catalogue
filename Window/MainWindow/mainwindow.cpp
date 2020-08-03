@@ -88,6 +88,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
 
+    connect(this, SIGNAL(showErrorDialog(QString, QString)),
+            this, SLOT(showOperationalError(QString, QString)));
+
     userMsgTimer->setSingleShot(true);
     connect(userMsgTimer, &QTimer::timeout,
             this, [=](){
@@ -121,6 +124,8 @@ void MainWindow::initUI()
 
     ui->buttonStopRec->setDisabled(true);
     ui->buttonExportBrowse->setEnabled(true);
+
+    errorDialog->setModal(true);
 
     sourceRadioButtonClicked();
     ioErrorMessage("");
@@ -399,14 +404,18 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
             catch(cv::Exception& e)
             {
                 qCritical() << e.what();
+                emit showErrorDialog("OpenCV Exception", e.what());
             }
             catch(std::exception& e)
             {
                 qCritical() << e.what();
+                emit showErrorDialog("Standard Exception", e.what());
             }
             catch(std::string &error)
             {
                 qCritical() << QString::fromStdString(error);
+                emit showErrorDialog("Unknown Exception",
+                                     QString::fromStdString(error));
             }
             if(!isChainSuccess)
             {
@@ -427,10 +436,39 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     if(testVBox->count() == 0) addOperation();
 }
 
-void MainWindow::getSourceCaptureError(QString error)
+void MainWindow::showOperationalError(QString title, QString error)
 {
     qCritical() << error;
-    // FIXME: Commented for DEMO
+
+    if(errorDialog->isVisible())
+    {
+        QString errorDetails = errorDialog->getDetails();
+        errorDetails += error;
+        errorDialog->setText(title, errorDetails);
+
+        /*
+         * Increement Continuous Error Count if error DIalog is already
+         * showing and another error appears
+         */
+        continuousErrorCount++;
+    }
+    else if(!errorDialog->isVisible())
+    {
+        errorDialog->setText(title, error);
+        errorDialog->show();
+        continuousErrorCount = 0;
+    }
+
+    if(continuousErrorCount >= continuousErrorThreshold)
+    {
+        qCritical() << "Continous Error threshold crossed";
+        // TODO: Show OpenCV Catalogue Hard Reset Button
+    }
+
+    /*
+     * FIXME: Commented for DEMO,
+     *  show in Alert Dialog instead of user message label
+     */
     //    setUserMessage(error, ERROR);
 }
 
@@ -742,8 +780,11 @@ void MainWindow::applySourceClicked()
 
         connect(captureInputSource, SIGNAL(sourceCaptured(cv::Mat)),
                 this, SLOT(getSourceCaptureImage(cv::Mat)));
-        connect(captureInputSource, SIGNAL(sourceCaptureError(QString)),
-                this, SLOT(getSourceCaptureError(QString)));
+        connect(captureInputSource, &CaptureInputSource::sourceCaptureError,
+                this, [=](QString error)
+        {
+            emit showErrorDialog("Input Source Error", error);
+        });
     }
 
     emit captureInputSource->setInputSource(path, inputSourceType);
