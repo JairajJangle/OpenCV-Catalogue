@@ -605,8 +605,17 @@ void MainWindow::stopRecClicked()
 {
     isRecording = false;
 
-    inputVideo.release();
-    outputVideo.release();
+    try
+    {
+        inputVideo.release();
+        outputVideo.release();
+        setUserMessage("Recording saved to destination folder", INFO);
+    }
+    catch (cv::Exception e)
+    {
+        qCritical() << e.what();
+        ioErrorMessage("Recording failed! Please try again");
+    }
 
     ui->buttonStopRec->setDisabled(true);
     ui->buttonStartRec->setEnabled(true);
@@ -630,9 +639,8 @@ void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
     catch (cv::Exception e)
     {
         qCritical() << "Video writing failed. Aborting!";
+        stopRecClicked();
         ioErrorMessage("Video Writing Failed! Please retry.");
-        isRecording = false;
-        setUserMessage("Recording Failer", ERROR);
     }
 }
 
@@ -668,13 +676,20 @@ void MainWindow::captureClicked()
         QFile ofile(exportFolderPath + "/" + outputFilename);
 
         if(!(inputPixMap.save(&ifile) && outputPixMap.save(&ofile)))
+        {
             qWarning() << "Image Exporting Failed";
+            ioErrorMessage("Capturing failed! Please select a valid destination.");
+        }
         else
+        {
             qInfo() << "Image Exporting Success!";
+            ioErrorMessage("Captures images, saved to destination folder");
+        }
     }
     catch(QException e)
     {
         qCritical() << "Error: " << e.what();
+        ioErrorMessage("Image exporting failed! Please try again.");
     }
 }
 
