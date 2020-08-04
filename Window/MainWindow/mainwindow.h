@@ -86,12 +86,12 @@ private:
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE, BITWISE_OPS,
                  CONTOURS,
 
-                 /*
-                                                      * Add all other Enum values before this
-                                                      *
-                                                      * To connect OpenCV operation Base Config widget to
-                                                      * the added OpCodes enum, see MainWindow::addOperation(...)
-                                                      */
+              /*
+               * Add all other Enum values before this
+               *
+               * To connect OpenCV operation Base Config widget to
+               * the added OpCodes enum, see MainWindow::addOperation(...)
+               */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
@@ -183,6 +183,7 @@ private:
              */
             aboutDialog->close();
         }
+        errorDialog->close();
     }
 
     cv::VideoWriter inputVideo, outputVideo;
