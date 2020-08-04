@@ -38,6 +38,7 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
     QByteArray dateTime = QDateTime::currentDateTime().toString(Qt::DateFormat::ISODateWithMs).toLocal8Bit();
     QByteArray localMsg = msg.toLocal8Bit();
 
+    // FIXME: Logging level is not relevant. Consider Loggin Level for Logs
 
     switch (type) {
     case QtDebugMsg:
