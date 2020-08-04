@@ -923,6 +923,7 @@ void MainWindow::showAboutDialog()
 
 MainWindow::~MainWindow()
 {
+    fclose(fp);
     delete ui;
     qDebug() << "Application Closed!";
 }

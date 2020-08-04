@@ -31,31 +31,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <Utils/utils.h>
+
 void logger(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray dateTime = QDateTime::currentDateTime().toString(Qt::DateFormat::ISODateWithMs).toLocal8Bit();
     QByteArray localMsg = msg.toLocal8Bit();
 
+
     switch (type) {
     case QtDebugMsg:
+#ifdef QT_DEBUG
         fprintf(stderr, "\u001b[37m%s :\x1b[32m Debug:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+#endif
+        fprintf(fp, "\n%s : Debug: %s (%s:%u, %s)",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtInfoMsg:
+#ifdef QT_DEBUG
         fprintf(stderr, "\u001b[37m%s :\x1b[34m Info:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+#endif
+        fprintf(fp, "\n%s : Info: %s (%s:%u, %s)",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtWarningMsg:
+#ifdef QT_DEBUG
         fprintf(stderr, "\u001b[37m%s :\x1b[33m Warning:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+#endif
+        fprintf(fp, "\n%s : Warning: %s (%s:%u, %s)",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtCriticalMsg:
+#ifdef QT_DEBUG
         fprintf(stderr, "\u001b[37m%s :\x1b[31m Critical:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+#endif
+        fprintf(fp, "\n%s : Critical: %s (%s:%u, %s)",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         break;
     case QtFatalMsg:
+#ifdef QT_DEBUG
         fprintf(stderr, "\u001b[37m%s :\x1b[31m Fatal:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n",
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+#endif
+        fprintf(fp, "\n%s : Fatal: %s (%s:%u, %s)",
                 dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
         abort();
     }
+
+    fflush(fp);
 }

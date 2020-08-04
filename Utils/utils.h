@@ -87,4 +87,6 @@ inline QPoint getWidgetCenter(QWidget* widget)
 }
 }
 
+inline FILE *fp;
+
 #define GET_VARIABLE_NAME(Variable) (#Variable)
