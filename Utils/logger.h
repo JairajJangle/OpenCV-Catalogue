@@ -65,9 +65,16 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
         tagStd = "\u001b[37m%s :\x1b[31m Fatal:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n";
     }
 
-    fprintf(fp, tagFile.c_str(),
-            dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
-    fflush(fp);
+    if(fp != NULL)
+    {
+        fprintf(fp, tagFile.c_str(),
+                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+        fflush(fp);
+    }
+    else if(fp == NULL)
+    {
+        fprintf(stderr, "\x1b[33m Warning:\x1b[0m %s ", "Error writing to log file");
+    }
 
 #ifdef QT_DEBUG
     fprintf(stderr, tagStd.c_str(),
