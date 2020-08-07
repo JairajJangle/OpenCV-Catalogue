@@ -95,7 +95,7 @@ Coming Soon:
 
 * [C++](https://devdocs.io/cpp/)
 * [QT](https://www.qt.io/)
-* [OpenCV](https://opencv.org/)
+* [OpenCV](https://opencv.org/) with [OpenCV Extra Modules](https://github.com/opencv/opencv_contrib)
 
 
 
