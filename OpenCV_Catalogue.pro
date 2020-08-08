@@ -22,6 +22,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+# Linux Dependencies here: change to your OpenCV lib installation path
 linux-g++ | linux-g++-64 | linux-g++-32 {
     INCLUDEPATH += /usr/local/include/opencv4
     LIBS += -L/usr/local/lib \
@@ -38,6 +39,7 @@ linux-g++ | linux-g++-64 | linux-g++-32 {
             -lX11
 }
 
+# Windows Dependencies here: change to your OpenCV build path
 win32 {
     INCLUDEPATH += D:\Softwares\opencv_installation\opencv\build\include
     LIBS += -LD:\Softwares\opencv_installation\opencv\build\bin \
