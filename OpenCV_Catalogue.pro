@@ -22,6 +22,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+linux-g++ | linux-g++-64 | linux-g++-32 {
 INCLUDEPATH += /usr/local/include/opencv4
 LIBS += -L/usr/local/lib \
         -lopencv_core \
@@ -35,6 +36,24 @@ LIBS += -L/usr/local/lib \
         -lopencv_bgsegm \
         -lpthread \
         -lX11
+}
+
+win32 {
+    INCLUDEPATH += D:\Softwares\opencv_installation\opencv\build\include
+
+    LIBS += -LD:\Softwares\opencv_installation\opencv\build\bin \
+            -lopencv_core440 \
+            -lopencv_imgcodecs440 \
+            -lopencv_highgui440 \
+            -lopencv_imgproc440 \
+            -lopencv_stitching440 \
+            -lopencv_videoio440 \
+            -lopencv_video440 \
+            -lopencv_photo440 \
+            -lopencv_features2d440 \
+            -lopencv_calib3d440 \
+            -lopencv_bgsegm440
+}
 
 SOURCES += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
