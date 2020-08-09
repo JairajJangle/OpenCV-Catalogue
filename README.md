@@ -64,9 +64,10 @@
 
 ## About The Project
 <p align="center">
-    <img src="assets/demo_video.gif" alt="Logo" width="640" >
+    <img src="assets/demo_video.gif" alt="Demo-Video-GIF" width="640" >
   </a>
 </p>
+
 
 
 <p align="center">
@@ -148,12 +149,13 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 ### 2. Select and Chain OpenCV Operations
 <p align="center">
-    <img src="media/screenshot_menu.png" alt="Input_File" width="1000" >
+    <img src="media/screenshot_menu.png" alt="Chain_Ops" width="1000" >
   </a>
 </p>
 <p align="center">
   <em>Select OpenCV Operation from the "Examples" Menu</em>
 </p>
+
 In the *Select and Chain OpenCV Operations box*(left side), click on:
 
 ![](media/plus_button.png)	button to add a OpenCV function in chain
@@ -167,7 +169,7 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 
 ### 3. Adjusting OpenCV Operation parameters
 <p align="center">
-    <img src="media/screenshot_adjust_params.png" alt="Input_File" width="756" >
+    <img src="media/screenshot_adjust_params.png" alt="Adjust_Params" width="756" >
   </a>
 </p>
 <p align="center">
@@ -175,14 +177,16 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 </p>
 
 
+
 ### 4. OpenCV Catalogue GUI summary
 <p align="center">
-    <img src="media/picture_gui.jpg" alt="Input_File" width="756" >
+    <img src="media/picture_gui.jpg" alt="Gallery" width="756" >
   </a>
 </p>
 <p align="center">
   <em>Convenient GUI for parameter value adjustment</em>
 </p>
+
 
 
 
@@ -238,13 +242,14 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 
 <p align="center">
   <a href="https://liberapay.com/FutureJJ/donate">
-    <img src="https://liberapay.com/assets/widgets/donate.svg" alt="Input_Cam" width="100" > 
+    <img src="https://liberapay.com/assets/widgets/donate.svg" alt="LiberPay_Donation_Button" width="100" > 
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XDRGEBR5YVR8Q">
-    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Input_Cam" width="120" >
+    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Paypal_Donation_Button" width="120" >
   </a>
 </p>
+
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
