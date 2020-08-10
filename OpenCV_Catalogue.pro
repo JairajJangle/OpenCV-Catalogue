@@ -96,6 +96,7 @@ HEADERS += \
     OpenCVFunction/houghlines.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/inrange.h \
+    OpenCVFunction/smooth.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/logger.h \
