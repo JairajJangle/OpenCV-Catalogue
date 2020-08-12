@@ -546,6 +546,8 @@ void MainWindow::showHideExplodedView()
     if(baseConfigWidgetChain.empty())
         return;
 
+    setUserMessage("Explode View is still in development!", WARNING);
+
     if(baseConfigWidgetChain.last()->isExplodedViewEnabled())
     {
         if(baseConfigWidgetChain.last()->setExplodedView(true))
