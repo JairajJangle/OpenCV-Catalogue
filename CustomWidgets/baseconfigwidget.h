@@ -78,6 +78,12 @@ protected:
 
     bool explodedViewEnabled = false;
 
+    /**
+     * @brief explodedViewList Holds List of Matrix and corresponsing Label to be
+     * displayed in exploded view
+     */
+    QList<QPair<QString, cv::Mat>> explodedViewList;
+
 signals:
     void removeOperationSignal();
     void operationSelected(ParamAdjustWidget*);
