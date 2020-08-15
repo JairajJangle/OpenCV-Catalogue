@@ -41,8 +41,10 @@ public:
         cv::Mat outputImage;
 
         cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
+        explodedView.insert("Grayscale", outputImage.clone());
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
+        explodedView.insert("Canny Edge", outputImage.clone());
 
         return outputImage;
     }
