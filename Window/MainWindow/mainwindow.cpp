@@ -399,6 +399,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
             try{
                 // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
+                qDebug() << baseConfigWidget->getExplodedViewMats().size();
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
