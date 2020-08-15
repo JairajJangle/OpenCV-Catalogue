@@ -152,6 +152,11 @@ public:
         return paramAdjustWidget;
     }
 
+    QMap<QString, cv::Mat> getExplodedViewMats()
+    {
+        return explodedView;
+    }
+
     /**
      * @brief changeWidgetsStyleSheet Changes the theme of children widgets
      * @param isDarkMode Set true to enable dark mode style sheet to children widgets
