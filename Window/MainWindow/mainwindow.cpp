@@ -88,6 +88,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
 
+    connect(this, SIGNAL(updateExplodedViewSignal(QList<QMap<QString, cv::Mat>>)),
+            this, SLOT(updateExplodedView(QList<QMap<QString, cv::Mat>>)));
+
     connect(this, SIGNAL(showErrorDialog(QString, QString)),
             this, SLOT(showOperationalError(QString, QString)));
 
@@ -540,6 +543,11 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         // TODO
         //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
     }
+}
+
+void MainWindow::updateExplodedView(QList<QMap<QString, cv::Mat>>)
+{
+
 }
 
 void MainWindow::showHideExplodedView()
