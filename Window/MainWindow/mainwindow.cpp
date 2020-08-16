@@ -394,6 +394,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     {
         qmutex.lock();
         cv::Mat outputImage;
+        QList<QMap<QString, cv::Mat>> explodedViewList;
         originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
         for(auto&& baseConfigWidget : baseConfigWidgetChain)
@@ -403,6 +404,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
                 // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
                 qDebug() << baseConfigWidget->getExplodedViewMats().size();
+                explodedViewList.append(baseConfigWidget->getExplodedViewMats());
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
@@ -433,6 +435,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         }
 
         emit refreshOutputImageSignal(outputImage);
+        emit updateExplodedViewSignal(explodedViewList);
         qmutex.unlock();
     });
 
