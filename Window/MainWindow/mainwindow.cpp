@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
+    qRegisterMetaType<QList<QMap<QString, cv::Mat>>>("QList<QMap<QString,cv::Mat>>");
 
     initUI();
 
@@ -403,7 +404,6 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
             try{
                 // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
-                qDebug() << baseConfigWidget->getExplodedViewMats().size();
                 explodedViewList.append(baseConfigWidget->getExplodedViewMats());
                 isChainSuccess = true;
             }
@@ -548,9 +548,12 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
     }
 }
 
-void MainWindow::updateExplodedView(QList<QMap<QString, cv::Mat>>)
+void MainWindow::updateExplodedView(QList<QMap<QString, cv::Mat>> explodedViewList)
 {
-
+    for(auto& explodedView: explodedViewList)
+    {
+        cv::imshow("jj", explodedView.value("Grayscale"));
+    }
 }
 
 void MainWindow::showHideExplodedView()
