@@ -106,6 +106,27 @@ MainWindow::MainWindow(QWidget *parent)
             this, [=](){
         ioErrorMessage("");
     });
+
+    QWidget *client = new QWidget;
+
+    QScrollArea *scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(client);
+    QGridLayout *loGrid = new QGridLayout;
+    client->setLayout(loGrid);
+
+    QTabWidget *tabPage = new QTabWidget;
+    QWidget *pageWidget = new QWidget;
+    pageWidget->setLayout(new QVBoxLayout);
+    pageWidget->layout()->addWidget(scrollArea);
+    tabPage->addTab(pageWidget, "Page");
+    tabPage->show();
+
+//    QString title = QString("Page %1").arg(1);
+//    QTabWidget *tab = new QTabWidget();
+
+//    tab->addTab(tabPage, title);
+//    client->show();
 }
 
 void MainWindow::initUI()
@@ -402,7 +423,6 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         {
             isChainSuccess = false;
             try{
-                // FIXME: Use Signal Slot System to get the output Image instead of return
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
                 explodedViewList.append(baseConfigWidget->getExplodedViewMats());
                 isChainSuccess = true;
