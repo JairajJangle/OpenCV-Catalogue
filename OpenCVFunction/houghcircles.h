@@ -54,6 +54,7 @@ public:
         cv::Mat grayImage;
 
         cvtColor(inputImage, grayImage, cv::COLOR_BGR2GRAY);
+        explodedView.insert("Grayscale", grayImage.clone());
 
         if(*minDist == -1.0)
         {

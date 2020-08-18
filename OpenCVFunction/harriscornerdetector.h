@@ -60,6 +60,7 @@ public:
         inputImage.copyTo(outputImage);
 
         cvtColor(inputImage, inputImageGray, cv::COLOR_BGR2GRAY);
+        explodedView.insert("Grayscale", inputImageGray.clone());
 
         cv::Mat dst = cv::Mat::zeros(inputImage.size(), CV_32FC1);
 
