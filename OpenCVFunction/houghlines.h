@@ -53,6 +53,7 @@ public:
         // TODO make Canny params customizable
         Canny(inputImage, dst, 50, 200, 3);
         cvtColor(dst, cdst, cv::COLOR_GRAY2BGR);
+        explodedView.insert("Grayscale", cdst.clone());
 
         std::vector<cv::Vec4i> lines;
         HoughLinesP(dst, lines, rho->toDouble(), theta->toDouble(), threshold->toInt(), srn->toDouble(), stn->toDouble());
@@ -64,7 +65,7 @@ public:
                     3, cv::LINE_AA);
         }
 
-        for (size_t i=0; i<lines.size(); i++) {
+        for (size_t i = 0; i < lines.size(); i++) {
             cv::Vec4i l = lines[i];
             cv::line(inputImage, cv::Point(l[0], l[1]),
                     cv::Point(l[2], l[3]),

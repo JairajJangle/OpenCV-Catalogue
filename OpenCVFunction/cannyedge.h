@@ -44,7 +44,6 @@ public:
         explodedView.insert("Grayscale", outputImage.clone());
 
         Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
-        explodedView.insert("Canny Edge", outputImage.clone());
 
         return outputImage;
     }
