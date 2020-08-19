@@ -26,6 +26,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDebug>
+#include <QUuid>
 
 #include "Utils/constants.h"
 
@@ -35,6 +36,9 @@
 class BaseConfigWidget : public QWidget
 {
     Q_OBJECT
+
+private:
+    QUuid uuid = QUuid::createUuid();
 
 protected:
     /**
@@ -211,6 +215,11 @@ public:
     bool isExplodedViewEnabled()
     {
         return  explodedViewEnabled;
+    }
+
+    QUuid getUUID()
+    {
+        return uuid;
     }
 
     /**
