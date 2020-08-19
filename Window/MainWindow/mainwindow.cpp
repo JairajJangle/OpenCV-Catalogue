@@ -582,7 +582,6 @@ void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv:
             QString title = label + i.key();
             cv::imshow(title.toStdString(), i.value());
         }
-//        cv::imshow("jj", explodedView.second.value("Grayscale"));
     }
 }
 
