@@ -29,7 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
-    qRegisterMetaType<QList<QMap<QString, cv::Mat>>>("QList<QMap<QString,cv::Mat>>");
+    qRegisterMetaType<QList<QPair<QString, QMap<QString, cv::Mat>>>>
+            ("QList<QPair<QString, QMap<QString, cv::Mat>>>");
 
     initUI();
 
@@ -89,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
 
-    connect(this, SIGNAL(updateExplodedViewSignal(QList<QMap<QString, cv::Mat>>)),
-            this, SLOT(updateExplodedView(QList<QMap<QString, cv::Mat>>)));
+    connect(this, SIGNAL(updateExplodedViewSignal(QList<QPair<QString, QMap<QString, cv::Mat>>>)),
+            this, SLOT(updateExplodedView(QList<QPair<QString, QMap<QString, cv::Mat>>>)));
 
     connect(this, SIGNAL(showErrorDialog(QString, QString)),
             this, SLOT(showOperationalError(QString, QString)));
@@ -122,11 +123,11 @@ MainWindow::MainWindow(QWidget *parent)
     tabPage->addTab(pageWidget, "Page");
     tabPage->show();
 
-//    QString title = QString("Page %1").arg(1);
-//    QTabWidget *tab = new QTabWidget();
+    //    QString title = QString("Page %1").arg(1);
+    //    QTabWidget *tab = new QTabWidget();
 
-//    tab->addTab(tabPage, title);
-//    client->show();
+    //    tab->addTab(tabPage, title);
+    //    client->show();
 }
 
 void MainWindow::initUI()
@@ -416,15 +417,20 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     {
         qmutex.lock();
         cv::Mat outputImage;
-        QList<QMap<QString, cv::Mat>> explodedViewList;
+        QList<QPair<QString, QMap<QString, cv::Mat>>> explodedViewList;
         originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
         for(auto&& baseConfigWidget : baseConfigWidgetChain)
         {
             isChainSuccess = false;
-            try{
+            try
+            {
+                cv::Mat currentInput = outputImage.clone();
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
-                explodedViewList.append(baseConfigWidget->getExplodedViewMats());
+                auto currentExplodedView = baseConfigWidget->getExplodedViewMats();
+                currentExplodedView.insert("Input", currentInput);
+                currentExplodedView.insert("Output", outputImage.clone());
+                explodedViewList.append(qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
@@ -568,11 +574,12 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
     }
 }
 
-void MainWindow::updateExplodedView(QList<QMap<QString, cv::Mat>> explodedViewList)
+void MainWindow::updateExplodedView(QList<QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
 {
     for(auto& explodedView: explodedViewList)
     {
-        cv::imshow("jj", explodedView.value("Grayscale"));
+        qDebug() << explodedView.first;
+//        cv::imshow("jj", explodedView.second.value("Grayscale"));
     }
 }
 

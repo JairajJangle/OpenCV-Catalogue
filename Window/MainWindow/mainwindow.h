@@ -115,13 +115,13 @@ private slots:
     void refreshOperationWidgets();
     void switchThemeButtonClicked();
     void operationSelectedToDisplay(ParamAdjustWidget*);
-    void updateExplodedView(QList<QMap<QString, cv::Mat>>);
+    void updateExplodedView(QList<QPair<QString, QMap<QString, cv::Mat>>>);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
     void removeOperationWidgetSignal();
     void showErrorDialog(QString, QString);
-    void updateExplodedViewSignal(QList<QMap<QString, cv::Mat>>);
+    void updateExplodedViewSignal(QList<QPair<QString, QMap<QString, cv::Mat>>>);
 
 public:
     MainWindow(QWidget *parent = nullptr);
