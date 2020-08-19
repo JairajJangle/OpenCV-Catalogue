@@ -29,8 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Register cv::Mat type to make it queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
-    qRegisterMetaType<QList<QPair<QString, QMap<QString, cv::Mat>>>>
-            ("QList<QPair<QString, QMap<QString, cv::Mat>>>");
+    qRegisterMetaType<QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>>
+            ("QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>");
 
     initUI();
 
@@ -90,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
 
-    connect(this, SIGNAL(updateExplodedViewSignal(QList<QPair<QString, QMap<QString, cv::Mat>>>)),
-            this, SLOT(updateExplodedView(QList<QPair<QString, QMap<QString, cv::Mat>>>)));
+    connect(this, SIGNAL(updateExplodedViewSignal(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>)),
+            this, SLOT(updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>)));
 
     connect(this, SIGNAL(showErrorDialog(QString, QString)),
             this, SLOT(showOperationalError(QString, QString)));
@@ -108,16 +108,10 @@ MainWindow::MainWindow(QWidget *parent)
         ioErrorMessage("");
     });
 
-    QWidget *client = new QWidget;
-
-    QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(client);
-    QGridLayout *loGrid = new QGridLayout;
     client->setLayout(loGrid);
 
-    QTabWidget *tabPage = new QTabWidget;
-    QWidget *pageWidget = new QWidget;
     pageWidget->setLayout(new QVBoxLayout);
     pageWidget->layout()->addWidget(scrollArea);
     tabPage->addTab(pageWidget, "Page");
@@ -417,7 +411,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     {
         qmutex.lock();
         cv::Mat outputImage;
-        QList<QPair<QString, QMap<QString, cv::Mat>>> explodedViewList;
+        QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList;
         originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
         for(auto&& baseConfigWidget : baseConfigWidgetChain)
@@ -430,7 +424,8 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
                 auto currentExplodedView = baseConfigWidget->getExplodedViewMats();
                 currentExplodedView.insert("Input", currentInput);
                 currentExplodedView.insert("Output", outputImage.clone());
-                explodedViewList.append(qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
+                explodedViewList.insert(baseConfigWidget->getUUID(),
+                            qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
@@ -574,7 +569,7 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
     }
 }
 
-void MainWindow::updateExplodedView(QList<QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
+void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
 {
     for(auto& explodedView: explodedViewList)
     {
