@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Register cv::Mat type to make it queueable
+    // Register custom data type to make them queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
     qRegisterMetaType<QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>>
             ("QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>");
