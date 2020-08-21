@@ -164,7 +164,7 @@ void initWidget() override
             this, SLOT(resetClicked()));
 
     QMap<QString, QVariant> methodMap;
-    methodMap.insert("CV_HOUGH_GRADIENT", CV_HOUGH_GRADIENT);
+    methodMap.insert("HOUGH_GRADIENT", cv::HOUGH_GRADIENT);
     LabelledComboBox* selectMethodCB = new LabelledComboBox("Select Method",
                                                             methodMap);
 

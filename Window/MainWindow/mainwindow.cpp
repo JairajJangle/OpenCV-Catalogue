@@ -661,7 +661,7 @@ void MainWindow::startRecClicked()
             + ".avi";
 
     inputVideo = cv::VideoWriter((exportFolderPath + "/" + inputVideoFileName).toStdString(),
-                                 CV_FOURCC('M','J','P','G'),
+                                 cv::VideoWriter::fourcc('M','J','P','G'),
                                  captureInputSource->getCurrentFPS(),
                                  cv::Size(inputPixMap.width(), inputPixMap.height()),
                                  true);
@@ -673,7 +673,7 @@ void MainWindow::startRecClicked()
             + ".avi";
 
     outputVideo = cv::VideoWriter((exportFolderPath + "/" + outputVideoFileName).toStdString(),
-                                  CV_FOURCC('M','J','P','G'),
+                                  cv::VideoWriter::fourcc('M','J','P','G'),
                                   captureInputSource->getCurrentFPS(),
                                   cv::Size(outputPixMap.width(), outputPixMap.height()),
                                   true);
