@@ -45,7 +45,7 @@ public:
         if(begin.x < 0 || begin.y < 0)
             begin = cv::Point(0,0);
         QString currentOffsetText = QString::number(begin.x)
-                + ", " + QString::number(begin.y);
+                                    + ", " + QString::number(begin.y);
 
         if(prevOffsetText != currentOffsetText)
         {
@@ -74,100 +74,100 @@ public:
         throw e;
     }
     catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+        throw std::string("Unknown Exception in ")
+            + std::string(typeid(this).name());
+    }
 
 private slots:
-void modeChanged(int value)
-{
-    mode = value;
-}
-void methodChanged(int value)
-{
-    method = value;
-}
+    void modeChanged(int value)
+    {
+        mode = value;
+    }
+    void methodChanged(int value)
+    {
+        method = value;
+    }
 
 private:
-int mode = CV_RETR_TREE;
-int method = CV_CHAIN_APPROX_SIMPLE;
+    int mode = cv::RETR_TREE;
+    int method = cv::CHAIN_APPROX_SIMPLE;
 
-LineEditLayout* offsetLEL =
+    LineEditLayout* offsetLEL =
         new LineEditLayout("Current Offset", "Default = (-1, -1)",
                            160, 150);
-QString prevOffsetText = "";
-QLabel* offsetNoteLabel  = new QLabel("Click on Output to select offset");
+    QString prevOffsetText = "";
+    QLabel* offsetNoteLabel  = new QLabel("Click on Output to select offset");
 
-unsigned int lineB = 0, lineG = 255, lineR = 204;
+    unsigned int lineB = 0, lineG = 255, lineR = 204;
 
-void initWidget() override
-{
-    QList<QVariant> modeList = {
-        "CV_RETR_EXTERNAL",
-        "CV_RETR_LIST",
-        "CV_RETR_CCOMP",
-        "CV_RETR_TREE",
-        "CV_RETR_FLOODFILL (CV_32SC1 only)"};
+    void initWidget() override
+    {
+        QList<QVariant> modeList = {
+            "RETR_EXTERNAL",
+            "RETR_LIST",
+            "RETR_CCOMP",
+            "RETR_TREE",
+            "RETR_FLOODFILL (CV_32SC1 only)"};
 
-    LabelledComboBox* modeLCB = new LabelledComboBox("mode", modeList);
-    connect(modeLCB, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(modeChanged(int)));
-    modeLCB->comboBox->setCurrentIndex(mode);
+        LabelledComboBox* modeLCB = new LabelledComboBox("mode", modeList);
+        connect(modeLCB, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(modeChanged(int)));
+        modeLCB->comboBox->setCurrentIndex(mode);
 
-    QList<QVariant> methodList = {
-        "CV_CHAIN_CODE", // Crashes
-        "CV_CHAIN_APPROX_NONE",
-        "CV_CHAIN_APPROX_SIMPLE",
-        "CV_CHAIN_APPROX_TC89_L1",
-        "CV_CHAIN_APPROX_TC89_KCOS",
-        "CV_LINK_RUNS"}; // Crashes
+        QList<QVariant> methodList = {
+            "CV_CHAIN_CODE", // Crashes
+            "CV_CHAIN_APPROX_NONE",
+            "CV_CHAIN_APPROX_SIMPLE",
+            "CV_CHAIN_APPROX_TC89_L1",
+            "CV_CHAIN_APPROX_TC89_KCOS",
+            "CV_LINK_RUNS"}; // Crashes
 
-    LabelledComboBox* methodLCB = new LabelledComboBox("method", methodList);
-    connect(methodLCB, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(methodChanged(int)));
-    methodLCB->comboBox->setCurrentIndex(method);
+        LabelledComboBox* methodLCB = new LabelledComboBox("method", methodList);
+        connect(methodLCB, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(methodChanged(int)));
+        methodLCB->comboBox->setCurrentIndex(method);
 
-    QVBoxLayout* offsetMainVBox = new QVBoxLayout;
-    offsetMainVBox->setAlignment(Qt::AlignHCenter);
+        QVBoxLayout* offsetMainVBox = new QVBoxLayout;
+        offsetMainVBox->setAlignment(Qt::AlignHCenter);
 
-    offsetLEL->lineEdit->setReadOnly(true);
-    offsetMainVBox->addLayout(offsetLEL);
-    offsetMainVBox->setSpacing(0);
+        offsetLEL->lineEdit->setReadOnly(true);
+        offsetMainVBox->addLayout(offsetLEL);
+        offsetMainVBox->setSpacing(0);
 
-    QFont font = offsetNoteLabel->font();
-    font.setPointSize(8);
-    offsetNoteLabel->setFont(font);
-    offsetNoteLabel->setAlignment(Qt::AlignCenter);
-    offsetMainVBox->addWidget(offsetNoteLabel);
+        QFont font = offsetNoteLabel->font();
+        font.setPointSize(8);
+        offsetNoteLabel->setFont(font);
+        offsetNoteLabel->setAlignment(Qt::AlignCenter);
+        offsetMainVBox->addWidget(offsetNoteLabel);
 
-    QVBoxLayout* lineColorsMainLayout = new QVBoxLayout();
-    QHBoxLayout* lineColorsLayout = new QHBoxLayout();
-    SliderLayout* bSL = new SliderLayout("B", lineB, 0, 255, 60);
-    SliderLayout* gSL = new SliderLayout("G", lineG, 0, 255, 60);
-    SliderLayout* rSL = new SliderLayout("R", lineR, 0, 255, 60);
-    connect(bSL, &SliderLayout::sliderValueChanged,
-            this, [=](int value){lineB = value;});
-    connect(gSL, &SliderLayout::sliderValueChanged,
-            this, [=](int value){lineG = value;});
-    connect(rSL, &SliderLayout::sliderValueChanged,
-            this, [=](int value){lineR = value;});
-    bSL->setSpacing(5); gSL->setSpacing(5); rSL->setSpacing(5);
-    lineColorsLayout->setSpacing(5);
-    lineColorsLayout->addLayout(bSL);
-    lineColorsLayout->addLayout(gSL);
-    lineColorsLayout->addLayout(rSL);
+        QVBoxLayout* lineColorsMainLayout = new QVBoxLayout();
+        QHBoxLayout* lineColorsLayout = new QHBoxLayout();
+        SliderLayout* bSL = new SliderLayout("B", lineB, 0, 255, 60);
+        SliderLayout* gSL = new SliderLayout("G", lineG, 0, 255, 60);
+        SliderLayout* rSL = new SliderLayout("R", lineR, 0, 255, 60);
+        connect(bSL, &SliderLayout::sliderValueChanged,
+                this, [=](int value){lineB = value;});
+        connect(gSL, &SliderLayout::sliderValueChanged,
+                this, [=](int value){lineG = value;});
+        connect(rSL, &SliderLayout::sliderValueChanged,
+                this, [=](int value){lineR = value;});
+        bSL->setSpacing(5); gSL->setSpacing(5); rSL->setSpacing(5);
+        lineColorsLayout->setSpacing(5);
+        lineColorsLayout->addLayout(bSL);
+        lineColorsLayout->addLayout(gSL);
+        lineColorsLayout->addLayout(rSL);
 
-    lineColorsMainLayout->addWidget(new QLabel("Contour Line"));
-    lineColorsMainLayout->addLayout(lineColorsLayout);
-    lineColorsMainLayout->setSpacing(2);
+        lineColorsMainLayout->addWidget(new QLabel("Contour Line"));
+        lineColorsMainLayout->addLayout(lineColorsLayout);
+        lineColorsMainLayout->setSpacing(2);
 
-    vBoxSub->setSpacing(25);
-    vBoxSub->addLayout(modeLCB);
-    vBoxSub->addLayout(methodLCB);
-    vBoxSub->addLayout(offsetMainVBox);
-    vBoxSub->addWidget(new DividerLine(1));
-    vBoxSub->addLayout(lineColorsMainLayout);
+        vBoxSub->setSpacing(25);
+        vBoxSub->addLayout(modeLCB);
+        vBoxSub->addLayout(methodLCB);
+        vBoxSub->addLayout(offsetMainVBox);
+        vBoxSub->addWidget(new DividerLine(1));
+        vBoxSub->addLayout(lineColorsMainLayout);
 
-    BaseConfigWidget::initWidget();
-}
+        BaseConfigWidget::initWidget();
+    }
 };
