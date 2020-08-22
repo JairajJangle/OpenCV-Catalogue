@@ -425,7 +425,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
                 currentExplodedView.insert("Input", currentInput);
                 currentExplodedView.insert("Output", outputImage.clone());
                 explodedViewList.insert(baseConfigWidget->getUUID(),
-                            qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
+                                        qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
@@ -573,13 +573,13 @@ void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv:
 {
     for(auto& explodedView: explodedViewList)
     {
-        QString label = explodedView.first;
+        QString operationName = explodedView.first;
 
         QMapIterator<QString, cv::Mat> i(explodedView.second);
         while (i.hasNext())
         {
             i.next();
-            QString title = label + i.key();
+            QString title = operationName + ": " + i.key();
             cv::imshow(title.toStdString(), i.value());
         }
     }
