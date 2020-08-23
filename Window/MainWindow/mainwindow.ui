@@ -84,6 +84,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="explodedViewCB">
+            <property name="text">
+             <string>Exploded View</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="buttonExplodedView">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
