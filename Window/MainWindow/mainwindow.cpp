@@ -71,8 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonCapture, SIGNAL(released()),
             this, SLOT(captureClicked()));
 
-    connect(ui->buttonExplodedView,SIGNAL(released()),
-            this,SLOT(showHideExplodedView()));
+    connect(ui->explodedViewCB, SIGNAL(stateChanged(int)),
+            this, SLOT(showHideExplodedView(int)));
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
             this, SLOT(switchThemeButtonClicked()));
 
@@ -585,8 +585,9 @@ void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv:
     }
 }
 
-void MainWindow::showHideExplodedView()
+void MainWindow::showHideExplodedView(int state)
 {
+    qDebug() << "Exploded View CB State = " << state;
     if(baseConfigWidgetChain.empty())
         return;
 
