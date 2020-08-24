@@ -32,6 +32,7 @@
 #include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
 #include <QGroupBox>
+#include <QScrollArea>
 #include <QWindow>
 #include <QFuture>
 #include <QDateTime>
@@ -108,18 +109,20 @@ private slots:
     void lastOperationChanged(MainWindow::OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(QPoint);
-    void showHideExplodedView();
+    void showHideExplodedView(int);
     void refreshOutputImage(const cv::Mat img);
     void addOperationWidget();
     void removeOperationWidget();
     void refreshOperationWidgets();
     void switchThemeButtonClicked();
     void operationSelectedToDisplay(ParamAdjustWidget*);
+    void updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>);
 
 signals:
     void refreshOutputImageSignal(cv::Mat);
     void removeOperationWidgetSignal();
     void showErrorDialog(QString, QString);
+    void updateExplodedViewSignal(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>);
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -169,6 +172,14 @@ private:
     QPixmap inputPixMap;
     QPixmap outputPixMap;
     bool isRecording = false;
+
+    QWidget *client = new QWidget;
+    QScrollArea *scrollArea = new QScrollArea;
+    QGridLayout *loGrid = new QGridLayout;
+    QTabWidget *tabPage = new QTabWidget;
+    QWidget *pageWidget = new QWidget;
+
+    int explodedViewState = 0;
 
     /*
      * overriden closeEvent to close all opened windows when MainWindow
