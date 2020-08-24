@@ -456,7 +456,9 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         }
 
         emit refreshOutputImageSignal(outputImage);
-        emit updateExplodedViewSignal(explodedViewList);
+        if(explodedViewState != 0)
+            emit updateExplodedViewSignal(explodedViewList);
+
         qmutex.unlock();
     });
 
@@ -587,6 +589,11 @@ void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv:
 
 void MainWindow::showHideExplodedView(int state)
 {
+    explodedViewState = state;
+
+    if(state == 0)
+        cv::destroyAllWindows();
+
     qDebug() << "Exploded View CB State = " << state;
     if(baseConfigWidgetChain.empty())
         return;
