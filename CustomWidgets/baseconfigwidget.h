@@ -26,6 +26,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDebug>
+#include <QUuid>
 
 #include "Utils/constants.h"
 
@@ -35,6 +36,9 @@
 class BaseConfigWidget : public QWidget
 {
     Q_OBJECT
+
+private:
+    QUuid uuid = QUuid::createUuid();
 
 protected:
     /**
@@ -77,6 +81,12 @@ protected:
     QString moreInfoLink = "";
 
     bool explodedViewEnabled = false;
+
+    /**
+     * @brief explodedViewList Holds List of Matrix and corresponsing Label to be
+     * displayed in exploded view
+     */
+    QMap<QString, cv::Mat> explodedView;
 
 signals:
     void removeOperationSignal();
@@ -146,6 +156,11 @@ public:
         return paramAdjustWidget;
     }
 
+    QMap<QString, cv::Mat> getExplodedViewMats()
+    {
+        return explodedView;
+    }
+
     /**
      * @brief changeWidgetsStyleSheet Changes the theme of children widgets
      * @param isDarkMode Set true to enable dark mode style sheet to children widgets
@@ -200,6 +215,11 @@ public:
     bool isExplodedViewEnabled()
     {
         return  explodedViewEnabled;
+    }
+
+    QUuid getUUID()
+    {
+        return uuid;
     }
 
     /**

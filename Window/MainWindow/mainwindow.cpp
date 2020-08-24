@@ -27,8 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Register cv::Mat type to make it queueable
+    // Register custom data type to make them queueable
     qRegisterMetaType<cv::Mat>("cv::Mat");
+    qRegisterMetaType<QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>>
+            ("QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>");
 
     initUI();
 
@@ -69,8 +71,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonCapture, SIGNAL(released()),
             this, SLOT(captureClicked()));
 
-    connect(ui->buttonExplodedView,SIGNAL(released()),
-            this,SLOT(showHideExplodedView()));
+    connect(ui->explodedViewCB, SIGNAL(stateChanged(int)),
+            this, SLOT(showHideExplodedView(int)));
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
             this, SLOT(switchThemeButtonClicked()));
 
@@ -88,6 +90,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, SIGNAL(refreshOutputImageSignal(cv::Mat)),
             this, SLOT(refreshOutputImage(cv::Mat)));
 
+    connect(this, SIGNAL(updateExplodedViewSignal(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>)),
+            this, SLOT(updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>)));
+
     connect(this, SIGNAL(showErrorDialog(QString, QString)),
             this, SLOT(showOperationalError(QString, QString)));
 
@@ -102,6 +107,21 @@ MainWindow::MainWindow(QWidget *parent)
             this, [=](){
         ioErrorMessage("");
     });
+
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(client);
+    client->setLayout(loGrid);
+
+    pageWidget->setLayout(new QVBoxLayout);
+    pageWidget->layout()->addWidget(scrollArea);
+    tabPage->addTab(pageWidget, "Page");
+    tabPage->show();
+
+    //    QString title = QString("Page %1").arg(1);
+    //    QTabWidget *tab = new QTabWidget();
+
+    //    tab->addTab(tabPage, title);
+    //    client->show();
 }
 
 void MainWindow::initUI()
@@ -391,14 +411,21 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     {
         qmutex.lock();
         cv::Mat outputImage;
+        QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList;
         originalImg.copyTo(outputImage);
         bool isChainSuccess = false;
         for(auto&& baseConfigWidget : baseConfigWidgetChain)
         {
             isChainSuccess = false;
-            try{
-                // FIXME: Use Signal Slot System to get the output Image instead of return
+            try
+            {
+                cv::Mat currentInput = outputImage.clone();
                 outputImage = baseConfigWidget->getProcessedImage(outputImage);
+                auto currentExplodedView = baseConfigWidget->getExplodedViewMats();
+                currentExplodedView.insert("Input", currentInput);
+                currentExplodedView.insert("Output", outputImage.clone());
+                explodedViewList.insert(baseConfigWidget->getUUID(),
+                                        qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
@@ -429,6 +456,9 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         }
 
         emit refreshOutputImageSignal(outputImage);
+        if(explodedViewState != 0)
+            emit updateExplodedViewSignal(explodedViewList);
+
         qmutex.unlock();
     });
 
@@ -541,8 +571,30 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
     }
 }
 
-void MainWindow::showHideExplodedView()
+void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
 {
+    for(auto& explodedView: explodedViewList)
+    {
+        QString operationName = explodedView.first;
+
+        QMapIterator<QString, cv::Mat> i(explodedView.second);
+        while (i.hasNext())
+        {
+            i.next();
+            QString title = operationName + ": " + i.key();
+            cv::imshow(title.toStdString(), i.value());
+        }
+    }
+}
+
+void MainWindow::showHideExplodedView(int state)
+{
+    explodedViewState = state;
+
+    if(state == 0)
+        cv::destroyAllWindows();
+
+    qDebug() << "Exploded View CB State = " << state;
     if(baseConfigWidgetChain.empty())
         return;
 
@@ -617,7 +669,7 @@ void MainWindow::startRecClicked()
             + ".avi";
 
     inputVideo = cv::VideoWriter((exportFolderPath + "/" + inputVideoFileName).toStdString(),
-                                 CV_FOURCC('M','J','P','G'),
+                                 cv::VideoWriter::fourcc('M','J','P','G'),
                                  captureInputSource->getCurrentFPS(),
                                  cv::Size(inputPixMap.width(), inputPixMap.height()),
                                  true);
@@ -629,7 +681,7 @@ void MainWindow::startRecClicked()
             + ".avi";
 
     outputVideo = cv::VideoWriter((exportFolderPath + "/" + outputVideoFileName).toStdString(),
-                                  CV_FOURCC('M','J','P','G'),
+                                  cv::VideoWriter::fourcc('M','J','P','G'),
                                   captureInputSource->getCurrentFPS(),
                                   cv::Size(outputPixMap.width(), outputPixMap.height()),
                                   true);
