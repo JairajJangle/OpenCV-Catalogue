@@ -179,6 +179,8 @@ private:
     QTabWidget *tabPage = new QTabWidget;
     QWidget *pageWidget = new QWidget;
 
+    int explodedViewState = 0;
+
     /*
      * overriden closeEvent to close all opened windows when MainWindow
      * closeEvent(...) is fired
