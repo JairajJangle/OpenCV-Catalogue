@@ -528,8 +528,8 @@ void MainWindow::refreshInputImage(const cv::Mat img)
     catch(cv::Exception& e)
     {
         qWarning() << e.what();
-        // TODO
-        //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+        setUserMessage("Error Occured while refreshing the input image label: "
+                       + QString::fromStdString(e.what()), ERROR);
     }
 }
 
@@ -566,8 +566,8 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
     catch(cv::Exception& e)
     {
         qWarning() << e.what();
-        // TODO
-        //        captureInputSource->resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+        setUserMessage("Error Occured while refreshing the output image label: "
+                       + QString::fromStdString(e.what()), ERROR);
     }
 }
 
