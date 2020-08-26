@@ -29,7 +29,7 @@ namespace Info {
 /**
  * @brief version Application version name
  */
-[[maybe_unused]] static const char* version = "v0.2.1";
+[[maybe_unused]] static const char* version = "v0.3.1";
 }
 
 /**
