@@ -33,12 +33,68 @@ MainWindow::MainWindow(QWidget *parent)
             ("QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>");
 
     initUI();
+    connectSignals();
 
     // FIXME: Check FIXME in HybridSlider cpp source
     //    HybridSlider* hybrid = new HybridSlider();
     //    hybrid->show();
 
-    // Connect MainWindow UI signals here
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(client);
+    client->setLayout(loGrid);
+
+    pageWidget->setLayout(new QVBoxLayout);
+    pageWidget->layout()->addWidget(scrollArea);
+    tabPage->addTab(pageWidget, "Page");
+    tabPage->show();
+
+    //    QString title = QString("Page %1").arg(1);
+    //    QTabWidget *tab = new QTabWidget();
+
+    //    tab->addTab(tabPage, title);
+    //    client->show();
+}
+
+void MainWindow::initUI()
+{
+    this->setWindowTitle(Info::appName);
+    this->setWindowIcon(QIcon(":/assets/app_logo.png"));
+
+    ui->scrollAreaChainMenu->setWidget(chainMenuSubWgt);
+    chainMenuVBox->setAlignment(Qt::AlignTop);
+    chainMenuVBox->setSpacing(0);
+
+    testVBox->setAlignment(Qt::AlignTop);
+    ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
+    ui->scrollAreaParameterWidget->setWidgetResizable(true);
+
+    QButtonGroup* group = new QButtonGroup();
+    group->addButton(ui->cameraRadioButton);
+    group->addButton(ui->fileRadioButton);
+    group->addButton(ui->ipcamRadioButton);
+
+    ui->buttonStopRec->setDisabled(true);
+    ui->buttonExportBrowse->setEnabled(true);
+
+    errorDialog->setModal(true);
+
+    sourceRadioButtonClicked();
+    ioErrorMessage("");
+    switchThemeButtonClicked();
+
+    chainMenuInitDone = false;
+    for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
+        addOperation((OPCodes)opCode);
+    }
+    qDebug() <<  "All OpenCV Operation Widgets Initialized";
+    chainMenuInitDone = true;
+    addOperation(NONE);
+
+    setUserMessage("Initializing Done", INFO);
+}
+
+void MainWindow::connectSignals()
+{
     connect(ui->cameraRadioButton,SIGNAL(clicked()),
             this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),
@@ -107,59 +163,6 @@ MainWindow::MainWindow(QWidget *parent)
             this, [=](){
         ioErrorMessage("");
     });
-
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setWidget(client);
-    client->setLayout(loGrid);
-
-    pageWidget->setLayout(new QVBoxLayout);
-    pageWidget->layout()->addWidget(scrollArea);
-    tabPage->addTab(pageWidget, "Page");
-    tabPage->show();
-
-    //    QString title = QString("Page %1").arg(1);
-    //    QTabWidget *tab = new QTabWidget();
-
-    //    tab->addTab(tabPage, title);
-    //    client->show();
-}
-
-void MainWindow::initUI()
-{
-    this->setWindowTitle(Info::appName);
-    this->setWindowIcon(QIcon(":/assets/app_logo.png"));
-
-    ui->scrollAreaChainMenu->setWidget(chainMenuSubWgt);
-    chainMenuVBox->setAlignment(Qt::AlignTop);
-    chainMenuVBox->setSpacing(0);
-
-    testVBox->setAlignment(Qt::AlignTop);
-    ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
-    ui->scrollAreaParameterWidget->setWidgetResizable(true);
-
-    QButtonGroup* group = new QButtonGroup();
-    group->addButton(ui->cameraRadioButton);
-    group->addButton(ui->fileRadioButton);
-    group->addButton(ui->ipcamRadioButton);
-
-    ui->buttonStopRec->setDisabled(true);
-    ui->buttonExportBrowse->setEnabled(true);
-
-    errorDialog->setModal(true);
-
-    sourceRadioButtonClicked();
-    ioErrorMessage("");
-    switchThemeButtonClicked();
-
-    chainMenuInitDone = false;
-    for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
-        addOperation((OPCodes)opCode);
-    }
-    qDebug() <<  "All OpenCV Operation Widgets Initialized";
-    chainMenuInitDone = true;
-    addOperation(NONE);
-
-    setUserMessage("Initializing Done", INFO);
 }
 
 void MainWindow::addOperation(OPCodes opCode)
