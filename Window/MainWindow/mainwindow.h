@@ -139,6 +139,8 @@ private:
 
     void initUI();
 
+    void connectSignals();
+
     CaptureInputSource* captureInputSource = nullptr;
 
     AboutDialog* aboutDialog = nullptr;
