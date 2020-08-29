@@ -52,6 +52,8 @@
   * [1. Select Input source](#1-select-input-source)
   * [2. Select and Chain OpenCV Operations](#2-select-and-chain-opencv-operations)
   * [3. Adjusting OpenCV Operation parameters](#3-adjusting-opencv-operation-parameters)
+  * [4. Record and Export Input-Output Stream](#4-record-and-export-input-output-stream)
+  * [5. OpenCV Catalogue GUI summary](#5-opencv-catalogue-gui-summary)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
@@ -177,8 +179,15 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 </p>
 
 
+### 4. Record and Export Input-Output Stream
 
-### 4. OpenCV Catalogue GUI summary
+- Select folder where you want to export the output to
+- Click on capture image(camera button) to capture and save input and output image or start video recording to export the video of input and output in realtime, click on stop button to end and save the video recording. 
+
+<!-- TODO: Add a screenshot here -->
+
+### 5. OpenCV Catalogue GUI summary
+
 <p align="center">
     <img src="media/picture_gui.jpg" alt="Gallery" width="756" >
   </a>
