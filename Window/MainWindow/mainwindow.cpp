@@ -251,8 +251,6 @@ void MainWindow::lastOperationChanged(OPCodes opCode)
 
 void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget)
 {
-    qDebug() << "Operation selection radio button clicked: ";
-
     for(int i = 0; i < testVBox->count(); i++)
     {
         QLayoutItem *itemParamAdjust = testVBox->itemAt(i);
@@ -260,6 +258,9 @@ void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget
     }
 
     paramAdjustWidget->show();
+
+    // NOTE: Experimental implementation of Exploded View Feature
+    cv::destroyAllWindows();
 }
 
 void MainWindow::addOperationWidget()
@@ -390,6 +391,9 @@ void MainWindow::refreshOperationWidgets()
             ->triggerAction(QAbstractSlider::SliderToMaximum);
     ui->scrollAreaParameterWidget->verticalScrollBar()
             ->triggerAction(QAbstractSlider::SliderToMaximum);
+
+    // NOTE: Experimental implementation of Exploded View Feature
+    cv::destroyAllWindows();
 }
 
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
@@ -427,8 +431,13 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
                 auto currentExplodedView = baseConfigWidget->getExplodedViewMats();
                 currentExplodedView.insert("Input", currentInput);
                 currentExplodedView.insert("Output", outputImage.clone());
-                explodedViewList.insert(baseConfigWidget->getUUID(),
-                                        qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
+
+                // NOTE: Experimental implementation of Exploded View Feature
+                if((explodedViewState == 1
+                        && baseConfigWidget->getChainMenuWidget()->getRadioButton()->isChecked())
+                        || explodedViewState == 2)
+                    explodedViewList.insert(baseConfigWidget->getUUID(),
+                                            qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
                 isChainSuccess = true;
             }
             catch(cv::Exception& e)
