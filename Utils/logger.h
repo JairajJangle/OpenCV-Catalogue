@@ -41,7 +41,7 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
     // FIXME: Logging level is not relevant. Consider Loggin Level for Logs
 
     std::string tagFile = "\n%s : Unknown: %s (%s:%u, %s)";
-    std::string tagStd = "";
+    std::string tagStd = "\u001b[37m%s :\x1b[32m Unknown:\x1b[0m %s \x1b[36m(%s:%u, %s)\x1b[0m\n";
 
     switch (type) {
     case QtDebugMsg:
