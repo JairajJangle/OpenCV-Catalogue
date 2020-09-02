@@ -41,11 +41,40 @@ public:
     enum InputSourceType {HARDWARE_CAM, FILE, NETWORK_STREAM};
 
 signals:
+    /**
+     * @brief sourceCaptured Signal is emiitted when a frame is captured from
+     *  the input source
+     * @param originalImg Full resolution image captured from the input source
+     */
     void sourceCaptured(cv::Mat originalImg);
+
+    /**
+     * @brief sourceCaptureError is emitted when there is an error in capturing
+     *  frame from source
+     */
     void sourceCaptureError(QString);
-    void setInputSource(QString inputSource, int inputSourceType);
-    void startTimer(int);
+
+    /**
+     * @brief setInputSource should be triggered the calling class to
+     *  set/change the input source
+     * @param inputSourcePath Path of Input source
+     * @param inputSourceType Type of source, refer to
+     *  @enum CaptureInputSource::InputSourceType
+     */
+    void setInputSource(int inputSourceType, QString inputSourcePath);
+
+    /**
+     * @brief stopCapture To be emitted to stop the ongoing input source capture
+     */
     void stopCapture();
+
+private: signals:
+    /**
+     * @brief startTimer Internal signal to start source frame capture on a
+     *  timely basis
+     * @param delay The initial delay to start capture
+     */
+    void startTimer(int delay);
 
 private slots:
     void captureSource()
@@ -81,7 +110,7 @@ private slots:
                      */
                     if(!isSuccess)
                     {
-                        img = cv::imread(inputSource.toStdString());
+                        img = cv::imread(inputSourcePath.toStdString());
                         isSuccess = !img.empty();
                     }
                 }
@@ -128,7 +157,7 @@ public:
                 this,
                 [=](int initialDelay){
             inputSourceCaptureTImer->start(initialDelay);
-            inputSourceCaptureTImer->setInterval(1000);
+            inputSourceCaptureTImer->setInterval(initialDelay);
         },
         Qt::QueuedConnection);
 
@@ -142,11 +171,11 @@ public:
 
         connect(this, &CaptureInputSource::setInputSource,
                 this,
-                [=](QString inputSource, int inputSourceType){
+                [=](int inputSourceType, QString inputSourcePath){
             emit stopCapture();
             this->inputSourceType = InputSourceType(inputSourceType);
-            this->inputSource = inputSource;
-            emit startTimer(1000);
+            this->inputSourcePath = inputSourcePath;
+            emit startTimer(initialDelay);
         },
         Qt::QueuedConnection);
 
@@ -169,20 +198,22 @@ private:
     QThread *camThread = new QThread;
     QTimer *inputSourceCaptureTImer;
 
-    QString inputSource = "";
+    QString inputSourcePath = "";
     cv::VideoCapture cap;
 
     InputSourceType inputSourceType = FILE;
 
     double fps = 30;
 
+    const int initialDelay = 1000; // ms
+
     void openSource()
     {
         cap.release();
 
-        if (QRegExp(RegExps::onlyDigits).exactMatch(inputSource))
-            cap.open(inputSource.toInt()); // Camera Index
+        if (QRegExp(RegExps::onlyDigits).exactMatch(inputSourcePath))
+            cap.open(inputSourcePath.toInt()); // Camera Index
         else
-            cap.open(inputSource.toStdString()); // Source File path
+            cap.open(inputSourcePath.toStdString()); // Source File path
     }
 };
