@@ -853,7 +853,7 @@ void MainWindow::applySourceClicked()
         });
     }
 
-    emit captureInputSource->setInputSource(path, inputSourceType);
+    emit captureInputSource->setInputSource(inputSourceType, path);
 }
 
 void MainWindow::outputLabelLBClicked(QPoint point)
