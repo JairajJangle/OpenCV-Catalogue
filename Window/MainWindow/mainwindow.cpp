@@ -592,7 +592,6 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
 
 void MainWindow::updateOutputFPS()
 {
-
     auto currentTime = QDateTime::currentMSecsSinceEpoch();
     if(prevOutputFPSShowTime == -1)
         prevOutputFPSShowTime = currentTime;
@@ -607,7 +606,8 @@ void MainWindow::updateOutputFPS()
                     aggregateOutputFPS.first + 1,
                     aggregateOutputFPS.second + outputFps
                     );
-        if(currentTime - prevOutputFPSShowTime >= 500)
+        if(currentTime - prevOutputFPSShowTime >= 500
+                && aggregateOutputFPS.first != 0)
         {
             prevOutputFPSShowTime = currentTime;
             ui->labelOutputFPS->setText(
