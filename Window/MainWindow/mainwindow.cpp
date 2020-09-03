@@ -163,6 +163,12 @@ void MainWindow::connectSignals()
             this, [=](){
         ioErrorMessage("");
     });
+
+    connect(this, &MainWindow::updateFPSLabel,
+            this, [=](int fps){
+        ui->labelInputFPS->setText(
+                    QString(Strings::fps).arg(fps));
+    });
 }
 
 void MainWindow::addOperation(OPCodes opCode)
@@ -434,7 +440,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 
                 // NOTE: Experimental implementation of Exploded View Feature
                 if((explodedViewState == 1
-                        && baseConfigWidget->getChainMenuWidget()->getRadioButton()->isChecked())
+                    && baseConfigWidget->getChainMenuWidget()->getRadioButton()->isChecked())
                         || explodedViewState == 2)
                     explodedViewList.insert(baseConfigWidget->getUUID(),
                                             qMakePair(baseConfigWidget->getOperationName(), currentExplodedView));
@@ -468,6 +474,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
         }
 
         emit refreshOutputImageSignal(outputImage);
+
         if(explodedViewState != 0)
             emit updateExplodedViewSignal(explodedViewList);
 
@@ -573,14 +580,48 @@ void MainWindow::refreshOutputImage(const cv::Mat img)
         ui->labelOutput->setPixmap(outputPixMap.scaled(ui->labelOutput->width(),
                                                        ui->labelOutput->height(),
                                                        Qt::KeepAspectRatio));
+        updateOutputFPS();
     }
-
     catch(cv::Exception& e)
     {
         qWarning() << e.what();
         setUserMessage("Error Occured while refreshing the output image label: "
                        + QString::fromStdString(e.what()), ERROR);
     }
+}
+
+void MainWindow::updateOutputFPS()
+{
+
+    auto currentTime = QDateTime::currentMSecsSinceEpoch();
+    if(prevOutputFPSShowTime == -1)
+        prevOutputFPSShowTime = currentTime;
+    if(prevOutputTime != -1)
+    {
+        auto timeDifference = currentTime - prevOutputTime;
+        if(timeDifference == 0)
+            return;
+
+        double outputFps = 1000 / timeDifference;
+        aggregateOutputFPS = qMakePair(
+                    aggregateOutputFPS.first + 1,
+                    aggregateOutputFPS.second + outputFps
+                    );
+        if(currentTime - prevOutputFPSShowTime >= 500)
+        {
+            prevOutputFPSShowTime = currentTime;
+            ui->labelOutputFPS->setText(
+                        QString(Strings::fps).arg(
+                            Numeric::setPrecision(
+                                aggregateOutputFPS.second
+                                /aggregateOutputFPS.first,
+                                2)
+                            )
+                        );
+            aggregateOutputFPS = qMakePair(0, 0);
+        }
+    }
+    prevOutputTime = currentTime;
 }
 
 void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
@@ -850,6 +891,11 @@ void MainWindow::applySourceClicked()
                 this, [=](QString error)
         {
             emit showErrorDialog("Input Source Error", error);
+        });
+        connect(captureInputSource, &CaptureInputSource::updateFPS,
+                this, [=](int fps)
+        {
+            emit updateFPSLabel(fps);
         });
     }
 

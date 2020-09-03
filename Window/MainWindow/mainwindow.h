@@ -123,6 +123,7 @@ signals:
     void removeOperationWidgetSignal();
     void showErrorDialog(QString, QString);
     void updateExplodedViewSignal(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>>);
+    void updateFPSLabel(int fps);
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -142,6 +143,10 @@ private:
     void connectSignals();
 
     CaptureInputSource* captureInputSource = nullptr;
+    qint64 prevOutputTime = -1;
+    qint64 prevOutputFPSShowTime = -1;
+    QPair<int, double> aggregateOutputFPS = qMakePair(0, 0);
+    void updateOutputFPS();
 
     AboutDialog* aboutDialog = nullptr;
 
