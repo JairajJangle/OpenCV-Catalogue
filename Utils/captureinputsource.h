@@ -68,6 +68,8 @@ signals:
      */
     void stopCapture();
 
+    void updateFPS(int fps);
+
 private: signals:
     /**
      * @brief startTimer Internal signal to start source frame capture on a
@@ -88,7 +90,8 @@ private slots:
                 openSource();
             }
         }
-        catch (cv::Exception& e) {
+        catch (cv::Exception& e)
+        {
             emit sourceCaptureError(e.what());
             emit stopCapture();
             return;
@@ -96,9 +99,13 @@ private slots:
 
         try
         {
+            auto prevFPS = fps;
             fps = cap.get(cv::CAP_PROP_FPS);
 
-            inputSourceCaptureTImer->setInterval(
+            if(prevFPS != fps)
+                emit updateFPS(fps);
+
+            inputSourceCaptureTimer->setInterval(
                         inputSourceType == NETWORK_STREAM ? 10 : (1000/fps));
 
             if(inputSourceType == FILE)
@@ -132,7 +139,8 @@ private slots:
 
             emit sourceCaptured(img);
 
-        } catch (cv::Exception& e) {
+        } catch (cv::Exception& e)
+        {
             emit sourceCaptureError(e.what());
             emit stopCapture();
             return;
@@ -147,9 +155,9 @@ public:
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
     {
-        inputSourceCaptureTImer = new QTimer(this);
+        inputSourceCaptureTimer = new QTimer(this);
         this->moveToThread(camThread);
-        inputSourceCaptureTImer->moveToThread(camThread);
+        inputSourceCaptureTimer->moveToThread(camThread);
         QObject::connect(camThread, &QThread::finished,
                          this, &QObject::deleteLater);
         camThread->start();
@@ -157,15 +165,16 @@ public:
         connect(this, &CaptureInputSource::startTimer,
                 this,
                 [=](int initialDelay){
-            inputSourceCaptureTImer->start(initialDelay);
-            inputSourceCaptureTImer->setInterval(initialDelay);
+            inputSourceCaptureTimer->start(initialDelay);
+            inputSourceCaptureTimer->setInterval(initialDelay);
         },
         Qt::QueuedConnection);
 
         connect(this, &CaptureInputSource::stopCapture,
                 this,
                 [=](){
-            inputSourceCaptureTImer->stop();
+            emit updateFPS(0);
+            inputSourceCaptureTimer->stop();
             cap.release();
         },
         Qt::QueuedConnection);
@@ -180,7 +189,7 @@ public:
         },
         Qt::QueuedConnection);
 
-        connect(inputSourceCaptureTImer, SIGNAL(timeout()),
+        connect(inputSourceCaptureTimer, SIGNAL(timeout()),
                 this, SLOT(captureSource()));
     }
 
@@ -197,14 +206,14 @@ public:
 
 private:
     QThread *camThread = new QThread;
-    QTimer *inputSourceCaptureTImer;
+    QTimer *inputSourceCaptureTimer;
 
     QString inputSourcePath = "";
     cv::VideoCapture cap;
 
     InputSourceType inputSourceType = FILE;
 
-    double fps = 30;
+    double fps = -1;
 
     const int initialDelay = 1000; // ms
 
