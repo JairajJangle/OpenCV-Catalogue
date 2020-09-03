@@ -79,69 +79,70 @@ private: signals:
 private slots:
     void captureSource()
     {
-        try{
-            bool isSuccess = true;
+        bool isSuccess = true;
+
+        try
+        {
             if(!cap.isOpened())
             {
                 openSource();
-
-                // img =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-                // resizedImg =cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-            }
-
-            try {
-                fps = cap.get(cv::CAP_PROP_FPS);
-
-                inputSourceCaptureTImer->setInterval(
-                            inputSourceType == NETWORK_STREAM ? 10 : (1000/fps));
-
-                if(inputSourceType == FILE)
-                {
-                    /*
-                     * TODO: Implement a more elegant way to differentiate between Image and Video
-                     *
-                     * First try to read input source as Video File
-                     * If it is not a continuos stream then it is a Image File
-                     */
-                    isSuccess = cap.read(img);
-
-                    /*
-                     * If the selected path is not a video then try to read it as an Image
-                     */
-                    if(!isSuccess)
-                    {
-                        img = cv::imread(inputSourcePath.toStdString());
-                        isSuccess = !img.empty();
-                    }
-                }
-                else if(inputSourceType == NETWORK_STREAM || inputSourceType == HARDWARE_CAM)
-                    isSuccess = cap.read(img);
-
-                // Avoid empty image resizing error
-                if(!cv::Size(img.rows , img.rows).empty())
-                    resize(img, resizedImg, cv::Size(640, 480));
-
-                if(!isSuccess)
-                {
-                    emit sourceCaptureError("Cannot read the input source");
-                    emit stopCapture();
-                    return;
-                }
-
-                emit sourceCaptured(img);
-
-            } catch (cv::Exception& e) {
-                emit sourceCaptureError(e.what());
             }
         }
         catch (cv::Exception& e) {
             emit sourceCaptureError(e.what());
+            emit stopCapture();
+            return;
         }
+
+        try
+        {
+            fps = cap.get(cv::CAP_PROP_FPS);
+
+            inputSourceCaptureTImer->setInterval(
+                        inputSourceType == NETWORK_STREAM ? 10 : (1000/fps));
+
+            if(inputSourceType == FILE)
+            {
+                /*
+                 * TODO: Implement a more elegant way to differentiate between Image and Video
+                 *
+                 * First try to read input source as Video File
+                 * If it is not a continuos stream then it is a Image File
+                 */
+                isSuccess = cap.read(img);
+
+                /*
+                 * If the selected path is not a video then try to read it as an Image
+                 */
+                if(!isSuccess)
+                {
+                    img = cv::imread(inputSourcePath.toStdString());
+                    isSuccess = !img.empty();
+                }
+            }
+            else if(inputSourceType == NETWORK_STREAM || inputSourceType == HARDWARE_CAM)
+                isSuccess = cap.read(img);
+
+            if(!isSuccess)
+            {
+                emit sourceCaptureError("Cannot read the input source");
+                emit stopCapture();
+                return;
+            }
+
+            emit sourceCaptured(img);
+
+        } catch (cv::Exception& e) {
+            emit sourceCaptureError(e.what());
+            emit stopCapture();
+            return;
+        }
+
     }
 
 public:
     // Mat to store image from camera
-    inline static cv::Mat img, resizedImg;
+    inline static cv::Mat img;
 
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
