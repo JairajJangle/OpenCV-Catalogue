@@ -140,6 +140,9 @@
             <property name="statusTip">
              <string/>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -214,6 +217,9 @@
           </property>
           <property name="styleSheet">
            <string notr="true"/>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
           <property name="text">
            <string>No input source selected</string>
