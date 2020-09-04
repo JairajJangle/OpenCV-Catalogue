@@ -965,6 +965,8 @@ void MainWindow::switchThemeButtonClicked()
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
 
+        ui->labelOutputFPS->setStyleSheet("#labelOutputFPS { border: 1.2px solid #54636D; }");
+        ui->labelInputFPS->setStyleSheet("#labelInputFPS { border: 1.2px solid #54636D; }");
         ui->labelInput->setStyleSheet("#labelInput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
         ui->labelOutput->setStyleSheet("#labelOutput \n{\n border: 2px solid #54636D;\n background-color : #32414B; \n color : white; \n}");
 
@@ -980,6 +982,8 @@ void MainWindow::switchThemeButtonClicked()
         isDarkModeOn = false;
         qApp->setStyleSheet("");
 
+        ui->labelOutputFPS->setStyleSheet("#labelOutputFPS { border: 1.2px solid #C0C0C0; }");
+        ui->labelInputFPS->setStyleSheet("#labelInputFPS { border: 1.2px solid #C0C0C0; }");
         ui->labelInput->setStyleSheet("border: 1px solid black");
         ui->labelOutput->setStyleSheet("border: 1px solid black");
 
