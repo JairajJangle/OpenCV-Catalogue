@@ -68,6 +68,10 @@ signals:
      */
     void stopCapture();
 
+    /**
+     * @brief updateFPS emitted on input source FPS change
+     * @param fps is equal to the value as received from OpenCV CAP_PROP_FPS
+     */
     void updateFPS(int fps);
 
 private: signals:
@@ -149,12 +153,10 @@ private slots:
     }
 
 public:
-    // Mat to store image from camera
-    inline static cv::Mat img;
-
     explicit CaptureInputSource(QObject* parent = nullptr)
         :QObject(parent)
     {
+        // Input Source Capture is done on a separate thread
         inputSourceCaptureTimer = new QTimer(this);
         this->moveToThread(camThread);
         inputSourceCaptureTimer->moveToThread(camThread);
@@ -173,8 +175,13 @@ public:
         connect(this, &CaptureInputSource::stopCapture,
                 this,
                 [=](){
+            // Reset input source FPS to 0
             emit updateFPS(0);
+
+            // Stop source capture timer
             inputSourceCaptureTimer->stop();
+
+            // Release source device be it a file or a stream
             cap.release();
         },
         Qt::QueuedConnection);
@@ -210,6 +217,9 @@ private:
 
     QString inputSourcePath = "";
     cv::VideoCapture cap;
+
+    // Mat to store image from camera
+    inline static cv::Mat img;
 
     InputSourceType inputSourceType = FILE;
 
