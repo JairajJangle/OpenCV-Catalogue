@@ -39,14 +39,15 @@ MainWindow::MainWindow(QWidget *parent)
     //    HybridSlider* hybrid = new HybridSlider();
     //    hybrid->show();
 
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setWidget(client);
-    client->setLayout(loGrid);
+    // FIXME: Enhance exploded view in a paginated view
+    //    scrollArea->setWidgetResizable(true);
+    //    scrollArea->setWidget(client);
+    //    client->setLayout(loGrid);
 
-    pageWidget->setLayout(new QVBoxLayout);
-    pageWidget->layout()->addWidget(scrollArea);
-    tabPage->addTab(pageWidget, "Page");
-    tabPage->show();
+    //    pageWidget->setLayout(new QVBoxLayout);
+    //    pageWidget->layout()->addWidget(scrollArea);
+    //    tabPage->addTab(pageWidget, "Page");
+    //    tabPage->show();
 
     //    QString title = QString("Page %1").arg(1);
     //    QTabWidget *tab = new QTabWidget();
