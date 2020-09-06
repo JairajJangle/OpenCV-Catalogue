@@ -85,8 +85,6 @@ private: signals:
 private slots:
     void captureSource()
     {
-        bool isSuccess = true;
-
         try
         {
             if(!cap.isOpened())
@@ -103,6 +101,7 @@ private slots:
 
         try
         {
+            bool isSuccess = true;
             auto prevFPS = fps;
             fps = cap.get(cv::CAP_PROP_FPS);
 
