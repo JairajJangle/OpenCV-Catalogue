@@ -20,6 +20,9 @@
 
 #include "OpenCVFunction/bitwiseops.h"
 
+#include "Utils/captureinputsource.h"
+#include "CustomWidgets/labelledcombobox.h"
+
 BitWise::BitWise()
 {
     operationName = "Bitwise Operation";

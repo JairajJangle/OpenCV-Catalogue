@@ -21,9 +21,6 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/labelledcombobox.h"
-
-#include "Utils/captureinputsource.h"
 
 class BitWise: public BaseConfigWidget
 {
