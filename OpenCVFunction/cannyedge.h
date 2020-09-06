@@ -21,9 +21,6 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/sliderlayout.h"
-#include "CustomWidgets/labelledcombobox.h"
-#include "CustomWidgets/HybridSlider/hybridslider.h"
 
 class CannyEdge : public BaseConfigWidget
 {

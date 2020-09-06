@@ -20,6 +20,10 @@
 
 #include "OpenCVFunction/cannyedge.h"
 
+#include "CustomWidgets/sliderlayout.h"
+#include "CustomWidgets/labelledcombobox.h"
+#include "CustomWidgets/HybridSlider/hybridslider.h"
+
 CannyEdge::CannyEdge()
 {
     operationName = "Canny Edge";
