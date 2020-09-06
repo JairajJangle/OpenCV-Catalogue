@@ -21,16 +21,13 @@
 #pragma once
 
 // QT libs
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
 #include <QPushButton>
-#include <QIntValidator>
 
-#include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/errorlabel.h"
-#include "CustomWidgets/duallineeditlayout.h"
+
+class DualLineEditLayout;
+class LineEditLayout;
+class ErrorLabel;
 
 class Blur : public BaseConfigWidget
 {
@@ -50,17 +47,11 @@ private:
     cv::Size kSize = cv::Size(101, 101);
     const int lineEditW = 50;
 
-    DualLineEditLayout *kSizeDLEL = new DualLineEditLayout("Kernel Size",
-                                                           qMakePair(kSize.width,kSize.height),
-                                                           70);
-    LineEditLayout* anchorLineEditLayout =
-            new LineEditLayout("Current Anchor", "Default = (-1, -1)",
-                               160, 150);
-    QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
+    DualLineEditLayout *kSizeDLEL;
+    LineEditLayout* anchorLineEditLayout;
 
     QPushButton* applyButton = new QPushButton("Apply Kernel");
     QPushButton* resetAnchorButton = new QPushButton("Reset Anchor Position");
-    ErrorLabel* errorLabel  = new ErrorLabel("No \nError");
-
+    ErrorLabel* errorLabel;
     QString prevAnchorText = "";
 };
