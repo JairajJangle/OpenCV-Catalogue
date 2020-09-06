@@ -64,6 +64,7 @@ SOURCES += \
     CustomWidgets/focusawarelineedit.cpp \
     OpenCVFunction/backgroundsubtract.cpp \
     OpenCVFunction/bitwiseops.cpp \
+    OpenCVFunction/blur.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
