@@ -29,92 +29,21 @@ class CannyEdge : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    CannyEdge()
-    {
-        operationName = "Canny Edge";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/feature_detection.html?highlight=canny#canny";
-        initWidget();
-    }
+    CannyEdge();
 
-    cv::Mat getProcessedImage(cv::Mat inputImage) override try
-    {
-        cv::Mat outputImage;
-
-        cvtColor(inputImage, outputImage, cv::COLOR_BGR2GRAY);
-        explodedView.insert("Grayscale", outputImage.clone());
-
-        Canny(outputImage, outputImage, t1Value, t1Value*t2Value, appertureValue);
-
-        return outputImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+    cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 private slots:
-void t1ValueChanged(int value){
-    t1Value = value;
-}
-
-void t2ValueChanged(int value){
-    t2Value = value;
-}
-
-void appertureValueChanged(QVariant value){
-    appertureValue = value.toInt();
-    qDebug() << "Apperture: " << appertureValue;
-}
-void testSliderValChanged(int value){
-    qDebug() << "Test: " << value;
-}
-void refreshLayout()
-{
-    wgtSub->adjustSize();
-}
+    void t1ValueChanged(int value);
+    void t2ValueChanged(int value);
+    void appertureValueChanged(QVariant value);
+    void testSliderValChanged(int value);
+    void refreshLayout();
 
 private:
-int t1Value = 30;
-int t2Value = 3;
-int appertureValue = 3;
+    int t1Value = 30;
+    int t2Value = 3;
+    int appertureValue = 3;
 
-void initWidget() override
-{
-    SliderLayout* t1SliderLayout = new SliderLayout("threshold1\n[0-100]", t1Value);
-    connect(t1SliderLayout, SIGNAL(sliderValueChanged(int)),
-            this, SLOT(t1ValueChanged(int)));
-
-    SliderLayout* t2SliderLayout = new SliderLayout("threshold2\n[0-100]", t2Value);
-    connect(t2SliderLayout, SIGNAL(sliderValueChanged(int)),
-            this, SLOT(t2ValueChanged(int)));
-
-    QList<QVariant> appertureMap;
-    appertureMap.append({3, 5, 7});
-    LabelledComboBox* selectAppertureCB =
-            new LabelledComboBox("Apperture Value",
-                                 appertureMap, 50);
-
-    connect(selectAppertureCB,SIGNAL(currentDataChanged(QVariant)),
-            this,SLOT(appertureValueChanged(QVariant)));
-
-    vBoxSub->addLayout(t1SliderLayout);
-    vBoxSub->addLayout(t2SliderLayout);
-    vBoxSub->addLayout(selectAppertureCB);
-
-    // FIXME: Range Box hiding causes Hybrid Slider to retain height
-    //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
-    //        connect(hybridGG, SIGNAL(sliderValueChanged(int)),
-    //                this, SLOT(t1ValueChanged(int)));
-    //        connect(hybridGG, SIGNAL(editApplyClicked()),
-    //                this, SLOT(refreshLayout()));
-
-    //        vBoxSub->addWidget(hybridGG);
-
-    BaseConfigWidget::initWidget();
-}
+    void initWidget() override;
 };
