@@ -65,6 +65,7 @@ SOURCES += \
     OpenCVFunction/backgroundsubtract.cpp \
     OpenCVFunction/bitwiseops.cpp \
     OpenCVFunction/blur.cpp \
+    OpenCVFunction/cannyedge.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
