@@ -20,9 +20,6 @@
 
 #pragma once
 
-// QT libs
-#include <QRadioButton>
-
 #include "CustomWidgets/baseconfigwidget.h"
 
 class ColorSpace : public BaseConfigWidget

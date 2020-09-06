@@ -20,11 +20,9 @@
 
 #pragma once
 
-// QT libs
-#include <QLabel>
-
-#include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
+
+class LineEditLayout;
 
 class ColorPicker : public BaseConfigWidget
 {
@@ -35,10 +33,10 @@ public:
     cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 private:
-    LineEditLayout* rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
-    LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);
+    LineEditLayout* rgbLineEditLayout;
+    LineEditLayout* locLineEditLayout;
 
-    QLabel* infoLabel  = new QLabel("Click on Output feed to pick color\n");
+    QLabel* infoLabel;
 
     void initWidget() override;
 };
