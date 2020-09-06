@@ -457,7 +457,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
                 qCritical() << e.what();
                 emit showErrorDialog("Standard Exception", e.what());
             }
-            catch(std::string &error)
+            catch(std::string& error)
             {
                 qCritical() << QString::fromStdString(error);
                 emit showErrorDialog("Unknown Exception",
@@ -757,7 +757,7 @@ void MainWindow::stopRecClicked()
         outputVideo.release();
         setUserMessage("Recording saved to destination folder", INFO);
     }
-    catch (cv::Exception e)
+    catch (cv::Exception& e)
     {
         qCritical() << e.what();
         ioErrorMessage("Recording failed! Please try again");
@@ -782,7 +782,7 @@ void MainWindow::writeToVideo(cv::VideoWriter videoWriter, cv::Mat img)
         videoWriter.write(img);
         setUserMessage("Recording...", WARNING);
     }
-    catch (cv::Exception e)
+    catch (cv::Exception& e)
     {
         qCritical() << "Video writing failed. Aborting!";
         stopRecClicked();
@@ -832,7 +832,7 @@ void MainWindow::captureClicked()
             ioErrorMessage("Captures images, saved to destination folder");
         }
     }
-    catch(QException e)
+    catch(QException& e)
     {
         qCritical() << "Error: " << e.what();
         ioErrorMessage("Image exporting failed! Please try again.");
