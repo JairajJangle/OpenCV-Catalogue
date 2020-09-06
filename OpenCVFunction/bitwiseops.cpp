@@ -20,7 +20,6 @@
 
 #include "OpenCVFunction/bitwiseops.h"
 
-
 BitWise::BitWise()
 {
     operationName = "Bitwise Operation";
