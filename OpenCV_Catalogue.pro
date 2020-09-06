@@ -62,6 +62,8 @@ SOURCES += \
     CustomWidgets/ErrorDialog/errordialog.cpp \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.cpp \
     CustomWidgets/focusawarelineedit.cpp \
+    OpenCVFunction/backgroundsubtract.cpp \
+    OpenCVFunction/bitwiseops.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
@@ -96,6 +98,7 @@ HEADERS += \
     OpenCVFunction/houghlines.h \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/inrange.h \
+    OpenCVFunction/resize.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/logger.h \
