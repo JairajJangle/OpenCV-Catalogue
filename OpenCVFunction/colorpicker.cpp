@@ -20,6 +20,8 @@
 
 #include"OpenCVFunction/colorpicker.h"
 
+#include "CustomWidgets/lineeditlayout.h"
+
 ColorPicker::ColorPicker()
 {
     operationName = "Color Picker";
@@ -67,6 +69,10 @@ throw std::string("Unknown Exception in ")
 
 void ColorPicker::initWidget()
 {
+    rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
+    locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);
+    infoLabel = new QLabel("Click on Output feed to pick color\n");
+
     locLineEditLayout->lineEdit->setReadOnly(true);
     vBoxSub->addWidget(infoLabel);
 
