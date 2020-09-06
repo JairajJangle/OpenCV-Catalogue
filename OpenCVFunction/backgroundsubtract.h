@@ -20,19 +20,7 @@
 
 #pragma once
 
-// QT libs
-#include <QRadioButton>
-#include <QRegExpValidator>
-
-#include "Utils/utils.h"
-#include "Utils/constants.h"
-
-#include <opencv2/bgsegm.hpp>
-
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/errorlabel.h"
-#include "CustomWidgets/lineeditlayout.h"
-#include "CustomWidgets/applyresetbuttonlayout.h"
 
 class BackgroundSubtraction : public BaseConfigWidget
 {
@@ -55,9 +43,4 @@ private:
 
     int selectedTech = 0; // KNN
     double learningRate = 0.1;
-    LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
-                                                                 learningRate,
-                                                                 150,
-                                                                 150);
-    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 };

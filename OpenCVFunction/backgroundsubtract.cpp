@@ -20,6 +20,19 @@
 
 #include "OpenCVFunction/backgroundsubtract.h"
 
+#include "CustomWidgets/errorlabel.h"
+#include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
+
+#include <opencv2/bgsegm.hpp>
+
+// QT libs
+#include <QRadioButton>
+#include <QRegExpValidator>
+
+#include "Utils/utils.h"
+#include "Utils/constants.h"
+
 BackgroundSubtraction::BackgroundSubtraction()
 {
     operationName = "Background Subtraction";
@@ -58,6 +71,12 @@ void BackgroundSubtraction::resetAnchorClicked(){
 
 void BackgroundSubtraction::initWidget()
 {
+    LineEditLayout* learningRateEditLayout  = new LineEditLayout("Learning Rate\n[0-1]",
+                                                                 learningRate,
+                                                                 150,
+                                                                 150);
+    ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+
     connect(applyResetBox, &ApplyResetButtonLayout::applyClicked,
             this, [=](){ learningRate = learningRateEditLayout->getText().toDouble(); });
     connect(applyResetBox, &ApplyResetButtonLayout::resetClicked,
