@@ -20,6 +20,13 @@
 
 #include "OpenCVFunction/blur.h"
 
+#include <QIntValidator>
+#include <QHBoxLayout>
+
+#include "CustomWidgets/duallineeditlayout.h"
+#include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/errorlabel.h"
+
 Blur::Blur()
 {
     operationName = "Blur";
@@ -77,6 +84,16 @@ void Blur::resetAnchorClicked(){
 
 void Blur::initWidget()
 {
+    kSizeDLEL = new DualLineEditLayout("Kernel Size",
+                                       qMakePair(kSize.width,kSize.height),
+                                       70);
+    anchorLineEditLayout =
+            new LineEditLayout("Current Anchor",
+                               "Default = (-1, -1)",
+                               160, 150);
+    QLabel* anchorNoteLabel  = new QLabel("Click on Output to select Anchor");
+    errorLabel = new ErrorLabel("No \nError");
+
     anchorLineEditLayout->lineEdit->setReadOnly(true);
 
     errorLabel->hide();
