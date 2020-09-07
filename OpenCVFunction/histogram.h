@@ -20,112 +20,26 @@
 
 #pragma once
 
-// QT libs
-#include <QCheckBox>
-
-#include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
+
+class QCheckBox;
 
 class HistogramCalculation : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    HistogramCalculation()
-    {
-        operationName = "Histogram Calculation";
-        moreInfoLink = "https://docs.opencv.org/3.4/d6/dc7/group__imgproc_Hist.html#ga4b2b5fd75503ff9e6844cc4dcdaed35d";
-        initWidget();
-    }
+    HistogramCalculation();
 
-    cv::Mat getProcessedImage(cv::Mat inputImage) override try
-    {
-        std::vector<cv::Mat> bgrPlanes;
-        split(inputImage, bgrPlanes);
-
-        const float* histRange = {range};
-
-        cv::Mat bHist, gHist, rHist;
-
-        /**
-         * Conditioning on number of channels of @param inputImage is done
-         * to prevent Segmentation faults while accessing more number of
-         * channels than the size of @param bgrPlanes after above split operation
-         */
-        if(inputImage.channels() >= 1)
-            calcHist(&bgrPlanes[0], 1, 0, cv::Mat(), bHist, 1,
-                    &histSize, &histRange, uniform,
-                    accumulate);
-
-        if(inputImage.channels() >= 2)
-            calcHist(&bgrPlanes[1], 1, 0, cv::Mat(), gHist, 1,
-                    &histSize, &histRange, uniform,
-                    accumulate);
-
-        if(inputImage.channels() >= 3)
-            calcHist(&bgrPlanes[2], 1, 0, cv::Mat(), rHist, 1,
-                    &histSize, &histRange, uniform,
-                    accumulate);
-
-        int hist_w = 512, histH = 400;
-        int bin_w = cvRound((double)hist_w/histSize);
-
-        cv::Mat histImage( histH, hist_w, CV_8UC3, cv::Scalar( 0,0,0));
-
-        normalize(bHist, bHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
-        normalize(gHist, gHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
-        normalize(rHist, rHist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
-
-        for(int i = 1; i < histSize; i++)
-        {
-            if(inputImage.channels() >= 1)
-                line(histImage, cv::Point(bin_w*(i-1), histH - cvRound(bHist.at<float>(i-1))),
-                     cv::Point(bin_w*(i), histH - cvRound(bHist.at<float>(i))),
-                     cv::Scalar(255, 0, 0), 2, 8, 0);
-            if(inputImage.channels() >= 2)
-                line(histImage, cv::Point( bin_w*(i-1), histH - cvRound(gHist.at<float>(i-1))),
-                     cv::Point(bin_w*(i), histH - cvRound(gHist.at<float>(i))),
-                     cv::Scalar(0, 255, 0), 2, 8, 0);
-            if(inputImage.channels() >= 3)
-                line(histImage, cv::Point( bin_w*(i-1), histH - cvRound(rHist.at<float>(i-1))),
-                     cv::Point(bin_w*(i), histH - cvRound(rHist.at<float>(i))),
-                     cv::Scalar(0, 0, 255), 2, 8, 0);
-        }
-
-        /**
-         *  @param histImage is of CV_8UC3 type
-         */
-        return histImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+    cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 private:
-int histSize = 256;
-bool uniform = true, accumulate = false;
+    int histSize = 256;
+    bool uniform = true, accumulate = false;
 
-float range[2]; //the upper boundary is exclusive
+    float range[2]; //the upper boundary is exclusive
 
-QCheckBox* uniformCB = new QCheckBox("uniform");
-QCheckBox* accumulateCB = new QCheckBox("accumulate");
+    QCheckBox* uniformCB;
+    QCheckBox* accumulateCB;
 
-void initWidget() override
-{
-    uniformCB->setChecked(true);
-    range[0] = 0; //the upper boundary is exclusive
-    range[1] = 256;
-    // TODO add parameter control
-
-    // FIXME: Handle uniform false value
-    //        vBoxSub->addWidget(uniformCB);
-    //        vBoxSub->addWidget(accumulateCB);
-
-    BaseConfigWidget::initWidget();
-}
+    void initWidget() override;
 };
