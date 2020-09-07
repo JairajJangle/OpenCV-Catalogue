@@ -20,191 +20,47 @@
 
 #pragma once
 
-// QT libs
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QComboBox>
-
-#include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/sliderlayout.h"
-#include "CustomWidgets/dividerline.h"
-#include "CustomWidgets/applyresetbuttonlayout.h"
 
-#include "Utils/utils.h"
+class LineEditLayout;
+class SliderLayout;
+class ApplyResetButtonLayout;
 
 class HarrisCornerDetector : public BaseConfigWidget
 {
     Q_OBJECT
 
 public:
-    HarrisCornerDetector()
-    {
-        operationName = "Harris Corner Detector";
-        moreInfoLink = "https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#gac1fc3598018010880e370e2f709b4345";
+    HarrisCornerDetector();
 
-        lineEditsWithParams.push_back(qMakePair(blockSizeLayout, blockSize));
-        lineEditsWithParams.push_back(qMakePair(apertureSizeLayout, apertureSize));
-        lineEditsWithParams.push_back(qMakePair(kLayout, k));
-
-        initWidget();
-    }
-
-    cv::Mat getProcessedImage(cv::Mat inputImage) override try
-    {
-        blockSizeLayout->setText(borderTypeComboBox->currentData());
-
-        cv::Mat inputImageGray, outputImage,
-                inputNorm, inputNormScaled;
-
-        inputImage.copyTo(outputImage);
-
-        cvtColor(inputImage, inputImageGray, cv::COLOR_BGR2GRAY);
-        explodedView.insert("Grayscale", inputImageGray.clone());
-
-        cv::Mat dst = cv::Mat::zeros(inputImage.size(), CV_32FC1);
-
-        cornerHarris(inputImageGray, dst,
-                     blockSize->toInt(), apertureSize->toInt(), k->toDouble(),
-                     borderType->toInt());
-        normalize(dst, inputNorm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat());
-        convertScaleAbs(inputNorm, inputNormScaled);
-
-        for(int i = 0; i < inputNorm.rows ; i++)
-        {
-            for(int j = 0; j < inputNorm.cols; j++)
-            {
-                if(static_cast<int>(inputNorm.at<float>(i,j)) > threshold)
-                {
-                    circle(outputImage, cv::Point(j,i), 5,
-                           cv::Scalar(0, 0, 255), 2, 8, 0);
-                }
-            }
-        }
-
-        return outputImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+    cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 private slots:
-void threshChanged(int value)
-{
-    threshold = value;
-}
-
-void applyClicked()
-{
-    bool paramsApplied = true;
-    for(auto& lineEditWithParam : lineEditsWithParams)
-    {
-        if(!lineEditWithParam.first->getText().isEmpty())
-            return lineEditWithParam.second->setValue(
-                        QVariant(lineEditWithParam.first->getText()));
-
-        paramsApplied = false;
-        break;
-    }
-
-    if(!paramsApplied)
-    {
-        // TODO: Update error label message
-    }
-}
-
-void resetClicked()
-{
-    *blockSize = 2;
-    *apertureSize = 3;
-    *k = 0.04;
-
-    for(auto& lineEditWithParam : lineEditsWithParams)
-        lineEditWithParam.first->setText(lineEditWithParam.second->toString());
-
-    borderTypeComboBox->setCurrentText("BORDER_DEFAULT");
-}
-
-void borderTypeChanged(int index)
-{
-    *borderType = borderTypeComboBox->itemData(index);
-}
+    void threshChanged(int value);
+    void applyClicked();
+    void resetClicked();
+    void borderTypeChanged(int index);
 
 private:
-int threshold = 200;
+    int threshold = 200;
 
-// TODO: Add ToolTip for Theshold
-SliderLayout* threshSliderLayout = new SliderLayout("Threshold\n[0-255]",
-                                                    threshold, 0, 255, 190);
+    // TODO: Add ToolTip for Theshold
+    SliderLayout* threshSliderLayout;
 
-QVariant* blockSize = new QVariant(2);
-// FIXME: Kernel size should be odd and less than 31
-QVariant* apertureSize = new QVariant(3);
-QVariant* k = new QVariant(0.04);
-QVariant* borderType = new QVariant(cv::BORDER_DEFAULT);
+    QVariant* blockSize = new QVariant(2);
+    // FIXME: Kernel size should be odd and less than 31
+    QVariant* apertureSize = new QVariant(3);
+    QVariant* k = new QVariant(0.04);
+    QVariant* borderType = new QVariant(cv::BORDER_DEFAULT);
 
-LineEditLayout* blockSizeLayout = new LineEditLayout("blockSize", *blockSize);
-LineEditLayout* apertureSizeLayout = new LineEditLayout("ksize", *apertureSize);
-LineEditLayout* kLayout = new LineEditLayout("k", *k);
-QComboBox* borderTypeComboBox = new QComboBox();
+    LineEditLayout* blockSizeLayout;
+    LineEditLayout* apertureSizeLayout;
+    LineEditLayout* kLayout;
+    QComboBox* borderTypeComboBox;
 
-QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
+    QVector<QPair<LineEditLayout*, QVariant*>> lineEditsWithParams;
 
-ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+    ApplyResetButtonLayout* applyResetBox;
 
-void initWidget() override
-{
-    borderTypeComboBox->addItem("BORDER_CONSTANT", cv::BORDER_CONSTANT);
-    borderTypeComboBox->addItem("BORDER_REPLICATE", cv::BORDER_REPLICATE);
-    borderTypeComboBox->addItem("BORDER_REFLECT", cv::BORDER_REFLECT);
-    /*!
-         * borderTypeComboBox->addItem( "BORDER_WRAP", 3);
-         * BORDER_WRAP is not supported, see @var moreInfoLink page
-         */
-    borderTypeComboBox->addItem("BORDER_DEFAULT", cv::BORDER_DEFAULT);
-    borderTypeComboBox->addItem("BORDER_REFLECT_101", cv::BORDER_REFLECT_101);
-    /*!
-         * FIXME:
-         * borderTypeComboBox->addItem("BORDER_TRANSPARENT", cv::BORDER_TRANSPARENT);
-         * BORDER_TRANSPARENT is causing crash
-         */
-    borderTypeComboBox->addItem("BORDER_REFLECT101", cv::BORDER_REFLECT101);
-    borderTypeComboBox->addItem("BORDER_ISOLATED", cv::BORDER_ISOLATED);
-    borderTypeComboBox->setCurrentText("BORDER_DEFAULT");
-
-    for(auto& lineEditWithParam : lineEditsWithParams)
-        vBoxSub->addLayout(lineEditWithParam.first);
-
-    connect(applyResetBox, SIGNAL(applyClicked()),
-            this, SLOT(applyClicked()));
-    connect(applyResetBox, SIGNAL(resetClicked()),
-            this, SLOT(resetClicked()));
-
-    vBoxSub->addLayout(applyResetBox);
-
-    QHBoxLayout* borderTypeHBox = new QHBoxLayout;
-    borderTypeHBox->addWidget(new QLabel("borderType"));
-    borderTypeHBox->setSpacing(30);
-
-    connect(borderTypeComboBox, SIGNAL(activated(int)),
-            this, SLOT(borderTypeChanged(int)));
-
-    borderTypeHBox->addWidget(borderTypeComboBox);
-    borderTypeHBox->insertStretch( -1, 1 );
-    vBoxSub->addLayout(borderTypeHBox);
-
-    vBoxSub->addWidget(new DividerLine(0, this));
-
-    vBoxSub->addLayout(threshSliderLayout);
-    connect(threshSliderLayout, SIGNAL(sliderValueChanged(int)),
-            this, SLOT(threshChanged(int)));
-
-    BaseConfigWidget::initWidget();
-}
+    void initWidget() override;
 };
