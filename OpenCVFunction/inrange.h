@@ -21,95 +21,26 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
-#include "CustomWidgets/sliderlayout.h"
 
 class InRange : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    InRange()
-    {
-        operationName = "InRange";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html?highlight=inrange#inrange";
-        this->initWidget();
-    }
+    InRange();
 
-    cv::Mat getProcessedImage(cv::Mat inputImage) override try
-    {
-        if(channelNos != inputImage.channels())
-        {
-            channelNos = inputImage.channels();
-            emit refreshWidget();
-            qDebug() << "Refreshed Parameter Adjustment Widget";
-        }
-
-        cv::Mat outputImage = cv::Mat::zeros(inputImage.size(), CV_8U);
-
-        if(static_cast<int>(lLimits->size()) == channelNos
-                && static_cast<int>(hLimits->size()) == channelNos)
-        {
-            cv::inRange(inputImage,
-                        *lLimits,
-                        *hLimits,
-                        outputImage);
-        }
-
-        return outputImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+    cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 signals:
-void refreshWidget();
+    void refreshWidget();
 
 private:
-std::vector<int>* lLimits = new std::vector<int>();
-std::vector<int>* hLimits = new std::vector<int>();
+    std::vector<int>* lLimits = new std::vector<int>();
+    std::vector<int>* hLimits = new std::vector<int>();
 
-int channelNos = 0;
+    int channelNos = 0;
 
-void initWidget() override
-{
-    connect(this, SIGNAL(refreshWidget()), this, SLOT(changeSliderNumbers()));
-
-    BaseConfigWidget::initWidget();
-}
+    void initWidget() override;
 
 private slots:
-void changeSliderNumbers()
-{
-    lLimits->clear();
-    hLimits->clear();
-
-    qDeleteAll(vBoxSub->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly));
-
-    // TODO: Add Max Limit according to matrix pixel byte size eg 255 for 8 byte
-    for(int i = 0; i < channelNos; i++)
-    {
-        lLimits->push_back(0);
-        hLimits->push_back(100);
-        SliderLayout* lSliderLayout = new SliderLayout(
-                    QString("Channel ") + QString::number(i) + QString(" Low\n[0-255]"),
-                    lLimits->back(), 0, 255, 200);
-        connect(lSliderLayout, &SliderLayout::sliderValueChanged,
-                this, [=](int value) { lLimits->at(i) = value; });
-        vBoxSub->addLayout(lSliderLayout);
-
-        SliderLayout* hSliderLayout = new SliderLayout(
-                    QString("Channel ") + QString::number(i) + QString(" High\n[0-255]"),
-                    hLimits->back(), 0, 255, 200);
-        connect(hSliderLayout, &SliderLayout::sliderValueChanged,
-                this, [=](int value) { hLimits->at(i) = value; });
-        vBoxSub->addLayout(hSliderLayout);
-    }
-
-    BaseConfigWidget::initWidget();
-}
+    void changeSliderNumbers();
 };
