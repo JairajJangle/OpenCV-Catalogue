@@ -72,6 +72,7 @@ SOURCES += \
     OpenCVFunction/contours.cpp \
     OpenCVFunction/erodedilate.cpp \
     OpenCVFunction/harriscornerdetector.cpp \
+    OpenCVFunction/histogram.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
