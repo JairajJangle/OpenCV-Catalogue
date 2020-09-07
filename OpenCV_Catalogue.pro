@@ -61,6 +61,7 @@ SOURCES += \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
     CustomWidgets/ErrorDialog/errordialog.cpp \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.cpp \
+    CustomWidgets/baseconfigwidget.cpp \
     CustomWidgets/focusawarelineedit.cpp \
     OpenCVFunction/backgroundsubtract.cpp \
     OpenCVFunction/bitwiseops.cpp \
@@ -68,6 +69,9 @@ SOURCES += \
     OpenCVFunction/cannyedge.cpp \
     OpenCVFunction/colorpicker.cpp \
     OpenCVFunction/colorspaces.cpp \
+    OpenCVFunction/contours.cpp \
+    OpenCVFunction/erodedilate.cpp \
+    OpenCVFunction/harriscornerdetector.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
