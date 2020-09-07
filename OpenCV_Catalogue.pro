@@ -74,6 +74,7 @@ SOURCES += \
     OpenCVFunction/harriscornerdetector.cpp \
     OpenCVFunction/histogram.cpp \
     OpenCVFunction/houghcircles.cpp \
+    OpenCVFunction/houghlines.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
