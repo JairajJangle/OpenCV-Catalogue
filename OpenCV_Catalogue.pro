@@ -75,6 +75,7 @@ SOURCES += \
     OpenCVFunction/histogram.cpp \
     OpenCVFunction/houghcircles.cpp \
     OpenCVFunction/houghlines.cpp \
+    OpenCVFunction/imageflip.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \
