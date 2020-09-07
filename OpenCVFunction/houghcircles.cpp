@@ -20,7 +20,6 @@
 
 #include "OpenCVFunction/houghcircles.h"
 
-#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/sliderlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"

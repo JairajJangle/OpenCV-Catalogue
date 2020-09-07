@@ -26,7 +26,6 @@
 #include <QLabel>
 #include <QLineEdit>
 
-#include "CustomWidgets/baseconfigwidget.h"
 #include "CustomWidgets/duallineeditlayout.h"
 #include "CustomWidgets/applyresetbuttonlayout.h"
 #include "CustomWidgets/lineeditlayout.h"
