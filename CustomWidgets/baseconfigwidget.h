@@ -25,10 +25,7 @@
 // QT libs
 #include <QVBoxLayout>
 #include <QWidget>
-#include <QDebug>
 #include <QUuid>
-
-#include "Utils/constants.h"
 
 #include "CustomWidgets/ChainMenuWidget/chainmenuwidget.h"
 #include "CustomWidgets/ParamAdjustWidget/paramadjustwidget.h"
@@ -93,11 +90,7 @@ signals:
     void operationSelected(ParamAdjustWidget*);
 
 public slots:
-    void beginPointChanged(QPoint point)
-    {
-        if(chainMenuWidget->getRadioButton()->isChecked())
-        begin = cv::Point(point.x(), point.y());
-    }
+    void beginPointChanged(QPoint point);
 
 public:
     cv::Point begin;
@@ -113,17 +106,7 @@ public:
      * to display the obtained parameter adjust widget in the parameter adjust box
      * in MainWindow UI
      */
-    BaseConfigWidget(){
-        begin =cv::Point(-1, -1);
-        end =cv::Point(-1, -1);
-
-        connect(chainMenuWidget, &ChainMenuWidget::radioButtonChecked,
-                this, [=]() {
-            emit operationSelected(paramAdjustWidget);
-        });
-
-        changeWidgetsStyleSheet(isDarkModeOn);
-    }
+    BaseConfigWidget();
     virtual ~BaseConfigWidget(){}
 
     /**
@@ -131,54 +114,34 @@ public:
      * @return Returned widget to be used by calling widget/application(Main Window)
      * to set it in Scroll Area
      */
-    QWidget* getConfigWidget()
-    {
-        return wgtSub;
-    }
+    QWidget* getConfigWidget();
 
     /**
      * @brief getChainMenuWidget TO get the OpenCV Operation Menu widget
      * @return The Chain Menu Widget which lets user to add, change, remove OpenCV operations
      */
-    ChainMenuWidget* getChainMenuWidget()
-    {
-        chainMenuWidget->setCurrentOperation(operationName);
-        return chainMenuWidget;
-    }
+    ChainMenuWidget* getChainMenuWidget();
 
     /**
      * @brief getParamAdjustWidget To get the Parameter Adjustment Widget
      * @return The Parameter Adjustment widget which lets user change the OpenCV operation
      *  parameters in real-time.
      */
-    ParamAdjustWidget* getParamAdjustWidget()
-    {
-        return paramAdjustWidget;
-    }
+    ParamAdjustWidget* getParamAdjustWidget();
 
-    QMap<QString, cv::Mat> getExplodedViewMats()
-    {
-        return explodedView;
-    }
+    QMap<QString, cv::Mat> getExplodedViewMats();
 
     /**
      * @brief changeWidgetsStyleSheet Changes the theme of children widgets
      * @param isDarkMode Set true to enable dark mode style sheet to children widgets
      */
-    void changeWidgetsStyleSheet(bool isDarkMode)
-    {
-        paramAdjustWidget->setInfoIconStyleSheet(isDarkMode);
-        chainMenuWidget->setStyleSheet(isDarkMode);
-    }
+    void changeWidgetsStyleSheet(bool isDarkMode);
 
     /*
      * Returns name of operation to be used by calling widget/application(Main Window)
      * to update Operation Name label
      */
-    QString getOperationName()
-    {
-        return operationName;
-    }
+    QString getOperationName();
 
     /*
      * Returns URL of opertaion documentation in OpenCV docs to be used by calling
@@ -188,39 +151,21 @@ public:
      * @brief getInfoURL Returns URL of opertaion documentation in OpenCV docs
      * @return Documentation URL of selected OpenCV Operation
      */
-    QString getInfoURL()
-    {
-        return moreInfoLink;
-    }
+    QString getInfoURL();
 
     /**
      * @brief setExplodedView Shows exploded windows of OpenCV operation to give user more insights
      * @param explodedViewEnabled
      * @return Status of operation, true if Exploded view is enabled else false
      */
-    virtual bool setExplodedView([[maybe_unused]] bool explodedViewEnabled)
-    {
-        /*
-         * If exploded == true:
-         *              Should return true if exploded view is possible else false
-         * If exploded == false:
-         *              Ignore return value
-         */
-        return this->explodedViewEnabled;
-    }
+    virtual bool setExplodedView([[maybe_unused]] bool explodedViewEnabled);
 
     /*
      * Get state of exploded view
      */
-    bool isExplodedViewEnabled()
-    {
-        return  explodedViewEnabled;
-    }
+    bool isExplodedViewEnabled();
 
-    QUuid getUUID()
-    {
-        return uuid;
-    }
+    QUuid getUUID();
 
     /**
      * @brief getProcessedImage All OpenCV operations is done in this function
@@ -228,36 +173,11 @@ public:
      * @param inputImage The input image for OpenCV operation
      * @return The output image after OpenCV operation is performed
      */
-    virtual cv::Mat getProcessedImage(cv::Mat inputImage)try
-    {
-        /*
-         * Perform OpenCV operations here in derived classes
-         */
+    virtual cv::Mat getProcessedImage(cv::Mat inputImage);
 
-        return inputImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name()); // Append class name
-}
-
-/**
- * @brief initWidget Super call this function at the end of overriden initWidget() function in
- * each derived Operation class to actually set configuration widget in @var wgtSub
- */
-virtual void initWidget()
-{
-    // vBoxSub->setAlignment(Qt::AlignHCenter);
-    wgtSub->setMinimumWidth(370);
-    wgtSub->setMaximumWidth(420);
-
-    paramAdjustWidget->setContentLayout(wgtSub,
-                                        &operationName,
-                                        &moreInfoLink);
-}
+    /**
+     * @brief initWidget Super call this function at the end of overriden initWidget() function in
+     * each derived Operation class to actually set configuration widget in @var wgtSub
+     */
+    virtual void initWidget();
 };
