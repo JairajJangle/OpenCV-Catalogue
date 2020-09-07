@@ -20,75 +20,28 @@
 
 #pragma once
 
-// QT libs
-#include <QRadioButton>
-
 #include "CustomWidgets/baseconfigwidget.h"
 
 class ImageFlip : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    ImageFlip()
-    {
-        operationName = "Image Flip";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#flip";
-        initWidget();
-    }
-
-    cv::Mat getProcessedImage(cv::Mat inputImage) override try
-    {
-        cv::Mat outputImage;
-        int selectedFlipFlag = flipFlagsAll.at(flipFlagCode).first;
-
-        // If "No Image Flip" is selected: o/p = i/p
-        if(selectedFlipFlag == -99)
-            return inputImage;
-
-        flip(inputImage, outputImage, selectedFlipFlag);
-        return outputImage;
-    }
-    catch(cv::Exception& e){
-        throw e;
-    } catch(std::exception& e) {
-        throw e;
-    }
-    catch(...){
-    throw std::string("Unknown Exception in ")
-    + std::string(typeid(this).name());
-}
+    ImageFlip();
+    cv::Mat getProcessedImage(cv::Mat inputImage) override;
 
 private slots:
-void imgFlipRadioButtonClicked(int flipFlagCode){
-    this->flipFlagCode = flipFlagCode;
-}
+    void imgFlipRadioButtonClicked(int flipFlagCode);
 
 private:
-int flipFlagCode = 0;
+    int flipFlagCode = 0;
 
-QVector<QPair<int, QString>> flipFlagsAll =
-{
-    {-99, "No flip"},
-    {0, "X axis"},
-    {1, "Y axis"},
-    {-1, "X and Y axis"}
-};
-
-void initWidget() override
-{
-    for(int jCount = 0; jCount < flipFlagsAll.size(); jCount++)
+    QVector<QPair<int, QString>> flipFlagsAll =
     {
-        QRadioButton *radioButton =
-                new QRadioButton(flipFlagsAll.at(jCount).second);
-        if(jCount == 0)
-            radioButton->setChecked(true);
+        {-99, "No flip"},
+        {0, "X axis"},
+        {1, "Y axis"},
+        {-1, "X and Y axis"}
+    };
 
-        vBoxSub->addWidget(radioButton);
-
-        connect(radioButton, &QRadioButton::clicked,
-                this, [=]() { imgFlipRadioButtonClicked(jCount); });
-    }
-
-    BaseConfigWidget::initWidget();
-}
+    void initWidget() override;
 };
