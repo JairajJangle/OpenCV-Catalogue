@@ -63,20 +63,6 @@ SOURCES += \
     CustomWidgets/ParamAdjustWidget/paramadjustwidget.cpp \
     CustomWidgets/baseconfigwidget.cpp \
     CustomWidgets/focusawarelineedit.cpp \
-    OpenCVFunction/backgroundsubtract.cpp \
-    OpenCVFunction/bitwiseops.cpp \
-    OpenCVFunction/blur.cpp \
-    OpenCVFunction/cannyedge.cpp \
-    OpenCVFunction/colorpicker.cpp \
-    OpenCVFunction/colorspaces.cpp \
-    OpenCVFunction/contours.cpp \
-    OpenCVFunction/erodedilate.cpp \
-    OpenCVFunction/harriscornerdetector.cpp \
-    OpenCVFunction/histogram.cpp \
-    OpenCVFunction/houghcircles.cpp \
-    OpenCVFunction/houghlines.cpp \
-    OpenCVFunction/imageflip.cpp \
-    OpenCVFunction/inrange.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
     main.cpp \

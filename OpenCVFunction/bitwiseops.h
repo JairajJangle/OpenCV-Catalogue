@@ -21,6 +21,9 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "CustomWidgets/labelledcombobox.h"
+
+#include "Utils/captureinputsource.h"
 
 class BitWise: public BaseConfigWidget
 {
@@ -35,15 +38,72 @@ public:
         {XOR, "XOR"},
         {NOT, "NOT"}
     };
-    BitWise();
 
-    cv::Mat getProcessedImage(cv::Mat inputImage) override;
+    BitWise()
+    {
+        operationName = "Bitwise Operation";
+        moreInfoLink = "";
+        initWidget();
+    }
+
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
+    {
+        cv::Mat outputImage;
+        cv::Mat inputImageChanneled;
+
+        if(inputImage.channels() == 1)
+            cv::cvtColor(inputImage, inputImageChanneled, cv::COLOR_GRAY2BGR);
+        else if(inputImage.channels() == 3)
+            inputImage.copyTo(inputImageChanneled);
+
+        // TODO: Check need to optional parameter: mas in bitwise operations
+        switch (selectedLogic) {
+        case AND:
+            cv::bitwise_and(inputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case OR:
+            cv::bitwise_or(inputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case XOR:
+            cv::bitwise_xor(inputImageChanneled, CaptureInputSource::img, outputImage);
+            break;
+        case NOT:
+            cv::bitwise_not(inputImageChanneled, outputImage);
+            break;
+        }
+
+        return outputImage;
+    }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
 private slots:
-void logicTypeChanged(QVariant value);
-
+void logicTypeChanged(QVariant value){
+    selectedLogic = static_cast<BitWiseLogic>(value.toInt());
+    moreInfoLink = baseInfoLink + logicNameMap.value(value).toLower();
+    qDebug() << "Selected Bitwise operator: " << selectedLogic;
+}
 private:
 BitWiseLogic selectedLogic = AND;
 
-void initWidget() override;
+void initWidget() override
+{
+    LabelledComboBox* logicTypeLCB = new LabelledComboBox("Bitwise Logic Type", logicNameMap);
+
+    vBoxSub->addLayout(logicTypeLCB);
+
+    connect(logicTypeLCB,SIGNAL(currentDataChanged(QVariant)),
+            this,SLOT(logicTypeChanged(QVariant)));
+
+    logicTypeChanged(AND);
+
+    BaseConfigWidget::initWidget();
+}
 };

@@ -20,23 +20,75 @@
 
 #pragma once
 
-#include "CustomWidgets/baseconfigwidget.h"
+// QT libs
+#include <QLabel>
 
-class LineEditLayout;
+#include "CustomWidgets/lineeditlayout.h"
+#include "CustomWidgets/baseconfigwidget.h"
 
 class ColorPicker : public BaseConfigWidget
 {
     Q_OBJECT
 public:
-    ColorPicker();
+    ColorPicker()
+    {
+        operationName = "Color Picker";
+        moreInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/basic_structures.html#mat-at";
+        initWidget();
+    }
 
-    cv::Mat getProcessedImage(cv::Mat inputImage) override;
+    cv::Mat getProcessedImage(cv::Mat inputImage) override try
+    {
+        cv::Mat outputImage;
+
+        // If No Location is selected: o/p = 0
+        if(begin ==cv::Point(-1, -1))
+            return inputImage;
+
+        QString locationValues =
+                QString::number(begin.x) + ", "
+                +  QString::number(begin.y);
+
+        locLineEditLayout->setText(locationValues);
+
+        cv::Vec3b color = inputImage.at<cv::Vec3b>(begin);
+
+        QString rgbValues =
+                QString::number(color[0]) + ", "
+                +  QString::number(color[1]) + ", "
+                +  QString::number(color[2]);
+
+        rgbLineEditLayout->setText(rgbValues);
+
+
+        begin =cv::Point(-1, -1);
+
+        return inputImage;
+    }
+    catch(cv::Exception& e){
+        throw e;
+    } catch(std::exception& e) {
+        throw e;
+    }
+    catch(...){
+    throw std::string("Unknown Exception in ")
+    + std::string(typeid(this).name());
+}
 
 private:
-    LineEditLayout* rgbLineEditLayout;
-    LineEditLayout* locLineEditLayout;
+LineEditLayout* rgbLineEditLayout = new LineEditLayout("RGB", "000, 000, 000", 200);
+LineEditLayout* locLineEditLayout = new LineEditLayout("Location", "No location selected", 200);
 
-    QLabel* infoLabel;
+QLabel* infoLabel  = new QLabel("Click on Output feed to pick color\n");
 
-    void initWidget() override;
+void initWidget() override
+{
+    locLineEditLayout->lineEdit->setReadOnly(true);
+    vBoxSub->addWidget(infoLabel);
+
+    vBoxSub->addLayout(rgbLineEditLayout);
+    vBoxSub->addLayout(locLineEditLayout);
+
+    BaseConfigWidget::initWidget();
+}
 };
