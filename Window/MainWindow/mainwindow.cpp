@@ -408,7 +408,7 @@ void MainWindow::refreshOperationWidgets()
 
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
 {
-    if(cv::Size(originalImg.rows , originalImg.rows).empty())
+    if(originalImg.empty())
     {
         qCritical() << "Invalid input image";
         return;
