@@ -227,6 +227,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case CONTOURS:
         baseConfigWidgetChain.append(new Contours());
         break;
+    case RESIZE:
+        baseConfigWidgetChain.append(new Resize());
+        break;
 
         /*
          * Append other OpenCV Operation Base Config Widgets

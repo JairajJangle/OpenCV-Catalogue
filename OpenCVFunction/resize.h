@@ -21,6 +21,9 @@
 #pragma once
 
 #include "CustomWidgets/baseconfigwidget.h"
+#include "CustomWidgets/duallineeditlayout.h"
+#include "CustomWidgets/applyresetbuttonlayout.h"
+#include "Utils/captureinputsource.h"
 
 class Resize : public BaseConfigWidget
 {
@@ -35,7 +38,10 @@ public:
 
     cv::Mat getProcessedImage(cv::Mat inputImage) override try
     {
-        return inputImage;
+        cv::Mat outputImage;
+
+        cv::resize(inputImage, outputImage, resolution);
+        return outputImage;
     }
     catch(cv::Exception& e){
         throw e;
@@ -48,8 +54,41 @@ public:
 }
 
 private:
+cv::Size resolution = cv::Size(640, 480);
+DualLineEditLayout* resDLEL = new DualLineEditLayout("Size",
+                                                     qMakePair(resolution.width,
+                                                               resolution.height),
+                                                     80);
+ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
+
 void initWidget() override
 {
+    resolution = cv::Size(CaptureInputSource::img.cols,
+                          CaptureInputSource::img.rows);
+
+    connect(applyResetBox, &ApplyResetButtonLayout::applyClicked,
+            this, [=](){
+        resolution = cv::Size(resDLEL->getTexts().first.toInt(),
+                              resDLEL->getTexts().second.toInt());
+    });
+    connect(applyResetBox, &ApplyResetButtonLayout::resetClicked,
+            this, [=](){
+        resolution = cv::Size(CaptureInputSource::img.cols,
+                              CaptureInputSource::img.rows);
+
+        resDLEL->setText(qMakePair(resolution.width,
+                                   resolution.height));
+    });
+
+    QIntValidator* resValidator = new QIntValidator();
+    resValidator->setBottom(1);
+
+    resDLEL->setValidator(resValidator);
+
+    vBoxSub->addLayout(resDLEL);
+    vBoxSub->addSpacing(10);
+    vBoxSub->addLayout(applyResetBox);
+
     BaseConfigWidget::initWidget();
 }
 };

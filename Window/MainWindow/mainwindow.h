@@ -60,6 +60,7 @@
 #include "OpenCVFunction/erodedilate.h"
 #include "OpenCVFunction/bitwiseops.h"
 #include "OpenCVFunction/contours.h"
+#include "OpenCVFunction/resize.h"
 
 // Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
@@ -85,7 +86,7 @@ private:
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE, BITWISE_OPS,
-                 CONTOURS,
+                 CONTOURS, RESIZE,
 
               /*
                * Add all other Enum values before this
