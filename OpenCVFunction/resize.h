@@ -63,9 +63,6 @@ ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout();
 
 void initWidget() override
 {
-    resolution = cv::Size(CaptureInputSource::img.cols,
-                          CaptureInputSource::img.rows);
-
     connect(applyResetBox, &ApplyResetButtonLayout::applyClicked,
             this, [=](){
         resolution = cv::Size(resDLEL->getTexts().first.toInt(),
