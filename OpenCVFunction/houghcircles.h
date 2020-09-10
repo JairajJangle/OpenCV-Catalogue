@@ -126,7 +126,6 @@ void resetClicked(){
 }
 
 private:
-
 QVariant* dp = new QVariant(1);
 QVariant* minDist = new QVariant(-1.0);
 QVariant* param1 = new QVariant(200.0);
