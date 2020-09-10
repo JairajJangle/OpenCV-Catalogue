@@ -466,7 +466,7 @@ background-repeat: none;
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>   Made with</string>
+          <string>Made with</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
