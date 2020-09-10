@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>525</width>
-    <height>593</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -231,11 +231,17 @@ background-repeat: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>35</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Sourced hosted on Github</string>
            </property>
            <property name="text">
-            <string>Want to contribute?</string>
+            <string>  Want to contribute?  </string>
            </property>
            <property name="default">
             <bool>false</bool>
@@ -257,11 +263,17 @@ background-repeat: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>35</height>
+            </size>
+           </property>
            <property name="toolTip">
             <string>Write new Issue on Github</string>
            </property>
            <property name="text">
-            <string>Report issue</string>
+            <string>  Report issuet  </string>
            </property>
           </widget>
          </item>
