@@ -88,12 +88,12 @@ private:
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE, BITWISE_OPS,
                  CONTOURS, RESIZE,
 
-              /*
-               * Add all other Enum values before this
-               *
-               * To connect OpenCV operation Base Config widget to
-               * the added OpCodes enum, see MainWindow::addOperation(...)
-               */
+                 /*
+                                 * Add all other Enum values before this
+                                 *
+                                 * To connect OpenCV operation Base Config widget to
+                                 * the added OpCodes enum, see MainWindow::addOperation(...)
+                                 */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:
@@ -110,6 +110,8 @@ private slots:
     void lastOperationChanged(MainWindow::OPCodes opCode);
     void showAboutDialog();
     void outputLabelLBClicked(QPoint);
+    void outputLabelLBMoved(QPoint);
+    void outputLabelLBReleased(QPoint);
     void showHideExplodedView(int);
     void refreshOutputImage(const cv::Mat img);
     void addOperationWidget();

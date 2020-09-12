@@ -140,6 +140,10 @@ void MainWindow::connectSignals()
 
     connect(ui->labelOutput, SIGNAL(LBclicked(QPoint)),
             this, SLOT(outputLabelLBClicked(QPoint)));
+    connect(ui->labelOutput, SIGNAL(LBMoved(QPoint)),
+            this, SLOT(outputLabelLBMoved(QPoint)));
+    connect(ui->labelOutput, SIGNAL(LBReleased(QPoint)),
+            this, SLOT(outputLabelLBReleased(QPoint)));
 
     connect(this, SIGNAL(removeOperationWidgetSignal()),
             this, SLOT(removeOperationWidget()));
@@ -169,6 +173,16 @@ void MainWindow::connectSignals()
             this, [=](int fps){
         ui->labelInputFPS->setText(
                     QString(Strings::fps).arg(fps));
+    });
+
+    // Not yet implemented features
+    connect(ui->actionSave_Chain, &QAction::triggered,
+            this, [=](){
+        setUserMessage("Save Chain feature is not yet implemented", WARNING);
+    });
+    connect(ui->actionLoad_Chain, &QAction::triggered,
+            this, [=](){
+        setUserMessage("Load Chain feature is not yet implemented", WARNING);
     });
 }
 
@@ -319,7 +333,11 @@ void MainWindow::addOperationWidget()
     });
 
     connect(ui->labelOutput, SIGNAL(LBclicked(QPoint)),
-            baseConfigWidgetChain.last(), SLOT(beginPointChanged(QPoint)));
+            baseConfigWidgetChain.last(), SLOT(mouseLBClicked(QPoint)));
+    connect(ui->labelOutput, SIGNAL(LBMoved(QPoint)),
+            baseConfigWidgetChain.last(), SLOT(mouseLBMoved(QPoint)));
+    connect(ui->labelOutput, SIGNAL(LBReleased(QPoint)),
+            baseConfigWidgetChain.last(), SLOT(mouseLBReleased(QPoint)));
 
     connect(baseConfigWidgetChain.last(), SIGNAL(operationSelected(ParamAdjustWidget*)),
             this, SLOT(operationSelectedToDisplay(ParamAdjustWidget*)));
@@ -909,6 +927,16 @@ void MainWindow::applySourceClicked()
 void MainWindow::outputLabelLBClicked(QPoint point)
 {
     qDebug() << "Output label Mouse LB button click pos = " << point;
+}
+
+void MainWindow::outputLabelLBMoved(QPoint point)
+{
+    qDebug() << "Output label Mouse LB button move pos = " << point;
+}
+
+void MainWindow::outputLabelLBReleased(QPoint point)
+{
+    qDebug() << "Output label Mouse LB button release pos = " << point;
 }
 
 void MainWindow::toggleFlipSource(bool isChecked)
