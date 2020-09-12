@@ -90,7 +90,9 @@ signals:
     void operationSelected(ParamAdjustWidget*);
 
 public slots:
-    void beginPointChanged(QPoint point);
+    virtual void mouseLBClicked(QPoint point);
+    virtual void mouseLBMoved(QPoint point);
+    virtual void mouseLBReleased(QPoint point);
 
 public:
     cv::Point begin;

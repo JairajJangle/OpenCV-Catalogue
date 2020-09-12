@@ -39,14 +39,24 @@ public:
 
 signals:
     /**
-     * @brief LBclicked Signal fired when Left Mouse Button click is recorded on this widget
+     * @brief LBclicked Signal fired when Left Mouse Button clicked
      */
     void LBclicked(QPoint);
 
     /**
-     * @brief LBclicked Signal fired when Right Mouse Button click is recorded on this widget
+     * @brief LBclicked Signal fired when Right Mouse Button clicked
      */
     void RBclicked(QPoint);
+
+    /**
+     * @brief LBMoved Signal fired when Left Mouse Button is dragged and moved
+     */
+    void LBMoved(QPoint);
+
+    /**
+     * @brief LBReleased Signal fired when Left Mouse Button is released after a move
+     */
+    void LBReleased(QPoint);
 
 protected:
     /**
@@ -54,5 +64,9 @@ protected:
      * @param event See QLabel::mousePressEvent
      */
     void mousePressEvent(QMouseEvent* event) override;
-    // void mouseMoveEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+
+private:
+    bool ismouseLBMoved = false;
 };

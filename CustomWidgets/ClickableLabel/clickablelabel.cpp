@@ -20,6 +20,8 @@
 
 #include "clickablelabel.h"
 
+#include <QDebug>
+
 ClickableLabel::ClickableLabel(QWidget* parent)
     : QLabel(parent)
 {
@@ -32,6 +34,7 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event)
 {
     if(event->button() == Qt::LeftButton)
     {
+        ismouseLBMoved = false;
         emit LBclicked(QPoint(event->x(), event->y()));
     }
     if(event->button() == Qt::RightButton)
@@ -40,8 +43,20 @@ void ClickableLabel::mousePressEvent(QMouseEvent* event)
     }
 }
 
-//void ClickableLabel::mouseMoveEvent(QMouseEvent *event)
-//{
-//    ClickPos = cv::Point(event->x(), event->y());
-//    emit clicked();
-//}
+void ClickableLabel::mouseMoveEvent(QMouseEvent* event)
+{
+    if(event->buttons() == Qt::LeftButton)
+    {
+        ismouseLBMoved = true;
+        emit LBMoved(event->pos());
+    }
+}
+
+void ClickableLabel::mouseReleaseEvent(QMouseEvent* event)
+{
+    if(event->button() == Qt::LeftButton
+            && ismouseLBMoved)
+    {
+        emit LBReleased(event->pos());
+    }
+}

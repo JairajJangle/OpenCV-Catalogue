@@ -21,10 +21,20 @@
 #include "CustomWidgets/baseconfigwidget.h"
 #include "Utils/constants.h"
 
-void BaseConfigWidget::beginPointChanged(QPoint point)
+void BaseConfigWidget::mouseLBClicked(QPoint point)
 {
     if(chainMenuWidget->getRadioButton()->isChecked())
         begin = cv::Point(point.x(), point.y());
+}
+
+void BaseConfigWidget::mouseLBMoved(QPoint point)
+{
+    qInfo() << "Mouse LB moved at: " << point;
+}
+
+void BaseConfigWidget::mouseLBReleased(QPoint point)
+{
+    qInfo() << "Mouse LB released at: " << point;
 }
 
 BaseConfigWidget::BaseConfigWidget(){
