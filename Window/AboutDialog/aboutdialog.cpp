@@ -58,6 +58,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
             [=]() {
         openURL(liberaPayUrl);
     });
+    connect(ui->buttonDonateUPI, &QPushButton::released, this,
+            [=]() {
+        openURL(upiPayUrl);
+    });
 }
 
 void AboutDialog::openURL(const QString& link)
