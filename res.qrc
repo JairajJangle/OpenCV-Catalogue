@@ -23,5 +23,6 @@
         <file>assets/capture_disabled.png</file>
         <file>assets/stop_disabled.png</file>
         <file>assets/play_disabled.png</file>
+        <file>assets/upi.png</file>
     </qresource>
 </RCC>

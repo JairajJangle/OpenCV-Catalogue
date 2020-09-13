@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>525</width>
-    <height>603</height>
+    <height>613</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -67,6 +67,9 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>20</number>
+         </property>
          <item>
           <widget class="QToolButton" name="buttonDonatePaypal">
            <property name="minimumSize">
@@ -128,6 +131,29 @@ background-repeat: none;
            </property>
            <property name="text">
             <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="buttonDonateUPI">
+           <property name="minimumSize">
+            <size>
+             <width>91</width>
+             <height>57</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#buttonDonateUPI
+{
+background-color: transparent;
+border-image: url(:/assets/upi.png);
+background: none;
+border: none;
+background-repeat: none;
+}</string>
+           </property>
+           <property name="text">
+            <string>...</string>
            </property>
           </widget>
          </item>

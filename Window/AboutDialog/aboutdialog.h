@@ -54,6 +54,7 @@ private:
 
     const QString paypalDonateUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPXTF24LWH86U";
     const QString liberaPayUrl = "https://liberapay.com/FutureJJ/donate";
+    const QString upiPayUrl = "https://github.com/JairajJangle/OpenCV-Catalogue/blob/master/.github/Jairaj_Jangle_Google_Pay_UPI_QR_Code.jpg";
 
     Ui::AboutDialog *ui;
 };
