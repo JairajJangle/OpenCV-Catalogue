@@ -43,7 +43,6 @@ public:
     {
         cv::Mat outputImage;
 
-        qDebug() << "FX = " << fx << " FY = " << fy;
         cv::resize(inputImage, outputImage, resolution,
                    fx.toDouble(), fy.toDouble(),
                    interpolation);
