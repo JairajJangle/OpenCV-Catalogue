@@ -98,6 +98,7 @@ HEADERS += \
     OpenCVFunction/imageflip.h \
     OpenCVFunction/inrange.h \
     OpenCVFunction/resize.h \
+    OpenCVFunction/subimage.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/logger.h \
