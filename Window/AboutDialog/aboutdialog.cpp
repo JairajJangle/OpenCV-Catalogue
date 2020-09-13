@@ -27,7 +27,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setFixedSize(490, 590);
+    this->setFixedSize(525, 615);
 
     ui->labelAppName->setText(Info::appName);
     ui->labelVersion->setText(Info::version);
