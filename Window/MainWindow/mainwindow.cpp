@@ -244,6 +244,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case RESIZE:
         baseConfigWidgetChain.append(new Resize());
         break;
+    case SUB_IMAGE:
+        baseConfigWidgetChain.append(new SubImage());
+        break;
 
         /*
          * Append other OpenCV Operation Base Config Widgets
