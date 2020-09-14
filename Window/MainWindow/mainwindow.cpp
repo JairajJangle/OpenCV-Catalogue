@@ -968,13 +968,12 @@ void MainWindow::setUserMessage(QString message, MESSAGE_TYPE messageType)
         return;
     }
 
+    ui->labelUserMessage->setStyleSheet("");
     if(messageType != INFO)
         ui->labelUserMessage->setStyleSheet(QString("QLabel { color : ")
                                             + (messageType == ERROR ? "red":
                                                                       "yellow")
                                             + "; }");
-    else if(messageType == INFO)
-        ui->labelUserMessage->setStyleSheet("");
 
     ui->labelUserMessage->setText(message);
 
