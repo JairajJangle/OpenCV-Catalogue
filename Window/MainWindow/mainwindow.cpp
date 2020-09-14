@@ -507,7 +507,7 @@ void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
     });
 
     // If Chain becomes empty, add NO_OPERATION to the chain
-    if(testVBox->count() == 0) addOperation();
+    if(testVBox->count() == 0) addOperation(NO_OPERATION);
 }
 
 void MainWindow::showOperationalError(QString title, QString error)
