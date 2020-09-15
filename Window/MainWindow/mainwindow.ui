@@ -1116,7 +1116,7 @@ background-repeat: none;
       <item row="2" column="0">
        <widget class="QLabel" name="labelUserMessage">
         <property name="text">
-         <string/>
+         <string>&lt;general user messages&gt;</string>
         </property>
        </widget>
       </item>
