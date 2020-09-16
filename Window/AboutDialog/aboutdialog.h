@@ -43,7 +43,7 @@ public:
 
 private slots:
     /**
-     * @brief openURL Opens @param url in system default browser. This is achieved using
+     * @brief openURL Opens url in system default browser. This is achieved using
      *  QDesktopServices. See aboutdialog.cpp for implementation
      */
     void openURL(const QString& url);
