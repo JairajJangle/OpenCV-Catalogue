@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    fp = fopen("logs.txt","a");
+    fp = fopen("logs-opencv-catalogue.txt","a");
     qInstallMessageHandler(logger);
 
     MainWindow w;
