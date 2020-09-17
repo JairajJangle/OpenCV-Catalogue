@@ -31,7 +31,7 @@ class ChainMenuWidget;
 }
 
 /**
- * @brief The ChainMenuWidget class A custom Widget to select a OpenCV operation
+ * @brief ChainMenuWidget is custom widget to select a OpenCV operation
  *  from list of operations displayed in QComboBox in .ui file
  *
  * ChainMenuWidget provides Add, Remove buttons to add or remove a OpenCV operation
