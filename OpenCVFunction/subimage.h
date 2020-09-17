@@ -62,14 +62,6 @@ public:
     + std::string(typeid(this).name());
 }
 
-private:
-cv::Point startPoint = cv::Point(0, 0);
-cv::Point endPoint = cv::Point(0, 0);
-
-QLabel* factorNote  = new QLabel("Drag and drop mouse to extract that sub-image");
-
-ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout(true, false);
-
 private slots:
 void mouseLBClicked(QPoint point) override
 {
@@ -79,15 +71,37 @@ void mouseLBClicked(QPoint point) override
 void mouseLBReleased(QPoint point) override
 {
     endPoint = cv::Point(point.x(), point.y());
+
+    locLineEditLayout->setText(locaionPlaceHolder.arg(
+                                   QString::number(startPoint.x) + ", " + QString::number(startPoint.y),
+                                   QString::number(endPoint.x) + ", " + QString::number(endPoint.y)
+                                   ));
 }
+
+private:
+cv::Point startPoint = cv::Point(0, 0);
+cv::Point endPoint = cv::Point(0, 0);
+
+QLabel* factorNote  = new QLabel("Drag and drop mouse to extract that sub-image");
+
+ApplyResetButtonLayout* applyResetBox = new ApplyResetButtonLayout(true, false);
+
+QString defaultLocationText = "No location selected";
+// TODO: Make Start and End point text boxes editable
+LineEditLayout* locLineEditLayout = new LineEditLayout("Location", defaultLocationText, 300);
+QString locaionPlaceHolder = "Start: (%1)   |   End (%2)";
 
 void initWidget() override
 {
+    locLineEditLayout->lineEdit->setReadOnly(true);
+
     QFont font = factorNote->font();
     font.setPointSize(8);
     factorNote->setFont(font);
     factorNote->setAlignment(Qt::AlignCenter);
 
+    vBoxSub->addLayout(locLineEditLayout);
+    vBoxSub->addSpacing(10);
     vBoxSub->addWidget(new DividerLine(1));
     vBoxSub->addWidget(factorNote);
     vBoxSub->addWidget(new DividerLine(1));
@@ -97,6 +111,8 @@ void initWidget() override
             this, [=](){
         startPoint = cv::Point(0, 0);
         endPoint = cv::Point(0, 0);
+
+        locLineEditLayout->setText(defaultLocationText);
     });
 
     BaseConfigWidget::initWidget();
