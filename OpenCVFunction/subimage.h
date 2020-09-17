@@ -33,8 +33,7 @@ public:
     SubImage()
     {
         operationName = "SubImage";
-        // FIXME: Add Doc URL
-        moreInfoLink = "";
+        moreInfoLink = "https://www.learnopencv.com/how-to-select-a-bounding-box-roi-in-opencv-cpp-python/";
         this->initWidget();
     }
 
