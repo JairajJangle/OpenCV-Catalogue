@@ -254,16 +254,22 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
     <img src="https://liberapay.com/assets/widgets/donate.svg" alt="LiberPay_Donation_Button" width="100" > 
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/JairajJangle/OpenCV-Catalogue/blob/master/.github/Jairaj_Jangle_Google_Pay_UPI_QR_Code.jpg">
+    <img src="assets/upi.png" alt="Paypal_Donation_Button" width="100" >
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XDRGEBR5YVR8Q">
-    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Paypal_Donation_Button" width="120" >
+    <img src="assets/paypal_donate.png" alt="Paypal_Donation_Button" width="100" >
   </a>
 </p>
+
 
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
 * [Img Shields](https://shields.io)
 * [QDarkStylesheet](https://github.com/ColinDuquesnoy/QDarkStyleSheet) - [The MIT License](https://github.com/ColinDuquesnoy/QDarkStyleSheet/blob/master/LICENSE.rst)
