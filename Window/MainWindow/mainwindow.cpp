@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI()
 {
+        ui->progressBar->setVisible(false);
+
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -910,12 +912,16 @@ void MainWindow::applySourceClicked()
     if(captureInputSource == nullptr){
         captureInputSource = new CaptureInputSource();
 
-        connect(captureInputSource, SIGNAL(sourceCaptured(cv::Mat)),
-                this, SLOT(getSourceCaptureImage(cv::Mat)));
+        connect(captureInputSource, &CaptureInputSource::sourceCaptured,
+                this, [=](cv::Mat image){
+            getSourceCaptureImage(image);
+            ui->progressBar->setVisible(false);
+        });
         connect(captureInputSource, &CaptureInputSource::sourceCaptureError,
                 this, [=](QString error)
         {
             emit showErrorDialog("Input Source Error", error);
+            ui->progressBar->setVisible(false);
         });
         connect(captureInputSource, &CaptureInputSource::updateFPS,
                 this, [=](int fps)
@@ -923,6 +929,8 @@ void MainWindow::applySourceClicked()
             emit updateFPSLabel(fps);
         });
     }
+
+    ui->progressBar->setVisible(true);
 
     emit captureInputSource->setInputSource(inputSourceType, path);
 }
