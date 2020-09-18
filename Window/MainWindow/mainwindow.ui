@@ -685,7 +685,7 @@ background-repeat: none;
                    </spacer>
                   </item>
                   <item>
-                   <widget class="QProgressBar" name="progressBar">
+                   <widget class="QProgressBar" name="pbLoadingInputSource">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                       <horstretch>0</horstretch>
