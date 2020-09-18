@@ -249,7 +249,7 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<p align="center" vlign="center">
+<p align="center" valign="center">
   <a href="https://liberapay.com/FutureJJ/donate">
     <img src="https://liberapay.com/assets/widgets/donate.svg" alt="LiberPay_Donation_Button" width="100" > 
   </a>
