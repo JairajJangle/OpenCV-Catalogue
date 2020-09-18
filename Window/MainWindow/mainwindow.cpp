@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI()
 {
-        ui->progressBar->setVisible(false);
+    ui->pbLoadingInputSource->setVisible(false);
 
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
@@ -915,13 +915,13 @@ void MainWindow::applySourceClicked()
         connect(captureInputSource, &CaptureInputSource::sourceCaptured,
                 this, [=](cv::Mat image){
             getSourceCaptureImage(image);
-            ui->progressBar->setVisible(false);
+            ui->pbLoadingInputSource->setVisible(false);
         });
         connect(captureInputSource, &CaptureInputSource::sourceCaptureError,
                 this, [=](QString error)
         {
             emit showErrorDialog("Input Source Error", error);
-            ui->progressBar->setVisible(false);
+            ui->pbLoadingInputSource->setVisible(false);
         });
         connect(captureInputSource, &CaptureInputSource::updateFPS,
                 this, [=](int fps)
@@ -930,7 +930,7 @@ void MainWindow::applySourceClicked()
         });
     }
 
-    ui->progressBar->setVisible(true);
+    ui->pbLoadingInputSource->setVisible(true);
 
     emit captureInputSource->setInputSource(inputSourceType, path);
 }
