@@ -52,7 +52,7 @@ private:
     const QString githubSourceLink = "https://github.com/JairajJangle/Open-CV-Catalogue";
     const QString githubIssuesLink = "https://github.com/JairajJangle/Open-CV-Catalogue/issues";
 
-    const QString paypalDonateUrl = "https://www.paypal.com/paypalme/jairajjangle001";
+    const QString paypalDonateUrl = "https://www.paypal.com/paypalme/jairajjangle001/usd";
     const QString liberaPayUrl = "https://liberapay.com/FutureJJ/donate";
     const QString upiPayUrl = "https://github.com/JairajJangle/OpenCV-Catalogue/blob/master/.github/Jairaj_Jangle_Google_Pay_UPI_QR_Code.jpg";
 
