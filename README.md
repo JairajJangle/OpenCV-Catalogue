@@ -262,10 +262,11 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
     <img src="assets/upi.png" alt="Paypal_Donation_Button" width="100" >
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.paypal.com/paypalme/jairajjangle001">
+  <a href="https://www.paypal.com/paypalme/jairajjangle001/usd">
     <img src="assets/paypal_donate.png" alt="Paypal_Donation_Button" width="100" >
   </a>
 </p>
+
 
 
 
