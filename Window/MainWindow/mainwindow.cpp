@@ -58,8 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI()
 {
-    ui->pbLoadingInputSource->setVisible(false);
-
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -84,6 +82,8 @@ void MainWindow::initUI()
     sourceRadioButtonClicked();
     ioErrorMessage("");
     switchThemeButtonClicked();
+
+    ui->pbLoadingInputSource->setVisible(false);
 
     chainMenuInitDone = false;
     for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
