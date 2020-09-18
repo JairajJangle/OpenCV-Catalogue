@@ -591,6 +591,12 @@ background-repeat: none;
                     <height>40</height>
                    </size>
                   </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>40</width>
+                    <height>40</height>
+                   </size>
+                  </property>
                   <property name="toolTip">
                    <string>Select the Input source</string>
                   </property>
