@@ -181,8 +181,9 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 
 ### 4. Record and Export Input-Output Stream
 
-- Select folder where you want to export the output to
-- Click on capture image(camera button) to capture and save input and output image or start video recording to export the video of input and output in realtime, click on stop button to end and save the video recording. 
+- Select folder where you want to export the output to.
+- Click on capture image(camera button) to capture and save current frame of input and output image.
+- Or you can also start video recording to export the video of input and output in realtime, click on stop button to end and save the video recording. 
 
 <!-- TODO: Add a screenshot here -->
 
@@ -215,6 +216,7 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
    - **Radio Buttons** to select one out of many options
 
 
+
 <!-- ROADMAP -->
 
 ## Roadmap
@@ -228,6 +230,8 @@ See the [open issues](https://github.com/JairajJangle/Open-CV-Catalogue/issues) 
 ## Contributing
 
 Check [CONTRIBUTING.md](https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/CONTRIBUTING.md). 
+
+
 
 <!-- LICENSE -->
 
