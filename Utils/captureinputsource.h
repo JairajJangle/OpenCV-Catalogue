@@ -103,6 +103,8 @@ private slots:
         {
             bool isSuccess = true;
             auto prevFPS = fps;
+
+            // FIXME: FPS for Network Streams turns out to be incorrect
             fps = cap.get(cv::CAP_PROP_FPS);
 
             if(prevFPS != fps)
