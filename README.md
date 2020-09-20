@@ -120,8 +120,6 @@ chmod +x <name of .AppImage File>
 
 ## Application usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
 ### 1. Select Input source
 <p align="center">
     <img src="media/screenshot_select_input_camera.png" alt="Input_Cam" width="895" >
@@ -174,7 +172,7 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 
  ![](media/radio_button.png)	radio button to select the OpenCV operation for it's parameter adjustment
 
-**NOTE:** on adding an incompatible OpenCV Operation to the chain, it will be automatically removed from the chain.
+**NOTE:** on adding an incompatible OpenCV Operation to the chain, it will be automatically removed from the chain with a pop up dialog stating the error.
 
 
 ### 3. Adjusting OpenCV Operation parameters
