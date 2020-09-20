@@ -158,12 +158,13 @@ chmod +x <name of .AppImage File>
 
 ### 2. Select and Chain OpenCV Operations
 <p align="center">
-    <img src="media/screenshot_menu.png" alt="Chain_Ops" width="1000" >
+    <img src="media/screenshot_menu.png" alt="Chain_Ops" width="1020" >
   </a>
 </p>
 <p align="center">
   <em>Select OpenCV Operation from the "Examples" Menu</em>
 </p>
+
 
 In the *Select and Chain OpenCV Operations box*(left side), click on:
 
@@ -197,12 +198,13 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 ### 5. OpenCV Catalogue GUI summary
 
 <p align="center">
-    <img src="media/picture_gui.png" alt="Gallery" width="800" >
+    <img src="media/picture_gui.png" alt="Gallery" width="850" >
   </a>
 </p>
 <p align="center">
   <em>Convenient GUI for parameter value adjustment</em>
 </p>
+
 
 - Each OpenCV operation has it's own parameter control GUI
 - **Changing parameters** values reflect the changes in **real time**
