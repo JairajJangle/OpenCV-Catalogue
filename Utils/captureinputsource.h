@@ -76,11 +76,11 @@ signals:
 
 private: signals:
     /**
-     * @brief startTimer Internal signal to start source frame capture on a
+     * @brief startCaptureTimer Internal signal to start source frame capture on a
      *  timely basis
      * @param delay The initial delay to start capture
      */
-    void startTimer(int delay);
+    void startCaptureTimer(int delay);
 
 private slots:
     void captureSource()
@@ -168,7 +168,7 @@ public:
                          this, &QObject::deleteLater);
         camThread->start();
 
-        connect(this, &CaptureInputSource::startTimer,
+        connect(this, &CaptureInputSource::startCaptureTimer,
                 this,
                 [=](int initialDelay){
             inputSourceCaptureTimer->start(initialDelay);
@@ -196,7 +196,7 @@ public:
             emit stopCapture();
             this->inputSourceType = InputSourceType(inputSourceType);
             this->inputSourcePath = inputSourcePath;
-            emit startTimer(initialDelay);
+            emit startCaptureTimer(initialDelay);
         },
         Qt::QueuedConnection);
 
