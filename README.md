@@ -189,7 +189,7 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 
 ### 4. Record and Export Input-Output Stream
 
-- Select folder where you want to export the output to.
+- <img align="right" width="200" height="200" src="media/screenshot_export.png">Select folder where you want to export the output to.
 - Click on capture image(camera button) to capture and save current frame of input and output image.
 - Or you can also start video recording to export the video of input and output in realtime, click on stop button to end and save the video recording. 
 
