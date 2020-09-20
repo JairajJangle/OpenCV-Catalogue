@@ -59,6 +59,7 @@
 * [License](#license)
 * [Contact](#contact)
 * [Support the project development](#support-the-project-development)
+* [Acknowledgements](#acknowledgements)
 
 
 
