@@ -197,24 +197,18 @@ In the *Select and Chain OpenCV Operations box*(left side), click on:
 ### 5. OpenCV Catalogue GUI summary
 
 <p align="center">
-    <img src="media/picture_gui.jpg" alt="Gallery" width="756" >
+    <img src="media/picture_gui.png" alt="Gallery" width="800" >
   </a>
 </p>
 <p align="center">
   <em>Convenient GUI for parameter value adjustment</em>
 </p>
 
-
-
-
 - Each OpenCV operation has it's own parameter control GUI
-
 - **Changing parameters** values reflect the changes in **real time**
-
 - Clicking on <img src="assets/info.png" alt="Logo" width="22"> button at the top right corner besides the selected operation name will reveal the official OpenCV documentation for the selected operation in your internet browser.
-
 - Click on **Switch Theme** button at the bottom right corner to swtich between Dark Mode and Light Mode Theme
-
+- Two themes available: Dark and Light
 - Various GUI elements are used:
 
    - **Seekbar** for definite ranging values
