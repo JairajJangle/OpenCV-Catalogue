@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
+    <width>317</width>
     <height>67</height>
    </rect>
   </property>
@@ -47,6 +47,9 @@
        </property>
        <item>
         <widget class="QRadioButton" name="radioButton">
+         <property name="toolTip">
+          <string>Select this operation to adjust it's parameters</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -78,6 +81,9 @@
            <weight>75</weight>
            <bold>true</bold>
           </font>
+         </property>
+         <property name="toolTip">
+          <string>Remove this operation from the chain</string>
          </property>
          <property name="styleSheet">
           <string notr="true">#buttonRemove 
@@ -114,6 +120,9 @@
            <height>60</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string>Drop down menu to change the operation</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -142,6 +151,9 @@
            <weight>75</weight>
            <bold>true</bold>
           </font>
+         </property>
+         <property name="toolTip">
+          <string>Add OpenCV operation to the chain</string>
          </property>
          <property name="styleSheet">
           <string notr="true">#buttonAdd
