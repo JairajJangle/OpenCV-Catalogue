@@ -85,7 +85,7 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Paypal Donate</string>
+            <string>Support using PayPal</string>
            </property>
            <property name="styleSheet">
             <string notr="true">#buttonDonatePaypal
@@ -109,6 +109,9 @@ background-repeat: none;
              <width>91</width>
              <height>57</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>Support using UPI for Indian supporters</string>
            </property>
            <property name="styleSheet">
             <string notr="true">#buttonDonateUPI
@@ -140,7 +143,7 @@ background-repeat: none;
             </size>
            </property>
            <property name="toolTip">
-            <string>LiberaPay support</string>
+            <string>Support using LiberaPay</string>
            </property>
            <property name="styleSheet">
             <string notr="true">#buttonDonateLiberaPay
