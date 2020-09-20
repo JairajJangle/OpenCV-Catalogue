@@ -78,22 +78,22 @@
 
 
 
-OpenCV Catalogue is a stand alone application which is made to let OpenCV beginnners and veterans test any OpenCV operation without a need to code. This awesome GUI application lets the user control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes.
+OpenCV Catalogue is a stand alone application which is made to let you test any OpenCV operation without a need to code. This awesome GUI application lets you control all parameters of an OpenCV operation using GUI elements such as Sliders/Seekbars, Input Text Box, Radio Buttons and Check Boxes. You can even form a series or chain of OpenCV operations, control individual operation parameters and view the output. Exporting realtime output is also supported. 
 
-This project is still in development and as of now covers primitive OpenCV operations. But, with the power of open sourcing, this application can be made to cover all the OpenCV operations, very soon.
+This project is still under development and as of now covers some primitive OpenCV operations. But, with the power of open sourcing, this application can be made to cover all the OpenCV operations, very soon.
 
-This repository also contain release packages with standalone GUI application which anyone can run it on their Linux system. OpenCV Catalogue is primarily saves user's time with figuring out what parameter causes what changes on the output.
+This repository also contain release packages with **standalone** GUI application which anyone can run it on their Linux system. OpenCV Catalogue is primarily saves user's time with figuring out what parameter causes what changes on the output.
 
 Features:
-* Select camera, image files and video files as input source
+* Select camera, image and video file, network stream as input source
 * Real time ajustment of paramters of selected OpenCV operation
 * Chaining of various OpenCV operations in a sequence
-* Provide's link to official OpenCV documentation to selected OpenCV operation
-* Paramter adjustment can be done with Seekbars, Text Boxes, Check Boxes, Radio Buttons.
+* Provides link to official OpenCV documentation to selected OpenCV operation
+* Record and export output
+* View output of each operation in the chain using Exploded View (Experimental)
 
 Coming Soon:
-* Exploded View of OpenCV operations to give more insights
-* Support for CUDA operations
+* Support for CUDA based operations
 
 ### Built With
 
