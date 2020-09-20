@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::initUI()
 {
+    // Set Application name and icon
     this->setWindowTitle(Info::appName);
     this->setWindowIcon(QIcon(":/assets/app_logo.png"));
 
@@ -69,42 +70,42 @@ void MainWindow::initUI()
     ui->scrollAreaParameterWidget->setWidget(wgtSubtest);
     ui->scrollAreaParameterWidget->setWidgetResizable(true);
 
+    // Add source selection radio buttons to a group
     QButtonGroup* group = new QButtonGroup();
     group->addButton(ui->cameraRadioButton);
     group->addButton(ui->fileRadioButton);
     group->addButton(ui->ipcamRadioButton);
 
-    ui->buttonStopRec->setDisabled(true);
-    ui->buttonExportBrowse->setEnabled(true);
+    sourceRadioButtonClicked(); // Set default source to H/W Camera
 
-    errorDialog->setModal(true);
+    ioErrorMessage(""); // Initial empty user message
 
-    sourceRadioButtonClicked();
-    ioErrorMessage("");
-    switchThemeButtonClicked();
+    switchThemeButtonClicked(); // Set default theme to Dark theme
 
+    // Initially hide the input source loading progress bar
     ui->pbLoadingInputSource->setVisible(false);
 
+    // Initialize all OpenCV operations widgets and add to Chain Menu options
     chainMenuInitDone = false;
     for (int opCode = 0; opCode != OPCodes::NONE; ++opCode) {
         addOperation((OPCodes)opCode);
     }
     qDebug() <<  "All OpenCV Operation Widgets Initialized";
     chainMenuInitDone = true;
-    addOperation(NONE);
+    addOperation(NONE); // Set the default operation
 
     setUserMessage("Initializing Done", INFO);
 }
 
 void MainWindow::connectSignals()
 {
+    // Input settings signal connection
     connect(ui->cameraRadioButton,SIGNAL(clicked()),
             this,SLOT(sourceRadioButtonClicked()));
     connect(ui->fileRadioButton,SIGNAL(clicked()),
             this,SLOT(sourceRadioButtonClicked()));
     connect(ui->ipcamRadioButton,SIGNAL(clicked()),
             this,SLOT(sourceRadioButtonClicked()));
-
     connect(ui->buttonSelectSource,SIGNAL(released()),
             this,SLOT(applySourceClicked()));
     connect(ui->checkBoxMirror, SIGNAL(clicked(bool)),
@@ -112,9 +113,9 @@ void MainWindow::connectSignals()
     connect(ui->buttonBrowse,SIGNAL(released()),
             this,SLOT(browseClicked()));
 
+    // Export output signal connection
     connect(ui->buttonExportBrowse, &QToolButton::released,
-            this, [=]()
-    {
+            this, [=](){
         exportFolderPath =
                 QFileDialog::getExistingDirectory(this);
         if(!exportFolderPath.isEmpty())
@@ -135,11 +136,7 @@ void MainWindow::connectSignals()
     connect(ui->buttonSwitchTheme, SIGNAL(released()),
             this, SLOT(switchThemeButtonClicked()));
 
-    connect(ui->actionAbout, &QAction::triggered, this,
-            [=]() {
-        showAboutDialog();
-    });
-
+    // Output Label mouse events signal connection
     connect(ui->labelOutput, SIGNAL(LBclicked(QPoint)),
             this, SLOT(outputLabelLBClicked(QPoint)));
     connect(ui->labelOutput, SIGNAL(LBMoved(QPoint)),
@@ -177,13 +174,20 @@ void MainWindow::connectSignals()
                     QString(Strings::fps).arg(fps));
     });
 
-    // Not yet implemented features
+
+    // Connect Menu actions
+    connect(ui->actionAbout, &QAction::triggered, this,
+            [=]() {
+        showAboutDialog();
+    });
     connect(ui->actionSave_Chain, &QAction::triggered,
             this, [=](){
+        // Not yet implemented feature
         setUserMessage("Save Chain feature is not yet implemented", WARNING);
     });
     connect(ui->actionLoad_Chain, &QAction::triggered,
             this, [=](){
+        // Not yet implemented feature
         setUserMessage("Load Chain feature is not yet implemented", WARNING);
     });
 }
