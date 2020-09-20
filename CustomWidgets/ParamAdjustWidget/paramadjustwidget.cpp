@@ -29,6 +29,7 @@ ParamAdjustWidget::ParamAdjustWidget(QWidget *parent) : QFrame(parent)
     infoButton->setFixedSize(25, 25);
     infoButton->setObjectName("infoButton");
     infoButton->setStyleSheet(infoButtonDarkStyleSheet);
+    infoButton->setToolTip("Online documentation for the selected operation");
     infoButton->hide();
 
     dividerLine->setFrameShape(QFrame::HLine);
