@@ -147,7 +147,7 @@ DISTFILES += \
     assets/undock_sel.png \
     assets/upi.png \
     media/minus_button.png \
-    media/picture_gui.jpg \
+    media/picture_gui.png \
     media/plus_button.png \
     media/radio_button.png \
     media/screenshot_adjust_params.png \
