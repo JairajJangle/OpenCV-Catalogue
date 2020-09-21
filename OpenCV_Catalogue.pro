@@ -56,6 +56,8 @@ win32 {
             -lopencv_bgsegm440
 }
 
+# TODO: Add Mac dependency block
+
 SOURCES += \
     CustomWidgets/ChainMenuWidget/chainmenuwidget.cpp \
     CustomWidgets/ClickableLabel/clickablelabel.cpp \
