@@ -125,7 +125,7 @@ chmod +x <name of .AppImage File>
 
 ### 1. Select Input source
 <p align="center">
-    <img src="media/screenshot_select_input_camera.png" alt="Input_Cam" width="875" >
+    <img src="media/screenshot_select_input_camera.png" alt="Input_Cam" width="800" >
   </a>
 </p>
 <p align="center">
@@ -136,7 +136,7 @@ chmod +x <name of .AppImage File>
   <b>OR</b>
 </p>
 <p align="center">
-    <img src="media/screenshot_select_input_file.png" alt="Input_File" width="875" >
+    <img src="media/screenshot_select_input_file.png" alt="Input_File" width="800" >
   </a>
 </p>
 <p align="center">
@@ -146,12 +146,13 @@ chmod +x <name of .AppImage File>
   <b>OR</b>
 </p>
 <p align="center">
-    <img src="media/screenshot_select_input_network.png" alt="Input_Network" width="875" >
+    <img src="media/screenshot_select_input_network.png" alt="Input_Network" width="800" >
   </a>
 </p>
 <p align="center">
   <em>Select Network stream as Input Source</em>
 </p>
+
 
 
 
