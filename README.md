@@ -93,8 +93,10 @@ Features:
 * Record and export output
 * View output of each operation in the chain using Exploded View (Experimental)
 
-Coming Soon:
+Planned features:
+* OpenCV machine learning operations
 * Support for CUDA based operations
+* Two-Dimensional chaining of OpenCV operations
 
 ### Built With
 
