@@ -288,6 +288,8 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 * [GitHub Pages](https://pages.github.com)
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 * [Typora Markdown Editor](https://typora.io/)
+* [PurpleBooth - Good-CONTRIBUTING.md-template.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426)
+* [briandk - CONTRIBUTING.md](https://gist.github.com/briandk/3d2e8b3ec8daf5a27a62)
 
 
 
