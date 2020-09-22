@@ -161,4 +161,5 @@ DISTFILES += \
     media/screenshot_select_input_camera.png \
     media/screenshot_select_input_file.jpg \
     media/screenshot_select_input_file.png \
-    media/screenshot_select_input_network.png
+    media/screenshot_select_input_network.png \
+    media/screenshot_source_apply.png
