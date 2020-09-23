@@ -137,7 +137,7 @@ private slots:
 
             if(!isSuccess)
             {
-                if(inputSourceType == FILE && retryCount < retryLimit)
+                if(inputSourceType == FILE)
                 {
                     qDebug() << "Retrying to open FILE type source";
                     openSource();
