@@ -137,6 +137,12 @@ private slots:
 
             if(!isSuccess)
             {
+                if(inputSourceType == FILE && retryCount < retryLimit)
+                {
+                    qDebug() << "Retrying to open FILE type source";
+                    openSource();
+                    return;
+                }
                 emit sourceCaptureError("Cannot read the input source");
                 emit stopCapture();
                 return;
@@ -194,6 +200,10 @@ public:
                 this,
                 [=](int inputSourceType, QString inputSourcePath){
             emit stopCapture();
+
+            // Reset retry count
+            retryCount = 0;
+
             this->inputSourceType = InputSourceType(inputSourceType);
             this->inputSourcePath = inputSourcePath;
             emit startCaptureTimer(initialDelay);
@@ -228,8 +238,12 @@ private:
 
     const int initialDelay = 1000; // ms
 
+    int retryCount = 0;
+    int retryLimit = 3;
+
     void openSource()
     {
+        retryCount++;
         cap.release();
 
         if (QRegExp(RegExps::onlyDigits).exactMatch(inputSourcePath))
