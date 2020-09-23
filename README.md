@@ -67,9 +67,10 @@
 
 ## About The Project
 <p align="center">
-    <img src="assets/demo_video.gif" alt="Demo-Video-GIF" width="640" >
+    <img src="assets/demo_video.gif" alt="Demo-Video-GIF" width="900" >
   </a>
 </p>
+
 
 
 
