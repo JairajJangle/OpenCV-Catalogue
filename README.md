@@ -75,8 +75,9 @@
 
 
 <p align="center">
- <em>OpenCV Catalogue Application Demo Video</em>
+ <em>OpenCV Catalogue Application Demo Video illustrating isolation of Red color</em>
 </p>
+
 
 
 
