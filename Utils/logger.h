@@ -67,8 +67,11 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
 
     if(fp != NULL)
     {
-        fprintf(fp, tagFile.c_str(),
-                dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+        fprintf(fp,
+                tagFile.c_str(),
+                dateTime.constData(),
+                localMsg.constData(),
+                context.file, context.line, context.function);
         fflush(fp);
     }
     else if(fp == NULL)
@@ -77,8 +80,11 @@ void logger(QtMsgType type, const QMessageLogContext &context, const QString &ms
     }
 
 #ifdef QT_DEBUG
-    fprintf(stderr, tagStd.c_str(),
-            dateTime.constData(), localMsg.constData(), context.file, context.line, context.function);
+    fprintf(stderr,
+            tagStd.c_str(),
+            dateTime.constData(),
+            localMsg.constData(),
+            context.file, context.line, context.function);
 #endif
 
     if(type == QtFatalMsg)

@@ -75,7 +75,7 @@ void resetAnchorClicked(){
 }
 
 private:
-QList<cv::Ptr< cv::BackgroundSubtractor>> bkgSubTechList;
+QList<cv::Ptr<cv::BackgroundSubtractor>> bkgSubTechList;
 
 // More at: https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html
 QList<QString> bkgSubTechs = { "KNN", "MOG", "MOG2", "GMG", "GSOC", "CNT", "LSBP" };

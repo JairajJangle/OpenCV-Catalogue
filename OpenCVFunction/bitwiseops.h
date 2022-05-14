@@ -32,7 +32,7 @@ private:
     const QString baseInfoLink = "https://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#bitwise-";
 public:
     enum BitWiseLogic{AND, OR, XOR, NOT};
-    QMap <QVariant, QString> logicNameMap = {
+    QMap<int, QString> logicNameMap = {
         {AND, "AND"},
         {OR, "OR"},
         {XOR, "XOR"},
@@ -87,7 +87,7 @@ public:
 private slots:
 void logicTypeChanged(QVariant value){
     selectedLogic = static_cast<BitWiseLogic>(value.toInt());
-    moreInfoLink = baseInfoLink + logicNameMap.value(value).toLower();
+    moreInfoLink = baseInfoLink + logicNameMap.value(value.toInt()).toLower();
     qDebug() << "Selected Bitwise operator: " << selectedLogic;
 }
 private:
