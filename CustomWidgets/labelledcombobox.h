@@ -73,13 +73,13 @@ public:
     }
 
     explicit LabelledComboBox(QString title,
-                              QMap<QVariant, QString> nameValueMap,
+                              QMap<int, QString> nameValueMap,
                               int comboBoxFixedWidth = 0,
                               int labelFixedWidth = 0,
                               QWidget *parent = nullptr)
         :QHBoxLayout(parent)
     {
-        QMapIterator<QVariant, QString> i(nameValueMap);
+        QMapIterator<int, QString> i(nameValueMap);
         while (i.hasNext())
         {
             i.next();
