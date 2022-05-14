@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QFile>
 #include <QtDebug>
+#include <QRegularExpression>
 
 // OpenCV libs
 #include <opencv2/opencv.hpp>
@@ -246,7 +247,7 @@ private:
         retryCount++;
         cap.release();
 
-        if (QRegExp(RegExps::onlyDigits).exactMatch(inputSourcePath))
+        if (QRegularExpression(RegExps::onlyDigits).match(inputSourcePath).hasMatch())
             cap.open(inputSourcePath.toInt()); // Camera Index
         else
             cap.open(inputSourcePath.toStdString()); // Source File path
