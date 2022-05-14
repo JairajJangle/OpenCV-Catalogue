@@ -291,9 +291,6 @@ void MainWindow::operationSelectedToDisplay(ParamAdjustWidget* paramAdjustWidget
     }
 
     paramAdjustWidget->show();
-
-    // NOTE: Experimental implementation of Exploded View Feature
-    cv::destroyAllWindows();
 }
 
 void MainWindow::addOperationWidget()
@@ -430,7 +427,7 @@ void MainWindow::refreshOperationWidgets()
             ->triggerAction(QAbstractSlider::SliderToMaximum);
 
     // NOTE: Experimental implementation of Exploded View Feature
-    cv::destroyAllWindows();
+//    cv::destroyAllWindows();
 }
 
 void MainWindow::getSourceCaptureImage(cv::Mat originalImg)
@@ -655,28 +652,29 @@ void MainWindow::updateOutputFPS()
     prevOutputTime = currentTime;
 }
 
-void MainWindow::updateExplodedView(QMap<QUuid, QPair<QString, QMap<QString, cv::Mat>>> explodedViewList)
+void MainWindow::updateExplodedView(
+        QMap<QUuid,QPair<QString,QMap<QString,    cv::Mat>>> explodedViewList)
 {
-    for(auto& explodedView: explodedViewList)
-    {
-        QString operationName = explodedView.first;
+//    for(auto& explodedView: explodedViewList)
+//    {
+//        QString operationName = explodedView.first;
 
-        QMapIterator<QString, cv::Mat> i(explodedView.second);
-        while (i.hasNext())
-        {
-            i.next();
-            QString title = operationName + ": " + i.key();
-            cv::imshow(title.toStdString(), i.value());
-        }
-    }
+//        QMapIterator<QString, cv::Mat> i(explodedView.second);
+//        while (i.hasNext())
+//        {
+//            i.next();
+//            QString title = operationName + ": " + i.key();
+//            cv::imshow(title.toStdString(), i.value());
+//        }
+//    }
 }
 
 void MainWindow::showHideExplodedView(int state)
 {
     explodedViewState = state;
 
-    if(state == 0)
-        cv::destroyAllWindows();
+//    if(state == 0)
+//        cv::destroyAllWindows();
 
     qDebug() << "Exploded View CB State = " << state;
     if(baseConfigWidgetChain.empty())
@@ -859,7 +857,7 @@ void MainWindow::captureClicked()
         else
         {
             qInfo() << "Image Exporting Success!";
-            ioErrorMessage("Captures images, saved to destination folder");
+            setUserMessage("Captured images, saved to destination folder", MESSAGE_TYPE::INFO);
         }
     }
     catch(QException& e)
