@@ -22,7 +22,6 @@
 
 // QT libs
 #include <QRadioButton>
-#include <QRegExpValidator>
 
 #include "Utils/utils.h"
 #include "Utils/constants.h"
@@ -99,8 +98,7 @@ void initWidget() override
         learningRateEditLayout->setText(QString::number(learningRate));
     });
 
-    learningRateEditLayout->lineEdit->setValidator(
-                new QRegExpValidator(QRegExp(RegExps::decimal0To1)));
+    learningRateEditLayout->lineEdit->setValidator(new QDoubleValidator(0, 1, 4));
 
     bkgSubTechList.append(cv::createBackgroundSubtractorKNN(1,2000.0,false)); // KNN
     bkgSubTechList.append(cv::bgsegm::createBackgroundSubtractorMOG()); // MOG
