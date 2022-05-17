@@ -107,10 +107,10 @@ void initWidget() override
     vBoxSub->addLayout(selectAppertureCB);
 
     // FIXME: Range Box hiding causes Hybrid Slider to retain height
-    //        HybridSlider* hybridGG = new HybridSlider(this, "threshold1", t1Value, 0, 100);
-    //        connect(hybridGG, SIGNAL(sliderValueChanged(int)),
+    //        HybridSlider* hybridSlider = new HybridSlider(this, "threshold1", t1Value, 0, 100);
+    //        connect(hybridSlider, SIGNAL(sliderValueChanged(int)),
     //                this, SLOT(t1ValueChanged(int)));
-    //        connect(hybridGG, SIGNAL(editApplyClicked()),
+    //        connect(hybridSlider, SIGNAL(editApplyClicked()),
     //                this, SLOT(refreshLayout()));
 
     //        vBoxSub->addWidget(hybridGG);
