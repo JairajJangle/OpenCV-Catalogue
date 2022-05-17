@@ -115,9 +115,10 @@ Planned features:
 
 ### Run the standalone application
 ```sh
-cd <.AppImage File Location>
-chmod +x <name of .AppImage File>
-./<name of .AppImage File>
+tar xjf opencv-catalogue.tar.bz2 
+cd <OpenCV_Catalogue.sh file location>
+chmod +x OpenCV_Catalogue.sh
+./OpenCV_Catalogue.sh
 ```
 
 
