@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - test
-  pull_request:
-    branches: 
-      - test
 
 env:
   VERSION_NAME: v0.3.2
