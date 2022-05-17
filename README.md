@@ -5,6 +5,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+[![Build Status][build-status-shield]][build-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -288,6 +289,8 @@ Project Link: [https://github.com/JairajJangle/Open-CV-Catalogue](https://github
 [issues-shield]: https://img.shields.io/github/issues/JairajJangle/Open-CV-Catalogue.svg?style=flat-square
 [issues-url]: https://github.com/JairajJangle/Open-CV-Catalogue/issues
 [license-shield]: https://img.shields.io/github/license/JairajJangle/Open-CV-Catalogue.svg?style=flat-square
+[build-status-shield]: https://github.com/JairajJangle/OpenCV-Catalogue/actions/workflows/github-actions-demo.yml/badge.svg
+[build-url]: https://github.com/JairajJangle/OpenCV-Catalogue/actions
 [license-url]: https://github.com/JairajJangle/Open-CV-Catalogue/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jairaj-jangle-35aab3137/

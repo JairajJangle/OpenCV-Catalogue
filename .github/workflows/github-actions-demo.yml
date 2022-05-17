@@ -1,4 +1,4 @@
-name: OpenCV Catalogue Actions
+name: build
 
 on:
   push:
