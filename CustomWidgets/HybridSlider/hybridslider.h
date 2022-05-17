@@ -27,6 +27,7 @@ namespace Ui {
 class HybridSlider;
 }
 
+// Currently unused
 class HybridSlider : public QWidget
 {
     Q_OBJECT
