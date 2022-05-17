@@ -245,10 +245,13 @@ private:
     void openSource()
     {
         retryCount++;
+        bool isStringNumber; // True if source path is valid number string
+        int convertedInt = inputSourcePath.toInt(&isStringNumber, 10);
+
         cap.release();
 
-        if (QRegularExpression(RegExps::onlyDigits).match(inputSourcePath).hasMatch())
-            cap.open(inputSourcePath.toInt()); // Camera Index
+        if (isStringNumber)
+            cap.open(convertedInt); // Camera Index
         else
             cap.open(inputSourcePath.toStdString()); // Source File path
     }
