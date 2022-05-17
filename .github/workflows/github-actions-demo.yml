@@ -1,0 +1,88 @@
+name: OpenCV Catalogue Actions
+
+on:
+  push:
+    branches:
+      - test
+  pull_request:
+    branches: 
+      - test
+
+env:
+  VERSION_NAME: v0.3.2
+
+jobs:
+  Setup-QT-And-OpenCV:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ matrix.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the matrix."
+      - run: echo "🖥️ The workflow is now ready to test your code on the matrix."
+      
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1  # not v2!
+        with:
+          path: ../Qt
+          key: ${{ matrix.os }}-QtCache
+      
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+      - run: echo "QT Installation status ${{ job.status }}"
+
+      - name: Cache OpenCV
+        id: opencv-cache
+        uses: actions/cache@v2
+        with:
+          path: ./opencv-install
+          key: ${{ matrix.os }}-opencv-cache
+
+      - name: Install OpenCV
+        uses: rayandrews/with-opencv-action@v1
+        with:  
+          dir: ./opencv-install
+          cached: ${{ steps.opencv-cache.outputs.cache-hit }}
+          opencv-version: '4.5.2'
+      - run: echo "OpenCV Installation status ${{ job.status }}"
+
+      - name: Build OpenCV Catalogue
+        run: |
+          cd ${{ github.workspace }}
+          qmake -o build/Makefile && cd build && make
+          echo "🍏 Status: ${{ job.status }}."
+      
+      - name: Package Distributable
+        run: |
+          sudo apt install snapd
+          sudo snap install cqtdeployer
+          cqtdeployer -bin ${{ github.workspace }}/build/OpenCV_Catalogue
+          cd ${{ github.workspace }}
+          mv DistributionKit OpenCV-Catalogue-Release
+          tar -cvjf opencv-catalogue-release.tar.bz2 OpenCV-Catalogue-Release
+          echo "Workspace Directory Contents:"
+          ls
+
+      - name: Release to GitHub
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.VERSION_NAME }}"
+          prerelease: true
+          title: "OpenCV Catalogue ${{ env.VERSION_NAME }}"
+          files: |
+            ${{ github.workspace }}/opencv-catalogue-release.tar.bz2
