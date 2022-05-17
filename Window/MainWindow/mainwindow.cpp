@@ -894,7 +894,10 @@ void MainWindow::applySourceClicked()
     else if(ui->cameraRadioButton->isChecked())
     {
         inputSourceType = CaptureInputSource::HARDWARE_CAM;
-        if (!QRegularExpression(RegExps::onlyDigits).match(path).hasMatch())
+        bool isStringNumber; // True if source path is valid number string
+        path.toInt(&isStringNumber, 10);
+
+        if (!isStringNumber)
         {
             qWarning() << "Invalid camera index";
             ioErrorMessage("Please enter a valid camera index!");
