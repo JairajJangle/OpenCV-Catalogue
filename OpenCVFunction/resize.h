@@ -35,7 +35,7 @@ public:
     Resize()
     {
         operationName = "Resize";
-        moreInfoLink = "https://docs.opencv.org/2.4/modules/imgproc/doc/geometric_transformations.html?highlight=resize#resize";
+        moreInfoLink = "https://docs.opencv.org/4.5.2/da/d54/group__imgproc__transform.html#ga47a974309e9102f5f08231edc7e7529d";
         this->initWidget();
     }
 
