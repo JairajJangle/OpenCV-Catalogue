@@ -67,6 +67,8 @@ SOURCES += \
     CustomWidgets/focusawarelineedit.cpp \
     Window/AboutDialog/aboutdialog.cpp \
     CustomWidgets/HybridSlider/hybridslider.cpp \
+    CustomWidgets/DebugImageLayout/debugimagelayout.cpp \
+    Window/CVDebugDialog/cvdebugdialog.cpp \
     main.cpp \
     Window/MainWindow/mainwindow.cpp
 
@@ -85,6 +87,7 @@ HEADERS += \
     CustomWidgets/HybridSlider/hybridslider.h \
     CustomWidgets/sliderlayout.h \
     CustomWidgets/baseconfigwidget.h \
+    CustomWidgets/DebugImageLayout/debugimagelayout.h \
     OpenCVFunction/backgroundsubtract.h \
     OpenCVFunction/bitwiseops.h \
     OpenCVFunction/blur.h \
@@ -101,11 +104,13 @@ HEADERS += \
     OpenCVFunction/inrange.h \
     OpenCVFunction/resize.h \
     OpenCVFunction/subimage.h \
+    OpenCVFunction/warpaffine.h \
     Utils/captureinputsource.h \
     Utils/constants.h \
     Utils/logger.h \
     Utils/utils.h \
     Window/AboutDialog/aboutdialog.h \
+    Window/CVDebugDialog/cvdebugdialog.h \
     Window/MainWindow/mainwindow.h
 
 FORMS += \
@@ -113,6 +118,7 @@ FORMS += \
     CustomWidgets/ErrorDialog/errordialog.ui \
     Window/AboutDialog/aboutdialog.ui \
     CustomWidgets/HybridSlider/hybridslider.ui \
+    Window/CVDebugDialog/cvdebugdialog.ui \
     Window/MainWindow/mainwindow.ui
 
 RESOURCES += \

@@ -62,6 +62,7 @@
 #include "OpenCVFunction/contours.h"
 #include "OpenCVFunction/resize.h"
 #include "OpenCVFunction/subimage.h"
+#include "OpenCVFunction/warpaffine.h"
 
 // Include all Custom Widgets here
 #include "Window/AboutDialog/aboutdialog.h"
@@ -87,14 +88,14 @@ private:
     enum OPCodes{NO_OPERATION, COLOR_SPACES, IMAGE_FLIP, COLOR_PICKER, INRANGE,
                  CANNY_EDGE, BLUR, BKG_SUBTRACT, HOUGH_CIRCLES, HOUGH_LINES,
                  HISTOGRAM_CALCULATION, HARRIS_CORNER, ERODE, DILATE, BITWISE_OPS,
-                 CONTOURS, RESIZE, SUB_IMAGE,
+                 CONTOURS, RESIZE, SUB_IMAGE, WARP_AFFINE,
 
                  /*
-                                 * Add all other Enum values before this
-                                 *
-                                 * To connect OpenCV operation Base Config widget to
-                                 * the added OpCodes enum, see MainWindow::addOperation(...)
-                                 */
+                  * Add all other Enum values before this
+                  *
+                  * To connect OpenCV operation Base Config widget to
+                  * the added OpCodes enum, see MainWindow::addOperation(...)
+                  */
                  NONE /* Corresponds to OPCodes::NO_OPERATION */ };
 
 private slots:

@@ -253,6 +253,9 @@ void MainWindow::addOperation(OPCodes opCode)
     case SUB_IMAGE:
         baseConfigWidgetChain.append(new SubImage());
         break;
+    case WARP_AFFINE:
+        baseConfigWidgetChain.append(new WarpAffine());
+        break;
 
         /*
          * Append other OpenCV Operation Base Config Widgets

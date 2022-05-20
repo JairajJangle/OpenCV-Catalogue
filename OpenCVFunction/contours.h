@@ -53,12 +53,12 @@ public:
             prevOffsetText = currentOffsetText;
         }
 
-        /// Find contours
+        // Find contours
         cv::findContours(inputImage, contours, hierarchy,
                          mode, method,
                          begin);
 
-        /// Draw contours
+        // Draw contours
         cv::Mat drawing = cv::Mat::zeros(inputImage.size(), CV_8UC3);
         for(unsigned int i = 0; i < contours.size(); i++)
         {

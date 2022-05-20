@@ -1,6 +1,6 @@
 Get started with contributing to the OpenCV Catalogue
 
-## For Developers
+## For Developers 🧑‍💻
 
 ### Prerequisites for building the source and contributing to the project
 
@@ -18,9 +18,7 @@ Get started with contributing to the OpenCV Catalogue
 
   
 
-<!-- CONTRIBUTING -->
-
-## Contributing
+## Contributing 🙌
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -32,7 +30,23 @@ Contributions are what make the open source community such an amazing place to b
 
 
 
-## Report bugs using Github's [issues](https://github.com/JairajJangle/OpenCV-Catalogue/issues)
+### How do I add a new OpenCV Operation? 🤔
+
+1. Create <operationname.h> file in OpenCVFunction
+2. Inherit the class from `BaseConfigWidget`
+3. Assign operationName and moreInfoLink in contructor
+4. Override `getProcessedImage(...)` with exception handling
+5. Override `initWidget()` and populate `BaseConfigWidget::vBox` with parameter adjustment widgets
+6. Super call to `BaseConfigWidget::initWidget()` in the end of overriden `initWidget()`
+7. In overriden `getProcessedImage(...)` get parameter values from widgets and apply to the OpenCV operation. 
+8. Return the processed image from `getProcessedImage(...)`
+9. Now, in mainwindow.h, import <operationname.h> and add Operation Code for the newly added operation in `OPCodes` enum.
+10. In mainwindow.cpp, add case for the new `OPCodes` value in `addOperation(...)`, append the object of the new operation to `baseConfigWidgetChain`.
+11. Done, that's it.  The new operation should be available in he UI. 🎉
+
+
+
+## Report bugs using Github's [issues](https://github.com/JairajJangle/OpenCV-Catalogue/issues) 🐞
 
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/JairajJangle/OpenCV-Catalogue/issues/new/choose); it's that easy!
 
@@ -54,6 +68,6 @@ People *love* thorough bug reports. I'm not even kidding.
 
 
 
-## License
+## License 📜
 
 By contributing, you agree that your contributions will be licensed under its GNU GPLv3 License.
