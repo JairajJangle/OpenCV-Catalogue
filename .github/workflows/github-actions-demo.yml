@@ -50,7 +50,7 @@ jobs:
           key: ${{ matrix.os }}-opencv-cache
 
       - name: Install OpenCV
-        uses: rayandrews/with-opencv-action@v1
+        uses: rayandrew/with-opencv-action
         with:  
           dir: ./opencv-install
           cached: ${{ steps.opencv-cache.outputs.cache-hit }}
