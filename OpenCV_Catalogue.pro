@@ -147,7 +147,6 @@ DISTFILES += \
     assets/stop_light.png \
     assets/undock.png \
     assets/undock_sel.png \
-    assets/upi.png \
     media/minus_button.png \
     media/picture_gui.png \
     media/plus_button.png \

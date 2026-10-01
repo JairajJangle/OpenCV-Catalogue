@@ -103,32 +103,6 @@ background-repeat: none;
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="buttonDonateUPI">
-           <property name="minimumSize">
-            <size>
-             <width>91</width>
-             <height>57</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>Support using UPI for Indian supporters</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#buttonDonateUPI
-{
-background-color: transparent;
-border-image: url(:/assets/upi.png);
-background: none;
-border: none;
-background-repeat: none;
-}</string>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QToolButton" name="buttonDonateLiberaPay">
            <property name="minimumSize">
             <size>
